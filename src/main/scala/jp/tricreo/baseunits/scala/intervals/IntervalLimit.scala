@@ -19,7 +19,7 @@ class IntervalLimit[T <% Ordered[T]]
 
   private def lowerToInt = if (lower) -1 else 1
 
-  def infinity = if (value == None) true else false
+  def infinity = value == None
   def open = closed == false
   def upper = lower == false
 
