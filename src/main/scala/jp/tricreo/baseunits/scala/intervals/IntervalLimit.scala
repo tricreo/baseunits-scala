@@ -34,10 +34,25 @@ class IntervalLimit[T <% Ordered[T]]
 
   private def closedToInt(t: Int, f: Int) = if (closed) t else f
 
+  /**
+   * この限界が無限限界であるかどうかを検証する。
+   *
+   * @return 無限限界である場合は{@code true}、そうでない場合は{@code false}
+   */
   def infinity = value == null
 
+  /**
+   * この限界が開いているかどうかを検証する。
+   *
+   * @return 開いている場合は{@code true}、そうでない場合は{@code false}
+   */
   def open = closed == false
 
+  /**
+   * この限界が上側限界であるかどうかを検証する。
+   *
+   * @return 上限値の場合は{@code true}、そうでない場合は{@code false}
+   */
   def upper = lower == false
 
   override def toString = "IntervalLimit(%s, %s, %s)".format(closed, lower, value)
@@ -89,12 +104,32 @@ class IntervalLimit[T <% Ordered[T]]
   }
 }
 
+/**
+ * 区間における「限界」を表すコンパニオンオブジェクト。
+ *
+ */
 object IntervalLimit {
 
+  /**
+	 * インスタンスを生成する。
+	 *
+	 * <p>無限限界（{@code value}ば{@code null}だった場合は、{@code closed}の指定にかかわらず
+	 * 常に閉じた限界のインスタンスを生成する。</p>
+	 *
+	 * @param closed 閉じた限界を生成する場合は {@code true}を指定する
+	 * @param lower 下側限界を生成する場合は {@code true}、上側限界を生成する場合は {@code false}を指定する
+	 * @param value 限界値. {@code null}の場合は、限界がないことを表す
+	 */
   def apply[T <% Ordered[T]](closed: Boolean, lower: Boolean, value: T) =
     new IntervalLimit[T](if (value == null) false else closed, lower, value)
 
-  def unapply[T <% Ordered[T]](intervalLimit: IntervalLimit[T]) =
+  /**
+   * 抽出子メソッド。
+   *
+   * @param intervalLimit [[IntervalLimit]]
+   * @return Option[(Boolean, Boolean, T)]
+   */
+  def unapply[T <% Ordered[T]](intervalLimit: IntervalLimit[T]):Option[(Boolean, Boolean, T)] =
     Some(intervalLimit.closed, intervalLimit.lower, intervalLimit.value)
 
   /**
@@ -119,7 +154,6 @@ object IntervalLimit {
 
 }
 
-
 class IntervalLimitless
 (
   closed: Boolean,
@@ -129,7 +163,6 @@ class IntervalLimitless
   override def toString = "IntervalLimitless(%s, %s)".format(closed, lower)
 
 }
-
 
 object IntervalLimitless {
 
