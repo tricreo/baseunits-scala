@@ -83,7 +83,7 @@ class MoneyTest extends FunSuite {
   }
 
   test("円の生成"){
-    val y = Money.yes(10)
+    val y = Money.yens(10)
     assert(y == Money(10, Money.JPY))
   }
 

@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat
  * <p>タイムゾーンを持っている。</p>
  */
 class TimePoint(private val millisecondsFromEpoc: Long) extends Ordered[TimePoint]{
+
   override def toString = "TimePoint(%d)".format(millisecondsFromEpoc)
 
   override def equals(obj: Any) = obj match {
