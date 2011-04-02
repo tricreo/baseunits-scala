@@ -21,19 +21,27 @@ package jp.tricreo.baseunits.scala.intervals
  * @param lower 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false}
  * @param value 限界値 {@code null}の場合は、限界がないことを表す。
  */
-trait LimitValue[T]
+trait LimitValue[T] extends Ordered[LimitValue[T]]
 
-case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T]
+case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T]{
+  def compare(that: LimitValue[T]) = that match {
+    case that:Limit[T] => value compare that.value
+    case _ => 1
+  }
+}
 
-case class Limitless[T <% Ordered[T]] extends LimitValue[T]
+case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
+  def compare(that: LimitValue[T]) = that match {
+    case that:Limitless[T] => 0
+    case _ => -1
+  }
+}
 
 @serializable
 class IntervalLimit[T <% Ordered[T]]
-(
-  val closed: Boolean,
-  val lower: Boolean,
-  val value: LimitValue[T]
-  )
+(val closed: Boolean,
+ val lower: Boolean,
+ val value: LimitValue[T])
   extends Ordered[IntervalLimit[T]] {
 
   private def lowerToInt(t: Int, f: Int) = if (lower) t else f
@@ -115,9 +123,9 @@ class IntervalLimit[T <% Ordered[T]]
       }
       return lowerToInt(-1, 1)
     }
-    val myValue = value.asInstanceOf[Limit[T]].value
-    val otherValue = obj.value.asInstanceOf[Limit[T]].value
-    return myValue.compareTo(otherValue)
+    //val myValue = value.asInstanceOf[Limit[T]].value
+    //val otherValue = obj.value.asInstanceOf[Limit[T]].value
+    return value compare obj.value
 
   }
 }
