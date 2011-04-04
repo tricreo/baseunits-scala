@@ -23,16 +23,16 @@ package jp.tricreo.baseunits.scala.intervals
  */
 trait LimitValue[T] extends Ordered[LimitValue[T]]
 
-case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T]{
+case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
   def compare(that: LimitValue[T]) = that match {
-    case that:Limit[T] => value compare that.value
+    case that: Limit[T] => value compare that.value
     case _ => 1
   }
 }
 
 case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
   def compare(that: LimitValue[T]) = that match {
-    case that:Limitless[T] => 0
+    case that: Limitless[T] => 0
     case _ => -1
   }
 }
@@ -53,7 +53,10 @@ class IntervalLimit[T <% Ordered[T]]
    *
    * @return 無限限界である場合は{@code true}、そうでない場合は{@code false}
    */
-  def infinity = value.asInstanceOf[Limitless[T]]
+  def infinity = value match {
+    case _: Limitless[T] => true
+    case _ => false
+  }
 
   /**
    * この限界が開いているかどうかを検証する。
