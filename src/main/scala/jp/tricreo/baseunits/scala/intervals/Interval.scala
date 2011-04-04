@@ -49,11 +49,11 @@ class Interval[T <% Ordered[T]]
    * @return 補区間と対照区間の共通部分のリスト
    * @see <a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
    */
-  def complementRelativeTo(other: Interval[T]) = {
+  def complementRelativeTo(other: Interval[T]): List[Interval[T]] = {
     val intervalSequence = ListBuffer.empty[Interval[T]]
     if (intersects(other) == false) {
       intervalSequence += other
-      intervalSequence.result
+      return intervalSequence.result
     }
     val left = leftComplementRelativeTo(other)
     left match {
@@ -138,13 +138,13 @@ class Interval[T <% Ordered[T]]
    * @param other 比較対象の区間
    * @return ギャップ区間
    */
-  def gap(other: Interval[T]) = {
+  def gap(other: Interval[T]): Interval[T] =
     if (intersects(other)) {
       emptyOfSameType
+    } else {
+      newOfSameType(lesserOfUpperLimits(other), lesserOfUpperIncludedInUnion(other) == false,
+        greaterOfLowerLimits(other), greaterOfLowerIncludedInUnion(other) == false)
     }
-    newOfSameType(lesserOfUpperLimits(other), lesserOfUpperIncludedInUnion(other) == false,
-      greaterOfLowerLimits(other), greaterOfLowerIncludedInUnion(other) == false)
-  }
 
   override def hashCode = lowerLimit.hashCode ^ upperLimit.hashCode
 
@@ -317,7 +317,7 @@ class Interval[T <% Ordered[T]]
   def empty: Boolean = {
     // TODO: Consider explicit empty interval
     // A 'degenerate' interval is an empty set, {}.
-    if (upperLimit == Limitless[T] || lowerLimit == Limitless[T]) {
+    if (upperLimit.isInstanceOf[Limitless[T]] || lowerLimit.isInstanceOf[Limitless[T]]) {
       return false
     }
     open && upperLimit.equals(lowerLimit)

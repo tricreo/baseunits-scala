@@ -1,5 +1,22 @@
 package jp.tricreo.baseunits.scala.intervals
 
+
+trait LimitValue[T] extends Ordered[LimitValue[T]]
+
+case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
+  def compare(that: LimitValue[T]) = that match {
+    case that: Limit[T] => value compare that.value
+    case _ => 1
+  }
+}
+
+case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
+  def compare(that: LimitValue[T]) = that match {
+    case that: Limitless[T] => 0
+    case _ => -1
+  }
+}
+
 /**
  * 区間における「限界」を表すクラス。
  *
@@ -21,22 +38,6 @@ package jp.tricreo.baseunits.scala.intervals
  * @param lower 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false}
  * @param value 限界値 {@code null}の場合は、限界がないことを表す。
  */
-trait LimitValue[T] extends Ordered[LimitValue[T]]
-
-case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
-  def compare(that: LimitValue[T]) = that match {
-    case that: Limit[T] => value compare that.value
-    case _ => 1
-  }
-}
-
-case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
-  def compare(that: LimitValue[T]) = that match {
-    case that: Limitless[T] => 0
-    case _ => -1
-  }
-}
-
 @serializable
 class IntervalLimit[T <% Ordered[T]]
 (val closed: Boolean,
