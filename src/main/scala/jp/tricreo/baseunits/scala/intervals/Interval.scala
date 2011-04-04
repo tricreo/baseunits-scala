@@ -253,10 +253,10 @@ class Interval[T <% Ordered[T]]
    * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
    */
   def intersects(other: Interval[T]): Boolean = {
-    if (upperLimit == Limitless[T] && other.upperLimit == Limitless[T]) {
+    if (upperLimit.isInstanceOf[Limitless[T]] && other.upperLimit.isInstanceOf[Limitless[T]]) {
       return true
     }
-    if (lowerLimit == Limitless[T] && other.lowerLimit == Limitless[T]) {
+    if (lowerLimit.isInstanceOf[Limitless[T]] && other.lowerLimit.isInstanceOf[Limitless[T]]) {
       return true
     }
     val comparison = greaterOfLowerLimits(other).compareTo(lesserOfUpperLimits(other))
@@ -421,7 +421,7 @@ class Interval[T <% Ordered[T]]
       return lowerLimit
     }
     val lowerComparison = lowerLimit.compareTo(other.lowerLimit)
-    if (lowerComparison >= 0) lowerLimit
+    if (lowerComparison >= 0) return lowerLimit
     other.lowerLimit
   }
 
@@ -435,7 +435,7 @@ class Interval[T <% Ordered[T]]
     if (upperLimit == Limitless[T]) return other.upperLimit
     if (other.upperLimit == Limitless[T]) return upperLimit
     val upperComparison = upperLimit.compareTo(other.upperLimit)
-    if (upperComparison <= 0) upperLimit
+    if (upperComparison <= 0) return upperLimit
     other.upperLimit
   }
 

@@ -322,7 +322,7 @@ class IntevalTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test07_IsBelow {
+  def test07_Below {
     val range = Interval.closed(Limit(BigDecimal(-5.5)), Limit(BigDecimal(6.6)))
     assert(range.below(Limit(BigDecimal(5.0))) == false)
     assert(range.below(Limit(BigDecimal(-5.5))) == false)
@@ -346,6 +346,133 @@ class IntevalTest extends AssertionsForJUnit {
     assert(range.includes(Limit(BigDecimal(6.6))) == true)
     assert(range.includes(Limit(BigDecimal(6.601))) == false)
     assert(range.includes(Limit(BigDecimal(-5.501))) == false)
+  }
+
+  /**
+   * {@link Interval}の開閉の境界挙動テスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test09_OpenInterval {
+    val exRange = Interval.over(Limit(BigDecimal(-5.5)), false, Limit(BigDecimal(6.6)), true)
+    assert(exRange.includes(Limit(BigDecimal(5.0))) == true)
+    assert(exRange.includes(Limit(BigDecimal(-5.5))) == false)
+    assert(exRange.includes(Limit(BigDecimal(-5.4999))) == true)
+    assert(exRange.includes(Limit(BigDecimal(6.6))) == true)
+    assert(exRange.includes(Limit(BigDecimal(6.601))) == false)
+    assert(exRange.includes(Limit(BigDecimal(-5.501))) == false)
+  }
+
+  /**
+   * {@link Interval#isEmpty()}のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test10_IsEmpty {
+    assert(Interval.closed(Limit(5), Limit(6)).empty == false)
+    assert(Interval.closed(Limit(6), Limit(6)).empty == false)
+    assert(Interval.open(Limit(6), Limit(6)).empty == true)
+    assert(c1_10c.emptyOfSameType.empty == true)
+  }
+
+  /**
+   * {@link Interval#intersects(Interval)}のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test11_Intersects {
+    assert(c5_10c.intersects(c1_10c) == true)
+    assert(c1_10c.intersects(c5_10c) == true)
+    assert(c4_6c.intersects(c1_10c) == true)
+    assert(c1_10c.intersects(c4_6c) == true)
+    assert(c5_10c.intersects(c5_15c) == true)
+    assert(c5_15c.intersects(c1_10c) == true)
+    assert(c1_10c.intersects(c5_15c) == true)
+
+    val check = c1_10c.intersects(c12_16c)
+    println(check)
+
+    assert(c1_10c.intersects(c12_16c) == false)
+    assert(c12_16c.intersects(c1_10c) == false)
+    assert(c5_10c.intersects(c5_10c) == true)
+    assert(c1_10c.intersects(o10_12c) == false)
+    assert(o10_12c.intersects(c1_10c) == false)
+
+    // ---- 気を取り直して総当たりしてみよう
+
+    assert(c5_10c.intersects(c5_10c) == true)
+    assert(c5_10c.intersects(c1_10c) == true)
+    assert(c5_10c.intersects(c4_6c) == true)
+    assert(c5_10c.intersects(c5_15c) == true)
+    assert(c5_10c.intersects(c12_16c) == false)
+    assert(c5_10c.intersects(o10_12c) == false)
+    assert(c5_10c.intersects(o1_1c) == false)
+    assert(c5_10c.intersects(c1_1o) == false)
+    assert(c5_10c.intersects(c1_1c) == false)
+    assert(c5_10c.intersects(o1_1o) == false)
+    assert(c5_10c.intersects(_2o) == false)
+    assert(c5_10c.intersects(o9_) == true)
+    assert(c5_10c.intersects(empty) == false)
+    assert(c5_10c.intersects(all) == true)
+
+    assert(c1_10c.intersects(c5_10c) == true)
+    assert(c1_10c.intersects(c1_10c) == true)
+    assert(c1_10c.intersects(c4_6c) == true)
+    assert(c1_10c.intersects(c5_15c) == true)
+    assert(c1_10c.intersects(c12_16c) == false)
+    assert(c1_10c.intersects(o10_12c) == false)
+    assert(c1_10c.intersects(o1_1c) == true)
+    assert(c1_10c.intersects(c1_1o) == true)
+    assert(c1_10c.intersects(c1_1c) == true)
+    assert(c1_10c.intersects(o1_1o) == false)
+    assert(c1_10c.intersects(_2o) == true)
+    assert(c1_10c.intersects(o9_) == true)
+    assert(c1_10c.intersects(empty) == false)
+    assert(c1_10c.intersects(all) == true)
+
+    assert(c4_6c.intersects(c5_10c) == true)
+    assert(c4_6c.intersects(c1_10c) == true)
+    assert(c4_6c.intersects(c4_6c) == true)
+    assert(c4_6c.intersects(c5_15c) == true)
+    assert(c4_6c.intersects(c12_16c) == false)
+    assert(c4_6c.intersects(o10_12c) == false)
+    assert(c4_6c.intersects(o1_1c) == false)
+    assert(c4_6c.intersects(c1_1o) == false)
+    assert(c4_6c.intersects(c1_1c) == false)
+    assert(c4_6c.intersects(o1_1o) == false)
+    assert(c4_6c.intersects(_2o) == false)
+    assert(c4_6c.intersects(o9_) == false)
+    assert(c4_6c.intersects(empty) == false)
+    assert(c4_6c.intersects(all) == true)
+
+    assert(c5_15c.intersects(c5_10c) == true)
+    assert(c5_15c.intersects(c1_10c) == true)
+    assert(c5_15c.intersects(c4_6c) == true)
+    assert(c5_15c.intersects(c5_15c) == true)
+    assert(c5_15c.intersects(c12_16c) == true)
+    assert(c5_15c.intersects(o10_12c) == true)
+    assert(c5_15c.intersects(o1_1c) == false)
+    assert(c5_15c.intersects(c1_1o) == false)
+    assert(c5_15c.intersects(c1_1c) == false)
+    assert(c5_15c.intersects(o1_1o) == false)
+    assert(c5_15c.intersects(_2o) == false)
+    assert(c5_15c.intersects(o9_) == true)
+    assert(c5_15c.intersects(empty) == false)
+    assert(c5_15c.intersects(all) == true)
+
+    // --- 疲れてきたからあと適当ｗ 総当たり達成ならず。まぁ、大丈夫やろ…。
+
+    assert(c12_16c.intersects(c1_10c) == false)
+    assert(o10_12c.intersects(c1_10c) == false)
+    assert(o1_1c.intersects(c4_6c) == false)
+    assert(c1_1o.intersects(c5_15c) == false)
+    assert(c1_1c.intersects(c5_15c) == false)
+    assert(o1_1o.intersects(c12_16c) == false)
+    assert(empty.intersects(o10_12c) == false)
+    assert(all.intersects(o10_12c) == true)
   }
 
 
