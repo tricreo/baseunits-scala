@@ -110,21 +110,21 @@ class Interval[T <% Ordered[T]]
       val thisEmpty = empty
       val otherEmpty = other.empty
       if (thisEmpty & otherEmpty) {
-        return true
+        true
+      } else if (thisEmpty ^ otherEmpty) {
+        false
+      } else {
+        val thisSingle = singleElement
+        val otherSingle = other.singleElement
+        if (thisSingle & otherSingle) {
+          lowerLimit == other.lowerLimit
+        } else if (thisSingle ^ otherSingle) {
+          false
+        } else {
+          upperLimitObject.compareTo(other.upperLimitObject) == 0 &&
+            lowerLimitObject.compareTo(other.lowerLimitObject) == 0
+        }
       }
-      if (thisEmpty ^ otherEmpty) {
-        return false
-      }
-      val thisSingle = singleElement
-      val otherSingle = other.singleElement
-      if (thisSingle & otherSingle) {
-        lowerLimit.equals(other.lowerLimit)
-      }
-      if (thisSingle ^ otherSingle) {
-        return false
-      }
-      upperLimitObject.compareTo(other.upperLimitObject) == 0 &&
-        lowerLimitObject.compareTo(other.lowerLimitObject) == 0
     }
     case _ => false
   }
@@ -246,28 +246,28 @@ class Interval[T <% Ordered[T]]
       lesserOfUpperIncludedInIntersection(other))
   }
 
+  private def equalBothLimitless(me: LimitValue[T], your: LimitValue[T]) = (me, your) match {
+    case (_: Limitless[T], _: Limitless[T]) => true
+    case _ => false
+  }
+
   /**
    * この区間と、与えた区間{@code other}の間に共通部分が存在するかどうか検証する。
    *
    * @param other 対象区間
    * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
    */
-  def intersects(other: Interval[T]): Boolean = {
-    if (upperLimit.isInstanceOf[Limitless[T]] && other.upperLimit.isInstanceOf[Limitless[T]]) {
-      return true
+  def intersects(other: Interval[T]) =
+    if (equalBothLimitless(upperLimit, other.upperLimit)) {
+      true
+    } else if (equalBothLimitless(lowerLimit, other.lowerLimit)) {
+      true
+    } else greaterOfLowerLimits(other) compare lesserOfUpperLimits(other) match {
+      case comparison if (comparison < 0) => true
+      case comparison if (comparison > 0) => false
+      case _ => greaterOfLowerIncludedInIntersection(other) && lesserOfUpperIncludedInIntersection(other)
     }
-    if (lowerLimit.isInstanceOf[Limitless[T]] && other.lowerLimit.isInstanceOf[Limitless[T]]) {
-      return true
-    }
-    val comparison = greaterOfLowerLimits(other).compareTo(lesserOfUpperLimits(other))
-    if (comparison < 0) {
-      return true
-    }
-    if (comparison > 0) {
-      return false
-    }
-    greaterOfLowerIncludedInIntersection(other) && lesserOfUpperIncludedInIntersection(other)
-  }
+
 
   /**
    * 指定した値 {@code value} が、この区間の下側限界を超過していないかどうかを検証する。
@@ -275,13 +275,12 @@ class Interval[T <% Ordered[T]]
    * @param value 値
    * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
    */
-  def above(value: LimitValue[T]): Boolean =
+  def above(value: LimitValue[T]) =
     if (hasLowerLimit == false) {
-      return false
+      false
     } else {
       val comparison = lowerLimit.compareTo(value)
-      val result = comparison > 0 || (comparison == 0 && includesLowerLimit == false)
-      result
+      comparison > 0 || (comparison == 0 && includesLowerLimit == false)
     }
 
   /**
@@ -314,14 +313,13 @@ class Interval[T <% Ordered[T]]
    *
    * @return 空である場合は{@code true}、そうでない場合は{@code false}
    */
-  def empty: Boolean = {
-    // TODO: Consider explicit empty interval
-    // A 'degenerate' interval is an empty set, {}.
+  def empty: Boolean =
+  // TODO: Consider explicit empty interval
+  // A 'degenerate' interval is an empty set, {}.
     if (upperLimit.isInstanceOf[Limitless[T]] || lowerLimit.isInstanceOf[Limitless[T]]) {
       return false
-    }
-    open && upperLimit.equals(lowerLimit)
-  }
+    } else
+      open && upperLimit == lowerLimit
 
 
   /**
@@ -339,12 +337,11 @@ class Interval[T <% Ordered[T]]
    *
    * @return 単一要素区間である場合は{@code true}、そうでない場合は{@code false}
    */
-  def singleElement: Boolean = {
-    if (hasUpperLimit == false) return false
-    if (hasLowerLimit == false) return false
+  def singleElement: Boolean =
+    if (hasUpperLimit == false) false
+    else if (hasLowerLimit == false) false
     //An interval containing a single element, {a}.
-    upperLimit == lowerLimit && empty == false
-  }
+    else upperLimit == lowerLimit && empty == false
 
   /**
    * 下側限界値を取得する。
@@ -371,9 +368,8 @@ class Interval[T <% Ordered[T]]
    * @param upperClosed 上限値を区間に含む（閉じた上側限界）場合は{@code true}を指定する
    * @return 新しい区間
    */
-  def newOfSameType(lower: LimitValue[T], lowerClosed: Boolean, upper: LimitValue[T], upperClosed: Boolean) = {
+  def newOfSameType(lower: LimitValue[T], lowerClosed: Boolean, upper: LimitValue[T], upperClosed: Boolean) =
     new Interval[T](lower, lowerClosed, upper, upperClosed)
-  }
 
   /**
    * 区間の文字列表現を取得する。
@@ -385,11 +381,10 @@ class Interval[T <% Ordered[T]]
    *
    * @see java.lang.Object#toString()
    */
-  override def toString: String = {
-    if (empty) return "{}"
-    if (singleElement) return "{" + lowerLimit.toString + "}"
-    toStringDetail
-  }
+  override def toString =
+    if (empty) "{}"
+    else if (singleElement) "{" + lowerLimit.toString + "}"
+    else toStringDetail
 
   /**
    * 上側限界値を取得する。
@@ -413,17 +408,15 @@ class Interval[T <% Ordered[T]]
    * @param other 比較対象の限界値
    * @return より大きい限界値
    */
-  private[intervals] def greaterOfLowerLimits(other: Interval[T]): LimitValue[T] = {
+  private[intervals] def greaterOfLowerLimits(other: Interval[T]): LimitValue[T] =
     if (lowerLimit == Limitless[T]) {
-      return other.lowerLimit
+      other.lowerLimit
+    } else if (other.lowerLimit == Limitless[T]) {
+      lowerLimit
+    } else {
+      val lowerComparison = lowerLimit.compareTo(other.lowerLimit)
+      if (lowerComparison >= 0) lowerLimit else other.lowerLimit
     }
-    if (other.lowerLimit == Limitless[T]) {
-      return lowerLimit
-    }
-    val lowerComparison = lowerLimit.compareTo(other.lowerLimit)
-    if (lowerComparison >= 0) return lowerLimit
-    other.lowerLimit
-  }
 
   /**
    * この区間と与えた区間 {@code other} の上側限界値のうち、より小さい（限界の狭い、制約の大きい）限界値を返す。
@@ -431,13 +424,14 @@ class Interval[T <% Ordered[T]]
    * @param other 比較対象の限界値
    * @return より小さい限界値
    */
-  private[intervals] def lesserOfUpperLimits(other: Interval[T]): LimitValue[T] = {
-    if (upperLimit == Limitless[T]) return other.upperLimit
-    if (other.upperLimit == Limitless[T]) return upperLimit
-    val upperComparison = upperLimit.compareTo(other.upperLimit)
-    if (upperComparison <= 0) return upperLimit
-    other.upperLimit
-  }
+  private[intervals] def lesserOfUpperLimits(other: Interval[T]) =
+    if (upperLimit == Limitless[T]) other.upperLimit
+    else if (other.upperLimit == Limitless[T]) upperLimit
+    else {
+      val upperComparison = upperLimit.compareTo(other.upperLimit)
+      if (upperComparison <= 0) upperLimit
+      else other.upperLimit
+    }
 
   private[intervals] def toStringDetail = {
     val buffer = new StringBuilder
@@ -461,39 +455,39 @@ class Interval[T <% Ordered[T]]
    *
    * @return 文字列
    */
-  private[intervals] def toStringGraphically = {
-    val sb = new StringBuilder
-    sb.append(" ")
-    if (empty) {
-      sb.append("EMPTY")
-    } else if (singleElement) {
-      for (i <- 0 until lowerLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]) {
-        sb.append(" ")
-      }
-      sb.append("@")
-    } else {
-      if (lowerLimit == Limitless[T]) {
-        sb.deleteCharAt(0)
-        sb.append("<")
-      } else {
-        for (i <- 0 until lowerLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]) {
-          sb.append(" ")
-        }
-        sb.append(if (includesLowerLimit) "[" else "(")
-      }
-      if (upperLimit == Limitless[T]) {
-        sb.append(">")
-      } else {
-        val l = if (lowerLimit == Limitless[T]) -1 else lowerLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]
-        val u = if (upperLimit == Limitless[T]) 100 else upperLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]
-        for (i <- 0 until u - l - 1) {
-          sb.append("-")
-        }
-        sb.append(if (includesUpperLimit) "]" else ")")
-      }
-    }
-    sb.toString
-  }
+  //  private[intervals] def toStringGraphically = {
+  //    val sb = new StringBuilder
+  //    sb.append(" ")
+  //    if (empty) {
+  //      sb.append("EMPTY")
+  //    } else if (singleElement) {
+  //      for (i <- 0 until lowerLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]) {
+  //        sb.append(" ")
+  //      }
+  //      sb.append("@")
+  //    } else {
+  //      if (lowerLimit == Limitless[T]) {
+  //        sb.deleteCharAt(0)
+  //        sb.append("<")
+  //      } else {
+  //        for (i <- 0 until lowerLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]) {
+  //          sb.append(" ")
+  //        }
+  //        sb.append(if (includesLowerLimit) "[" else "(")
+  //      }
+  //      if (upperLimit == Limitless[T]) {
+  //        sb.append(">")
+  //      } else {
+  //        val l = if (lowerLimit == Limitless[T]) -1 else lowerLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]
+  //        val u = if (upperLimit == Limitless[T]) 100 else upperLimit.asInstanceOf[Limit[T]].value.asInstanceOf[Int]
+  //        for (i <- 0 until u - l - 1) {
+  //          sb.append("-")
+  //        }
+  //        sb.append(if (includesUpperLimit) "]" else ")")
+  //      }
+  //    }
+  //    sb.toString
+  //  }
 
   private def checkLowerIsLessThanOrEqualUpper(lower: IntervalLimit[T], upper: IntervalLimit[T]) {
     if ((lower.lower && upper.upper && lower.compareTo(upper) <= 0) == false) {
@@ -517,16 +511,16 @@ class Interval[T <% Ordered[T]]
    * @param other 比較対象の限界値
    * @return より小さい限界値. この区間に上側限界がない場合は {@code Limitless[T]}
    */
-  private def greaterOfUpperLimits(other: Interval[T]): Option[LimitValue[T]] = {
+  private def greaterOfUpperLimits(other: Interval[T]): Option[LimitValue[T]] =
     if (upperLimit == Limitless[T]) {
-      return None
+      None
+    } else {
+      val upperComparison = upperLimit.compareTo(other.upperLimit)
+      if (upperComparison >= 0) {
+        Some(upperLimit)
+      } else
+        Some(other.upperLimit)
     }
-    val upperComparison = upperLimit.compareTo(other.upperLimit)
-    if (upperComparison >= 0) {
-      return Some(upperLimit)
-    }
-    Some(other.upperLimit)
-  }
 
   /**
    * この区間の下側<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
@@ -534,14 +528,13 @@ class Interval[T <% Ordered[T]]
    * @param other 比較対象の区間
    * @return この区間の下側の補区間と、与えた区間の共通部分。存在しない場合は {@code None}
    */
-  private def leftComplementRelativeTo(other: Interval[T]): Option[Interval[T]] = {
-    // この区間の下側限界値の方が小さいか等しい場合、下側の補区間に共通部分は無い
+  private def leftComplementRelativeTo(other: Interval[T]): Option[Interval[T]] =
+  // この区間の下側限界値の方が小さいか等しい場合、下側の補区間に共通部分は無い
     if (lowerLimitObject.compareTo(other.lowerLimitObject) <= 0) {
-      return None
-    }
-    Some(newOfSameType(other.lowerLimit, other.includesLowerLimit, lowerLimit,
-      includesLowerLimit == false))
-  }
+      None
+    } else
+      Some(newOfSameType(other.lowerLimit, other.includesLowerLimit, lowerLimit,
+        includesLowerLimit == false))
 
   /**
    * この区間と与えた区間 {@code other} の下側限界値のうち、より小さい（限界の広い、制約の小さい）限界値を返す。
@@ -549,7 +542,7 @@ class Interval[T <% Ordered[T]]
    * @param other 比較対象の限界値
    * @return より小さい限界値. この区間に下側限界がない場合は {@code Limitless[T]}
    */
-  private def lesserOfLowerLimits(other: Interval[T]) = {
+  private def lesserOfLowerLimits(other: Interval[T]) =
     lowerLimit match {
       case _: Limitless[T] => None
       case _ => {
@@ -560,15 +553,6 @@ class Interval[T <% Ordered[T]]
         }
       }
     }
-    //    if (lowerLimit == Limitless[T]) {
-    //      None
-    //    }
-    //    val lowerComparison = lowerLimit.compareTo(other.lowerLimit)
-    //    if (lowerComparison <= 0) {
-    //      Some(lowerLimit)
-    //    }
-    //    Some(other.lowerLimit)
-  }
 
   private def lesserOfUpperIncludedInIntersection(other: Interval[T]) = {
     val limit = lesserOfUpperLimits(other)
@@ -586,18 +570,24 @@ class Interval[T <% Ordered[T]]
    * @param other 比較対象の区間
    * @return この区間の上側の補区間と、与えた区間の共通部分。存在しない場合は {@code None}
    */
-  private def rightComplementRelativeTo(other: Interval[T]): Option[Interval[T]] = {
-    // この区間の上側限界値の方が大きいか等しい場合、上側の補区間に共通部分は無い
+  private def rightComplementRelativeTo(other: Interval[T]): Option[Interval[T]] =
+  // この区間の上側限界値の方が大きいか等しい場合、上側の補区間に共通部分は無い
     if (upperLimitObject.compareTo(other.upperLimitObject) >= 0) {
-      return None
-    }
-    Some(newOfSameType(upperLimit, includesUpperLimit == false, other.upperLimit,
-      other.includesUpperLimit))
-  }
+      None
+    } else
+      Some(newOfSameType(upperLimit, includesUpperLimit == false, other.upperLimit,
+        other.includesUpperLimit))
+
 }
 
-
+/**
+ * Intervalコンパニオンオブジェクト
+ */
 object Interval {
+
+  def apply[T <% Ordered[T]](lower: IntervalLimit[T], upper: IntervalLimit[T]) = new Interval[T](lower, upper)
+
+  def unapply[T <% Ordered[T]](interval: Interval[T]) = Some(interval.lowerLimitObject, interval.upperLimitObject)
 
   /**
    * 下側限界のみを持つ区間を生成する。

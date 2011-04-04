@@ -127,10 +127,7 @@ class IntervalLimit[T <% Ordered[T]]
       }
       return lowerToInt(-1, 1)
     }
-    //val myValue = value.asInstanceOf[Limit[T]].value
-    //val otherValue = obj.value.asInstanceOf[Limit[T]].value
     return value compare obj.value
-
   }
 }
 
