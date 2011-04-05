@@ -3,9 +3,7 @@ package jp.tricreo.baseunits.scala.money
 import java.util.{Locale, Currency}
 
 
-/**
- * 金額を表すクラス。
- *
+/** 金額を表すクラス。
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
  */
 class Money(val amount: BigDecimal, val currency: Currency) extends Ordered[Money] {
@@ -23,8 +21,7 @@ class Money(val amount: BigDecimal, val currency: Currency) extends Ordered[Mone
 
   override def hashCode = amount.hashCode + currency.hashCode
 
-  /**
-   * Returns a {@link Money} whose amount is the absolute amount of this {@link Money}, and whose scale is this.scale().
+  /** Returns a {@link Money} whose amount is the absolute amount of this {@link Money}, and whose scale is this.scale().
    *
    * @return 絶対金額
    */
@@ -71,8 +68,7 @@ object Money {
   val EUR = Currency.getInstance("EUR")
   val JPY = Currency.getInstance("JPY")
 
-  /**
-   * {@code amount}で表す量のドルを表すインスタンスを返す。
+  /** {@code amount}で表す量のドルを表すインスタンスを返す。
    *
    * <p>This creation method is safe to use. It will adjust scale, but will not
    * round off the amount.</p>
@@ -82,8 +78,7 @@ object Money {
    */
   def dollars(amount: BigDecimal) = apply(amount, USD)
 
-  /**
-   * {@code amount}で表す量のユーロを表すインスタンスを返す。
+  /** {@code amount}で表す量のユーロを表すインスタンスを返す。
    *
    * This creation method is safe to use. It will adjust scale, but will not
    * round off the amount.
@@ -93,8 +88,7 @@ object Money {
    */
   def euros(amount: BigDecimal) = apply(amount, EUR)
 
-  /**
-   * {@code amount}で表す量の円を表すインスタンスを返す。
+  /** {@code amount}で表す量の円を表すインスタンスを返す。
    *
    * This creation method is safe to use. It will adjust scale, but will not
    * round off the amount.
@@ -104,8 +98,7 @@ object Money {
    */
   def yens(amount: BigDecimal) = apply(amount, JPY)
 
-  /**
-   * 指定した通貨単位を持つ、量が0の金額を返す。
+  /** 指定した通貨単位を持つ、量が0の金額を返す。
    *
    * @param currency 通貨単位
    * @return 金額
