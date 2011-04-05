@@ -40,7 +40,7 @@ class IntervalLimitTest extends AssertionsForJUnit {
 
     assert(IntervalLimit.lower(false, Limit(10)) == IntervalLimit.lower(false, Limit(10)))
     assert(IntervalLimit(false, true, Limit(10)) == IntervalLimit.lower(false, Limit(10)))
-    //assert(new IntervalLimit(false, true, Limit(10)){ } != IntervalLimit.lower(false, Limit(10)))
+    //assert(new IntervalLimit(false, true, Limit(10)){ } != IntervalLimit.isLower(false, Limit(10)))
   }
 
   @Test

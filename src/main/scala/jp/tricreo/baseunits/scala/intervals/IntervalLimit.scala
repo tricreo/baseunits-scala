@@ -34,20 +34,20 @@ case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
  * 上側限界とは、限界値以上（または超える）の値を超過とみなす限界を表す。</p>
  *
  * @tparam T 限界の型
- * @param closed 限界が閉じている場合 {@code true}
- * @param lower 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false}
+ * @param isClosed 限界が閉じている場合 {@code true}
+ * @param isLower 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false}
  * @param value 限界値 {@code null}の場合は、限界がないことを表す。
  */
 @serializable
 class IntervalLimit[T <% Ordered[T]]
-(val closed: Boolean,
- val lower: Boolean,
+(val isClosed: Boolean,
+ val isLower: Boolean,
  val value: LimitValue[T])
   extends Ordered[IntervalLimit[T]] {
 
-  private def lowerToInt(t: Int, f: Int) = if (lower) t else f
+  private def lowerToInt(t: Int, f: Int) = if (isLower) t else f
 
-  private def closedToInt(t: Int, f: Int) = if (closed) t else f
+  private def closedToInt(t: Int, f: Int) = if (isClosed) t else f
 
   /**
    * この限界が無限限界であるかどうかを検証する。
@@ -64,23 +64,23 @@ class IntervalLimit[T <% Ordered[T]]
    *
    * @return 開いている場合は{@code true}、そうでない場合は{@code false}
    */
-  def open = closed == false
+  def isOpen = isClosed == false
 
   /**
    * この限界が上側限界であるかどうかを検証する。
    *
    * @return 上限値の場合は{@code true}、そうでない場合は{@code false}
    */
-  def upper = lower == false
+  def isUpper = isLower == false
 
-  override def toString = "IntervalLimit(%s, %s, %s)".format(closed, lower, value)
+  override def toString = "IntervalLimit(%s, %s, %s)".format(isClosed, isLower, value)
 
   override def equals(obj: Any) = obj match {
     case that: IntervalLimit[T] => compareTo(that) == 0
     case _ => false
   }
 
-  override def hashCode = closed.hashCode + value.hashCode + lower.hashCode
+  override def hashCode = isClosed.hashCode + value.hashCode + isLower.hashCode
 
   /**
    * 限界同士の比較を行う。
@@ -101,7 +101,7 @@ class IntervalLimit[T <% Ordered[T]]
    */
   def compare(obj: IntervalLimit[T]): Int = {
     if (value.isInstanceOf[Limitless[T]] && obj.value.isInstanceOf[Limitless[T]]) {
-      if (lower == obj.lower) {
+      if (isLower == obj.isLower) {
         return 0
       }
       return lowerToInt(-1, 1)
@@ -113,14 +113,14 @@ class IntervalLimit[T <% Ordered[T]]
       return obj.lowerToInt(1, -1)
     }
     if (value == obj.value) {
-      if (lower && obj.lower) {
-        if (closed ^ obj.closed) {
+      if (isLower && obj.isLower) {
+        if (isClosed ^ obj.isClosed) {
           return closedToInt(-1, 1)
         }
         return 0
       }
-      if (lower == false && obj.lower == false) {
-        if (closed ^ obj.closed) {
+      if (isLower == false && obj.isLower == false) {
+        if (isClosed ^ obj.isClosed) {
           return closedToInt(1, -1)
         }
         return 0
@@ -140,14 +140,14 @@ object IntervalLimit {
   /**
    * インスタンスを生成する。
    *
-   * <p>無限限界（{@code value}ば{@code null}だった場合は、{@code closed}の指定にかかわらず
+   * <p>無限限界（{@code value}ば{@code null}だった場合は、{@code isClosed}の指定にかかわらず
    * 常に閉じた限界のインスタンスを生成する。</p>
    *
-   * @param closed 閉じた限界を生成する場合は {@code true}を指定する
-   * @param lower 下側限界を生成する場合は {@code true}、上側限界を生成する場合は {@code false}を指定する
+   * @param isClosed 閉じた限界を生成する場合は {@code true}を指定する
+   * @param isLower 下側限界を生成する場合は {@code true}、上側限界を生成する場合は {@code false}を指定する
    * @param value 限界値. {@code null}の場合は、限界がないことを表す
    */
-  def apply[T <% Ordered[T]](closed: Boolean, lower: Boolean, value: LimitValue[T]) =
+  def apply[T <% Ordered[T]](isClosed: Boolean, isLower: Boolean, value: LimitValue[T]) =
     new IntervalLimit[T](if (value.isInstanceOf[Limitless[T]]) false else closed, lower, value)
 
 
@@ -158,26 +158,26 @@ object IntervalLimit {
    * @return Option[(Boolean, Boolean, T)]
    */
   def unapply[T <% Ordered[T]](intervalLimit: IntervalLimit[T]): Option[(Boolean, Boolean, LimitValue[T])] =
-    Some(intervalLimit.closed, intervalLimit.lower, intervalLimit.value)
+    Some(intervalLimit.isClosed, intervalLimit.isLower, intervalLimit.value)
 
   /**
    * 下側限界インスタンスを生成する。
    *
    * @param <T> 限界値の型
-   * @param closed 閉じた限界を生成する場合は {@code true}を指定する
+   * @param isClosed 閉じた限界を生成する場合は {@code true}を指定する
    * @param value 限界値. {@code null}の場合は、限界がないことを表す
    * @return 下側限界インスタンス
    */
-  def lower[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]) = apply(closed, true, value)
+  def lower[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(closed, true, value)
 
   /**
    * 上側限界インスタンスを生成する。
    *
    * @param <T> 限界値の型
-   * @param closed 閉じた限界を生成する場合は {@code true}を指定する
+   * @param isClosed 閉じた限界を生成する場合は {@code true}を指定する
    * @param value 限界値. {@code null}の場合は、限界がないことを表す
    * @return 上側限界インスタンス
    */
-  def upper[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]) = apply(closed, false, value)
+  def upper[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(closed, false, value)
 
 }

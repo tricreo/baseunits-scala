@@ -103,7 +103,7 @@ class IntevalTest extends AssertionsForJUnit {
     list += Interval.over(Limit(100), false, Limit(100), true)
     list += Interval.over(Limit(100), true, Limit(100), true)
 
-    // empty
+    // isEmpty
     list += Interval.over(Limit(0), false, Limit(0), false)
     list += Interval.over(Limit(25), false, Limit(25), false)
     list += Interval.over(Limit(50), false, Limit(50), false)
@@ -207,7 +207,7 @@ class IntevalTest extends AssertionsForJUnit {
     list += Interval.over(Limit(20), false, Limit(20), true)
     list += Interval.over(Limit(20), true, Limit(20), true)
 
-    // empty
+    // isEmpty
     list += Interval.over(Limit(0), false, Limit(0), false)
     list += Interval.over(Limit(5), false, Limit(5), false)
     list += Interval.over(Limit(10), false, Limit(10), false)
@@ -265,7 +265,7 @@ class IntevalTest extends AssertionsForJUnit {
     // confusion at the moment, I decided to throw this in.
     try {
       Interval.closed(Limit(BigDecimal(2.0)), Limit(BigDecimal(1.0)))
-      fail("Lower bound mustn't be above upper bound.");
+      fail("Lower bound mustn't be isAbove isUpper bound.");
     } catch {
       case _: IllegalArgumentException => ()
       // success
@@ -324,12 +324,12 @@ class IntevalTest extends AssertionsForJUnit {
   @Test
   def test07_Below {
     val range = Interval.closed(Limit(BigDecimal(-5.5)), Limit(BigDecimal(6.6)))
-    assert(range.below(Limit(BigDecimal(5.0))) == false)
-    assert(range.below(Limit(BigDecimal(-5.5))) == false)
-    assert(range.below(Limit(BigDecimal(-5.4999))) == false)
-    assert(range.below(Limit(BigDecimal(6.6))) == false)
-    assert(range.below(Limit(BigDecimal(6.601))) == true)
-    assert(range.below(Limit(BigDecimal(-5.501))) == false)
+    assert(range.isBelow(Limit(BigDecimal(5.0))) == false)
+    assert(range.isBelow(Limit(BigDecimal(-5.5))) == false)
+    assert(range.isBelow(Limit(BigDecimal(-5.4999))) == false)
+    assert(range.isBelow(Limit(BigDecimal(6.6))) == false)
+    assert(range.isBelow(Limit(BigDecimal(6.601))) == true)
+    assert(range.isBelow(Limit(BigDecimal(-5.501))) == false)
   }
 
   /**
@@ -371,10 +371,10 @@ class IntevalTest extends AssertionsForJUnit {
    */
   @Test
   def test10_IsEmpty {
-    assert(Interval.closed(Limit(5), Limit(6)).empty == false)
-    assert(Interval.closed(Limit(6), Limit(6)).empty == false)
-    assert(Interval.open(Limit(6), Limit(6)).empty == true)
-    assert(c1_10c.emptyOfSameType.empty == true)
+    assert(Interval.closed(Limit(5), Limit(6)).isEmpty == false)
+    assert(Interval.closed(Limit(6), Limit(6)).isEmpty == false)
+    assert(Interval.open(Limit(6), Limit(6)).isEmpty == true)
+    assert(c1_10c.emptyOfSameType.isEmpty == true)
   }
 
   /**
@@ -486,7 +486,7 @@ class IntevalTest extends AssertionsForJUnit {
     assert(c5_10c.intersect(c5_15c) == c5_10c)
     assert(c5_15c.intersect(c1_10c) == c5_10c)
     assert(c1_10c.intersect(c5_15c) == c5_10c)
-    assert(c1_10c.intersect(c12_16c).empty == true)
+    assert(c1_10c.intersect(c12_16c).isEmpty == true)
     assert(c1_10c.intersect(c12_16c) == empty)
     assert(c12_16c.intersect(c1_10c) == empty)
     assert(c5_10c.intersect(c5_10c) == c5_10c)
@@ -535,9 +535,9 @@ class IntevalTest extends AssertionsForJUnit {
     assert(c5_10c.covers(c5_10c) == true)
 
     val o5_10c = Interval.over(Limit(BigDecimal(5)), false, Limit(BigDecimal(10)), true)
-    assert(c5_10c.covers(o5_10c) == true, "closed incl left-open")
-    assert(o5_10c.covers(o5_10c) == true, "left-open incl left-open")
-    assert(o5_10c.covers(c5_10c) == false, "left-open doesn't include closed")
+    assert(c5_10c.covers(o5_10c) == true, "isClosed incl left-isOpen")
+    assert(o5_10c.covers(o5_10c) == true, "left-isOpen incl left-isOpen")
+    assert(o5_10c.covers(c5_10c) == false, "left-isOpen doesn't include isClosed")
 
     val o1_10o = Interval.over(Limit(BigDecimal(1)), false, Limit(BigDecimal(10)), false)
     assert(c5_10c.covers(o1_10o) == false)
@@ -558,9 +558,9 @@ class IntevalTest extends AssertionsForJUnit {
 		val c2_3o = Interval.over(Limit(2), true, Limit(3), false)
 		
 		assert(c1_3c.gap(c5_7c)==o3_5o)
-		assert(c1_3c.gap(o3_5o).empty==true)
-		assert(c1_3c.gap(c2_3o).empty==true)
-		assert(c2_3o.gap(o3_5o).singleElement==true)
+		assert(c1_3c.gap(o3_5o).isEmpty==true)
+		assert(c1_3c.gap(c2_3o).isEmpty==true)
+		assert(c2_3o.gap(o3_5o).isSingleElement==true)
 	}
 	
 	/**
@@ -698,11 +698,11 @@ class IntevalTest extends AssertionsForJUnit {
 	 */
 	@Test
 	def test26_IsSingleElement {
-		assert(o1_1c.singleElement==true)
-		assert(c1_1c.singleElement==true)
-		assert(c1_1o.singleElement==true)
-		assert(c1_10c.singleElement==false)
-		assert(o1_1o.singleElement==false)
+		assert(o1_1c.isSingleElement==true)
+		assert(c1_1c.isSingleElement==true)
+		assert(c1_1o.isSingleElement==true)
+		assert(c1_10c.isSingleElement==false)
+		assert(o1_1o.isSingleElement==false)
 	}
 	
 	/**
