@@ -17,8 +17,7 @@ case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
   }
 }
 
-/**
- * 区間における「限界」を表すクラス。
+/** 区間における「限界」を表すクラス。
  *
  * <p>このクラスを理解するにあたっては、「限界」と「限界値」の区別を正しく認識することが重要となる。
  * 限界とはこのクラス {@code this} で表される値であり、限界値とは、 {@link #value}で表される値である。</p>
@@ -36,7 +35,7 @@ case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
  * @tparam T 限界の型
  * @param isClosed 限界が閉じている場合 {@code true}
  * @param isLower 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false}
- * @param value 限界値 {@code null}の場合は、限界がないことを表す。
+ * @param value 限界値 [[Limitless[T]]]の場合は、限界がないことを表す。
  */
 @serializable
 class IntervalLimit[T <% Ordered[T]]
@@ -148,7 +147,7 @@ object IntervalLimit {
    * @param value 限界値. {@code null}の場合は、限界がないことを表す
    */
   def apply[T <% Ordered[T]](isClosed: Boolean, isLower: Boolean, value: LimitValue[T]) =
-    new IntervalLimit[T](if (value.isInstanceOf[Limitless[T]]) false else closed, lower, value)
+    new IntervalLimit[T](if (value.isInstanceOf[Limitless[T]]) false else isClosed, isLower, value)
 
 
   /**
@@ -168,7 +167,7 @@ object IntervalLimit {
    * @param value 限界値. {@code null}の場合は、限界がないことを表す
    * @return 下側限界インスタンス
    */
-  def lower[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(closed, true, value)
+  def lower[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(isClosed, true, value)
 
   /**
    * 上側限界インスタンスを生成する。
@@ -178,6 +177,6 @@ object IntervalLimit {
    * @param value 限界値. {@code null}の場合は、限界がないことを表す
    * @return 上側限界インスタンス
    */
-  def upper[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(closed, false, value)
+  def upper[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(isClosed, false, value)
 
 }

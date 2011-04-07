@@ -1,5 +1,7 @@
 package jp.tricreo.baseunits.scala.intervals
 
+import collection.Iterator
+
 /**
  * Created by IntelliJ IDEA.
  * User: junichi
@@ -8,7 +10,7 @@ package jp.tricreo.baseunits.scala.intervals
  * To change this template use File | Settings | File Templates.
  */
 
-class IntervalSeq[T <% Ordered[T]](private val intervals: List[Interval[T]]) {
+class IntervalSeq[T <% Ordered[T]](private val intervals: List[Interval[T]]) extends Seq[Interval[T]] {
   /**
    * 全ての要素区間を内包する、最小の区間を返す。
    *
@@ -26,6 +28,12 @@ class IntervalSeq[T <% Ordered[T]](private val intervals: List[Interval[T]]) {
       }
     }
   }
+
+  def iterator: Iterator[Interval[T]] = intervals.iterator
+
+  def length: Int = intervals.length
+
+  def apply(idx: Int): Interval[T] = intervals(idx)
 }
 
 object IntervalSeq {
