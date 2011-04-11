@@ -76,5 +76,33 @@ class IntervalSeqTest extends AssertionsForJUnit {
 
   }
 
+  /**
+   * {@link IntervalSequence#gaps()}のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test05_Gaps {
+    var intervalSeq = IntervalSeq[Int]()
+    intervalSeq :+= c5_10c
+    intervalSeq :+= o10_12c
+    intervalSeq :+= c20_25c
+    intervalSeq :+= o30_35o
+
+    val it = intervalSeq.gaps.iterator
+    assert(it.hasNext == true)
+    assert(it.next == o12_20o)
+    assert(it.hasNext == true)
+    assert(it.next == o25_30c)
+    assert(it.hasNext == false)
+    try {
+    it.next();
+    fail("Should throw NoSuchElementException");
+    } catch {
+    case e:NoSuchElementException =>
+    // success
+    case _ => fail()
+    }
+  }
 
 }
