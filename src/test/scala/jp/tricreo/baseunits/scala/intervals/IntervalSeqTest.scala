@@ -61,6 +61,8 @@ class IntervalSeqTest extends AssertionsForJUnit {
     val intervalSequence3 = IntervalSeq(intervals.result)
     assert(intervalSequence3.extent == all)
 
+
+
     //		for (seq <- variousSequences()) {
     //			seq.add(c5_10c);
     //			seq.add(o10_12c);
@@ -75,6 +77,8 @@ class IntervalSeqTest extends AssertionsForJUnit {
     //		}
 
   }
+
+
 
   /**
    * {@link IntervalSequence#gaps()}のテスト。
@@ -96,12 +100,39 @@ class IntervalSeqTest extends AssertionsForJUnit {
     assert(it.next == o25_30c)
     assert(it.hasNext == false)
     try {
-    it.next();
-    fail("Should throw NoSuchElementException");
+      it.next();
+      fail("Should throw NoSuchElementException");
     } catch {
-    case e:NoSuchElementException =>
-    // success
-    case _ => fail()
+      case e: NoSuchElementException =>
+      // success
+      case _ => fail()
+    }
+  }
+
+  /**
+   * {@link IntervalSequence#intersections()}のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test04_Intersections {
+    var intervalSequence = IntervalSeq[Int]();
+    intervalSequence :+= o10_12c
+    intervalSequence :+= o11_20c
+    intervalSequence :+= c20_25c
+
+    val it = intervalSequence.intersections.iterator
+    assert(it.hasNext == true)
+    assert(it.next == o11_12c)
+    assert(it.hasNext == true)
+    assert(it.next == c20_20c)
+    assert(it.hasNext == false)
+    try {
+      it.next
+      fail("Should throw NoSuchElementException");
+    } catch {
+      case e: NoSuchElementException =>
+      case _ => fail()
     }
   }
 
