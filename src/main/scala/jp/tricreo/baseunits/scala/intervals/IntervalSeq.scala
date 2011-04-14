@@ -26,44 +26,45 @@ class UpperLowerOrdering[T <% Ordered[T]]
     }
 }
 
-object UpperLowerOrdering{
+object UpperLowerOrdering {
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) = new UpperLowerOrdering[T](inverseLower, inverseUpper)
 }
 
 class LowerUpperOrdering[T <% Ordered[T]]
 (inverseLower: Boolean, inverseUpper: Boolean)
-extends Ordering[Interval[T]] {
+  extends Ordering[Interval[T]] {
 
   private[this] val lowerFactor = if (inverseLower) -1 else 1
   private[this] val upperFactor = if (inverseUpper) -1 else 1
 
   def compare(e1: Interval[T], e2: Interval[T]): Int =
     if (e1.isEmpty && e2.isEmpty) {
-			0
-		} else if (e1.isEmpty) {
-			1
-		} else if (e2.isEmpty) {
-			-1
-		}else{
+      0
+    } else if (e1.isEmpty) {
+      1
+    } else if (e2.isEmpty) {
+      -1
+    } else {
       val upperComparance = e1.upperLimitObject.compareTo(e2.upperLimitObject);
       val lowerComparance = e1.lowerLimitObject.compareTo(e2.lowerLimitObject);
       if (lowerComparance != 0) (lowerComparance + lowerFactor) else (upperComparance * upperFactor)
     }
 }
-object LowerUpperOrdering{
+
+object LowerUpperOrdering {
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) = new LowerUpperOrdering[T](inverseLower, inverseUpper)
 }
 
 
-
 class IntervalSeq[T <% Ordered[T]]
-(val intervals: Seq[Interval[T]], val ordering:Ordering[Interval[T]])
+(val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
   extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
 
-  override protected def newBuilder: Builder[Interval[T], IntervalSeq[T]] = IntervalSeq.newBuilder[T]
+  override protected def newBuilder: Builder[Interval[T], IntervalSeq[T]] = IntervalSeq.newBuilder[T](ordering)
 
-  def this() = this(Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
-  def this(intervals: Seq[Interval[T]]) = this(intervals, UpperLowerOrdering[T](true, false))
+  def this() = this (Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
+
+  def this(intervals: Seq[Interval[T]]) = this (intervals, UpperLowerOrdering[T](true, false))
 
 
   /**全ての要素区間を内包する、最小の区間を返す。
@@ -142,6 +143,7 @@ class IntervalSeq[T <% Ordered[T]]
     }
   }
 
+
   def iterator = this.intervals.iterator
 
   def length: Int = this.intervals.length
@@ -150,14 +152,22 @@ class IntervalSeq[T <% Ordered[T]]
 
 }
 
-class IntervalSeqBuilder[T <% Ordered[T]](val ord:Ordering[Interval[T]])
-  extends Builder[Interval[T], IntervalSeq[T]]{
+/**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]のためのビルダー。
+ * @j5ik2o
+ */
+class IntervalSeqBuilder[T <% Ordered[T]]
+(val ord: Option[Ordering[Interval[T]]] = None)
+  extends Builder[Interval[T], IntervalSeq[T]] {
+
 
   val builder = new ListBuffer[Interval[T]]
 
   def +=(elem: Interval[T]): this.type = {
     builder += elem
-    builder.sorted(ord)
+    ord match {
+      case Some(ord) => builder.sorted(ord)
+      case _ => ()
+    }
     this
   }
 
@@ -179,9 +189,9 @@ object IntervalSeq {
   implicit def canBuildFrom[T <% Ordered[T]]: CanBuildFrom[From[T], Elem[T], To[T]] =
     new CanBuildFrom[From[T], Elem[T], To[T]] {
 
-      def apply(from: From[T]) = newBuilder
+      def apply(from: From[T]) = new IntervalSeqBuilder[T]
 
-      def apply() = newBuilder
+      def apply() = new IntervalSeqBuilder[T]
 
     }
 
@@ -189,9 +199,11 @@ object IntervalSeq {
 
   def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
 
-  def newBuilder[T <% Ordered[T]]: Builder[Elem[T], To[T]] = new ListBuffer[Elem[T]] mapResult {
-    x => newTo(x)
-  }
+  def newBuilder[T <% Ordered[T]](ordering: Ordering[Interval[T]]): Builder[Elem[T], To[T]] = new IntervalSeqBuilder[T](Some(ordering))
+
+  //  def newBuilder[T <% Ordered[T]]: Builder[Elem[T], To[T]] = new ListBuffer[Elem[T]] mapResult {
+  //    x => newTo(x)
+  //  }
 
 
 }
