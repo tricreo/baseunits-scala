@@ -38,8 +38,139 @@ class IntervalSeqTest extends AssertionsForJUnit {
 
   private val all = Interval.open(Limitless[Int], Limitless[Int])
 
-  /**
-   * {@link IntervalSequence#extent()}のテスト。
+  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#iterator]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test01_Iterate {
+    var intervalSequence = new IntervalSeq[Int]
+    assert(intervalSequence.isEmpty == true);
+    intervalSequence :+= empty
+    intervalSequence :+= c5_10c
+    intervalSequence :+= o10_12c
+    val it = intervalSequence.iterator
+    assert(it.hasNext == true)
+    assert(it.next == empty)
+    assert(it.hasNext == true)
+    assert(it.next == c5_10c)
+    assert(it.hasNext == true)
+    assert(it.next == o10_12c)
+    assert(it.hasNext == false)
+    try {
+      it.next
+      fail("Should throw NoSuchElementException");
+    } catch {
+      case e: NoSuchElementException =>
+      // success
+      case _ => fail()
+    }
+  }
+
+  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#add(Interval)]]が順不同で行われた場合の{@link IntervalSequence}のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test02_InsertedOutOfOrder {
+    var intervalSequence = new IntervalSeq[Int]
+    intervalSequence :+= o10_12c
+    intervalSequence :+= c5_10c
+    //Iterator behavior should be the same regardless of order of insertion.
+    val it = intervalSequence.iterator
+    assert(it.hasNext == true)
+    assert(it.next == c5_10c)
+    assert(it.hasNext == true)
+    assert(it.next == o10_12c)
+    assert(it.hasNext == false)
+    try {
+      it.next
+      fail("Should throw NoSuchElementException");
+    } catch {
+      case e: NoSuchElementException => // success
+      case _ => fail()
+    }
+  }
+
+  /**重なる区間を含んだ[[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test03_Overlapping {
+    var intervalSequence = new IntervalSeq[Int]()
+    intervalSequence :+= o10_12c
+    intervalSequence :+= o11_20c
+    val it = intervalSequence.iterator
+    assert(it.hasNext == true)
+    assert(it.next == o10_12c)
+    assert(it.hasNext == true)
+    assert(it.next == o11_20c)
+    assert(it.hasNext == false)
+    try {
+      it.next
+      fail("Should throw NoSuchElementException");
+    } catch {
+      case e: NoSuchElementException => // success
+      case _ => fail()
+    }
+  }
+
+  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#intersections]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test04_Intersections {
+    var intervalSequence = IntervalSeq[Int]();
+    intervalSequence :+= o10_12c
+    intervalSequence :+= o11_20c
+    intervalSequence :+= c20_25c
+
+    val it = intervalSequence.intersections.iterator
+    assert(it.hasNext == true)
+    assert(it.next == o11_12c)
+    assert(it.hasNext == true)
+    assert(it.next == c20_20c)
+    assert(it.hasNext == false)
+    try {
+      it.next
+      fail("Should throw NoSuchElementException");
+    } catch {
+      case e: NoSuchElementException =>
+      case _ => fail()
+    }
+  }
+
+  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#gaps]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test05_Gaps {
+    var intervalSeq = IntervalSeq[Int]()
+    intervalSeq :+= c5_10c
+    intervalSeq :+= o10_12c
+    intervalSeq :+= c20_25c
+    intervalSeq :+= o30_35o
+
+    val it = intervalSeq.gaps.iterator
+    assert(it.hasNext == true)
+    assert(it.next == o12_20o)
+    assert(it.hasNext == true)
+    assert(it.next == o25_30c)
+    assert(it.hasNext == false)
+    try {
+      it.next();
+      fail("Should throw NoSuchElementException");
+    } catch {
+      case e: NoSuchElementException =>
+      // success
+      case _ => fail()
+    }
+  }
+
+  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#extent]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -78,62 +209,5 @@ class IntervalSeqTest extends AssertionsForJUnit {
 
   }
 
-
-
-  /**
-   * {@link IntervalSequence#gaps()}のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
-  @Test
-  def test05_Gaps {
-    var intervalSeq = IntervalSeq[Int]()
-    intervalSeq :+= c5_10c
-    intervalSeq :+= o10_12c
-    intervalSeq :+= c20_25c
-    intervalSeq :+= o30_35o
-
-    val it = intervalSeq.gaps.iterator
-    assert(it.hasNext == true)
-    assert(it.next == o12_20o)
-    assert(it.hasNext == true)
-    assert(it.next == o25_30c)
-    assert(it.hasNext == false)
-    try {
-      it.next();
-      fail("Should throw NoSuchElementException");
-    } catch {
-      case e: NoSuchElementException =>
-      // success
-      case _ => fail()
-    }
-  }
-
-  /**
-   * {@link IntervalSequence#intersections()}のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
-  @Test
-  def test04_Intersections {
-    var intervalSequence = IntervalSeq[Int]();
-    intervalSequence :+= o10_12c
-    intervalSequence :+= o11_20c
-    intervalSequence :+= c20_25c
-
-    val it = intervalSequence.intersections.iterator
-    assert(it.hasNext == true)
-    assert(it.next == o11_12c)
-    assert(it.hasNext == true)
-    assert(it.next == c20_20c)
-    assert(it.hasNext == false)
-    try {
-      it.next
-      fail("Should throw NoSuchElementException");
-    } catch {
-      case e: NoSuchElementException =>
-      case _ => fail()
-    }
-  }
 
 }

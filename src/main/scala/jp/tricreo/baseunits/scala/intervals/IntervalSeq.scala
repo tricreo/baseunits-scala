@@ -55,7 +55,10 @@ object LowerUpperOrdering {
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) = new LowerUpperOrdering[T](inverseLower, inverseUpper)
 }
 
-
+/**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval 区間]] の列）を表すクラス。
+ *
+ * @param <T> [[jp.tricreo.beseunits.scala.intervals.Interval 区間]]の型
+ */
 class IntervalSeq[T <% Ordered[T]]
 (val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
   extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
@@ -159,37 +162,44 @@ class IntervalSeqBuilder[T <% Ordered[T]]
 (val ord: Option[Ordering[Interval[T]]] = None)
   extends Builder[Interval[T], IntervalSeq[T]] {
 
-
   val builder = new ListBuffer[Interval[T]]
 
   def +=(elem: Interval[T]): this.type = {
     builder += elem
-    ord match {
-      case Some(ord) => builder.sorted(ord)
-      case _ => ()
-    }
     this
   }
 
   def clear(): Unit = builder.clear
 
-  def result(): IntervalSeq[T] = IntervalSeq(builder.result)
+  def result(): IntervalSeq[T] =
+    ord match {
+      case Some(ord) => IntervalSeq(builder.sorted(ord).result)
+      case None => IntervalSeq(builder.result)
+    }
+
 }
 
-
+/**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]のためのコンパニオンオブジェクト
+ * @j5ik2o
+ */
 object IntervalSeq {
 
   type From[T] = Seq[Interval[T]]
   type Elem[T] = Interval[T]
   type To[T] = IntervalSeq[T]
 
-  private def newTo[T <% Ordered[T]](s: From[T]): To[T] =
-    new IntervalSeq[T](s)
+//  private def newTo[T <% Ordered[T]](s: From[T]): To[T] =
+//    new IntervalSeq[T](s)
 
   implicit def canBuildFrom[T <% Ordered[T]]: CanBuildFrom[From[T], Elem[T], To[T]] =
     new CanBuildFrom[From[T], Elem[T], To[T]] {
 
-      def apply(from: From[T]) = new IntervalSeqBuilder[T]
+      def apply(from: From[T]) = {
+        from match {
+          case intervalSeq: IntervalSeq[T] => new IntervalSeqBuilder[T](Some(intervalSeq.ordering))
+          case _ => throw new Error
+        }
+      }
 
       def apply() = new IntervalSeqBuilder[T]
 
