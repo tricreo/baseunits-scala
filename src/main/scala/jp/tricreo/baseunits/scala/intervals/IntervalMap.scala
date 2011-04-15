@@ -44,6 +44,8 @@ class LinearIntervalMap[A <% Ordered[A], B]
 
   //  override def empty: IntervalMap[A, B] = new LinearIntervalMap[A, B]()
 
+  override def toString(): String = intervalMap.toString
+
   def containsIntersectingKey(otherInterval: Interval[A]): Boolean =
     intersectingKeys(otherInterval).isEmpty == false
 
@@ -62,8 +64,7 @@ class LinearIntervalMap[A <% Ordered[A], B]
   private def findKeyIntervalContaining(key: LimitValue[A]): Option[Interval[A]] =
     intervalMap.keys.find(_.includes(key))
 
-  /**
-   * この写像が保持するキーとしての区間のうち、指定した区間 {@code otherInterval}と共通部分を持つ
+  /**この写像が保持するキーとしての区間のうち、指定した区間 {@code otherInterval}と共通部分を持つ
    * 区間の列を取得する。
    *
    * <p>戻り値の列は、区間の自然順にソートされている。</p>

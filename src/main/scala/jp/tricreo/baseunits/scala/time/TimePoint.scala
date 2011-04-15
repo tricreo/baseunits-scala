@@ -12,9 +12,7 @@ import java.text.SimpleDateFormat
  * To change this template use File | Settings | File Templates.
  */
 
-/**
- * ミリ秒精度で、ある時間の一点をあらわすクラス。
- *
+/**ミリ秒精度で、ある時間の一点をあらわすクラス。
  * <p>タイムゾーンを持っている。</p>
  */
 class TimePoint(private val millisecondsFromEpoc: Long) extends Ordered[TimePoint]{
