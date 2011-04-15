@@ -140,35 +140,6 @@ object TimeUnit extends Enumeration {
                     timeUnitConversionFactor: TimeUnitConversionFactor.Value) = new TimeUnitValue(nextId, name, timeUnitType, timeUnitBaseType, timeUnitConversionFactor)
 
 
-  def DESCENDING_MS_BASED = Array(
-    week,
-    day,
-    hour,
-    minute,
-    second,
-    millisecond
-  )
-
-  def DESCENDING_MS_BASED_FOR_DISPLAY = Array(
-    day,
-    hour,
-    minute,
-    second,
-    millisecond
-  )
-
-  def DESCENDING_MONTH_BASED = Array(
-    year,
-    quarter,
-    month
-  )
-
-  def DESCENDING_MONTH_BASED_FOR_DISPLAY = Array(
-    year,
-    month
-  )
-
-
   /**ミリ秒単位 */
   val millisecond = TimeUnitValue("millisecond", TimeUnitType.millisecond, TimeUnitType.millisecond, TimeUnitConversionFactor.identical)
 
@@ -195,5 +166,33 @@ object TimeUnit extends Enumeration {
 
   /**年単位 */
   val year = TimeUnitValue("year", TimeUnitType.year, TimeUnitType.month, TimeUnitConversionFactor.monthsPerYear)
+
+  private val DESCENDING_MS_BASED = Array(
+    week,
+    day,
+    hour,
+    minute,
+    second,
+    millisecond
+  )
+
+  private val DESCENDING_MS_BASED_FOR_DISPLAY = Array(
+    day,
+    hour,
+    minute,
+    second,
+    millisecond
+  )
+
+  private val DESCENDING_MONTH_BASED = Array(
+    year,
+    quarter,
+    month
+  )
+
+  private val DESCENDING_MONTH_BASED_FOR_DISPLAY = Array(
+    year,
+    month
+  )
 
 }
