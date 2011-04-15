@@ -3,56 +3,139 @@ package jp.tricreo.baseunits.scala.intervals
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/14
- * Time: 18:17
- * To change this template use File | Settings | File Templates.
+/**[[jp.tricreo.baseunits.scala.intervals.IntervalMap]]のためのテストクラス。
  */
+class IntervalMapTest extends AssertionsForJUnit {
+  /**[[jp.tricreo.baseunits.scala.intervals.IntervalMap]]に対する参照メソッドのテスト。
+   *
+   * <ul>
+   *   <li>{@link IntervalMap#containsKey(Comparable)}</li>
+   *   <li>{@link IntervalMap#get(Comparable)}</li>
+   * </ul>
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test01_Lookup {
 
-class IntervalMapTest extends AssertionsForJUnit{
+    var map = new LinearIntervalMap[Int, String]
+    map += (Interval.closed(Limit(1), Limit(3)) -> "one-three")
+    map += (Interval.closed(Limit(5), Limit(9)) -> "five-nine")
+    map += (Interval.open(Limit(9), Limit(12)) -> "ten-eleven")
+
+    assert(map.contains(Limit(0)) == false)
+    assert(map.contains(Limit(1)) == true)
+    assert(map.contains(Limit(2)) == true)
+    assert(map.contains(Limit(3)) == true)
+    assert(map.contains(Limit(4)) == false)
+    assert(map.contains(Limit(5)) == true)
+    assert(map.contains(Limit(9)) == true)
+    assert(map.contains(Limit(11)) == true)
+    assert(map.contains(Limit(12)) == false)
+    assert(map.contains(Limit(13)) == false)
+    assert(map.contains(Limitless[Int]) == false)
+
+    assert(map.get(Limit(0)) == None)
+    assert(map.get(Limit(1)) == Some("one-three"))
+    assert(map.get(Limit(2)) == Some("one-three"))
+    assert(map.get(Limit(3)) == Some("one-three"))
+    assert(map.get(Limit(4)) == None)
+    assert(map.get(Limit(5)) == Some("five-nine"))
+    assert(map.get(Limit(9)) == Some("five-nine"))
+    assert(map.get(Limit(10)) == Some("ten-eleven"))
+    assert(map.get(Limit(11)) == Some("ten-eleven"))
+    assert(map.get(Limit(12)) == None)
+    assert(map.get(Limit(13)) == None)
+    assert(map.get(Limitless[Int]) == None)
+  }
+
   /**
-     * {@link IntervalMap}に対する参照メソッドのテスト。
-     *
-     * <ul>
-     *   <li>{@link IntervalMap#containsKey(Comparable)}</li>
-     *   <li>{@link IntervalMap#get(Comparable)}</li>
-     * </ul>
-     *
-     * @throws Exception 例外が発生した場合
-     */
-    @Test
-    def test01_Lookup {
-//      var map = new LinearIntervalMap[Int, String]()
-//      map + (Interval.closed(Limit(1), Limit(3)) -> "one-three")
-//      map += (Interval.closed(Limit(5), Limit(9)) -> "five-nine")
-//      map += (Interval.open(Limit(9), Limit(12)) -> "ten-eleven")
+   * [[jp.tricreo.baseunits.scala.intervals.IntervalMap#remove(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test02_Remove {
+    var map = new LinearIntervalMap[Int, String]()
+    map += (Interval.closed(Limit(1), Limit(10)) -> "one-ten")
+    map -= (Interval.closed(Limit(3), Limit(5)))
+    assert(map.get(Limit(2)) == Some("one-ten"))
+    assert(map.get(Limit(3)) == None)
+    assert(map.get(Limit(4)) == None)
+    assert(map.get(Limit(5)) == None)
+    assert(map.get(Limit(6)) == Some("one-ten"))
+  }
 
-//      assert(map.contains(0)==false)
-//      assert(map.contains(1)==true)
-//      assert(map.containsKey(2)==true)
-//      assert(map.containsKey(3)==true)
-//      assert(map.containsKey(4)==false)
-//      assert(map.containsKey(5)==true)
-//      assert(map.containsKey(9)==true)
-//      assert(map.containsKey(11)==true)
-//      assert(map.containsKey(12)==false)
-//      assert(map.containsKey(13)==false)
-//      //assert(map.containsKey(null), is(false));
+  /**
+   * [[jp.tricreo.baseunits.scala.intervals.IntervalMap#put(Interval, Object)]]で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test03_ConstructionOverwriteOverlap {
+    var map = new LinearIntervalMap[Int, String]()
+    map += (Interval.closed(Limit(1), Limit(3)) -> "one-three")
+    map += (Interval.closed(Limit(5), Limit(9)) -> "five-nine")
+    map += (Interval.open(Limit(9), Limit(12)) -> "ten-eleven")
+    assert(map.get(Limit(10)) == Some("ten-eleven"))
+    assert(map.get(Limit(11)) == Some("ten-eleven"))
+    assert(map.get(Limit(12)) == None)
 
-//      assertThat(map.get(0), is(nullValue()));
-//      assertThat(map.get(1), is("one-three"));
-//      assertThat(map.get(2), is("one-three"));
-//      assertThat(map.get(3), is("one-three"));
-//      assertThat(map.get(4), is(nullValue()));
-//      assertThat(map.get(5), is("five-nine"));
-//      assertThat(map.get(9), is("five-nine"));
-//      assertThat(map.get(10), is("ten-eleven"));
-//      assertThat(map.get(11), is("ten-eleven"));
-//      assertThat(map.get(12), is(nullValue()));
-//      assertThat(map.get(13), is(nullValue()));
-//      assertThat(map.get(null), is(nullValue()));
-    }
+    val eleven_thirteen = Interval.closed(Limit(11), Limit(13))
+    assert(map.containsIntersectingKey(eleven_thirteen) == true)
+
+    map += (eleven_thirteen -> "eleven-thirteen")
+    assert(map.get(Limit(10)) == Some("ten-eleven"))
+    assert(map.get(Limit(11)) == Some("eleven-thirteen"))
+    assert(map.get(Limit(12)) == Some("eleven-thirteen"))
+  }
+
+  /**
+   * [[jp.tricreo.baseunits.scala.intervals.IntervalMap#put(Interval, Object)]]で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test04_ConstructionOverwriteMiddle {
+    var map = new LinearIntervalMap[Int, String]()
+    map += (Interval.closed(Limit(1), Limit(3)) -> "one-three")
+    map += (Interval.closed(Limit(5), Limit(9)) -> "five-nine")
+    map += (Interval.open(Limit(9), Limit(12)) -> "ten-eleven")
+    assert(map.get(Limit(6)) == Some("five-nine"))
+    assert(map.get(Limit(7)) == Some("five-nine"))
+    assert(map.get(Limit(8)) == Some("five-nine"))
+    assert(map.get(Limit(9)) == Some("five-nine"))
+
+    val seven_eight = Interval.closed(Limit(7), Limit(8))
+    assert(map.containsIntersectingKey(seven_eight) == true)
+    map += (seven_eight -> "seven-eight")
+    assert(map.get(Limit(6)) == Some("five-nine"))
+    assert(map.get(Limit(7)) == Some("seven-eight"))
+    assert(map.get(Limit(8)) == Some("seven-eight"))
+    assert(map.get(Limit(9)) == Some("five-nine"))
+  }
+
+  /**
+   * {@link IntervalMap#put(Interval, Object)}で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test05_ConstructionOverwriteMultiple {
+    var map = new LinearIntervalMap[Int, String]()
+    map += (Interval.closed(Limit(1), Limit(2)) -> "one-two")
+    map += (Interval.closed(Limit(3), Limit(4)) -> "three-four")
+    map += (Interval.closed(Limit(5), Limit(6)) -> "five-six")
+    map += (Interval.closed(Limit(8), Limit(9)) -> "eight-nine")
+    map += (Interval.closed(Limit(3), Limit(8)) -> "three-eight")
+    assert(map.get(Limit(2)) == Some("one-two"))
+    assert(map.get(Limit(3)) == Some("three-eight"))
+    assert(map.get(Limit(4)) == Some("three-eight"))
+    assert(map.get(Limit(5)) == Some("three-eight"))
+    assert(map.get(Limit(6)) == Some("three-eight"))
+    assert(map.get(Limit(7)) == Some("three-eight"))
+    assert(map.get(Limit(8)) == Some("three-eight"))
+    assert(map.get(Limit(9)) == Some("eight-nine"))
+  }
 
 }
