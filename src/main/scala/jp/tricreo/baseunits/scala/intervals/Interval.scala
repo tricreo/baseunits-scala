@@ -31,7 +31,7 @@ class Interval[T <% Ordered[T]]
    * @param isUpperClosed 上限値が閉区間である場合は {@code true}を指定する
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
-  protected def this(lower: LimitValue[T], isLowerClosed: Boolean, upper: LimitValue[T], isUpperClosed: Boolean) = {
+  def this(lower: LimitValue[T], isLowerClosed: Boolean, upper: LimitValue[T], isUpperClosed: Boolean) = {
     this (IntervalLimit.lower(isLowerClosed, lower), IntervalLimit.upper(isUpperClosed, upper))
   }
 
@@ -252,7 +252,7 @@ class Interval[T <% Ordered[T]]
    * @param value 値
    * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
    */
-  def isBelow(value: LimitValue[T]) =
+  def isBelow(value: LimitValue[T]):Boolean =
     if (hasUpperLimit == false) false
     else upperLimit < value || (upperLimit == value && includesUpperLimit == false)
 

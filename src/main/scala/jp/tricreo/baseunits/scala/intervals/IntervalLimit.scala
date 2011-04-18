@@ -1,7 +1,22 @@
 package jp.tricreo.baseunits.scala.intervals
 
 
-trait LimitValue[T] extends Ordered[LimitValue[T]]
+trait LimitValue[T] extends Ordered[LimitValue[T]] {
+  def toLimitObject = this match{
+    case Limit(result) => result
+  }
+}
+
+object LimitValue{
+//  implicit def toLimitObject[T <% Ordered[T]](lv:LimitValue[T]) = lv match{
+//    case Limit(result) => result
+//  }
+
+//  implicit def toLimitValue[T <% Ordered[T]](limitObject:T) = limitObject match{
+//    case null => Limitless[T]
+//    case _ => Limit(limitObject)
+//  }
+}
 
 case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
   def compare(that: LimitValue[T]) = that match {

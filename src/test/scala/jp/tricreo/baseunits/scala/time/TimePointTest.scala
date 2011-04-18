@@ -1,8 +1,9 @@
 package jp.tricreo.baseunits.scala.time
 
 import org.scalatest.FunSuite
-import java.util.{TimeZone, Calendar, Date => JDate}
-import jp.tricreo.baseunits.scala.time.TimePoint._
+import java.util.{Calendar, Date => JDate}
+import org.scalatest.junit.AssertionsForJUnit
+import org.junit.Test
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,23 +13,24 @@ import jp.tricreo.baseunits.scala.time.TimePoint._
  * To change this template use File | Settings | File Templates.
  */
 
-class TimePointTest extends FunSuite {
+class TimePointTest extends AssertionsForJUnit {
 
-  test("インスタンスを生成する"){
-    val tp = TimePoint(0L)
-    assert(tp == TimePoint(0L))
+  @Test
+  def test {
+    val tp = TimePoint.from(0L)
+    assert(tp == TimePoint.from(0L))
 
     val date = new JDate
-    val tp2 = TimePoint(date)
-    assert(tp2 == TimePoint(date))
+    val tp2 = TimePoint.from(date)
+    assert(tp2 == TimePoint.from(date))
 
     val calendar = Calendar.getInstance
-    val tp3 = TimePoint(calendar)
-    assert(tp3 == TimePoint(calendar))
+    val tp3 = TimePoint.from(calendar)
+    assert(tp3 == TimePoint.from(calendar))
 
 
-    val tp4 = TimePoint(TimePoint.GMT, Year(2010), Month(1), Date(1), Hour(1), Min(1))
-    assert(tp4 == TimePoint(TimePoint.GMT, Year(2010), Month(1), Date(1), Hour(1), Min(1)))
+    val tp4 = TimePoint.at(2010, 1, 1, 1, 1, TimePoint.GMT)
+    assert(tp4 == TimePoint.at(2010, 1, 1, 1, 1, TimePoint.GMT))
   }
 
 }

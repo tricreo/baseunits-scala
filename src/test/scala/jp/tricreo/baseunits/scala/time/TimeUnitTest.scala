@@ -108,7 +108,7 @@ class TimeUnitTest extends AssertionsForJUnit {
    */
   @Test
   def test07_NextFinerUnit {
-    assert(TimeUnit.hour.nextFinerUnit.get == TimeUnit.minute)
-    assert(TimeUnit.quarter.nextFinerUnit.get == TimeUnit.month)
+    assert(TimeUnit.hour.nextFinerUnit == TimeUnit.minute)
+    assert(TimeUnit.quarter.nextFinerUnit == TimeUnit.month)
   }
 }
