@@ -8,8 +8,8 @@ package jp.tricreo.baseunits.scala.time
  * To change this template use File | Settings | File Templates.
  */
 
-class MinuteOfHour private(private[time] val value: Int) extends Ordered[MinuteOfHour] {
-  require(MinuteOfHour.MIN < value && value < MinuteOfHour.MAX,
+class MinuteOfHour private[time](private[time] val value: Int) extends Ordered[MinuteOfHour] {
+  require(MinuteOfHour.MIN <= value && value <= MinuteOfHour.MAX,
     "Illegal value for 24 hour: " + value + ", please use a value between 0 and 23")
 
   /**
