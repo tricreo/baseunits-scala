@@ -5,9 +5,18 @@ package jp.tricreo.baseunits.scala.time
  * <p>{@link java.util.Date}と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
 @serializable
-class HourOfDay(val value: Int) extends Ordered[HourOfDay] {
-  require(value < HourOfDay.MIN || value > HourOfDay.MAX,
+class HourOfDay(private[time] val value: Int) extends Ordered[HourOfDay] {
+  require(value >= HourOfDay.MIN && value <= HourOfDay.MAX,
     "Illegal value for 24 hour: %d , please use a value between 0 and 23".format(value))
+
+  /**
+	 * このオブジェクトの{@link #value}フィールド（時をあらわす正数）を返す。
+	 *
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 *
+	 * @return 時をあらわす正数（0〜23）
+	 */
+	def breachEncapsulationOfValue = value
 
   def compare(that: HourOfDay): Int = value - that.value
 
@@ -74,9 +83,9 @@ object HourOfDay {
 	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
 	 */
 	def convertTo24hour(hour:Int, amPm:String):Int = {
-    require(("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm)) == false,
+    require("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm),
     "AM PM indicator invalid: %s, please use AM or PM".format(amPm))
-    require(hour < MIN || hour > 12,
+    require(hour >= MIN && hour <= 12,
     "Illegal value for 12 hour: %d, please use a value between 0 and 11".format(hour))
 
 		var translatedAmPm = if ("AM".equalsIgnoreCase(amPm)) 0 else 12
