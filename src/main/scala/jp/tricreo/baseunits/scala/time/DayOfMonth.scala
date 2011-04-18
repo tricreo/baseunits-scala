@@ -9,7 +9,7 @@ package jp.tricreo.baseunits.scala.time
  */
 
 class DayOfMonth(val value: Int) extends Ordered[DayOfMonth] {
-  require(value > DayOfMonth.MIN && value < DayOfMonth.MAX,
+  require(value >= DayOfMonth.MIN && value <= DayOfMonth.MAX,
     "Illegal value for day of month: " + value
       + ", please use a value between 1 and 31")
 

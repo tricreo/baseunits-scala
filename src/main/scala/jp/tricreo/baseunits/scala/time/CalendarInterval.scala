@@ -155,7 +155,7 @@ class CalendarInterval
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
    */
   def lengthInDaysInt = {
-    require(hasLowerLimit == false || hasUpperLimit == false)
+    require(hasLowerLimit && hasUpperLimit)
     val calStart = start.toLimitObject.asJavaCalendarUniversalZoneMidnight
     val calEnd = end.plusDays(1).asJavaCalendarUniversalZoneMidnight
     val diffMillis = calEnd.getTimeInMillis - calStart.getTimeInMillis
@@ -183,7 +183,7 @@ class CalendarInterval
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
    */
   def lengthInMonthsInt = {
-    require(hasLowerLimit == false || hasUpperLimit == false)
+    require(hasLowerLimit && hasUpperLimit)
 
     val calStart = start.toLimitObject.asJavaCalendarUniversalZoneMidnight
     val calEnd = end.plusDays(1).asJavaCalendarUniversalZoneMidnight
@@ -233,8 +233,10 @@ class CalendarInterval
    * @throws IllegalArgumentException 引数subintervalLengthの長さ単位が「日」未満の場合
    */
   def subintervalIterator(subintervalLength: Duration): Iterator[CalendarInterval] = {
-    require(hasLowerLimit == false)
-    require(TimeUnit.day.compareTo(subintervalLength.normalizedUnit.get) > 0,
+    if (hasLowerLimit == false){
+      throw new IllegalStateException
+    }
+    require(TimeUnit.day.compareTo(subintervalLength.normalizedUnit.get) <= 0,
       "CalendarIntervals must be a whole number of days or months.")
 
     val segmentLength = subintervalLength
@@ -243,7 +245,7 @@ class CalendarInterval
       var _next = segmentLength.startingFromCalendarDate(start)
 
       override def hasNext: Boolean = {
-        CalendarInterval.this.covers(next);
+        CalendarInterval.this.covers(_next);
       }
 
       override def next: CalendarInterval = {
@@ -251,7 +253,7 @@ class CalendarInterval
           throw new NoSuchElementException();
         }
         val current = _next;
-        _next = segmentLength.startingFromCalendarDate(Limit(next.end.plusDays(1)))
+        _next = segmentLength.startingFromCalendarDate(Limit(_next.end.plusDays(1)))
         return current;
       }
     };
