@@ -1,6 +1,7 @@
 package jp.tricreo.baseunits.scala.util
 
 import java.math.RoundingMode
+import annotation.tailrec
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,91 +22,104 @@ class Ratio
   }
 
   /**
-	 * このオブジェクトの{@link #denominator}フィールド（分母をあらわす数）を返す。
-	 *
-	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
-	 *
-	 * @return 分母をあらわず数
-	 */
-	def breachEncapsulationOfDenominator = denominator
+   * このオブジェクトの{@link #denominator}フィールド（分母をあらわす数）を返す。
+   *
+   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   *
+   * @return 分母をあらわず数
+   */
+  def breachEncapsulationOfDenominator = denominator
 
 
-	/**
-	 * このオブジェクトの{@link #numerator}フィールド（分子をあらわす数）を返す。
-	 *
-	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
-	 *
-	 * @return 分子をあらわす数
-	 */
-	def breachEncapsulationOfNumerator = numerator
+  /**
+   * このオブジェクトの{@link #numerator}フィールド（分子をあらわす数）を返す。
+   *
+   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   *
+   * @return 分子をあらわす数
+   */
+  def breachEncapsulationOfNumerator = numerator
 
 
-	/**
-	 * 比率を {@link BigDecimal}型で取得する。
-	 *
-	 * @param scale 小数点以下の有効数字
-	 * @param roundingMode 丸めモード
-	 * @return この比率の {@link BigDecimal} 型の表現
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	def decimalValue(scale:Int,  roundingMode:RoundingMode) =
-		BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode))
+  /**
+   * 比率を {@link BigDecimal}型で取得する。
+   *
+   * @param scale 小数点以下の有効数字
+   * @param roundingMode 丸めモード
+   * @return この比率の {@link BigDecimal} 型の表現
+   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   */
+  def decimalValue(scale: Int, roundingMode: RoundingMode) =
+    BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode))
 
-	/**
-	 * このオブジェクトと、与えたオブジェクトの同一性を検証する。
-	 *
-	 * <p>与えたオブジェクト {@code anObject} が {@code null}である場合、または{@link Ratio}型や
-	 * そのサブクラスではない場合、{@code false}を返す。
-	 * 与えたオブジェクトの、分母と分子が共に一致する場合、{@code true}を返す。</p>
-	 *
-	 * <p>{@code 2/3} と {@code 4/6} は、評価結果としては同一であるが、分母同士、分子同士が
-	 * 異なるため、このメソッドでは {@code true} と判断されず、 {@code false} となる。
-	 *
-	 * @param obj 比較対象オブジェクト
-	 * @return 同一の場合は{@code true}、そうでない場合は{@code false}
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	override def equals(obj:Any):Boolean = obj match {
-    case that:Ratio => denominator == that.denominator && numerator == that.numerator
+  /**
+   * このオブジェクトと、与えたオブジェクトの同一性を検証する。
+   *
+   * <p>与えたオブジェクト {@code anObject} が {@code null}である場合、または{@link Ratio}型や
+   * そのサブクラスではない場合、{@code false}を返す。
+   * 与えたオブジェクトの、分母と分子が共に一致する場合、{@code true}を返す。</p>
+   *
+   * <p>{@code 2/3} と {@code 4/6} は、評価結果としては同一であるが、分母同士、分子同士が
+   * 異なるため、このメソッドでは {@code true} と判断されず、 {@code false} となる。
+   *
+   * @param obj 比較対象オブジェクト
+   * @return 同一の場合は{@code true}、そうでない場合は{@code false}
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  override def equals(obj: Any): Boolean = obj match {
+    case that: Ratio => reduce.denominator == that.reduce.denominator &&
+      reduce.numerator == that.reduce.numerator
     case _ => false
   }
 
-  override def hashCode = denominator.hashCode +  numerator.hashCode
-
-	/**
-	 * この比率と {@code multiplier} の積からなる比率。
-	 *
-	 * <p>計算結果は、分母は変化せず、分子は分子と {@code multiplyer} の積からなる比率となる。</p>
-	 *
-	 * @param multiplier 乗数
-	 * @return 積
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	def times( multiplier:BigDecimal):Ratio =
-		Ratio(numerator * multiplier, denominator)
+  @tailrec
+  private def gcd(numerator: BigDecimal, denominator: BigDecimal): BigDecimal =
+    if (denominator == 0) numerator
+    else gcd(denominator, numerator % denominator)
 
 
-	/**
-	 * この比率と {@code multiplier} の積からなる比率。
-	 *
-	 * <p>計算結果は、分子同士・分母同士の積からなる比率となる。</p>
-	 *
-	 * @param multiplier 乗数比率
-	 * @return 積
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	def times( multiplier:Ratio):Ratio = {
-		Ratio(numerator * multiplier.numerator, denominator * multiplier.denominator)
-	}
+  private def reduce: Ratio = {
+    val gcd = this.gcd(numerator, denominator)
+    Ratio(numerator / gcd, denominator / gcd)
+  }
 
-	/** この比率の文字列表現を取得する。
-	 *
-	 * <p>"分子/分母"という表記となる。</p>
-	 *
-	 * @see java.lang.Object#toString()
-	 */
 
-	override def toString = numerator.toString + "/" + denominator
+  override def hashCode = denominator.hashCode + numerator.hashCode
+
+  /**
+   * この比率と {@code multiplier} の積からなる比率。
+   *
+   * <p>計算結果は、分母は変化せず、分子は分子と {@code multiplyer} の積からなる比率となる。</p>
+   *
+   * @param multiplier 乗数
+   * @return 積
+   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   */
+  def *(multiplier: BigDecimal): Ratio =
+    Ratio(numerator * multiplier, denominator)
+
+
+  /**
+   * この比率と {@code multiplier} の積からなる比率。
+   *
+   * <p>計算結果は、分子同士・分母同士の積からなる比率となる。</p>
+   *
+   * @param multiplier 乗数比率
+   * @return 積
+   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   */
+  def *(multiplier: Ratio): Ratio = {
+    Ratio(numerator * multiplier.numerator, denominator * multiplier.denominator)
+  }
+
+  /**この比率の文字列表現を取得する。
+   *
+   * <p>"分子/分母"という表記となる。</p>
+   *
+   * @see java.lang.Object#toString()
+   */
+
+  override def toString = numerator.toString + "/" + denominator
 
 }
 
@@ -141,7 +155,7 @@ object Ratio {
    * @return 引数に与えた分子、分母からなる比率
    * @throws ArithmeticException 引数{@code denominator}が0だった場合
    */
-  def apply(numerator:Long, denominator:Long): Ratio =
+  def apply(numerator: Long, denominator: Long): Ratio =
     new Ratio(BigDecimal(numerator), BigDecimal(denominator));
 
 }
