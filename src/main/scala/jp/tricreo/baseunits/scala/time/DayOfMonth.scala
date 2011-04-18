@@ -8,17 +8,20 @@ package jp.tricreo.baseunits.scala.time
  * To change this template use File | Settings | File Templates.
  */
 
-class DayOfMonth(val value: Int) extends Ordered[DayOfMonth] {
+class DayOfMonth(private[time] val value: Int) extends Ordered[DayOfMonth] {
   require(value >= DayOfMonth.MIN && value <= DayOfMonth.MAX,
     "Illegal value for day of month: " + value
       + ", please use a value between 1 and 31")
+
+  def breachEncapsulationOfValue = value
+
 
   def compare(that: DayOfMonth): Int = value - that.value
 
   override def hashCode: Int = value.hashCode
 
   override def equals(obj: Any): Boolean = obj match {
-    case that: DayOfMonth => value == that.value
+    case that: DayOfMonth => (value compare that.value) == 0
     case _ => false
   }
 
