@@ -1,17 +1,8 @@
 package jp.tricreo.baseunits.scala.time
 
-import java.util.concurrent.TimeUnit
 import java.util.Calendar
 import jp.tricreo.baseunits.scala.util.Ratio
 import jp.tricreo.baseunits.scala.intervals.{Limit, LimitValue}
-
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/15
- * Time: 16:58
- * To change this template use File | Settings | File Templates.
- */
 
 /**
  * 時間量（時間の長さ・期間の長さなど）を表すクラス。
@@ -119,12 +110,10 @@ class Duration
     }
     val difference = inBaseUnits - other.inBaseUnits
     if (difference > 0) {
-      return 1
-    }
-    if (difference < 0) {
-      return -1
-    }
-    return 0;
+      1
+    } else if (difference < 0) {
+      -1
+    } else 0
   }
 
   /**
@@ -177,13 +166,7 @@ class Duration
   def normalizedUnit: Option[TimeUnit] = {
     val units = unit.descendingUnits
     val baseAmount = inBaseUnits
-    for (aUnit <- units) {
-      val remainder = baseAmount % aUnit.getFactor
-      if (remainder == 0) {
-        return Some(aUnit)
-      }
-    }
-    return None
+    units.find(e => (baseAmount % e.getFactor) == 0)
   }
 
   /**
@@ -197,7 +180,7 @@ class Duration
   def plus(other: Duration): Duration = {
     checkConvertible(other)
     val newQuantity = inBaseUnits + other.inBaseUnits
-    new Duration(newQuantity, if (other.quantity == 0) unit.baseUnit() else other.unit.baseUnit())
+    new Duration(newQuantity, if (other.quantity == 0) unit.baseUnit else other.unit.baseUnit)
   }
 
   /**
@@ -249,15 +232,16 @@ class Duration
   def subtractedFrom(day: CalendarDate): CalendarDate = {
     //		only valid for days and larger units
     if (unit.compareTo(TimeUnit.day) < 0) {
-      return day
-    }
-    val calendar = day.asJavaCalendarUniversalZoneMidnight
-    if (unit.equals(TimeUnit.day)) {
-      calendar.add(Calendar.DATE, -1 * quantity.asInstanceOf[Int])
+      day
     } else {
-      subtractAmountFromCalendar(inBaseUnits, calendar)
+      val calendar = day.asJavaCalendarUniversalZoneMidnight
+      if (unit.equals(TimeUnit.day)) {
+        calendar.add(Calendar.DATE, -1 * quantity.asInstanceOf[Int])
+      } else {
+        subtractAmountFromCalendar(inBaseUnits, calendar)
+      }
+      CalendarDate.from(calendar)
     }
-    CalendarDate.from(calendar)
   }
 
   /**
