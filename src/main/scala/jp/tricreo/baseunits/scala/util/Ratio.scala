@@ -67,8 +67,12 @@ class Ratio
    * @see java.lang.Object#equals(java.lang.Object)
    */
   override def equals(obj: Any): Boolean = obj match {
-    case that: Ratio => reduce.denominator == that.reduce.denominator &&
-      reduce.numerator == that.reduce.numerator
+    case that: Ratio => {
+      val me = reduce
+      val you = that.reduce
+      me.denominator == you.denominator &&
+        me.numerator == you.numerator
+    }
     case _ => false
   }
 
