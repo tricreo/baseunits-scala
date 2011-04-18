@@ -76,7 +76,7 @@ class CalendarInterval
 
       override def next = {
         if (hasNext == false) {
-          throw new NoSuchElementException();
+          throw new NoSuchElementException
         }
         val current = _next
         _next = Limit(_next.toLimitObject.plusDays(-1))
@@ -124,7 +124,7 @@ class CalendarInterval
 
       override def next: CalendarDate = {
         if (hasNext == false) {
-          throw new NoSuchElementException()
+          throw new NoSuchElementException
         }
         val current = _next
         _next = Limit(_next.toLimitObject.plusDays(1))
@@ -233,7 +233,7 @@ class CalendarInterval
    * @throws IllegalArgumentException 引数subintervalLengthの長さ単位が「日」未満の場合
    */
   def subintervalIterator(subintervalLength: Duration): Iterator[CalendarInterval] = {
-    if (hasLowerLimit == false){
+    if (hasLowerLimit == false) {
       throw new IllegalStateException
     }
     require(TimeUnit.day.compareTo(subintervalLength.normalizedUnit.get) <= 0,
@@ -261,20 +261,17 @@ class CalendarInterval
 }
 
 object CalendarInterval {
-  /**
-   * 開始日より、下側限界のみを持つ期間を生成する。
+  /**開始日より、下側限界のみを持つ期間を生成する。
    *
    * <p>開始日は期間に含む（閉じている）区間である。</p>
    *
    * @param startDate 開始日（下側限界値）. {@code null}の場合は、限界がないことを表す
    * @return 期間
    */
-  def everFrom(startDate: LimitValue[CalendarDate]): CalendarInterval = {
-    inclusive(startDate, Limitless[CalendarDate]);
-  }
+  def everFrom(startDate: LimitValue[CalendarDate]): CalendarInterval =
+    inclusive(startDate, Limitless[CalendarDate])
 
-  /**
-   * 終了日より、上側限界のみを持つ期間を生成する。
+  /**終了日より、上側限界のみを持つ期間を生成する。
    *
    * <p>終了日は期間に含む（閉じている）区間である。</p>
    *
@@ -282,11 +279,10 @@ object CalendarInterval {
    * @return 期間
    */
   def everPreceding(endDate: LimitValue[CalendarDate]): CalendarInterval =
-    inclusive(Limitless[CalendarDate], endDate);
+    inclusive(Limitless[CalendarDate], endDate)
 
 
-  /**
-   * 開始日と終了日より、期間を生成する。
+  /**開始日と終了日より、期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
@@ -295,12 +291,10 @@ object CalendarInterval {
    * @return 期間
    * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
    */
-  def inclusive(start: LimitValue[CalendarDate], end: LimitValue[CalendarDate]): CalendarInterval = {
-    new CalendarInterval(start, end);
-  }
+  def inclusive(start: LimitValue[CalendarDate], end: LimitValue[CalendarDate]): CalendarInterval =
+    new CalendarInterval(start, end)
 
-  /**
-   * 開始日と終了日より、期間を生成する。
+  /**開始日と終了日より、期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
@@ -320,8 +314,7 @@ object CalendarInterval {
     new CalendarInterval(Limit(startDate), Limit(endDate))
   }
 
-  /**
-   * 指定した年月の1日からその月末までの、期間を生成する。
+  /**指定した年月の1日からその月末までの、期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
@@ -334,8 +327,7 @@ object CalendarInterval {
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
   }
 
-  /**
-   * 指定した年月の1日からその月末までの、期間を生成する。
+  /**指定した年月の1日からその月末までの、期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
@@ -343,12 +335,10 @@ object CalendarInterval {
    * @param month 開始日の月（1〜12）
    * @return 期間
    */
-  def month(year: Int, _month: Int): CalendarInterval = {
+  def month(year: Int, _month: Int): CalendarInterval =
     month(year, MonthOfYear.valueOf(_month))
-  }
 
-  /**
-   * 指定した年月の1日からその月末までの、期間を生成する。
+  /**指定した年月の1日からその月末までの、期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
@@ -362,8 +352,7 @@ object CalendarInterval {
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
   }
 
-  /**
-   * 開始日と期間の長さより、期間を生成する。
+  /**開始日と期間の長さより、期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
@@ -383,8 +372,7 @@ object CalendarInterval {
     }
   }
 
-  /**
-   * 指定した年の元旦からその年の大晦日までの、期間を生成する。
+  /**指定した年の元旦からその年の大晦日までの、期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *

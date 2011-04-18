@@ -9,9 +9,10 @@ import jp.tricreo.baseunits.scala.intervals.Limit
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
 @serializable
-class CalendarDate
-(private val yearMonth: CalendarMonth,
- private val day: DayOfMonth) extends Ordered[CalendarDate] {
+class CalendarDate private[time]
+(private[time] val yearMonth: CalendarMonth,
+ private[time] val day: DayOfMonth)
+  extends Ordered[CalendarDate] {
 
   /**
    * 年月日同士の比較を行う。
@@ -70,9 +71,8 @@ class CalendarDate
    * @param timeOfDay 時
    * @return 日時
    */
-  def at(timeOfDay: TimeOfDay) = {
+  def at(timeOfDay: TimeOfDay) =
     CalendarMinute.from(this, timeOfDay)
-  }
 
   /**
    * このオブジェクトの{@link #day}フィールド（日）を返す。
@@ -145,7 +145,7 @@ class CalendarDate
    *
    * @return 翌日
    */
-  def nextDay = plusDays(1);
+  def nextDay = plusDays(1)
 
 
   /**
@@ -214,9 +214,8 @@ class CalendarDate
    * @param otherDate 終了日
    * @return 期間
    */
-  def through(otherDate: CalendarDate) = {
+  def through(otherDate: CalendarDate) =
     CalendarInterval.inclusive(Limit(this), Limit(otherDate))
-  }
 
   /**
    * この日付の文字列表現を取得する。
@@ -225,9 +224,10 @@ class CalendarDate
    *
    * @see java.lang.Object#toString()
    */
-  override def toString() = {
-    toString("yyyy-MM-dd"); //default for console
-  }
+  override def toString =
+    toString("yyyy-MM-dd")
+
+  //default for console
 
   /**
    * この日付を、指定したパターンで整形し、その文字列表現を取得する。
@@ -242,8 +242,8 @@ class CalendarDate
     point.toString(pattern, arbitraryZone)
   }
 
-  def asJavaCalendarUniversalZoneMidnight = {
-    val zone = TimeZone.getTimeZone("Universal");
+  private[time] def asJavaCalendarUniversalZoneMidnight = {
+    val zone = TimeZone.getTimeZone("Universal")
     val calendar = Calendar.getInstance(zone)
     calendar.set(Calendar.YEAR, yearMonth.breachEncapsulationOfYear)
     calendar.set(Calendar.MONTH, yearMonth.breachEncapsulationOfMonth.value - 1)
@@ -252,10 +252,13 @@ class CalendarDate
     calendar.set(Calendar.MINUTE, 0)
     calendar.set(Calendar.SECOND, 0)
     calendar.set(Calendar.MILLISECOND, 0)
-    calendar;
+    calendar
   }
 }
 
+/**コンパニオンオブジェクト。
+ * @author j5ik2o
+ */
 object CalendarDate {
   /**
    * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
