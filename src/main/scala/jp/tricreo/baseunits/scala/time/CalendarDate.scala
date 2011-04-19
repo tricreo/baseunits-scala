@@ -61,9 +61,8 @@ class CalendarDate private[time]
    *
    * @return このインスタンスが表現する日を含む年を表す期間
    */
-  def asYearInterval = {
+  def asYearInterval =
     CalendarInterval.year(yearMonth.breachEncapsulationOfYear)
-  }
 
   /**
    * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
@@ -119,9 +118,8 @@ class CalendarDate private[time]
    * @param other 対象日時
    * @return 過去である場合は{@code true}、そうでない場合は{@code false}
    */
-  def isAfter(other: CalendarDate) = {
+  def isAfter(other: CalendarDate) =
     isBefore(other) == false && equals(other) == false
-  }
 
   /**
    * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
@@ -132,13 +130,12 @@ class CalendarDate private[time]
    * @param other 対象日時
    * @return 未来である場合は{@code true}、そうでない場合は{@code false}
    */
-  def isBefore(other: CalendarDate) = {
+  def isBefore(other: CalendarDate) =
     if (yearMonth.isBefore(other.yearMonth)) {
       true
     } else if (yearMonth.isAfter(other.yearMonth)) {
       false
     } else day.isBefore(other.day)
-  }
 
   /**
    * このインスタンスが表現する日の翌日を返す。
@@ -327,7 +324,7 @@ object CalendarDate {
     CalendarDate.from(point, arbitraryZone)
   }
 
-  def from(calendar: Calendar): CalendarDate = {
+  private[time] def from(calendar: Calendar): CalendarDate = {
     // Use timezone already set in calendar.
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH) + 1 // T&M Lib counts January as 1

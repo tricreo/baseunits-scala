@@ -177,7 +177,6 @@ class CalendarIntervalTest extends AssertionsForJUnit {
    */
   @Test
   def test07_Length {
-    println(may1.through(may3).length)
     assert(may1.through(may3).length == Duration.days(3))
     val may2002_july2004 = CalendarInterval.inclusive(2002, 5, 1, 2004, 7, 1)
     // (5/1/2002-4/30/2003) 365 days + (-4/30/2004) 366 + (5/1-7/31) 31+30+1 = 793 days

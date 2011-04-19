@@ -98,7 +98,9 @@ class TimeOfDay
   def on(date: CalendarDate) =
     CalendarMinute.from(date, this)
 
-  override def toString = hour.toString + ":" + minute.toString
+  override def toString = {
+    hour.toString + ":" + minute.toString
+  }
 
 }
 

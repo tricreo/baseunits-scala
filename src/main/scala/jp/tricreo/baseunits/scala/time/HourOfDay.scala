@@ -43,6 +43,7 @@ class HourOfDay(private[time] val value: Int) extends Ordered[HourOfDay] {
    */
   def isBefore(another: HourOfDay) = value < another.value;
 
+  override def toString = "%02d".format(value)
 }
 
 object HourOfDay {
