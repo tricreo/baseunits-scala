@@ -100,7 +100,7 @@ class Ratio
    * @return 積
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def *(multiplier: BigDecimal): Ratio =
+  def times(multiplier: BigDecimal): Ratio =
     Ratio(numerator * multiplier, denominator)
 
 
@@ -113,7 +113,7 @@ class Ratio
    * @return 積
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def *(multiplier: Ratio): Ratio = {
+  def times(multiplier: Ratio): Ratio = {
     Ratio(numerator * multiplier.numerator, denominator * multiplier.denominator)
   }
 

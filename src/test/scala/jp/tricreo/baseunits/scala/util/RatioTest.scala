@@ -133,7 +133,7 @@ class RatioTest extends AssertionsForJUnit {
   @Test
   def test05_MultiplyNumerator {
     val rManyDigits = Ratio(9001, 3000)
-    val product = rManyDigits * BigDecimal("1.1")
+    val product = rManyDigits.times(BigDecimal("1.1"))
     assert(product == Ratio(BigDecimal("9901.1"), BigDecimal(3000)))
   }
 
@@ -147,7 +147,7 @@ class RatioTest extends AssertionsForJUnit {
     val r1 = Ratio(9001, 3000)
     val r2 = Ratio(3, 2)
     val expectedProduct = Ratio(27003, 6000)
-    assert(r1 * r2 == expectedProduct)
+    assert(r1.times(r2) == expectedProduct)
   }
 
   /**

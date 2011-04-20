@@ -119,7 +119,7 @@ class Duration
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ArithmeticException 引数{@code divisor}が0だった場合
    */
-  def /(divisor: Duration): Ratio = {
+  def dividedBy(divisor: Duration): Ratio = {
     checkConvertible(divisor);
     Ratio(inBaseUnits, divisor.inBaseUnits)
   }

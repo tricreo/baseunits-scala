@@ -62,7 +62,7 @@ class TimeRate
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration, scale: Int, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal =
-    (duration / unit * quantity).decimalValue(scale, roundingMode)
+    duration.dividedBy(unit).times(quantity).decimalValue(scale, roundingMode)
 
   /**指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
    *

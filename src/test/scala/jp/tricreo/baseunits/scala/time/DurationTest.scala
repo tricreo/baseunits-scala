@@ -208,7 +208,7 @@ class DurationTest extends AssertionsForJUnit {
    */
   @Test
   def test12_Divide {
-    assert((Duration.days(3) / Duration.days(2)).decimalValue(1, BigDecimal.RoundingMode.DOWN) == BigDecimal(
+    assert(Duration.days(3).dividedBy(Duration.days(2)).decimalValue(1, BigDecimal.RoundingMode.DOWN) == BigDecimal(
       1.5))
   }
 

@@ -16,7 +16,7 @@ class TimeRateTest extends AssertionsForJUnit {
     val rate = TimeRate(100.00, Duration.minutes(1))
     assert(rate.over(Duration.hours(1)) == BigDecimal(6000.00))
 
-    assert(rate.toString() == "100.0 per 1 minute")
+    assert(rate.toString == "100.0 per 1 minute")
     assert(rate.breachEncapsulationOfQuantity == BigDecimal(100))
     assert(rate.breachEncapsulationOfUnit == Duration.minutes(1))
   }
