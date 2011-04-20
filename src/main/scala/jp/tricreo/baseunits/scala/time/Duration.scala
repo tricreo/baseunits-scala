@@ -155,10 +155,10 @@ class Duration
    *
    * @return 時間単位
    */
-  def normalizedUnit: Option[TimeUnit] = {
+  def normalizedUnit: TimeUnit = {
     val units = unit.descendingUnits
     val baseAmount = inBaseUnits
-    units.find(e => (baseAmount % e.getFactor) == 0)
+    units.find(e => (baseAmount % e.getFactor) == 0).get
   }
 
   /**このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。

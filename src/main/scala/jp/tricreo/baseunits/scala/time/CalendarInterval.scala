@@ -224,7 +224,7 @@ class CalendarInterval protected
     if (hasLowerLimit == false) {
       throw new IllegalStateException
     }
-    require(TimeUnit.day.compareTo(subintervalLength.normalizedUnit.get) <= 0,
+    require(TimeUnit.day.compareTo(subintervalLength.normalizedUnit) <= 0,
       "CalendarIntervals must be a whole number of days or months.")
 
     val segmentLength = subintervalLength
