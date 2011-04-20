@@ -3,14 +3,15 @@ package jp.tricreo.baseunits.scala.time
 import jp.tricreo.scala.ddd.base.model.spec.Specification
 import jp.tricreo.baseunits.scala.intervals.Limit
 
-/**
- * 営業日カレンダー。
+/**営業日カレンダー。
  *
  * <p>営業日と非営業日を判定する責務を持つ。非営業日とは休日（祝日）及び週末（土日）を表し、営業日とは非営業日でない日を表す。
  * 週末は休日ではないが、週末かつ休日は休日である。</p>
  */
 class BusinessCalendar {
-  private[time] var holidaySpecs: Specification[CalendarDate] = defaultHolidaySpecs
+
+  private[time] var holidaySpecs = defaultHolidaySpecs
+
   /**
    * 休日として取り扱う「日」を追加する。
    *
@@ -55,7 +56,6 @@ class BusinessCalendar {
     new Iterator[CalendarDate] {
 
       var lookAhead = nextBusinessDate
-
 
       override def hasNext = lookAhead != None
 
@@ -160,13 +160,12 @@ class BusinessCalendar {
    * @return 営業日
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def nearestNextBusinessDay(day: CalendarDate) = {
+  def nearestNextBusinessDay(day: CalendarDate) =
     if (isBusinessDay(day)) {
       day
     } else {
       nextBusinessDay(day)
     }
-  }
 
   /**
    * 指定した日の直近過去営業日を取得する。
@@ -177,13 +176,12 @@ class BusinessCalendar {
    * @return 営業日
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def nearestPrevBusinessDay(day: CalendarDate) = {
+  def nearestPrevBusinessDay(day: CalendarDate) =
     if (isBusinessDay(day)) {
       day
     } else {
       prevBusinessDay(day)
     }
-  }
 
   /**
    * 指定した日の翌営業日を取得する。
@@ -192,13 +190,12 @@ class BusinessCalendar {
    * @return 翌営業日
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def nextBusinessDay(startDate: CalendarDate): CalendarDate = {
+  def nextBusinessDay(startDate: CalendarDate): CalendarDate =
     if (isBusinessDay(startDate)) {
       plusBusinessDays(startDate, 1)
     } else {
       plusBusinessDays(startDate, 0)
     }
-  }
 
   /**
    * 開始日から数えて{@code numberOfDays}営業日目の日付を返す。
@@ -224,20 +221,19 @@ class BusinessCalendar {
    * @return 前営業日
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def prevBusinessDay(startDate: CalendarDate) = {
+  def prevBusinessDay(startDate: CalendarDate) =
     if (isBusinessDay(startDate)) {
       minusBusinessDays(startDate, 1)
     } else {
       minusBusinessDays(startDate, 0)
     }
-  }
 
   /**
    * Should be overriden for each particular organization.
    *
    * @return 営業日の{@link Set}
    */
-  protected def defaultHolidaySpecs: Specification[CalendarDate] =
+  protected def defaultHolidaySpecs =
     DateSpecification.never
 
   /**
