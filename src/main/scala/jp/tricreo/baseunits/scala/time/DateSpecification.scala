@@ -78,7 +78,7 @@ object DateSpecification {
    *
    * @return 日付仕様
    */
-  def never = {
+  def never =
     new DateSpecification {
 
       override def firstOccurrenceIn(interval: CalendarInterval): Option[CalendarDate] =
@@ -88,8 +88,7 @@ object DateSpecification {
 
       override def iterateOver(interval: CalendarInterval): Iterator[CalendarDate] = Iterator.empty
 
-    };
-  }
+    }
 
   /**
    * 毎月第Y◎曜日仕様のインスタンスを生成する。

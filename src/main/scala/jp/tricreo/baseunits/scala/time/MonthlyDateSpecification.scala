@@ -13,7 +13,7 @@ import jp.tricreo.baseunits.scala.intervals.Limit
 abstract class MonthlyDateSpecification extends DateSpecification {
 
   override def firstOccurrenceIn(interval: CalendarInterval) = {
-    val month = interval.start.toLimitObject.asCalendarMonth
+    val month = interval.start.toValue.asCalendarMonth
 
     val firstTry = ofYearMonth(month)
     if (interval.includes(Limit(firstTry.get))) {

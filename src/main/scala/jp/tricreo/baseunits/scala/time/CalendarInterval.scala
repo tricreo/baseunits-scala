@@ -33,8 +33,8 @@ class CalendarInterval
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimeInterval(zone: TimeZone) {
-    val startPoint = lowerLimit.toLimitObject.asTimeInterval(zone).start
-    val endPoint = upperLimit.toLimitObject.asTimeInterval(zone).end
+    val startPoint = lowerLimit.toValue.asTimeInterval(zone).start
+    val endPoint = upperLimit.toValue.asTimeInterval(zone).end
     TimeInterval.over(startPoint, endPoint)
   }
 
@@ -73,7 +73,7 @@ class CalendarInterval
       override def hasNext = {
         end match {
           case _: Limitless[CalendarDate] => true
-          case Limit(end) => _next.toLimitObject.isBefore(end) == false
+          case Limit(end) => _next.toValue.isBefore(end) == false
         }
       }
 
@@ -82,8 +82,8 @@ class CalendarInterval
           throw new NoSuchElementException
         }
         val current = _next
-        _next = Limit(_next.toLimitObject.plusDays(-1))
-        current.toLimitObject
+        _next = Limit(_next.toValue.plusDays(-1))
+        current.toValue
       }
     }
   }
@@ -124,7 +124,7 @@ class CalendarInterval
       override def hasNext = {
         end match {
           case _: Limitless[CalendarDate] => true
-          case Limit(end) => _next.toLimitObject.isAfter(end) == false
+          case Limit(end) => _next.toValue.isAfter(end) == false
         }
       }
 
@@ -133,8 +133,8 @@ class CalendarInterval
           throw new NoSuchElementException
         }
         val current = _next
-        _next = Limit(_next.toLimitObject.plusDays(1))
-        current.toLimitObject
+        _next = Limit(_next.toValue.plusDays(1))
+        current.toValue
       }
     }
   }
@@ -144,7 +144,7 @@ class CalendarInterval
    *
    * @return 終了日. 開始日がない場合は{@code null}
    */
-  def end: CalendarDate = upperLimit.toLimitObject
+  def end: CalendarDate = upperLimit.toValue
 
   /**
    * この期間の日数としての長さを取得する。
@@ -162,7 +162,7 @@ class CalendarInterval
    */
   def lengthInDaysInt = {
     require(hasLowerLimit && hasUpperLimit)
-    val calStart = start.toLimitObject.asJavaCalendarUniversalZoneMidnight
+    val calStart = start.toValue.asJavaCalendarUniversalZoneMidnight
     val calEnd = end.plusDays(1).asJavaCalendarUniversalZoneMidnight
     val diffMillis = calEnd.getTimeInMillis - calStart.getTimeInMillis
     (diffMillis / TimeUnitConversionFactor.millisecondsPerDay.value).asInstanceOf[Int]
@@ -191,7 +191,7 @@ class CalendarInterval
   def lengthInMonthsInt = {
     require(hasLowerLimit && hasUpperLimit)
 
-    val calStart = start.toLimitObject.asJavaCalendarUniversalZoneMidnight
+    val calStart = start.toValue.asJavaCalendarUniversalZoneMidnight
     val calEnd = end.plusDays(1).asJavaCalendarUniversalZoneMidnight
     val yearDiff = calEnd.get(Calendar.YEAR) - calStart.get(Calendar.YEAR)
     val monthDiff = yearDiff * 12 + calEnd.get(Calendar.MONTH) - calStart.get(Calendar.MONTH)
@@ -200,8 +200,8 @@ class CalendarInterval
 
   override def newOfSameType(lower: LimitValue[CalendarDate], isLowerClosed: Boolean,
                              upper: LimitValue[CalendarDate], isUpperClosed: Boolean): Interval[CalendarDate] = {
-    val includedLower = if (isLowerClosed) lower else Limit(lower.toLimitObject.plusDays(1))
-    val includedUpper = if (isUpperClosed) upper else Limit(upper.toLimitObject.plusDays(-1))
+    val includedLower = if (isLowerClosed) lower else Limit(lower.toValue.plusDays(1))
+    val includedUpper = if (isUpperClosed) upper else Limit(upper.toValue.plusDays(-1))
     CalendarInterval.inclusive(includedLower, includedUpper)
   }
 
@@ -374,7 +374,7 @@ object CalendarInterval {
     if (length.unit.compareTo(TimeUnit.day) < 0) {
       CalendarInterval.inclusive(start, start)
     } else {
-      CalendarInterval.inclusive(start, Limit(start.toLimitObject.plus(length).plusDays(-1)))
+      CalendarInterval.inclusive(start, Limit(start.toValue.plus(length).plusDays(-1)))
     }
   }
 

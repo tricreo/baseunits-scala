@@ -56,7 +56,7 @@ class TimeInterval
         _next = _next match {
           case Limit(n) => Limit(n.nextDay)
         }
-        current.toLimitObject
+        current.toValue
       }
     }
   }

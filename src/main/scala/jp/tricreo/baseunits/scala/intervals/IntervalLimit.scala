@@ -2,20 +2,28 @@ package jp.tricreo.baseunits.scala.intervals
 
 
 trait LimitValue[T] extends Ordered[LimitValue[T]] {
-  def toLimitObject = this match{
-    case Limit(result) => result
+  def toValue = this match {
+    case Limit(value) => value
+  }
+
+  override def equals(obj: Any) = obj match {
+    case that: LimitValue[T] => (this compare that) == 0
+    case that => this match {
+      case Limit(value) => value == that
+      case me: Limitless[T] => false
+    }
   }
 }
 
-object LimitValue{
-//  implicit def toLimitObject[T <% Ordered[T]](lv:LimitValue[T]) = lv match{
-//    case Limit(result) => result
-//  }
+object LimitValue {
+  //  implicit def toLimitObject[T <% Ordered[T]](lv:LimitValue[T]) = lv match{
+  //    case Limit(result) => result
+  //  }
 
-//  implicit def toLimitValue[T <% Ordered[T]](limitObject:T) = limitObject match{
-//    case null => Limitless[T]
-//    case _ => Limit(limitObject)
-//  }
+  //  implicit def toLimitValue[T <% Ordered[T]](limitObject:T) = limitObject match{
+  //    case null => Limitless[T]
+  //    case _ => Limit(limitObject)
+  //  }
 }
 
 case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
@@ -32,7 +40,7 @@ case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
   }
 }
 
-/** 区間における「限界」を表すクラス。
+/**区間における「限界」を表すクラス。
  *
  * <p>このクラスを理解するにあたっては、「限界」と「限界値」の区別を正しく認識することが重要となる。
  * 限界とはこのクラス {@code this} で表される値であり、限界値とは、 {@link #value}で表される値である。</p>

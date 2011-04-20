@@ -8,11 +8,11 @@ import jp.tricreo.baseunits.scala.intervals.Limit
 abstract class AnnualDateSpecification extends DateSpecification {
 
   override def firstOccurrenceIn(interval: CalendarInterval) = {
-    val firstTry = ofYear(interval.start.toLimitObject.asCalendarMonth.breachEncapsulationOfYear)
+    val firstTry = ofYear(interval.start.toValue.asCalendarMonth.breachEncapsulationOfYear)
     if (interval.includes(Limit(firstTry))) {
       Some(firstTry)
     } else {
-      val secondTry = ofYear(interval.start.toLimitObject.asCalendarMonth.breachEncapsulationOfYear + 1);
+      val secondTry = ofYear(interval.start.toValue.asCalendarMonth.breachEncapsulationOfYear + 1);
       if (interval.includes(Limit(secondTry))) {
         Some(secondTry)
       } else None

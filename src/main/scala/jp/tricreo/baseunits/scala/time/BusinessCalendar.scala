@@ -10,7 +10,7 @@ import jp.tricreo.baseunits.scala.intervals.Limit
  */
 class BusinessCalendar {
 
-  private[time] var holidaySpecs = defaultHolidaySpecs
+  private[time] var holidaySpecs: Specification[CalendarDate] = defaultHolidaySpecs
 
   /**
    * 休日として取り扱う「日」を追加する。
@@ -72,7 +72,7 @@ class BusinessCalendar {
         var result: Option[CalendarDate] = None
         do {
           result = if (calendarDays.hasNext) Some(calendarDays.next.asInstanceOf[CalendarDate])
-                   else None
+          else None
         } while ((result == None || isBusinessDay(result.get)) == false)
         println("nextBusinessDate = %s".format(result))
         result

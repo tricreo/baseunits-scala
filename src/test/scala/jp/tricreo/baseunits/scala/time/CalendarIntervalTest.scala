@@ -54,7 +54,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   @Test
   def test02_TranslationToTimeInterval {
     val day = may20.asTimeInterval(ct)
-    assert(day.start.toLimitObject == TimePoint.atMidnight(2004, 5, 20, ct), "May20Ct")
+    assert(day.start == TimePoint.atMidnight(2004, 5, 20, ct), "May20Ct")
   }
 
   /**
@@ -125,11 +125,11 @@ class CalendarIntervalTest extends AssertionsForJUnit {
     val may1_3 = CalendarInterval.inclusive(Limit(may1), Limit(may3))
     var iterator = may1_3.subintervalIterator(Duration.days(1))
     assert(iterator.hasNext == true)
-    assert(iterator.next.start.toLimitObject == may1)
+    assert(iterator.next.start == may1)
     assert(iterator.hasNext == true)
-    assert(iterator.next.start.toLimitObject == may2)
+    assert(iterator.next.start == may2)
     assert(iterator.hasNext == true)
-    assert(iterator.next.start.toLimitObject == may3)
+    assert(iterator.next.start == may3)
     assert(iterator.hasNext == false)
 
     iterator = may1_3.subintervalIterator(Duration.days(2))
@@ -199,7 +199,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
 
     val complement = complementList.iterator.next.asInstanceOf[CalendarInterval]
     assert(complement.isClosed == true)
-    assert(complement.start.toLimitObject == may1)
+    assert(complement.start == may1)
     assert(complement.end == may1)
   }
 
