@@ -73,7 +73,7 @@ class Duration
   def addedTo(point: TimePoint): TimePoint =
     addAmountToTimePoint(inBaseUnits, point)
 
-  /**このオブジェクトの{@link #quantity}フィールド（量）を返す。
+  /**このオブジェクトの[[#quantity]]フィールド（量）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -81,7 +81,7 @@ class Duration
    */
   def breachEncapsulationOfQuantity = quantity
 
-  /**このオブジェクトの{@link #unit}フィールド（単位）を返す。
+  /**このオブジェクトの[[#unit]]フィールド（単位）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -92,12 +92,12 @@ class Duration
   /**時間量同士の比較を行う。
    *
    * <p>基本単位(baseUnit)換算で比較し、時間量の少ない方を「小さい」と判断する。
-   * 同じ基本単位に変換できない場合は{@link ClassCastException}をスローする。</p>
+   * 同じ基本単位に変換できない場合は[[ClassCastException]]をスローする。</p>
    *
    * <p>例えば「1ヶ月間」と「30日間」は、同じ基本単位に変換できないため、比較不能である。</p>
    *
    * @param other 比較対照
-   * @return {@link Comparable#compareTo(Object)}に準じる
+   * @return [[Comparable#compareTo(Object)]]に準じる
    * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
    * @throws NullPointerException 引数に{@code null}を与えた場合
    */
@@ -119,7 +119,7 @@ class Duration
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ArithmeticException 引数{@code divisor}が0だった場合
    */
-  def dividedBy(divisor: Duration): Ratio = {
+  def /(divisor: Duration): Ratio = {
     checkConvertible(divisor);
     Ratio(inBaseUnits, divisor.inBaseUnits)
   }

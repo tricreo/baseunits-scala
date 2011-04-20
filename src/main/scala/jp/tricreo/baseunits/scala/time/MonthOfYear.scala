@@ -14,15 +14,15 @@ sealed class MonthOfYear
  private[time] val lastDayOfThisMonth: DayOfMonth,
  private[time] val calendarValue: Int) {
 
-  /**このオブジェクトの{@link #calendarValue}フィールド（{@link Calendar}に定義する月をあらわす定数値）を返す。
+  /**このオブジェクトの[[#calendarValue]]フィールド（[[Calendar]]に定義する月をあらわす定数値）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
-   * @return {@link Calendar}に定義する月をあらわす定数値（{@link Calendar#JANUARY}〜{@link Calendar#DECEMBER}）
+   * @return [[Calendar]]に定義する月をあらわす定数値（[[Calendar#JANUARY]]〜[[Calendar#DECEMBER]]）
    */
   def breachEncapsulationOfCalendarValue = calendarValue;
 
-  /**このオブジェクトの{@link #value}フィールド（月をあらわす数 1〜12）を返す。
+  /**このオブジェクトの[[#value]]フィールド（月をあらわす数 1〜12）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *

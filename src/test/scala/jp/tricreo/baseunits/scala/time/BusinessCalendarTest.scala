@@ -71,7 +71,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#getElapsedBusinessDays(CalendarInterval)}のテスト。
+   * [[BusinessCalendar#getElapsedBusinessDays(CalendarInterval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -87,7 +87,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#isWeekend(CalendarDate)}のテスト。
+   * [[BusinessCalendar#isWeekend(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -112,7 +112,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#isHoliday(CalendarDate)}のテスト。
+   * [[BusinessCalendar#isHoliday(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -124,7 +124,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#isBusinessDay(CalendarDate)}のテスト。
+   * [[BusinessCalendar#isBusinessDay(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -143,7 +143,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#nearestNextBusinessDay(CalendarDate)}のテスト。
+   * [[BusinessCalendar#nearestNextBusinessDay(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -166,7 +166,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#nearestNextBusinessDay(CalendarDate)}のテスト。
+   * [[BusinessCalendar#nearestNextBusinessDay(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -191,7 +191,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#businessDaysOnly(Iterator)}のテスト。
+   * [[BusinessCalendar#businessDaysOnly(Iterator)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -210,7 +210,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#nextBusinessDay(CalendarDate)}のテスト。
+   * [[BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -226,7 +226,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#nextBusinessDay(CalendarDate)}のテスト。
+   * [[BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -239,7 +239,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#plusBusinessDays(CalendarDate, int)}のテスト。
+   * [[BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -250,7 +250,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#plusBusinessDays(CalendarDate, int)}のテスト。
+   * [[BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -263,7 +263,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#minusBusinessDays(CalendarDate, int)}のテスト。
+   * [[BusinessCalendar#minusBusinessDays(CalendarDate, int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -276,7 +276,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link BusinessCalendar#businessDaysOnly(Iterator)}のテスト。
+   * [[BusinessCalendar#businessDaysOnly(Iterator)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

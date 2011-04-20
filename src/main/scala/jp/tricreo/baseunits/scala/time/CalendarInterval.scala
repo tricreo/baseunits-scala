@@ -5,7 +5,7 @@ import jp.tricreo.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Inter
 
 /**期間（日付の区間）を表すクラス。
  *
- * <p>限界の表現には {@link CalendarDate}を利用する。
+ * <p>限界の表現には [[CalendarDate]]を利用する。
  * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
  * @param startValue 開始日
  * @param endValue 終了日
@@ -42,9 +42,9 @@ class CalendarInterval protected
    * </ol>
    * </p>
    *
-   * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+   * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
-   * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+   * <p>この期間が開始日（下側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
    * {@code true}を返すので、無限ループに注意すること。</p>
    *
    * @return 日付の反復子
@@ -90,9 +90,9 @@ class CalendarInterval protected
    * </ol>
    * </p>
    *
-   * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+   * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
-   * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+   * <p>この期間が終了日（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
    * {@code true}を返すので、無限ループに注意すること。</p>
    *
    * @return 日付の反復子
@@ -195,7 +195,7 @@ class CalendarInterval protected
   def start = lowerLimit
 
   /**
-   * この期間の開始日を起点として、指定した時間の長さを持ち前回の終了日の翌日を開始日とする期間 {@link CalendarInterval} を
+   * この期間の開始日を起点として、指定した時間の長さを持ち前回の終了日の翌日を開始日とする期間 [[CalendarInterval]] を
    * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
    *
    * <p>例えば [2009/01/01, 2009/01/11] で表される期間に対して、
@@ -210,9 +210,9 @@ class CalendarInterval protected
    * </ol>
    * </p>
    *
-   * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+   * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
-   * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+   * <p>この期間が終了日（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
    * {@code true}を返すので、無限ループに注意すること。</p>
    *
    * @param subintervalLength 反復子が返す期間の長さ

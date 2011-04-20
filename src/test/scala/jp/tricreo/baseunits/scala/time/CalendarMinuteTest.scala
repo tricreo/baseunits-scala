@@ -25,7 +25,7 @@ class CalendarMinuteTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link CalendarMinute}のインスタンスがシリアライズできるかどうか検証する。
+   * [[CalendarMinute]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -35,7 +35,7 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarMinute#isBefore(CalendarMinute)} と {@link CalendarMinute#isAfter(CalendarMinute)}のテスト。
+   * [[CalendarMinute#isBefore(CalendarMinute)]] と [[CalendarMinute#isAfter(CalendarMinute)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -69,7 +69,7 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarMinute#asTimePoint(TimeZone)}のテスト。
+   * [[CalendarMinute#asTimePoint(TimeZone)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -80,7 +80,7 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarMinute#toString(String, TimeZone)}のテスト。
+   * [[CalendarMinute#toString(String, TimeZone)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -93,7 +93,7 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarMinute#parse(String, String)}のテスト。
+   * [[CalendarMinute#parse(String, String)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -105,7 +105,7 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarMinute#equals(Object)}のテスト。
+   * [[CalendarMinute#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -130,8 +130,8 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarMinute#breachEncapsulationOfDate()}
-   * {@link CalendarMinute#breachEncapsulationOfTime()}のテスト。
+   * [[CalendarMinute#breachEncapsulationOfDate()]]
+   * [[CalendarMinute#breachEncapsulationOfTime()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -142,7 +142,7 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarMinute#toString()}のテスト。
+   * [[CalendarMinute#toString()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

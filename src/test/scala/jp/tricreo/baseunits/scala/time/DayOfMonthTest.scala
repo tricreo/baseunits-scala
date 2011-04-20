@@ -77,7 +77,7 @@ class DayOfMonthTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link DayOfMonth#isBefore(DayOfMonth)}のテスト。
+   * [[DayOfMonth#isBefore(DayOfMonth)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -101,7 +101,7 @@ class DayOfMonthTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link DayOfMonth#isAfter(DayOfMonth)}のテスト。
+   * [[DayOfMonth#isAfter(DayOfMonth)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -125,7 +125,7 @@ class DayOfMonthTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link DayOfMonth#compareTo(DayOfMonth)}のテスト。
+   * [[DayOfMonth#compareTo(DayOfMonth)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -140,7 +140,7 @@ class DayOfMonthTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link DayOfMonth#toString}のテスト。
+   * [[DayOfMonth#toString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -152,7 +152,7 @@ class DayOfMonthTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link DayOfMonth#equals(Object)}のテスト。
+   * [[DayOfMonth#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

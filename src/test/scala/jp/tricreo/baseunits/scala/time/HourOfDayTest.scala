@@ -13,7 +13,7 @@ import org.junit.Test
 
 class HourOfDayTest extends AssertionsForJUnit {
   /**
-   * {@link HourOfDay#valueOf(int)}のテスト。
+   * [[HourOfDay#valueOf(int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -23,7 +23,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#valueOf(int, String)}のテスト。
+   * [[HourOfDay#valueOf(int, String)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -34,7 +34,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#valueOf(int)}の不正引数テスト。
+   * [[HourOfDay#valueOf(int)]]の不正引数テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -50,7 +50,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#valueOf(int)}の不正引数テスト。
+   * [[HourOfDay#valueOf(int)]]の不正引数テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -66,7 +66,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
+   * [[HourOfDay#valueOf(int, String)]]の不正引数テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -82,7 +82,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
+   * [[HourOfDay#valueOf(int, String)]]の不正引数テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -98,7 +98,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
+   * [[HourOfDay#valueOf(int, String)]]の不正引数テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -114,7 +114,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#isAfter(HourOfDay)}のテスト。
+   * [[HourOfDay#isAfter(HourOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -126,7 +126,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#isAfter(HourOfDay)}のテスト。
+   * [[HourOfDay#isAfter(HourOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -138,7 +138,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#isAfter(HourOfDay)}のテスト。
+   * [[HourOfDay#isAfter(HourOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -150,7 +150,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#isBefore(HourOfDay)}のテスト。
+   * [[HourOfDay#isBefore(HourOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -162,7 +162,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#isBefore(HourOfDay)}のテスト。
+   * [[HourOfDay#isBefore(HourOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -174,7 +174,7 @@ class HourOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link HourOfDay#isBefore(HourOfDay)}のテスト。
+   * [[HourOfDay#isBefore(HourOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

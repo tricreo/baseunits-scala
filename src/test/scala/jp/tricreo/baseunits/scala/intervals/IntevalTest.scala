@@ -245,7 +245,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval}のインスタンスがシリアライズできるかどうか検証する。
+   * [[Interval]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -255,7 +255,7 @@ class IntevalTest extends AssertionsForJUnit {
   //	}
 
   /**
-   * {@link Interval}のインスタンス生成テスト。
+   * [[Interval]]のインスタンス生成テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -273,7 +273,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval#upTo(Comparable)}のテスト。
+   * [[Interval#upTo(Comparable)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -288,7 +288,7 @@ class IntevalTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link Interval#andMore(Comparable)}のテスト。
+   * [[Interval#andMore(Comparable)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -304,7 +304,7 @@ class IntevalTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link Interval#newOfSameType(Comparable, boolean, Comparable, boolean)}のテスト。
+   * [[Interval#newOfSameType(Comparable, boolean, Comparable, boolean)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -317,7 +317,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval#isBelow(Comparable)}のテスト。
+   * [[Interval#isBelow(Comparable)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -333,7 +333,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval#includes(Comparable)}のテスト。
+   * [[Interval#includes(Comparable)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -349,7 +349,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval}の開閉の境界挙動テスト。
+   * [[Interval]]の開閉の境界挙動テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -365,7 +365,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval#isEmpty()}のテスト。
+   * [[Interval#isEmpty()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -378,7 +378,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval#intersects(Interval)}のテスト。
+   * [[Interval#intersects(Interval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -473,7 +473,7 @@ class IntevalTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link Interval#intersect(Interval)}のテスト。
+   * [[Interval#intersect(Interval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -496,7 +496,7 @@ class IntevalTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link Interval#greaterOfLowerLimits(Interval)}のテスト。（内部API）
+   * [[Interval#greaterOfLowerLimits(Interval)]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -509,7 +509,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval#lesserOfUpperLimits(Interval)}のテスト。（内部API）
+   * [[Interval#lesserOfUpperLimits(Interval)]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -522,7 +522,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Interval#covers(Interval)}のテスト。
+   * [[Interval#covers(Interval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -546,7 +546,7 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-	 * {@link Interval#gap(Interval)}のテスト。
+	 * [[Interval#gap(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -564,7 +564,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -578,7 +578,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -592,7 +592,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -607,7 +607,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -622,7 +622,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -636,7 +636,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -649,7 +649,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -661,7 +661,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -678,7 +678,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -692,7 +692,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#isSingleElement()}のテスト。
+	 * [[Interval#isSingleElement()]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -706,7 +706,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#equals(Interval)}のテスト。
+	 * [[Interval#equals(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -719,7 +719,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#emptyOfSameType()}のテスト。
+	 * [[Interval#emptyOfSameType()]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -729,7 +729,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -746,7 +746,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 	
 	/**
-	 * {@link Interval#toString()}のテスト。
+	 * [[Interval#toString()]]のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -760,7 +760,7 @@ class IntevalTest extends AssertionsForJUnit {
 
 	
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 *
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -775,7 +775,7 @@ class IntevalTest extends AssertionsForJUnit {
 	}
 
 	/**
-	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
 	 *
 	 * @throws Exception 例外が発生した場合
 	 */

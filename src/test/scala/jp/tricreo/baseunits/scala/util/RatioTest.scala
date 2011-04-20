@@ -15,7 +15,7 @@ import java.math.RoundingMode
 class RatioTest extends AssertionsForJUnit {
 
   /**
-   * {@link BigDecimal}で構成する{@link Ratio}の挙動テスト。
+   * [[BigDecimal]]で構成する[[Ratio]]の挙動テスト。
    *
    * <ul>
    *   <li>{@code 3/2}であらわす割合について、小数点第1位までで丸めなかった場合は1.5である。</li>
@@ -31,24 +31,24 @@ class RatioTest extends AssertionsForJUnit {
   @Test
   def test01_BigDecimalRatio {
     val r3over2 = Ratio(BigDecimal(3), BigDecimal(2))
-    var result = r3over2.decimalValue(1, RoundingMode.UNNECESSARY)
+    var result = r3over2.decimalValue(1, BigDecimal.RoundingMode.UNNECESSARY)
     assert(result == BigDecimal("1.5"))
 
     val r10over3 = Ratio(BigDecimal(10), BigDecimal(3))
-    result = r10over3.decimalValue(3, RoundingMode.DOWN)
+    result = r10over3.decimalValue(3, BigDecimal.RoundingMode.DOWN)
     assert(result == BigDecimal("3.333"))
 
-    result = r10over3.decimalValue(3, RoundingMode.UP)
+    result = r10over3.decimalValue(3, BigDecimal.RoundingMode.UP)
     assert(result == BigDecimal("3.334"))
 
     val rManyDigits = Ratio(BigDecimal("9.001"), BigDecimal(3))
-    result = rManyDigits.decimalValue(6, RoundingMode.UP)
+    result = rManyDigits.decimalValue(6, BigDecimal.RoundingMode.UP)
     assert(result == BigDecimal("3.000334"))
 
-    result = rManyDigits.decimalValue(7, RoundingMode.UP)
+    result = rManyDigits.decimalValue(7, BigDecimal.RoundingMode.UP)
     assert(result == BigDecimal("3.0003334"))
 
-    result = rManyDigits.decimalValue(7, RoundingMode.HALF_UP)
+    result = rManyDigits.decimalValue(7, BigDecimal.RoundingMode.HALF_UP)
     assert(result == BigDecimal("3.0003333"))
 
     try {
@@ -68,7 +68,7 @@ class RatioTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@code long}で構成する{@link Ratio}の挙動テスト。
+   * {@code long}で構成する[[Ratio]]の挙動テスト。
    *
    * <p>{@code 9001/3000}であらわす割合（3.00033…）について、小数点第6位までで切り上げた場合は3.000334である。</p>
    *
@@ -77,12 +77,12 @@ class RatioTest extends AssertionsForJUnit {
   @Test
   def test02_LongRatio {
     val rManyDigits = Ratio(9001L, 3000L)
-    val result = rManyDigits.decimalValue(6, RoundingMode.UP)
+    val result = rManyDigits.decimalValue(6, BigDecimal.RoundingMode.UP)
     assert(result == BigDecimal("3.000334"))
   }
 
   /**
-   * {@link Ratio#of(BigDecimal)}のテスト。
+   * [[Ratio#of(BigDecimal)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -91,11 +91,11 @@ class RatioTest extends AssertionsForJUnit {
     val ratio = Ratio(BigDecimal("3.14159"))
     assert(ratio.breachEncapsulationOfDenominator == BigDecimal(1))
     assert(ratio.breachEncapsulationOfNumerator == BigDecimal("3.14159"))
-    assert(ratio.decimalValue(5, RoundingMode.UNNECESSARY) == BigDecimal("3.14159"))
+    assert(ratio.decimalValue(5, BigDecimal.RoundingMode.UNNECESSARY) == BigDecimal("3.14159"))
   }
 
   /**
-   * {@link Ratio#equals(Object)}のテスト。
+   * [[Ratio#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -126,7 +126,7 @@ class RatioTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Ratio#times(BigDecimal)}のテスト。
+   * [[Ratio#times(BigDecimal)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -138,7 +138,7 @@ class RatioTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Ratio#times(Ratio)}のテスト。
+   * [[Ratio#times(Ratio)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -151,7 +151,7 @@ class RatioTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Ratio#toString()}のテスト。
+   * [[Ratio#toString()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

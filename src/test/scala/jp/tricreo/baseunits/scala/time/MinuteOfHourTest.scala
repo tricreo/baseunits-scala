@@ -14,7 +14,7 @@ import org.junit.Test
 class MinuteOfHourTest extends AssertionsForJUnit {
 
   /**
-   * {@link MinuteOfHour#valueOf(int)}のテスト。
+   * [[MinuteOfHour#valueOf(int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -25,7 +25,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#valueOf(int)}の不正引数テスト。
+   * [[MinuteOfHour#valueOf(int)]]の不正引数テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -41,7 +41,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#valueOf(int)}の不正引数テスト。
+   * [[MinuteOfHour#valueOf(int)]]の不正引数テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -57,7 +57,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#isAfter(MinuteOfHour)}のテスト。
+   * [[MinuteOfHour#isAfter(MinuteOfHour)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -69,7 +69,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#isAfter(MinuteOfHour)}のテスト。
+   * [[MinuteOfHour#isAfter(MinuteOfHour)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -81,7 +81,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#isAfter(MinuteOfHour)}のテスト。
+   * [[MinuteOfHour#isAfter(MinuteOfHour)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -93,7 +93,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#isBefore(MinuteOfHour)}のテスト。
+   * [[MinuteOfHour#isBefore(MinuteOfHour)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -105,7 +105,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#isBefore(MinuteOfHour)}のテスト。
+   * [[MinuteOfHour#isBefore(MinuteOfHour)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -117,7 +117,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#isBefore(MinuteOfHour)}のテスト。
+   * [[MinuteOfHour#isBefore(MinuteOfHour)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -129,7 +129,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#equals(Object)}のテスト。
+   * [[MinuteOfHour#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -146,7 +146,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link MinuteOfHour#toString}のテスト。
+   * [[MinuteOfHour#toString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

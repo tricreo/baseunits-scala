@@ -22,7 +22,7 @@ class Ratio
   }
 
   /**
-   * このオブジェクトの{@link #denominator}フィールド（分母をあらわす数）を返す。
+   * このオブジェクトの[[#denominator]]フィールド（分母をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -32,7 +32,7 @@ class Ratio
 
 
   /**
-   * このオブジェクトの{@link #numerator}フィールド（分子をあらわす数）を返す。
+   * このオブジェクトの[[#numerator]]フィールド（分子をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -42,20 +42,21 @@ class Ratio
 
 
   /**
-   * 比率を {@link BigDecimal}型で取得する。
+   * 比率を [[BigDecimal]]型で取得する。
    *
    * @param scale 小数点以下の有効数字
    * @param roundingMode 丸めモード
-   * @return この比率の {@link BigDecimal} 型の表現
+   * @return この比率の [[BigDecimal]] 型の表現
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def decimalValue(scale: Int, roundingMode: RoundingMode) =
-    BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode))
+  def decimalValue(scale: Int, roundingMode: BigDecimal.RoundingMode.Value) = {
+    BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode.id))
+  }
 
   /**
    * このオブジェクトと、与えたオブジェクトの同一性を検証する。
    *
-   * <p>与えたオブジェクト {@code anObject} が {@code null}である場合、または{@link Ratio}型や
+   * <p>与えたオブジェクト {@code anObject} が {@code null}である場合、または[[Ratio]]型や
    * そのサブクラスではない場合、{@code false}を返す。
    * 与えたオブジェクトの、分母と分子が共に一致する場合、{@code true}を返す。</p>
    *

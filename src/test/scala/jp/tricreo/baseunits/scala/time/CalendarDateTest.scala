@@ -19,7 +19,7 @@ class CalendarDateTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link CalendarDate}のインスタンスがシリアライズできるかどうか検証する。
+   * [[CalendarDate]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -29,7 +29,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#isBefore(CalendarDate)} と {@link CalendarDate#isAfter(CalendarDate)}のテスト。
+   * [[CalendarDate#isBefore(CalendarDate)]] と [[CalendarDate#isAfter(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -44,7 +44,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#startAsTimePoint(TimeZone)}のテスト。
+   * [[CalendarDate#startAsTimePoint(TimeZone)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -56,7 +56,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#asTimeInterval(TimeZone)}のテスト。
+   * [[CalendarDate#asTimeInterval(TimeZone)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -70,7 +70,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#toString(String)}のテスト。
+   * [[CalendarDate#toString(String)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -82,7 +82,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#parse(String, String)}のテスト。
+   * [[CalendarDate#parse(String, String)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -94,7 +94,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#from(TimePoint, TimeZone)}のテスト。
+   * [[CalendarDate#from(TimePoint, TimeZone)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -106,7 +106,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#equals(Object)}のテスト。
+   * [[CalendarDate#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -117,7 +117,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#dayOfWeek()}のテスト。
+   * [[CalendarDate#dayOfWeek()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -130,7 +130,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#nextDay()}のテスト。
+   * [[CalendarDate#nextDay()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -142,7 +142,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#previousDay()}のテスト。
+   * [[CalendarDate#previousDay()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -154,7 +154,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#asMonthInterval()}のテスト。
+   * [[CalendarDate#asMonthInterval()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -179,7 +179,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#toString()}のテスト。
+   * [[CalendarDate#toString()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -190,7 +190,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#asJavaCalendarUniversalZoneMidnight()}のテスト。（内部API）
+   * [[CalendarDate#asJavaCalendarUniversalZoneMidnight()]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -215,7 +215,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarDate#plusDays(int)}のテスト。
+   * [[CalendarDate#plusDays(int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

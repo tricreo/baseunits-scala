@@ -21,7 +21,7 @@ class Money(val amount: BigDecimal, val currency: Currency) extends Ordered[Mone
 
   override def hashCode = amount.hashCode + currency.hashCode
 
-  /** Returns a {@link Money} whose amount is the absolute amount of this {@link Money}, and whose scale is this.scale().
+  /** Returns a [[Money]] whose amount is the absolute amount of this [[Money]], and whose scale is this.scale().
    *
    * @return 絶対金額
    */

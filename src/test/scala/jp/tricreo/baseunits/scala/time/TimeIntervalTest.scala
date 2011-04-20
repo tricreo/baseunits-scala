@@ -26,7 +26,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link TimeInterval}のインスタンスがシリアライズできるかどうか検証する。
+   * [[TimeInterval]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -37,7 +37,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#isBefore(TimePoint)}のテスト。
+   * [[TimeInterval#isBefore(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -51,7 +51,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#isAfter(TimePoint)}のテスト。
+   * [[TimeInterval#isAfter(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -65,7 +65,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#includes(TimePoint)}のテスト。
+   * [[TimeInterval#includes(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -80,7 +80,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#isBefore(TimePoint)}のテスト。
+   * [[TimeInterval#isBefore(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -94,7 +94,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#isAfter(TimePoint)}のテスト。
+   * [[TimeInterval#isAfter(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -108,7 +108,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#includes(TimePoint)}のテスト。
+   * [[TimeInterval#includes(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -123,7 +123,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#includes(TimePoint)}のテスト。
+   * [[TimeInterval#includes(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -138,7 +138,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#startingFrom(TimePoint, Duration)}のテスト。
+   * [[TimeInterval#startingFrom(TimePoint, Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -152,7 +152,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#preceding(TimePoint, Duration)}のテスト。
+   * [[TimeInterval#preceding(TimePoint, Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -165,7 +165,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#over(TimePoint, TimePoint)}のテスト。
+   * [[TimeInterval#over(TimePoint, TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -185,7 +185,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#startingFrom(TimePoint, Duration)}のテスト。
+   * [[TimeInterval#startingFrom(TimePoint, Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -205,7 +205,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#everFrom(TimePoint)}のテスト。
+   * [[TimeInterval#everFrom(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -218,7 +218,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#everPreceding(TimePoint)}のテスト。
+   * [[TimeInterval#everPreceding(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -231,7 +231,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#open(TimePoint, TimePoint)}のテスト。
+   * [[TimeInterval#open(TimePoint, TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -248,7 +248,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#daysIterator}のテスト。
+   * [[TimeInterval#daysIterator]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -290,7 +290,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#subintervalIterator(Duration)}のテスト。
+   * [[TimeInterval#subintervalIterator(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -347,7 +347,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeInterval#intersects(Interval)}のテスト。
+   * [[TimeInterval#intersects(Interval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

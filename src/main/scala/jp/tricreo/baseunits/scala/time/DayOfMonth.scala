@@ -14,7 +14,7 @@ class DayOfMonth
     "Illegal value for day of month: " + value
       + ", please use a value between 1 and 31")
 
-	/**このオブジェクトの{@link #value}フィールド（日をあらわす正数）を返す。
+	/**このオブジェクトの[[#value]]フィールド（日をあらわす正数）を返す。
 	 *
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 *
@@ -83,7 +83,7 @@ class DayOfMonth
   /**指定した年月のこの日を返す。
    *
    * @param month 年月
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
    */

@@ -15,7 +15,7 @@ import jp.tricreo.baseunits.scala.intervals.Limit
 
 class DurationTest extends AssertionsForJUnit {
   /**
-   * {@link Duration}のインスタンスがシリアライズできるかどうか検証する。
+   * [[Duration]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -25,7 +25,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#addedTo(TimePoint)}のテスト。
+   * [[Duration#addedTo(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -41,7 +41,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#addedTo(TimePoint)}のテスト。
+   * [[Duration#addedTo(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -54,7 +54,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#subtractedFrom(TimePoint)}のテスト。
+   * [[Duration#subtractedFrom(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -70,7 +70,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#subtractedFrom(TimePoint)}のテスト。
+   * [[Duration#subtractedFrom(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -87,7 +87,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#subtractedFrom(CalendarDate)}のテスト。
+   * [[Duration#subtractedFrom(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -108,7 +108,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#addedTo(CalendarDate)}のテスト。
+   * [[Duration#addedTo(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -133,7 +133,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#inBaseUnits}のテスト。（内部API）
+   * [[Duration#inBaseUnits]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -144,7 +144,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#equals(Object)}のテスト。
+   * [[Duration#equals(Object)]]のテスト。
    *
    * <p>単位が違っていても、baseUnit換算できちんと比較できること。
    * baseUnitに互換性がなければ、必ず{@code false}となること。</p>
@@ -164,7 +164,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#plus(Duration)}のテスト。
+   * [[Duration#plus(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -183,7 +183,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#minus(Duration)}のテスト。
+   * [[Duration#minus(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -202,18 +202,18 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#dividedBy(Duration)}のテスト。
+   * [[Duration#dividedBy(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test12_Divide {
-    assert(Duration.days(3).dividedBy(Duration.days(2)).decimalValue(1, RoundingMode.DOWN) == BigDecimal(
+    assert((Duration.days(3) / Duration.days(2)).decimalValue(1, BigDecimal.RoundingMode.DOWN) == BigDecimal(
       1.5))
   }
 
   /**
-   * {@link Duration#toNormalizedString}のテスト。
+   * [[Duration#toNormalizedString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -231,7 +231,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#toNormalizedString}のテスト。
+   * [[Duration#toNormalizedString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -246,7 +246,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#toString}のテスト。
+   * [[Duration#toString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -262,7 +262,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#compareTo(Duration)}のテスト。
+   * [[Duration#compareTo(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -314,7 +314,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#startingFrom(TimePoint)}のテスト。
+   * [[Duration#startingFrom(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -327,7 +327,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#startingFrom(CalendarDate)}のテスト。
+   * [[Duration#startingFrom(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -340,7 +340,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#normalizedUnit}のテスト。
+   * [[Duration#normalizedUnit]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -353,7 +353,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link Duration#addedTo(CalendarMonth)}のテスト。
+   * [[Duration#addedTo(CalendarMonth)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

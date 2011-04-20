@@ -15,7 +15,7 @@ class TimeOfDay private[time]
   extends Ordered[TimeOfDay] {
 
 
-  /**指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+  /**指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について [[TimePoint]] 型のインスタンスを返す。
    *
    * @param date 年月日
    * @param timeZone タイムゾーン
@@ -27,7 +27,7 @@ class TimeOfDay private[time]
     timeOfDayOnDate.asTimePoint(timeZone)
   }
 
-  /**このオブジェクトの{@link #hour}フィールド（時）を返す。
+  /**このオブジェクトの[[#hour]]フィールド（時）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -36,7 +36,7 @@ class TimeOfDay private[time]
   def breachEncapsulationOfHour = hour
 
 
-  /**このオブジェクトの{@link #minute}フィールド（分）を返す。
+  /**このオブジェクトの[[#minute]]フィールド（分）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -83,10 +83,10 @@ class TimeOfDay private[time]
     hour.isBefore(another.hour) || (hour == another.hour && minute.isBefore(another.minute))
   }
 
-  /**指定した年月日における、このインスタンスがあらわす時分について {@link CalendarMinute} 型のインスタンスを返す。
+  /**指定した年月日における、このインスタンスがあらわす時分について [[CalendarMinute]] 型のインスタンスを返す。
    *
    * @param date 年月日
-   * @return {@link CalendarMinute}
+   * @return [[CalendarMinute]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def on(date: CalendarDate) =
@@ -110,21 +110,21 @@ object TimeOfDay {
   def unapply(timeOfDay: TimeOfDay) = Some(timeOfDay.hour, timeOfDay.minute)
 
 
-  /**指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
+  /**指定した時分を表す、[[TimeOfDay]]のインスタンスを生成する。
    *
    * @param hour 時
    * @param minute 分
-   * @return {@link TimeOfDay}
+   * @return [[TimeOfDay]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = apply(hour, minute)
 
   /**
-   * 指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
+   * 指定した時分を表す、[[TimeOfDay]]のインスタンスを生成する。
    *
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
-   * @return {@link TimeOfDay}
+   * @return [[TimeOfDay]]
    * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
    * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
    */

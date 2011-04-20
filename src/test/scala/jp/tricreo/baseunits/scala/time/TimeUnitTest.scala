@@ -14,7 +14,7 @@ import java.util.Calendar
 
 class TimeUnitTest extends AssertionsForJUnit {
   /**
-   * {@link TimeUnit}のインスタンスがシリアライズできるかどうか検証する。
+   * [[TimeUnit]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -24,7 +24,7 @@ class TimeUnitTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeUnit#toString()}のテスト。
+   * [[TimeUnit#toString()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -34,7 +34,7 @@ class TimeUnitTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeUnit#isConvertibleToMilliseconds()}のテスト。
+   * [[TimeUnit#isConvertibleToMilliseconds()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -49,7 +49,7 @@ class TimeUnitTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeUnit#compareTo(TimeUnit)}のテスト。
+   * [[TimeUnit#compareTo(TimeUnit)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -71,7 +71,7 @@ class TimeUnitTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeUnit#javaCalendarConstantForBaseType()}のテスト。（内部API）
+   * [[TimeUnit#javaCalendarConstantForBaseType()]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -87,7 +87,7 @@ class TimeUnitTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeUnit#isConvertibleTo(TimeUnit)}のテスト。
+   * [[TimeUnit#isConvertibleTo(TimeUnit)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -102,7 +102,7 @@ class TimeUnitTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeUnit#nextFinerUnit()}のテスト。（内部API）
+   * [[TimeUnit#nextFinerUnit()]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */

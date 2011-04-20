@@ -4,7 +4,7 @@ import java.util.{Calendar, TimeZone}
 
 /**カレンダー上の特定の「年月」を表すクラス。
  *
- * <p>{@link java.util.Date}と異なり、月未満（日以下）の概念を持っていない。また、{@link TimePoint}と異なり、
+ * <p>[[java.util.Date]]と異なり、月未満（日以下）の概念を持っていない。また、[[TimePoint]]と異なり、
  * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
 @serializable
@@ -24,10 +24,10 @@ class CalendarMonth private[time]
   }
 
   /**
-   * 指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+   * 指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について [[TimePoint]] 型のインスタンスを返す。
    *
    * @param timeZone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimePoint(timeZone: TimeZone) = {
@@ -56,7 +56,7 @@ class CalendarMonth private[time]
   }
 
   /**
-   * このオブジェクトの{@link #month}フィールド（月）を返す。
+   * このオブジェクトの[[#month]]フィールド（月）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -65,7 +65,7 @@ class CalendarMonth private[time]
   def breachEncapsulationOfMonth = month
 
   /**
-   * このオブジェクトの{@link #year}フィールド（西暦年をあらわす数）を返す。
+   * このオブジェクトの[[#year]]フィールド（西暦年をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -79,7 +79,7 @@ class CalendarMonth private[time]
    * <p>相対的に過去である方を「小さい」と判断する。</p>
    *
    * @param other 比較対象
-   * @return {@link Comparable#compareTo(Object)}に準じる
+   * @return [[Comparable#compareTo(Object)]]に準じる
    * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(other: CalendarMonth): Int = {
@@ -98,7 +98,7 @@ class CalendarMonth private[time]
   /**
    * 月末の日付を取得する。
    *
-   * @return {@link DayOfMonth}
+   * @return [[DayOfMonth]]
    */
   def getLastDay = {
     CalendarDate.from(year, month, getLastDayOfMonth)
@@ -107,7 +107,7 @@ class CalendarMonth private[time]
   /**
    * 月末の日を取得する。
    *
-   * @return {@link DayOfMonth}
+   * @return [[DayOfMonth]]
    */
   def getLastDayOfMonth = {
     month.getLastDayOfThisMonth(year)
@@ -190,7 +190,7 @@ class CalendarMonth private[time]
   /**
    * この日付の文字列表現を取得する。
    *
-   * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
+   * <p>[[SimpleDateFormat]]の使用に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
    *
    * @see java.lang.Object#toString()
    */
@@ -232,33 +232,33 @@ object CalendarMonth {
   def unapply(calendarMonth: CalendarMonth) =
     Some(calendarMonth.year, calendarMonth.month)
 
-  /**指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+  /**指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
    */
   def from(year: Int, month: Int) = {
     new CalendarMonth(year, MonthOfYear(month))
   }
 
-  /**指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+  /**指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
    *
    * @param year 年
    * @param month 月
-   * @return {@link CalendarMonth}
+   * @return [[CalendarMonth]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(year: Int, month: MonthOfYear) =
     new CalendarMonth(year, month)
 
   /**
-   * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+   * 指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
    *
    * @param dateString 年月を表す文字列
    * @param pattern 解析パターン文字列
-   * @return {@link CalendarMonth}
+   * @return [[CalendarMonth]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateString: String, pattern: String) = {
@@ -269,11 +269,11 @@ object CalendarMonth {
   }
 
   /**
-   * 指定したタイムゾーン上で指定した瞬間が属する日付を元に、{@link CalendarDate}のインスタンスを生成する。
+   * 指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
    * @param zone タイムゾーン
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarMonth = {

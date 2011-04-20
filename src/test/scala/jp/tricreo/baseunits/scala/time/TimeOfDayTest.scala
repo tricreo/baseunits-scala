@@ -32,7 +32,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link TimeOfDay#on(CalendarDate)}のテスト。
+   * [[TimeOfDay#on(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -43,7 +43,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#on(CalendarDate)}のテスト。
+   * [[TimeOfDay#on(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -54,7 +54,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#on(CalendarDate)}のテスト。
+   * [[TimeOfDay#on(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -65,7 +65,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#equals(Object)}のテスト。
+   * [[TimeOfDay#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -86,7 +86,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#hashCode}のテスト。
+   * [[TimeOfDay#hashCode]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -100,7 +100,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#isAfter(TimeOfDay)}のテスト。
+   * [[TimeOfDay#isAfter(TimeOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -112,7 +112,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#isAfter(TimeOfDay)}のテスト。
+   * [[TimeOfDay#isAfter(TimeOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -124,7 +124,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#isAfter(TimeOfDay)}のテスト。
+   * [[TimeOfDay#isAfter(TimeOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -137,7 +137,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#isBefore(TimeOfDay)}のテスト。
+   * [[TimeOfDay#isBefore(TimeOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -149,7 +149,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#isBefore(TimeOfDay)}のテスト。
+   * [[TimeOfDay#isBefore(TimeOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -161,7 +161,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#isBefore(TimeOfDay)}のテスト。
+   * [[TimeOfDay#isBefore(TimeOfDay)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -174,7 +174,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#breachEncapsulationOfHour}のテスト。（内部API）
+   * [[TimeOfDay#breachEncapsulationOfHour]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -188,7 +188,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#breachEncapsulationOfMinute}のテスト。（内部API）
+   * [[TimeOfDay#breachEncapsulationOfMinute]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -202,7 +202,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link TimeOfDay#asTimePointGiven(CalendarDate, TimeZone)}のテスト。
+   * [[TimeOfDay#asTimePointGiven(CalendarDate, TimeZone)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

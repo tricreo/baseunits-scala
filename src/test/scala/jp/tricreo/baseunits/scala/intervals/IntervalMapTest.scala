@@ -9,8 +9,8 @@ class IntervalMapTest extends AssertionsForJUnit {
   /**[[jp.tricreo.baseunits.scala.intervals.IntervalMap]]に対する参照メソッドのテスト。
    *
    * <ul>
-   *   <li>{@link IntervalMap#containsKey(Comparable)}</li>
-   *   <li>{@link IntervalMap#get(Comparable)}</li>
+   *   <li>[[IntervalMap#containsKey(Comparable)]]</li>
+   *   <li>[[IntervalMap#get(Comparable)]]</li>
    * </ul>
    *
    * @throws Exception 例外が発生した場合
@@ -116,7 +116,7 @@ class IntervalMapTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link IntervalMap#put(Interval, Object)}で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
+   * [[IntervalMap#put(Interval, Object)]]で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
    *
    * @throws Exception 例外が発生した場合
    */

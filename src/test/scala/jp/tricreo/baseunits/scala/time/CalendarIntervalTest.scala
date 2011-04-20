@@ -37,7 +37,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
 
 
   /**
-   * {@link CalendarInterval}のインスタンスがシリアライズできるかどうか検証する。
+   * [[CalendarInterval]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -47,7 +47,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   //}
 
   /**
-   * {@link CalendarInterval#asTimeInterval(TimeZone)}のテスト。
+   * [[CalendarInterval#asTimeInterval(TimeZone)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -58,7 +58,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#equals(Interval)}のテスト。
+   * [[CalendarInterval#equals(Interval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -70,7 +70,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#includes(CalendarDate)}のテスト。
+   * [[CalendarInterval#includes(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -84,7 +84,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#daysIterator}のテスト。
+   * [[CalendarInterval#daysIterator]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -116,7 +116,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#subintervalIterator(Duration)}のテスト。
+   * [[CalendarInterval#subintervalIterator(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -171,7 +171,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#length} {@link CalendarInterval#lengthInMonths} のテスト。
+   * [[CalendarInterval#length]] [[CalendarInterval#lengthInMonths]] のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -186,7 +186,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#complementRelativeTo(Interval)}のテスト。
+   * [[CalendarInterval#complementRelativeTo(Interval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -204,7 +204,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#everFrom(CalendarDate)}のテスト。
+   * [[CalendarInterval#everFrom(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -216,7 +216,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval}のインスタンス生成テスト。
+   * [[CalendarInterval]]のインスタンス生成テスト。
    *
    * [ 1792849 ] ConcreteCalendarInterval allows misordered limits
    *
@@ -234,7 +234,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   }
 
   /**
-   * {@link CalendarInterval#startingFrom(CalendarDate, Duration)}のテスト。
+   * [[CalendarInterval#startingFrom(CalendarDate, Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

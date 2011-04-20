@@ -49,7 +49,7 @@ abstract class AnnualDateSpecification extends DateSpecification {
   /**指定した年においてこの日付仕様を満たす年月日を返す。
    *
    * @param year 西暦年をあらわす数
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    */
   def ofYear(year: Int): CalendarDate
 }

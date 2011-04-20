@@ -5,7 +5,7 @@ import jp.tricreo.baseunits.scala.intervals.Limit
 
 /**カレンダー上の特定の「年月日」を表すクラス。
  *
- * <p>{@link Date}と異なり、時間の概念を持っていない。また、{@link TimePoint}と異なり、
+ * <p>[[Date]]と異なり、時間の概念を持っていない。また、[[TimePoint]]と異なり、
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
 @serializable
@@ -14,13 +14,12 @@ class CalendarDate private[time]
  private[time] val day: DayOfMonth)
   extends Ordered[CalendarDate] {
 
-  /**
-   * 年月日同士の比較を行う。
+  /**年月日同士の比較を行う。
    *
    * <p>相対的に過去である方を「小さい」と判断する。</p>
    *
    * @param other 比較対象
-   * @return {@link Comparable#compareTo(Object)}に準じる
+   * @return [[Comparable#compareTo(Object)]]に準じる
    * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(other: CalendarDate): Int = {
@@ -31,7 +30,7 @@ class CalendarDate private[time]
     } else 0
   }
 
-  /**このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
+  /**このインスタンスが表現する日を含む年月を表す[[CalendarMonth]]を取得する。
    *
    * @return このインスタンスが表現する日を含む年月を表す期間
    */
@@ -56,16 +55,14 @@ class CalendarDate private[time]
   def asTimeInterval(zone: TimeZone) =
     TimeInterval.startingFrom(Limit(startAsTimePoint(zone)), true, Duration.days(1), false);
 
-  /**
-   * このインスタンスが表現する日を含む年を表す期間を取得する。
+  /**このインスタンスが表現する日を含む年を表す期間を取得する。
    *
    * @return このインスタンスが表現する日を含む年を表す期間
    */
   def asYearInterval =
     CalendarInterval.year(yearMonth.breachEncapsulationOfYear)
 
-  /**
-   * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
+  /**このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
    *
    * @param timeOfDay 時
    * @return 日時
@@ -73,8 +70,7 @@ class CalendarDate private[time]
   def at(timeOfDay: TimeOfDay) =
     CalendarMinute.from(this, timeOfDay)
 
-  /**
-   * このオブジェクトの{@link #day}フィールド（日）を返す。
+  /**このオブジェクトの[[#day]]フィールド（日）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -82,7 +78,7 @@ class CalendarDate private[time]
    */
   def breachEncapsulationOfDay = day
 
-  /**このオブジェクトの{@link #yearMonth}フィールド（年月）を返す。
+  /**このオブジェクトの[[#yearMonth]]フィールド（年月）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -91,8 +87,7 @@ class CalendarDate private[time]
   def breachEncapsulationOfYearMonth = yearMonth
 
 
-  /**
-   * この日付の曜日を返す。
+  /**この日付の曜日を返す。
    *
    * @return 曜日
    */
@@ -109,8 +104,7 @@ class CalendarDate private[time]
 
   override def hashCode = day.hashCode + yearMonth.hashCode
 
-  /**
-   * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
    * <p>{@code other} が {@code null} である場合は {@code false} を返す。
    * また、お互いが同一日時である場合は {@code false} を返す。</p>
@@ -121,8 +115,7 @@ class CalendarDate private[time]
   def isAfter(other: CalendarDate) =
     isBefore(other) == false && equals(other) == false
 
-  /**
-   * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
    * <p>{@code other} が {@code null} である場合は {@code false} を返す。
    * また、お互いが同一日時である場合は {@code false} を返す。</p>
@@ -145,8 +138,7 @@ class CalendarDate private[time]
   def nextDay = plusDays(1)
 
 
-  /**
-   * このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
+  /**このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
    *
    * <p>引数の長さの単位が "日" 未満である場合は、元の日付をそのまま返す。<p>
    *
@@ -155,8 +147,7 @@ class CalendarDate private[time]
    */
   def plus(length: Duration) = length.addedTo(this)
 
-  /**
-   * このインスタンスが表現する日の {@code increment} 日後を返す。
+  /**このインスタンスが表現する日の {@code increment} 日後を返す。
    *
    * <p> {@code increment}に負数を与えてもよい。</p>
    *
@@ -172,8 +163,7 @@ class CalendarDate private[time]
     CalendarDate.from(year, month, day)
   }
 
-  /**
-   * このインスタンスが表現する日の {@code increment} ヶ月後を返す。
+  /**このインスタンスが表現する日の {@code increment} ヶ月後を返す。
    *
    * <p> {@code increment}に負数を与えてもよい。</p>
    *
@@ -189,15 +179,13 @@ class CalendarDate private[time]
     CalendarDate.from(year, month, day)
   }
 
-  /**
-   * このインスタンスが表現する日の前日を返す。
+  /**このインスタンスが表現する日の前日を返す。
    *
    * @return 前日
    */
   def previousDay = plusDays(-1)
 
-  /**
-   * このインスタンスが表現する日付の午前0時を、日時として取得する。
+  /**このインスタンスが表現する日付の午前0時を、日時として取得する。
    *
    * @param zone タイムゾーン
    * @return このインスタンスが表現する日の午前0時を表現する日時
@@ -205,8 +193,7 @@ class CalendarDate private[time]
    */
   def startAsTimePoint(zone: TimeZone) = TimePoint.atMidnight(this, zone)
 
-  /**
-   * このインスタンスが表現する日付を開始日とし、指定した日付 {@code otherDate} を終了日とする期間を取得する。
+  /**このインスタンスが表現する日付を開始日とし、指定した日付 {@code otherDate} を終了日とする期間を取得する。
    *
    * @param otherDate 終了日
    * @return 期間
@@ -214,10 +201,9 @@ class CalendarDate private[time]
   def through(otherDate: CalendarDate) =
     CalendarInterval.inclusive(Limit(this), Limit(otherDate))
 
-  /**
-   * この日付の文字列表現を取得する。
+  /**この日付の文字列表現を取得する。
    *
-   * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM-dd"}のパターンで整形する。</p>
+   * <p>[[SimpleDateFormat]]の使用に基づく {@code "yyyy-MM-dd"}のパターンで整形する。</p>
    *
    * @see java.lang.Object#toString()
    */
@@ -226,10 +212,9 @@ class CalendarDate private[time]
 
   //default for console
 
-  /**
-   * この日付を、指定したパターンで整形し、その文字列表現を取得する。
+  /**この日付を、指定したパターンで整形し、その文字列表現を取得する。
    *
-   * @param pattern {@link SimpleDateFormat}に基づくパターン
+   * @param pattern [[SimpleDateFormat]]に基づくパターン
    * @return 整形済み時間文字列
    */
   def toString(pattern: String) = {
@@ -264,25 +249,23 @@ object CalendarDate {
   def unapply(calendarDate:CalendarDate) =
     Some(calendarDate.yearMonth, calendarDate.day)
 
-  /**
-   * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
+  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param yearMonth 年月
    * @param day 日
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
    */
   def from(yearMonth: CalendarMonth, day: DayOfMonth): CalendarDate =
     new CalendarDate(yearMonth, day)
 
-  /**
-   * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
+  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
    * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
    * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
@@ -290,24 +273,22 @@ object CalendarDate {
   def from(year: Int, month: Int, day: Int): CalendarDate =
     new CalendarDate(CalendarMonth.from(year, month), DayOfMonth(day))
 
-  /**
-   * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
+  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param year 年
    * @param month 月
    * @param day 日
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数{@code day}が{@code year}年の{@code month}の月に存在しない場合
    */
   def from(year: Int, month: MonthOfYear, day: DayOfMonth): CalendarDate =
     from(CalendarMonth.from(year, month), day)
 
-  /**
-   * 指定したタイムゾーン上で指定した瞬間が属する日付を元に、{@link CalendarDate}のインスタンスを生成する。
+  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
    * @param zone タイムゾーン
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarDate = {
@@ -316,12 +297,11 @@ object CalendarDate {
     from(calendar)
   }
 
-  /**
-   * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
+  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param dateString 年月日を表す文字列
    * @param pattern 解析パターン文字列
-   * @return {@link CalendarDate}
+   * @return [[CalendarDate]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateString: String, pattern: String) = {

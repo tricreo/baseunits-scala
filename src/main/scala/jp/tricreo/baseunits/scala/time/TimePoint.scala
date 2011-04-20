@@ -13,16 +13,16 @@ class TimePoint private[time]
 (private[time] val millisecondsFromEpoc: Long)
   extends Ordered[TimePoint] {
 
-  /**このオブジェクトが表現する瞬間をGMTとして扱い、{@link Calendar}型として取得する。
+  /**このオブジェクトが表現する瞬間をGMTとして扱い、[[Calendar]]型として取得する。
    *
-   * @return {@link Calendar}
+   * @return [[Calendar]]
    */
   def asJavaCalendar: Calendar = asJavaCalendar(TimePoint.GMT)
 
-  /**このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、{@link Calendar}型として取得する。
+  /**このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、[[Calendar]]型として取得する。
    *
    * @param zone タイムゾーン
-   * @return {@link Calendar}
+   * @return [[Calendar]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asJavaCalendar(zone: TimeZone): Calendar = {
@@ -31,9 +31,9 @@ class TimePoint private[time]
     result
   }
 
-  /**このオブジェクトが表現する瞬間を、{@link Date}型として取得する。
+  /**このオブジェクトが表現する瞬間を、[[Date]]型として取得する。
    *
-   * @return {@link Date}
+   * @return [[Date]]
    */
   def asJavaUtilDate = new JDate(millisecondsFromEpoc)
 
@@ -48,16 +48,16 @@ class TimePoint private[time]
     TimeOfDay.from(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE))
   }
 
-  /**このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す {@link TimePoint}を取得する。
+  /**このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す [[TimePoint]]を取得する。
    *
    * @param zone タイムゾーン
-   * @return 午前0時（深夜）の瞬間を表す {@link TimePoint}
+   * @return 午前0時（深夜）の瞬間を表す [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def backToMidnight(zone: TimeZone) = calendarDate(zone).asTimeInterval(zone).start
 
 
-  /**このオブジェクトの{@link #millisecondsFromEpoc}フィールド（エポックからの経過ミリ秒）を返す。
+  /**このオブジェクトの[[#millisecondsFromEpoc]]フィールド（エポックからの経過ミリ秒）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -78,7 +78,7 @@ class TimePoint private[time]
    * <p>相対的に過去である方を「小さい」と判断する。</p>
    *
    * @param otherPoint 比較対象
-   * @return {@link Comparable#compareTo(Object)}に準じる
+   * @return [[Comparable#compareTo(Object)]]に準じる
    * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(otherPoint: TimePoint): Int =
@@ -88,7 +88,7 @@ class TimePoint private[time]
 
   /**このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
    *
-   * <p>与えたオブジェクトが {@code null} ではなく、かつ {@link TimePoint}型であった場合、
+   * <p>与えたオブジェクトが {@code null} ではなく、かつ [[TimePoint]]型であった場合、
    * 同じ日時を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
    *
    * @see java.lang.Object#equals(java.lang.Object)
@@ -187,7 +187,7 @@ class TimePoint private[time]
   /**
    * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
    *
-   * @param pattern {@link SimpleDateFormat}に基づくパターン
+   * @param pattern [[SimpleDateFormat]]に基づくパターン
    * @param zone タイムゾーン
    * @return 整形済み時間文字列
    */
@@ -203,7 +203,7 @@ class TimePoint private[time]
    * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
    *
    * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-   * @return {@link TimeInterval}
+   * @return [[TimeInterval]]
    */
   def until(end: TimePoint) = TimeInterval.over(Limit(this), Limit(end))
 
@@ -227,7 +227,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(yearMonth: CalendarMonth, date: DayOfMonth, hour: Int,
@@ -247,7 +247,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int, zone: TimeZone): TimePoint = {
@@ -271,7 +271,7 @@ object TimePoint {
    * @param minute 分
    * @param second 秒
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, zone: TimeZone): TimePoint = {
@@ -286,7 +286,7 @@ object TimePoint {
    * @param hour 時
    * @param minute 分
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, zone: TimeZone): TimePoint = {
@@ -303,7 +303,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int,
@@ -321,7 +321,7 @@ object TimePoint {
    * @param minute 分
    * @param second 秒
    * @param millisecond ミリ秒
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
    * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
    */
@@ -341,7 +341,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
    * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
    * @throws IllegalArgumentException 引数{@code zone}に{@code null}を与えた場合
@@ -357,7 +357,7 @@ object TimePoint {
    * @param date 日
    * @param hour 時
    * @param minute 分
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    */
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int): TimePoint =
     atGMT(year, month, date, hour, minute, 0, 0)
@@ -370,7 +370,7 @@ object TimePoint {
    * @param hour 時
    * @param minute 分
    * @param second 秒
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    */
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int): TimePoint =
     atGMT(year, month, date, hour, minute, second, 0)
@@ -384,7 +384,7 @@ object TimePoint {
    * @param minute 分
    * @param second 秒
    * @param millisecond ミリ秒
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    */
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int): TimePoint =
     at(year, month, date, hour, minute, second, millisecond, GMT);
@@ -393,7 +393,7 @@ object TimePoint {
    *
    * @param calendarDate 日付
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def atMidnight(calendarDate: CalendarDate, zone: TimeZone): TimePoint =
@@ -406,7 +406,7 @@ object TimePoint {
    * @param month 月（1〜12）
    * @param date 日
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def atMidnight(year: Int, month: Int, date: Int, zone: TimeZone): TimePoint =
@@ -417,7 +417,7 @@ object TimePoint {
    * @param year 年
    * @param month 月（1〜12）
    * @param date 日
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    */
   def atMidnightGMT(year: Int, month: Int, date: Int): TimePoint =
     atMidnight(year, month, date, GMT)
@@ -436,7 +436,7 @@ object TimePoint {
    * @param date 日付
    * @param time 時間
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(date: CalendarDate, time: TimeOfDay, zone: TimeZone): TimePoint =
@@ -453,10 +453,10 @@ object TimePoint {
   def from(javaDate: JDate): TimePoint =
     from(javaDate.getTime)
 
-  /**エポックからの経過ミリ秒を {@link TimePoint} に変換する。
+  /**エポックからの経過ミリ秒を [[TimePoint]] に変換する。
    *
    * @param milliseconds エポックからの経過ミリ秒
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    */
   def from(milliseconds: Long): TimePoint = {
     val result = new TimePoint(milliseconds);
@@ -465,12 +465,12 @@ object TimePoint {
     result
   }
 
-  /**日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す {@link TimePoint}を返す。
+  /**日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す [[TimePoint]]を返す。
    *
    * @param dateTimeString 日時を表す文字列
    * @param pattern 解析パターン
    * @param zone タイムゾーン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
@@ -481,11 +481,11 @@ object TimePoint {
     from(date)
   }
 
-  /**日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す {@link TimePoint}を返す。
+  /**日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す [[TimePoint]]を返す。
    *
    * @param dateString 日時を表す文字列
    * @param pattern 解析パターン
-   * @return {@link TimePoint}
+   * @return [[TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */

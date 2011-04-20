@@ -18,9 +18,9 @@ class TimeInterval
    * </ol>
    * </p>
    *
-   * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+   * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
-   * <p>この期間が終了日時（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+   * <p>この期間が終了日時（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
    * {@code true}を返すので、無限ループに注意すること。</p>
    *
    * @return 日時の反復子
@@ -122,7 +122,7 @@ class TimeInterval
   def start = lowerLimit
 
 
-  /**この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間 {@link TimeInterval} を
+  /**この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間 [[TimeInterval]] を
    * この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
    * <p>例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
@@ -136,9 +136,9 @@ class TimeInterval
    * </ol>
    * </p>
    *
-   * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+   * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
-   * <p>この期間が終了日時（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+   * <p>この期間が終了日時（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
    * {@code true}を返すので、無限ループに注意すること。</p>
    *
    * @param subintervalLength 反復子が返す期間の長さ

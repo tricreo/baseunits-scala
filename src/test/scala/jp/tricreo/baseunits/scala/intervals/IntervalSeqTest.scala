@@ -67,7 +67,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     }
   }
 
-  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#add(Interval)]]が順不同で行われた場合の{@link IntervalSequence}のテスト。
+  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#add(Interval)]]が順不同で行われた場合の[[IntervalSequence]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

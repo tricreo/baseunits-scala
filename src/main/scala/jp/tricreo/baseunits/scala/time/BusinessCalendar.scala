@@ -39,10 +39,10 @@ class BusinessCalendar {
   }
 
   /**[[CalendarDate]]の反復子を受け取り、その反復子が返す[[CalendarDate]]のうち、
-   * 営業日に当たる{@link CalendarDate}のみを返す反復子を返す。
+   * 営業日に当たる[[CalendarDate]]のみを返す反復子を返す。
    *
    * <p>このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
-   * 引数に与えた反復子の {@link Iterator#next()} を呼び出してはならない。</p>
+   * 引数に与えた反復子の [[Iterator#next()]] を呼び出してはならない。</p>
    *
    * @param calendarDays 元となる反復子
    * @return 営業日のみを返す反復子
@@ -215,7 +215,7 @@ class BusinessCalendar {
 
   /**Should be overriden for each particular organization.
    *
-   * @return 営業日の{@link Set}
+   * @return 営業日の[[Set]]
    */
   protected def defaultHolidaySpecs =
     DateSpecification.never

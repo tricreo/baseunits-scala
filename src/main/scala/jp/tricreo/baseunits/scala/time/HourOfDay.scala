@@ -2,7 +2,7 @@ package jp.tricreo.baseunits.scala.time
 
 /**1日の中の特定の「時」を表すクラス。
  *
- * <p>{@link java.util.Date}と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * <p>[[java.util.Date]]と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
 @serializable
 class HourOfDay private
@@ -13,7 +13,7 @@ class HourOfDay private
     "Illegal value for 24 hour: %d , please use a value between 0 and 23".format(value))
 
   /**
-   * このオブジェクトの{@link #value}フィールド（時をあらわす正数）を返す。
+   * このオブジェクトの[[#value]]フィールド（時をあらわす正数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
