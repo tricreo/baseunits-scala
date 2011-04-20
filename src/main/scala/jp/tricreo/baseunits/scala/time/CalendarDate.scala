@@ -98,7 +98,7 @@ class CalendarDate private[time]
    */
   def dayOfWeek = {
     val calendar = asJavaCalendarUniversalZoneMidnight
-    DayOfWeek.valueOf(calendar.get(Calendar.DAY_OF_WEEK))
+    DayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))
   }
 
 

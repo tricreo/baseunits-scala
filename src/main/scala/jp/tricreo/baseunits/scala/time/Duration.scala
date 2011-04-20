@@ -136,7 +136,7 @@ class Duration
   }
 
   override def hashCode: Int = {
-    (inBaseUnits ^ (inBaseUnits >>> 32)).asInstanceOf[Int] + unit.baseType.hashCode
+    (inBaseUnits ^ (inBaseUnits >>> 32)).asInstanceOf[Int] + unit.valueBaseType.hashCode
   }
 
 
@@ -260,7 +260,7 @@ class Duration
    *
    * @return 時間量の文字列表現
    */
-  def toNormalizedString: String = toNormalizedString(unit.descendingUnits());
+  def toNormalizedString: String = toNormalizedString(unit.descendingUnits)
 
   /**
    * この時間量の文字列表現を返す。
@@ -268,7 +268,7 @@ class Duration
    * @return 時間量の文字列表現
    * @see #toNormalizedString()
    */
-  override def toString: String = toNormalizedString(unit.descendingUnitsForDisplay());
+  override def toString: String = toNormalizedString(unit.descendingUnitsForDisplay)
 
   def addAmountToCalendar(amount: Long, calendar: Calendar) {
     if (unit.isConvertibleToMilliseconds) {
@@ -314,7 +314,7 @@ class Duration
     unit.isConvertibleTo(other.unit);
 
 
-  private def toNormalizedString(units: Array[TimeUnit]): String = {
+  private def toNormalizedString(units: List[TimeUnit]): String = {
     val buffer = new StringBuffer
     var remainder = inBaseUnits
     var first = true;

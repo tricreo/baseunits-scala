@@ -71,7 +71,10 @@ class CalendarInterval
       var _next = start
 
       override def hasNext = {
-        _next.toLimitObject.isBefore(end.toLimitObject) == false
+        end match {
+          case _: Limitless[CalendarDate] => true
+          case Limit(end) => _next.toLimitObject.isBefore(end) == false
+        }
       }
 
       override def next = {
@@ -109,7 +112,7 @@ class CalendarInterval
    */
   def daysIterator: Iterator[CalendarDate] = {
     if (hasLowerLimit == false) {
-      throw new IllegalStateException()
+      throw new IllegalStateException
     }
     val start = lowerLimit
     val end = upperLimit
@@ -119,7 +122,10 @@ class CalendarInterval
 
 
       override def hasNext = {
-        _next.toLimitObject.isAfter(end.toLimitObject) == false
+        end match {
+          case _: Limitless[CalendarDate] => true
+          case Limit(end) => _next.toLimitObject.isAfter(end) == false
+        }
       }
 
       override def next: CalendarDate = {
@@ -336,7 +342,7 @@ object CalendarInterval {
    * @return 期間
    */
   def month(year: Int, _month: Int): CalendarInterval =
-    month(year, MonthOfYear.valueOf(_month))
+    month(year, MonthOfYear(_month))
 
   /**指定した年月の1日からその月末までの、期間を生成する。
    *

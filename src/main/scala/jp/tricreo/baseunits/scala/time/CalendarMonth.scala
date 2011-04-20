@@ -236,7 +236,7 @@ object CalendarMonth {
    * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
    */
   def from(year: Int, month: Int) = {
-    new CalendarMonth(year, MonthOfYear.valueOf(month))
+    new CalendarMonth(year, MonthOfYear(month))
   }
 
   /**指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。

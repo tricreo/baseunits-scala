@@ -156,6 +156,11 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
+        <dependency>
+            <groupId>jp.tricreo</groupId>
+            <artifactId>scala-ddd-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- COMMONS DEPENDENCIES -->
         <dependency>
             <groupId>commons-lang</groupId>
