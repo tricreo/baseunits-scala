@@ -3,15 +3,11 @@ package jp.tricreo.baseunits.scala.time
 import jp.tricreo.baseunits.scala.intervals.Limit
 
 /**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/19
- * Time: 11:10
- * To change this template use File | Settings | File Templates.
+ * ある特定の年月日を表す日付仕様。
  */
-
 class FixedDateSpecification private[time]
-(private[time] val date: CalendarDate) extends DateSpecification {
+(private[time] val date: CalendarDate)
+  extends DateSpecification {
 
   def iterateOver(interval: CalendarInterval): Iterator[CalendarDate] = {
     if (firstOccurrenceIn(interval) == None) {

@@ -257,6 +257,13 @@ class CalendarDate private[time]
  * @author j5ik2o
  */
 object CalendarDate {
+
+  def apply(yearMonth: CalendarMonth, day: DayOfMonth) =
+    from(yearMonth, day)
+
+  def unapply(calendarDate:CalendarDate) =
+    Some(calendarDate.yearMonth, calendarDate.day)
+
   /**
    * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
    *

@@ -4,20 +4,20 @@ import java.util.Calendar
 import jp.tricreo.baseunits.scala.util.Ratio
 import jp.tricreo.baseunits.scala.intervals.{Limit, LimitValue}
 
-/**
- * 時間量（時間の長さ・期間の長さなど）を表すクラス。
+/**時間量（時間の長さ・期間の長さなど）を表すクラス。
  *
  * <p>負の時間量は表現しない。</p>
  */
 @serializable
 class Duration
 (val quantity: Long,
- val unit: TimeUnit) extends Ordered[Duration] {
+ val unit: TimeUnit)
+  extends Ordered[Duration] {
+
   require(quantity >= 0, "Quantity: " + quantity + " must be zero or positive")
 
 
-  /**
-   * 指定した日付に、このオブジェクトが表現する長さの時間を加えた、未来の日付を取得する。
+  /**指定した日付に、このオブジェクトが表現する長さの時間を加えた、未来の日付を取得する。
    *
    * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
    *
@@ -25,22 +25,22 @@ class Duration
    * @return このオブジェクトが表現する長さの時間が経過した未来の日付
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def addedTo(day: CalendarDate): CalendarDate = {
+  def addedTo(day: CalendarDate) = {
     //		only valid for days and larger units
     if (unit.compareTo(TimeUnit.day) < 0) {
-      return day
-    }
-    val calendar = day.asJavaCalendarUniversalZoneMidnight
-    if (unit.equals(TimeUnit.day)) {
-      calendar.add(Calendar.DATE, quantity.asInstanceOf[Int])
+      day
     } else {
-      addAmountToCalendar(inBaseUnits, calendar)
+      val calendar = day.asJavaCalendarUniversalZoneMidnight
+      if (unit == TimeUnit.day) {
+        calendar.add(Calendar.DATE, quantity.asInstanceOf[Int])
+      } else {
+        addAmountToCalendar(inBaseUnits, calendar)
+      }
+      CalendarDate.from(calendar)
     }
-    CalendarDate.from(calendar)
   }
 
-  /**
-   * 指定した年月に、このオブジェクトが表現する長さの時間を加えた、未来の年月を取得する。
+  /**指定した年月に、このオブジェクトが表現する長さの時間を加えた、未来の年月を取得する。
    *
    * <p>このオブジェクトが表現する時間の長さの単位が 月 未満である場合は、元の年月をそのまま返す。<p>
    *
@@ -48,22 +48,22 @@ class Duration
    * @return このオブジェクトが表現する長さの時間が経過した未来の年月
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def addedTo(month: CalendarMonth): CalendarMonth = {
+  def addedTo(month: CalendarMonth) = {
     //		only valid for days and larger units
     if (unit.compareTo(TimeUnit.month) < 0) {
-      return month
-    }
-    val calendar = month.asJavaCalendarUniversalZoneMidnight
-    if (unit == TimeUnit.month) {
-      calendar.add(Calendar.MONTH, quantity.asInstanceOf[Int])
+      month
     } else {
-      addAmountToCalendar(inBaseUnits, calendar)
+      val calendar = month.asJavaCalendarUniversalZoneMidnight
+      if (unit == TimeUnit.month) {
+        calendar.add(Calendar.MONTH, quantity.asInstanceOf[Int])
+      } else {
+        addAmountToCalendar(inBaseUnits, calendar)
+      }
+      CalendarMonth.from(calendar)
     }
-    CalendarMonth.from(calendar)
   }
 
-  /**
-   * 指定した日時に、このオブジェクトが表現する長さの時間を加えた、未来の日時を取得する。
+  /**指定した日時に、このオブジェクトが表現する長さの時間を加えた、未来の日時を取得する。
    *
    * @param point 元となる日時
    * @return このオブジェクトが表現する長さの時間が経過した未来の日時
@@ -73,8 +73,7 @@ class Duration
   def addedTo(point: TimePoint): TimePoint =
     addAmountToTimePoint(inBaseUnits, point)
 
-  /**
-   * このオブジェクトの{@link #quantity}フィールド（量）を返す。
+  /**このオブジェクトの{@link #quantity}フィールド（量）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -82,8 +81,7 @@ class Duration
    */
   def breachEncapsulationOfQuantity = quantity
 
-  /**
-   * このオブジェクトの{@link #unit}フィールド（単位）を返す。
+  /**このオブジェクトの{@link #unit}フィールド（単位）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -91,8 +89,7 @@ class Duration
    */
   def breachEncapsulationOfUnit = unit
 
-  /**
-   * 時間量同士の比較を行う。
+  /**時間量同士の比較を行う。
    *
    * <p>基本単位(baseUnit)換算で比較し、時間量の少ない方を「小さい」と判断する。
    * 同じ基本単位に変換できない場合は{@link ClassCastException}をスローする。</p>
@@ -109,15 +106,12 @@ class Duration
       throw new ClassCastException(other.toString() + " is not convertible to: " + toString())
     }
     val difference = inBaseUnits - other.inBaseUnits
-    if (difference > 0) {
-      1
-    } else if (difference < 0) {
-      -1
-    } else 0
+    if (difference > 0) 1
+    else if (difference < 0) -1
+    else 0
   }
 
-  /**
-   * この時間量を、指定した時間量 {@code other} で割った商（割合）を取得する。
+  /**この時間量を、指定した時間量 {@code other} で割った商（割合）を取得する。
    *
    * @param divisor 割る数
    * @return 割合
@@ -140,8 +134,7 @@ class Duration
   }
 
 
-  /**
-   * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の差を返す。
+  /**このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の差を返す。
    *
    * @param other 期間
    * @return 時間量の差
@@ -156,8 +149,7 @@ class Duration
     new Duration(newQuantity, if (other.quantity == 0) unit.baseUnit else other.unit.baseUnit)
   }
 
-  /**
-   * この期間を1単位で表せる最大の時間単位を求める。
+  /**この期間を1単位で表せる最大の時間単位を求める。
    *
    * <p>例えば、1〜23時間, 25〜47時間は hours だが、24時間, 48時間は days である。</p>
    *
@@ -169,8 +161,7 @@ class Duration
     units.find(e => (baseAmount % e.getFactor) == 0)
   }
 
-  /**
-   * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。
+  /**このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。
    *
    * @param other 期間
    * @return 時間量の和
@@ -183,8 +174,7 @@ class Duration
     new Duration(newQuantity, if (other.quantity == 0) unit.baseUnit else other.unit.baseUnit)
   }
 
-  /**
-   * 終了日時とこのオブジェクトが表現する時間量より、期間を生成する。
+  /**終了日時とこのオブジェクトが表現する時間量より、期間を生成する。
    *
    * @param end 終了日時（上側限界値）
    * @return 期間
@@ -193,8 +183,7 @@ class Duration
   def preceding(end: LimitValue[TimePoint]): TimeInterval =
     TimeInterval.preceding(end.asInstanceOf[Limit[TimePoint]], this)
 
-  /**
-   * 指定した日付を開始日とする、このオブジェクトが表現する長さを持つ期間を生成する。
+  /**指定した日付を開始日とする、このオブジェクトが表現する長さを持つ期間を生成する。
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
@@ -207,8 +196,7 @@ class Duration
   def startingFromCalendarDate(start: LimitValue[CalendarDate]): CalendarInterval =
     CalendarInterval.startingFrom(start, this)
 
-  /**
-   * 指定した日時を開始日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
+  /**指定した日時を開始日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
    *
    * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
    *
@@ -220,8 +208,7 @@ class Duration
     TimeInterval.startingFrom(start.asInstanceOf[Limit[TimePoint]], this)
 
 
-  /**
-   * 指定した日付に、このオブジェクトが表現する長さの時間を引いた、過去の日付を取得する。
+  /**指定した日付に、このオブジェクトが表現する長さの時間を引いた、過去の日付を取得する。
    *
    * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
    *
@@ -244,8 +231,7 @@ class Duration
     }
   }
 
-  /**
-   * 指定した日時に、このオブジェクトが表現する長さの時間を引いた、過去の日時を取得する。
+  /**指定した日時に、このオブジェクトが表現する長さの時間を引いた、過去の日時を取得する。
    *
    * @param point 元となる日時
    * @return このオブジェクトが表現する長さのを引いた、過去の日時
@@ -255,15 +241,13 @@ class Duration
   def subtractedFrom(point: TimePoint): TimePoint =
     addAmountToTimePoint(-1 * inBaseUnits, point)
 
-  /**
-   * この時間量の文字列表現を返す。
+  /**この時間量の文字列表現を返す。
    *
    * @return 時間量の文字列表現
    */
   def toNormalizedString: String = toNormalizedString(unit.descendingUnits)
 
-  /**
-   * この時間量の文字列表現を返す。
+  /**この時間量の文字列表現を返す。
    *
    * @return 時間量の文字列表現
    * @see #toNormalizedString()
@@ -313,7 +297,6 @@ class Duration
   private def isConvertibleTo(other: Duration) =
     unit.isConvertibleTo(other.unit);
 
-
   private def toNormalizedString(units: List[TimeUnit]): String = {
     val buffer = new StringBuffer
     var remainder = inBaseUnits
@@ -340,8 +323,7 @@ object Duration {
   val NONE = milliseconds(0)
 
 
-  /**
-   * 長さが {@code howMany} 日の時間量を取得する。
+  /**長さが {@code howMany} 日の時間量を取得する。
    *
    * @param howMany 時間の長さ（日）
    * @return 時間量
@@ -349,8 +331,7 @@ object Duration {
   def days(howMany: Int): Duration =
     Duration(howMany, TimeUnit.day)
 
-  /**
-   * 長さが {@code days}日 + {@code hours}時間 + {@code minute}分 + {@code seconds}秒
+  /**長さが {@code days}日 + {@code hours}時間 + {@code minute}分 + {@code seconds}秒
    * + {@code milliseconds}ミリ秒 の時間量を取得する。
    *
    * @param days 時間の長さ（日）
@@ -378,8 +359,7 @@ object Duration {
     result
   }
 
-  /**
-   * 長さが {@code howMany} 時間の時間量を取得する。
+  /**長さが {@code howMany} 時間の時間量を取得する。
    *
    * @param howMany 時間の長さ（時間）
    * @return 時間量
@@ -387,8 +367,7 @@ object Duration {
   def hours(howMany: Int): Duration =
     Duration(howMany, TimeUnit.hour)
 
-  /**
-   * 長さが {@code howMany} ミリ秒の時間量を取得する。
+  /**長さが {@code howMany} ミリ秒の時間量を取得する。
    *
    * @param howMany 時間の長さ（ミリ秒）
    * @return 時間量
@@ -396,8 +375,7 @@ object Duration {
   def milliseconds(howMany: Long): Duration =
     Duration(howMany, TimeUnit.millisecond)
 
-  /**
-   * 長さが {@code howMany} 分の時間量を取得する。
+  /**長さが {@code howMany} 分の時間量を取得する。
    *
    * @param howMany 時間の長さ（分）
    * @return 時間量
@@ -405,8 +383,7 @@ object Duration {
   def minutes(howMany: Int): Duration =
     Duration(howMany, TimeUnit.minute)
 
-  /**
-   * 長さが {@code howMany} ヶ月の時間量を取得する。
+  /**長さが {@code howMany} ヶ月の時間量を取得する。
    *
    * @param howMany 時間の長さ（月）
    * @return 時間量
@@ -414,8 +391,7 @@ object Duration {
   def months(howMany: Int): Duration =
     Duration(howMany, TimeUnit.month);
 
-  /**
-   * 長さが {@code howMany} 四半期の時間量を取得する。
+  /**長さが {@code howMany} 四半期の時間量を取得する。
    *
    * @param howMany 時間の長さ（四半期）
    * @return 時間量
@@ -424,8 +400,7 @@ object Duration {
     Duration(howMany, TimeUnit.quarter);
   }
 
-  /**
-   * 長さが {@code howMany} ミリの時間量を取得する。
+  /**長さが {@code howMany} ミリの時間量を取得する。
    *
    * @param howMany 時間の長さ（ミリ）
    * @return 時間量
@@ -433,8 +408,7 @@ object Duration {
   def seconds(howMany: Int): Duration =
     Duration(howMany, TimeUnit.second)
 
-  /**
-   * 長さが {@code howMany} 週間の時間量を取得する。
+  /**長さが {@code howMany} 週間の時間量を取得する。
    *
    * @param howMany 時間の長さ（週）
    * @return 時間量
@@ -442,8 +416,7 @@ object Duration {
   def weeks(howMany: Int): Duration =
     Duration(howMany, TimeUnit.week)
 
-  /**
-   * 長さが {@code howMany} 年の時間量を取得する。
+  /**長さが {@code howMany} 年の時間量を取得する。
    *
    * @param howMany 時間の長さ（年）
    * @return 時間量
@@ -452,7 +425,9 @@ object Duration {
     Duration(howMany, TimeUnit.year)
 
 
-  private def apply(howMany: Long, unit: TimeUnit): Duration =
+  private[time] def apply(howMany: Long, unit: TimeUnit): Duration =
     new Duration(howMany, unit)
 
+  private[time] def unapply(duration: Duration) =
+    Some(duration.quantity, duration.unit)
 }

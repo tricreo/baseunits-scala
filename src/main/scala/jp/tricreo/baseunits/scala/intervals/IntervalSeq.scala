@@ -22,12 +22,14 @@ class UpperLowerOrdering[T <% Ordered[T]]
     } else {
       val upperComparance = e1.upperLimitObject.compareTo(e2.upperLimitObject);
       val lowerComparance = e1.lowerLimitObject.compareTo(e2.lowerLimitObject);
-      if (upperComparance != 0) (upperComparance * upperFactor) else (lowerComparance * lowerFactor)
+      if (upperComparance != 0) (upperComparance * upperFactor)
+      else (lowerComparance * lowerFactor)
     }
 }
 
 object UpperLowerOrdering {
-  def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) = new UpperLowerOrdering[T](inverseLower, inverseUpper)
+  def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
+    new UpperLowerOrdering[T](inverseLower, inverseUpper)
 }
 
 class LowerUpperOrdering[T <% Ordered[T]]
@@ -52,7 +54,8 @@ class LowerUpperOrdering[T <% Ordered[T]]
 }
 
 object LowerUpperOrdering {
-  def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) = new LowerUpperOrdering[T](inverseLower, inverseUpper)
+  def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
+    new LowerUpperOrdering[T](inverseLower, inverseUpper)
 }
 
 /**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval 区間]] の列）を表すクラス。
@@ -63,7 +66,8 @@ class IntervalSeq[T <% Ordered[T]]
 (val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
   extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
 
-  override protected def newBuilder: Builder[Interval[T], IntervalSeq[T]] = IntervalSeq.newBuilder[T](ordering)
+  override protected def newBuilder: Builder[Interval[T], IntervalSeq[T]] =
+    IntervalSeq.newBuilder[T](ordering)
 
   def this() = this (Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
 

@@ -1,20 +1,26 @@
 package jp.tricreo.baseunits.scala.time
 
 /**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/16
- * Time: 1:32
- * To change this template use File | Settings | File Templates.
+ * 1ヶ月間の中の特定の「日」を表すクラス。
+ *
+ * <p>タイムゾーンの概念はない。</p>
  */
+@serializable
+class DayOfMonth
+(private[time] val value: Int)
+  extends Ordered[DayOfMonth] {
 
-class DayOfMonth(private[time] val value: Int) extends Ordered[DayOfMonth] {
   require(value >= DayOfMonth.MIN && value <= DayOfMonth.MAX,
     "Illegal value for day of month: " + value
       + ", please use a value between 1 and 31")
 
+	/**このオブジェクトの{@link #value}フィールド（日をあらわす正数）を返す。
+	 *
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 *
+	 * @return 日をあらわす正数（1〜31）
+	 */
   def breachEncapsulationOfValue = value
-
 
   def compare(that: DayOfMonth): Int = value - that.value
 
@@ -64,8 +70,7 @@ class DayOfMonth(private[time] val value: Int) extends Ordered[DayOfMonth] {
     month.getLastDayOfThisMonth(year).isBefore(this) == false;
   }
 
-  /**
-   * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
    * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
    *
@@ -75,8 +80,7 @@ class DayOfMonth(private[time] val value: Int) extends Ordered[DayOfMonth] {
    */
   def isBefore(other: DayOfMonth): Boolean = value < other.value
 
-  /**
-   * 指定した年月のこの日を返す。
+  /**指定した年月のこの日を返す。
    *
    * @param month 年月
    * @return {@link CalendarDate}
@@ -96,4 +100,6 @@ object DayOfMonth {
   val MAX = 31
 
   def apply(value: Int) = new DayOfMonth(value)
+
+  def unapply(dayOfMonth:DayOfMonth) = Some(dayOfMonth.value)
 }

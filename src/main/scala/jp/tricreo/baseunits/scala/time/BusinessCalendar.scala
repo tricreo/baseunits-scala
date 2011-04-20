@@ -12,8 +12,7 @@ class BusinessCalendar {
 
   private[time] var holidaySpecs: Specification[CalendarDate] = defaultHolidaySpecs
 
-  /**
-   * 休日として取り扱う「日」を追加する。
+  /**休日として取り扱う「日」を追加する。
    *
    * @param date 休日として取り扱う「日」
    */
@@ -21,8 +20,7 @@ class BusinessCalendar {
     addHolidaySpec(DateSpecification.fixed(date));
   }
 
-  /**
-   * 休日として取り扱う「日」を追加する。
+  /**休日として取り扱う「日」を追加する。
    *
    * @param days 休日として取り扱う「日」
    */
@@ -32,8 +30,7 @@ class BusinessCalendar {
     }
   }
 
-  /**
-   * 休日として取り扱う「日付仕様」を追加する。
+  /**休日として取り扱う「日付仕様」を追加する。
    *
    * @param specs 休日として取り扱う「日付仕様」
    */
@@ -41,8 +38,7 @@ class BusinessCalendar {
     holidaySpecs = holidaySpecs.or(specs)
   }
 
-  /**
-   * {@link CalendarDate}の反復子を受け取り、その反復子が返す{@link CalendarDate}のうち、
+  /**[[CalendarDate]]の反復子を受け取り、その反復子が返す[[CalendarDate]]のうち、
    * 営業日に当たる{@link CalendarDate}のみを返す反復子を返す。
    *
    * <p>このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
@@ -74,14 +70,12 @@ class BusinessCalendar {
           result = if (calendarDays.hasNext) Some(calendarDays.next.asInstanceOf[CalendarDate])
           else None
         } while ((result == None || isBusinessDay(result.get)) == false)
-        println("nextBusinessDate = %s".format(result))
         result
       }
     }
   }
 
-  /**
-   * {@link CalendarInterval}で表す期間のうち、営業日の日数を返す。
+  /**[[CalendarInterval]]で表す期間のうち、営業日の日数を返す。
    *
    * @param interval 期間
    * @return 営業日の日数
@@ -96,8 +90,7 @@ class BusinessCalendar {
     tally
   }
 
-  /**
-   * {@link CalendarDate}が営業日に当たるかどうか調べる。
+  /**[[CalendarDate]]が営業日に当たるかどうか調べる。
    *
    * <p>デフォルトの実装として、週末でなく休日でない日を営業日とするが、
    * 業態によってはオーバーライドの可能性があるので注意すること。</p>
@@ -109,8 +102,7 @@ class BusinessCalendar {
   def isBusinessDay(day: CalendarDate) =
     isWeekend(day) == false && isHoliday(day) == false
 
-  /**
-   * {@link CalendarDate}が休日に当たるかどうか調べる。
+  /**[[CalendarDate]]が休日に当たるかどうか調べる。
    *
    * <p>休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。</p>
    *
@@ -120,8 +112,7 @@ class BusinessCalendar {
   def isHoliday(day: CalendarDate) =
     holidaySpecs.isSatisfiedBy(day)
 
-  /**
-   * {@link CalendarDate}が週末に当たるかどうか調べる。
+  /**[[CalendarDate]]が週末に当たるかどうか調べる。
    *
    * <p>週末とは、土曜日と日曜日のことである。</p>
    *
@@ -134,8 +125,7 @@ class BusinessCalendar {
     dow == DayOfWeek.Saturday || dow == DayOfWeek.Sunday
   }
 
-  /**
-   * 開始日から数えて{@code numberOfDays}営業日前の日付を返す。
+  /**開始日から数えて{@code numberOfDays}営業日前の日付を返す。
    *
    * @param startDate 開始日
    * @param numberOfDays 営業日数（現在は正数しかサポートしない）
@@ -151,8 +141,7 @@ class BusinessCalendar {
     nextNumberOfBusinessDays(numberOfDays, iterator)
   }
 
-  /**
-   * 指定した日の直近営業日を取得する。
+  /**指定した日の直近営業日を取得する。
    *
    * <p>指定日が営業日であれば当日、そうでなければ翌営業日を返す。</p>
    *
@@ -167,8 +156,7 @@ class BusinessCalendar {
       nextBusinessDay(day)
     }
 
-  /**
-   * 指定した日の直近過去営業日を取得する。
+  /**指定した日の直近過去営業日を取得する。
    *
    * <p>指定日が営業日であれば当日、そうでなければ前営業日を返す。</p>
    *
@@ -183,8 +171,7 @@ class BusinessCalendar {
       prevBusinessDay(day)
     }
 
-  /**
-   * 指定した日の翌営業日を取得する。
+  /**指定した日の翌営業日を取得する。
    *
    * @param startDate 基準日
    * @return 翌営業日
@@ -197,8 +184,7 @@ class BusinessCalendar {
       plusBusinessDays(startDate, 0)
     }
 
-  /**
-   * 開始日から数えて{@code numberOfDays}営業日目の日付を返す。
+  /**開始日から数えて{@code numberOfDays}営業日目の日付を返す。
    *
    * @param startDate 開始日
    * @param numberOfDays 営業日数（現在は正数しかサポートしない）. {@code 0}の場合、開始日を含む翌営業日を返す
@@ -214,8 +200,7 @@ class BusinessCalendar {
     nextNumberOfBusinessDays(numberOfDays, iterator)
   }
 
-  /**
-   * 指定した日の前営業日を取得する。
+  /**指定した日の前営業日を取得する。
    *
    * @param startDate 基準日
    * @return 前営業日
@@ -228,16 +213,14 @@ class BusinessCalendar {
       minusBusinessDays(startDate, 0)
     }
 
-  /**
-   * Should be overriden for each particular organization.
+  /**Should be overriden for each particular organization.
    *
    * @return 営業日の{@link Set}
    */
   protected def defaultHolidaySpecs =
     DateSpecification.never
 
-  /**
-   * {@code calendarDays}の先頭から数えて{@code numberOfDays}営業日目の日付を返す。
+  /**{@code calendarDays}の先頭から数えて{@code numberOfDays}営業日目の日付を返す。
    *
    * @param numberOfDays 営業日数. {@code 0}の場合、イテレータの先頭
    * @param calendarDays 日付イテレータ

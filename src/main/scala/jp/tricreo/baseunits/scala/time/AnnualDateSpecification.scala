@@ -37,7 +37,7 @@ abstract class AnnualDateSpecification extends DateSpecification {
         }
         val current = _next
         year += 1
-        _next = Some(AnnualDateSpecification.this.ofYear(year))
+        _next = Some(ofYear(year))
         if (interval.includes(Limit(_next.get)) == false){
           _next = None
         }
@@ -46,8 +46,7 @@ abstract class AnnualDateSpecification extends DateSpecification {
     }
   }
 
-  /**
-   * 指定した年においてこの日付仕様を満たす年月日を返す。
+  /**指定した年においてこの日付仕様を満たす年月日を返す。
    *
    * @param year 西暦年をあらわす数
    * @return {@link CalendarDate}

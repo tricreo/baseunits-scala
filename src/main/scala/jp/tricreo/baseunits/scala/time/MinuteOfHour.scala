@@ -1,19 +1,19 @@
 package jp.tricreo.baseunits.scala.time
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/17
- * Time: 23:34
- * To change this template use File | Settings | File Templates.
+/**1時間の中の特定の「分」を表すクラス。
+ *
+ * <p>{@link java.util.Date}と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * @param value 分をあらわす正数
  */
+@serializable
+class MinuteOfHour private[time]
+(private[time] val value: Int)
+  extends Ordered[MinuteOfHour] {
 
-class MinuteOfHour private[time](private[time] val value: Int) extends Ordered[MinuteOfHour] {
   require(MinuteOfHour.MIN <= value && value <= MinuteOfHour.MAX,
     "Illegal value for 24 hour: " + value + ", please use a value between 0 and 23")
 
-  /**
-   * このオブジェクトの{@link #value}フィールド（時をあらわす正数）を返す。
+  /**このオブジェクトの{@link #value}フィールド（時をあらわす正数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -30,8 +30,7 @@ class MinuteOfHour private[time](private[time] val value: Int) extends Ordered[M
 
   override def hashCode = value.hashCode
 
-  /**
-   * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来かどうか調べる。
+  /**同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来かどうか調べる。
    *
    * <p>等価である場合は{@code false}を返す。</p>
    *
@@ -41,8 +40,7 @@ class MinuteOfHour private[time](private[time] val value: Int) extends Ordered[M
    */
   def isAfter(another: MinuteOfHour) = value > another.value;
 
-  /**
-   * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去かどうか調べる。
+  /**同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去かどうか調べる。
    *
    * <p>等価である場合は{@code false}を返す。</p>
    *
@@ -62,14 +60,8 @@ object MinuteOfHour {
 
   val MAX = 59
 
+  def apply(value: Int) = new MinuteOfHour(value)
 
-  /**
-   * インスタンスを生成する。
-   *
-   * @param initial 分をあらわす正数
-   * @return 分（0〜59）
-   * @throws IllegalArgumentException 引数の値が0〜59の範囲ではない場合
-   */
-  def apply(initial: Int) = new MinuteOfHour(initial)
+  def unapply(minuteOfHour:MinuteOfHour) = Some(minuteOfHour.value)
 
 }

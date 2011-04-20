@@ -1,21 +1,12 @@
 package jp.tricreo.baseunits.scala.time
 
-object Shifter extends Enumeration {
-  val Next, Prev = Value
-
-  implicit def toObject(enum: Shifter.Value) = enum match {
-    case Next => NextShifter()
-    case Prev => PrevShifter()
-  }
-
-  implicit def toEnum(shifter: Shifter) = shifter match {
-    case NextShifter() => Shifter.Next
-    case PrevShifter() => Shifter.Prev
-  }
-}
-
 sealed trait Shifter {
   def shift(date: CalendarDate, cal: BusinessCalendar): CalendarDate
+}
+
+object Shifter {
+  val Prev = PrevShifter
+  val Next = NextShifter
 }
 
 case class NextShifter extends Shifter {
@@ -28,17 +19,16 @@ case class PrevShifter extends Shifter {
     cal.nearestPrevBusinessDay(date)
 }
 
-/**
- * 指定日が非営業日の場合のシフト戦略。
+/**指定日が非営業日の場合のシフト戦略。
  */
 class MonthlyFixedBusinessDateSpecification
 (val day: DayOfMonth,
- val shifter: Shifter.Value,
+ val shifter: Shifter,
  val cal: BusinessCalendar) extends MonthlyDateSpecification {
 
   def ofYearMonth(month: CalendarMonth) =
-    Some(shifter.shift(CalendarDate.from(month.breachEncapsulationOfYear,
-      month.breachEncapsulationOfMonth, day), cal))
+    shifter.shift(CalendarDate.from(month.breachEncapsulationOfYear,
+      month.breachEncapsulationOfMonth, day), cal)
 
   override def isSatisfiedBy(date: CalendarDate) =
     if (cal.isBusinessDay(date)) {

@@ -2,21 +2,20 @@ package jp.tricreo.baseunits.scala.time
 
 import java.util.TimeZone
 
-/**
- * 1日の中の特定の「時分」を表すクラス。
+/**1日の中の特定の「時分」を表すクラス。
  *
  * <p>[[java.util.Date]]と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
  * @param hour 時
  * @param minute 分
  */
 @serializable
-class TimeOfDay
-(private val hour: HourOfDay,
- private val minute: MinuteOfHour) extends Ordered[TimeOfDay] {
+class TimeOfDay private[time]
+(private[time] val hour: HourOfDay,
+ private[time] val minute: MinuteOfHour)
+  extends Ordered[TimeOfDay] {
 
 
-  /**
-   * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+  /**指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
    *
    * @param date 年月日
    * @param timeZone タイムゾーン
@@ -28,8 +27,7 @@ class TimeOfDay
     timeOfDayOnDate.asTimePoint(timeZone)
   }
 
-  /**
-   * このオブジェクトの{@link #hour}フィールド（時）を返す。
+  /**このオブジェクトの{@link #hour}フィールド（時）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -38,8 +36,7 @@ class TimeOfDay
   def breachEncapsulationOfHour = hour
 
 
-  /**
-   * このオブジェクトの{@link #minute}フィールド（分）を返す。
+  /**このオブジェクトの{@link #minute}フィールド（分）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -49,9 +46,9 @@ class TimeOfDay
 
 
   def compare(other: TimeOfDay): Int = {
-    val hourComparance = hour.compareTo(other.hour)
+    val hourComparance = hour compare other.hour
     if (hourComparance != 0) hourComparance
-    else minute.compareTo(other.minute)
+    else minute compare other.minute
   }
 
   override def equals(obj: Any): Boolean = obj match {
@@ -62,8 +59,7 @@ class TimeOfDay
   override def hashCode = hour.hashCode + minute.hashCode
 
 
-  /**
-   * このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
+  /**このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
    *
    * <p>等価の場合は{@code false}を返す。</p>
    *
@@ -75,8 +71,7 @@ class TimeOfDay
     hour.isAfter(another.hour) || (hour == another.hour && minute.isAfter(another.minute))
   }
 
-  /**
-   * このインスタンスがあらわす時分が、指定した時分よりも過去であるかどうか調べる。
+  /**このインスタンスがあらわす時分が、指定した時分よりも過去であるかどうか調べる。
    *
    * <p>等価の場合は{@code false}を返す。</p>
    *
@@ -88,8 +83,7 @@ class TimeOfDay
     hour.isBefore(another.hour) || (hour == another.hour && minute.isBefore(another.minute))
   }
 
-  /**
-   * 指定した年月日における、このインスタンスがあらわす時分について {@link CalendarMinute} 型のインスタンスを返す。
+  /**指定した年月日における、このインスタンスがあらわす時分について {@link CalendarMinute} 型のインスタンスを返す。
    *
    * @param date 年月日
    * @return {@link CalendarMinute}
@@ -98,9 +92,8 @@ class TimeOfDay
   def on(date: CalendarDate) =
     CalendarMinute.from(date, this)
 
-  override def toString = {
+  override def toString =
     hour.toString + ":" + minute.toString
-  }
 
 }
 

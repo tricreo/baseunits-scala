@@ -1,14 +1,11 @@
 package jp.tricreo.baseunits.scala.time
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/19
- * Time: 15:23
- * To change this template use File | Settings | File Templates.
- */
-
-private[time] class TimeUnitConversionFactor(val value: Int)
+@serializable
+private[time] final class TimeUnitConversionFactor
+(val value: Int)
+  extends Ordered[TimeUnitConversionFactor] {
+  def compare(that: TimeUnitConversionFactor) = value - that.value
+}
 
 private[time] object TimeUnitConversionFactor {
   val identical = new TimeUnitConversionFactor(1)
@@ -23,8 +20,8 @@ private[time] object TimeUnitConversionFactor {
   private val values = List(identical, millisecondsPerSecond, millisecondsPerMinute, millisecondsPerHour,
     millisecondsPerDay, millisecondsPerWeek, monthsPerQuarter, monthsPerYear)
 
-  def apply(value:Int) = values.find(_.value == value).get
+  def apply(value: Int) = values.find(_.value == value).get
 
-  def unapply(timeUnitConversionFactor:TimeUnitConversionFactor) = Some(timeUnitConversionFactor.value)
+  def unapply(timeUnitConversionFactor: TimeUnitConversionFactor) = Some(timeUnitConversionFactor.value)
 
 }

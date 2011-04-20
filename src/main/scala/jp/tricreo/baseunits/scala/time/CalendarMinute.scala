@@ -12,7 +12,7 @@ import java.util.TimeZone
  * @param time 時分
  */
 @serializable
-class CalendarMinute
+class CalendarMinute private[time]
 (private[time] val date: CalendarDate,
  private[time] val time: TimeOfDay)
   extends Ordered[CalendarMinute] {
@@ -115,6 +115,12 @@ class CalendarMinute
 }
 
 object CalendarMinute {
+
+  def apply(aDate: CalendarDate, aTime: TimeOfDay) = from(aDate, aTime)
+
+  def unapply(calendarMinute:CalendarMinute) =
+    Some(calendarMinute.date, calendarMinute.time)
+
 
   /**
    * 指定した年月日を時分表す、{@link CalendarMinute}のインスタンスを生成する。

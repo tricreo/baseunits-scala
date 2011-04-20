@@ -2,18 +2,16 @@ package jp.tricreo.baseunits.scala.time
 
 import java.util.{Calendar, TimeZone}
 
-
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/16
- * Time: 1:43
- * To change this template use File | Settings | File Templates.
+/**カレンダー上の特定の「年月」を表すクラス。
+ *
+ * <p>{@link java.util.Date}と異なり、月未満（日以下）の概念を持っていない。また、{@link TimePoint}と異なり、
+ * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
-
-class CalendarMonth
-(val year: Int,
- val month: MonthOfYear) extends Ordered[CalendarMonth] {
+@serializable
+class CalendarMonth private[time]
+(private[time] val year: Int,
+ private[time] val month: MonthOfYear)
+  extends Ordered[CalendarMonth] {
 
   /**このインスタンスが表現する年月の1日からその月末までの、期間を生成する。
    *
@@ -228,6 +226,12 @@ class CalendarMonth
 }
 
 object CalendarMonth {
+
+  def apply(year: Int, month: Int) = from(year, month)
+
+  def unapply(calendarMonth: CalendarMonth) =
+    Some(calendarMonth.year, calendarMonth.month)
+
   /**指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数

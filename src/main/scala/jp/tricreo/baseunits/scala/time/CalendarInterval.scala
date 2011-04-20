@@ -3,28 +3,20 @@ package jp.tricreo.baseunits.scala.time
 import java.util.{TimeZone, Calendar}
 import jp.tricreo.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Interval}
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/16
- * Time: 8:23
- * To change this template use File | Settings | File Templates.
+/**期間（日付の区間）を表すクラス。
+ *
+ * <p>限界の表現には {@link CalendarDate}を利用する。
+ * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+ * @param startValue 開始日
+ * @param endValue 終了日
  */
+@serializable
+class CalendarInterval protected
+(startValue: LimitValue[CalendarDate],
+ endValue: LimitValue[CalendarDate])
+  extends Interval[CalendarDate](startValue, true, endValue, true) {
 
-class CalendarInterval
-(_start: LimitValue[CalendarDate], _end: LimitValue[CalendarDate])
-  extends Interval[CalendarDate](_start, true, _end, true) {
-  /**
-   * インスタンスを生成する。
-   *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
-   *
-   * @param start 開始日
-   * @param end 終了日
-   */
-
-  /**
-   * この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
+  /**この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
    *
    * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
    *
@@ -38,9 +30,7 @@ class CalendarInterval
     TimeInterval.over(startPoint, endPoint)
   }
 
-  /**
-   * この期間の終了日を起点として、前回の日付の前日を
-   * この期間の開始日を超過しない範囲で順次取得する反復子を取得する。
+  /**この期間の終了日を起点として、前回の日付の前日をこの期間の開始日を超過しない範囲で順次取得する反復子を取得する。
    *
    * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
@@ -88,9 +78,7 @@ class CalendarInterval
     }
   }
 
-  /**
-   * この期間の開始日を起点として、前回の日付の翌日を
-   * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
+  /**この期間の開始日を起点として、前回の日付の翌日をこの期間の終了日を超過しない範囲で順次取得する反復子を取得する。
    *
    * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
@@ -139,23 +127,20 @@ class CalendarInterval
     }
   }
 
-  /**
-   * 終了日を取得する。
+  /**終了日を取得する。
    *
    * @return 終了日. 開始日がない場合は{@code null}
    */
   def end: CalendarDate = upperLimit.toValue
 
-  /**
-   * この期間の日数としての長さを取得する。
+  /**この期間の日数としての長さを取得する。
    *
    * @return 期間の長さ
    * @see #length()
    */
   def length = Duration.days(lengthInDaysInt)
 
-  /**
-   * この期間が、日数にして何日の長さがあるかを取得する。
+  /**この期間が、日数にして何日の長さがあるかを取得する。
    *
    * @return 日数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
@@ -168,8 +153,7 @@ class CalendarInterval
     (diffMillis / TimeUnitConversionFactor.millisecondsPerDay.value).asInstanceOf[Int]
   }
 
-  /**
-   * この期間の月数としての長さを取得する。
+  /**この期間の月数としての長さを取得する。
    *
    * <p>開始日と終了日が同月であれば{@code 0}ヶ月となる。</p>
    *
@@ -180,8 +164,7 @@ class CalendarInterval
     Duration.months(lengthInMonthsInt)
   }
 
-  /**
-   * 限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
+  /**限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
    *
    * <p>開始日と終了日が同月であれば{@code 0}となる。</p>
    *
@@ -205,8 +188,7 @@ class CalendarInterval
     CalendarInterval.inclusive(includedLower, includedUpper)
   }
 
-  /**
-   * 開始日を取得する。
+  /**開始日を取得する。
    *
    * @return 開始日. 開始日がない場合は{@code null}
    */
@@ -246,27 +228,34 @@ class CalendarInterval
       "CalendarIntervals must be a whole number of days or months.")
 
     val segmentLength = subintervalLength
+
     new Iterator[CalendarInterval] {
 
       var _next = segmentLength.startingFromCalendarDate(start)
 
-      override def hasNext: Boolean = {
-        CalendarInterval.this.covers(_next);
-      }
+      override def hasNext: Boolean =
+        CalendarInterval.this.covers(_next)
 
       override def next: CalendarInterval = {
         if (hasNext == false) {
-          throw new NoSuchElementException();
+          throw new NoSuchElementException
         }
-        val current = _next;
+        val current = _next
         _next = segmentLength.startingFromCalendarDate(Limit(_next.end.plusDays(1)))
-        return current;
+        current
       }
-    };
+    }
   }
 }
 
 object CalendarInterval {
+
+  def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]) =
+    new CalendarInterval(startValue, endValue)
+
+  def unapply(calendarInterval:CalendarInterval) =
+    Some(calendarInterval.start, calendarInterval.end)
+
   /**開始日より、下側限界のみを持つ期間を生成する。
    *
    * <p>開始日は期間に含む（閉じている）区間である。</p>

@@ -1,7 +1,6 @@
 package jp.tricreo.baseunits.scala.time
 
-/**
- * 毎月Y日、を表す日付仕様。
+/**毎月Y日、を表す日付仕様。
  */
 class MonthlyFixedDateSpecification private[time]
 (private[time] val day: DayOfMonth)
@@ -11,7 +10,7 @@ class MonthlyFixedDateSpecification private[time]
     day == date.breachEncapsulationOfDay
 
   override def ofYearMonth(month: CalendarMonth) =
-    Some(CalendarDate.from(month.breachEncapsulationOfYear,
-      month.breachEncapsulationOfMonth, day))
+    CalendarDate.from(month.breachEncapsulationOfYear,
+      month.breachEncapsulationOfMonth, day)
 
 }
