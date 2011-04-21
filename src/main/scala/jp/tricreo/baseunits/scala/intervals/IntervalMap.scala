@@ -27,7 +27,6 @@ abstract class IntervalMap[A <% Ordered[A], +B]
   def +[B1 >: B](kv: (Interval[A], B1)): IntervalMap[A, B1]
 
   /**指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に {@code true} を返す。
-   *
    * @param interval 区間
    * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は{@code true}、そうでない場合は{@code false}
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -118,7 +117,12 @@ object LinearIntervalMap {
 
   //implicit def toMap[A <: Ordered[A], B](src: LinearIntervalMap[A, B]) = src.intervalMap
 
-  def apply[A <% Ordered[A], B] = new LinearIntervalMap[A, B]
+  def apply[A <% Ordered[A], B]:LinearIntervalMap[A, B] = new LinearIntervalMap[A, B]
+
+  def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]):LinearIntervalMap[A, B] = new LinearIntervalMap[A, B](intervalMap)
+
+  def unapply[A <% Ordered[A], B](linearIntervalMap:LinearIntervalMap[A,B]) =
+    Some(linearIntervalMap.intervalMap)
 
 }
 

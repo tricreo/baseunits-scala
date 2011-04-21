@@ -83,3 +83,11 @@ class MoneyTimeRate
     currency.getSymbol + " " + rate.toString
 
 }
+
+object MoneyTimeRate {
+
+  def apply(rate: TimeRate, currency: Currency) = new MoneyTimeRate(rate, currency)
+
+  def unapply(moneyTimeRate: MoneyTimeRate) = Some(moneyTimeRate.rate, moneyTimeRate.currency)
+
+}

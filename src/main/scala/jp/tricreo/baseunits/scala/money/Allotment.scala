@@ -7,8 +7,8 @@ package jp.tricreo.baseunits.scala.money
  * @param amount 金額
  */
 class Allotment[T]
-(private[money] val entity:T,
-private[money] val amount:Money){
+(private[money] val entity: T,
+ private[money] val amount: Money) {
 
   /**このオブジェクトの{@link #amount}フィールド（金額）を返す。
    *
@@ -26,8 +26,8 @@ private[money] val amount:Money){
    */
   def breachEncapsulationOfEntity = entity
 
-  override def equals(obj:Any) = obj match {
-    case that:Allotment[T] => entity == that.entity && amount == that.amount
+  override def equals(obj: Any) = obj match {
+    case that: Allotment[T] => entity == that.entity && amount == that.amount
     case _ => false
   }
 
@@ -42,5 +42,13 @@ private[money] val amount:Money){
 
   override def toString =
     "" + entity + " --> " + amount
+
+}
+
+object Allotment {
+
+  def apply[T](entity: T, amount: Money) = new Allotment[T](entity, amount)
+
+  def unapplly[T](allotment: Allotment[T]) = Some(allotment.entity, allotment.amount)
 
 }

@@ -524,10 +524,13 @@ object Interval {
 
   def apply[T <% Ordered[T]](lower: IntervalLimit[T], upper: IntervalLimit[T]) = new Interval(lower, upper)
 
+  /**抽出子メソッド
+   * @tparam T 限界値の型
+   * @return 分解されたフィールドを含むTupleのOption型
+   */
   def unapply[T <% Ordered[T]](interval: Interval[T]) = Some(interval.lowerLimitObject, interval.upperLimitObject)
 
   /** 下側限界のみを持つ区間を生成する。
-   *
    * <p>下側限界値は区間に含む（閉じている）区間である。</p>
    *
    * @param <T> 限界値の型

@@ -19,10 +19,10 @@ class Money
 
   override def equals(obj: Any) = obj match {
     case that: Money => amount == that.amount && currency == that.currency
-//    case bd: BigDecimal => amount == bd
-//    case n: Int => amount == n
-//    case f: Float => amount == f
-//    case d: Double => amount == d
+    //    case bd: BigDecimal => amount == bd
+    //    case n: Int => amount == n
+    //    case f: Float => amount == f
+    //    case d: Double => amount == d
     case _ => false
   }
 
@@ -77,7 +77,7 @@ class Money
    * @return 指定した割合の金額
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def applying(ratio: Ratio, scale: Int, roundingMode: BigDecimal.RoundingMode.Value):Money = {
+  def applying(ratio: Ratio, scale: Int, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     val newAmount = ratio.times(amount).decimalValue(scale, roundingMode)
     Money.adjustBy(newAmount, currency)
   }
@@ -90,7 +90,7 @@ class Money
    * @return 指定した割合の金額
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def applying(ratio: Ratio, roundingMode: BigDecimal.RoundingMode.Value):Money = {
+  def applying(ratio: Ratio, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     applying(ratio, currency.getDefaultFractionDigits, roundingMode);
   }
 
@@ -127,7 +127,7 @@ class Money
    * @param divisor 除数
    * @return 金額
    */
-  def dividedBy(divisor: Double):Money = {
+  def dividedBy(divisor: Double): Money = {
     dividedBy(divisor, Money.DEFAULT_ROUNDING_MODE);
   }
 
@@ -139,7 +139,7 @@ class Money
    * @return 金額
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def dividedBy(divisor: BigDecimal, roundingMode: BigDecimal.RoundingMode.Value):Money = {
+  def dividedBy(divisor: BigDecimal, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     val newAmount = amount.bigDecimal.divide(divisor.bigDecimal, roundingMode.id)
     Money(BigDecimal(newAmount), currency)
   }
@@ -152,7 +152,7 @@ class Money
    * @return 金額
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def dividedBy(divisor: Double, roundingMode: BigDecimal.RoundingMode.Value):Money = {
+  def dividedBy(divisor: Double, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     dividedBy(BigDecimal(divisor), roundingMode)
   }
 
@@ -264,7 +264,7 @@ class Money
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
    */
-  def plus(other: Money):Money = {
+  def plus(other: Money): Money = {
     checkHasSameCurrencyAs(other)
     Money.adjustBy(amount + other.amount, currency)
   }
@@ -284,7 +284,7 @@ class Money
    * @param factor 係数
    * @return 掛けた金額
    */
-  def times(factor: BigDecimal):Money = {
+  def times(factor: BigDecimal): Money = {
     times(factor, Money.DEFAULT_ROUNDING_MODE);
   }
 
@@ -299,7 +299,7 @@ class Money
    * @return 掛けた金額
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def times(factor: BigDecimal, roundingMode: BigDecimal.RoundingMode.Value):Money = {
+  def times(factor: BigDecimal, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     Money.adjustBy(amount * factor, currency, roundingMode)
   }
 
@@ -311,7 +311,7 @@ class Money
    * @param amount 係数
    * @return 掛けた金額
    */
-  def times(amount: Double):Money =
+  def times(amount: Double): Money =
     times(BigDecimal(amount));
 
   /**
@@ -322,7 +322,7 @@ class Money
    * @return 掛けた金額
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def times(amount: Double, roundingMode: BigDecimal.RoundingMode.Value):Money = {
+  def times(amount: Double, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     times(BigDecimal(amount), roundingMode)
   }
 
@@ -334,7 +334,7 @@ class Money
    * @param amount 係数
    * @return 掛けた金額
    */
-  def times(amount: Int):Money =
+  def times(amount: Int): Money =
     times(BigDecimal(amount))
 
   override def toString = {
@@ -420,7 +420,7 @@ object Money {
 
   def apply(amount: BigDecimal, currency: Currency) = new Money(amount, currency)
 
-  def unappy(money:Money) = Some(money.amount, money.currency)
+  def unappy(money: Money) = Some(money.amount, money.currency)
 
 
   /**{@code amount}で表す量のドルを表すインスタンスを返す。
@@ -498,7 +498,7 @@ object Money {
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def adjustBy(amount: BigDecimal, currency: Currency): Money = {
-    adjustBy(amount, currency, DEFAULT_ROUNDING_MODE)//BigDecimal.RoundingMode.UNNECESSARY)
+    adjustBy(amount, currency, DEFAULT_ROUNDING_MODE) //BigDecimal.RoundingMode.UNNECESSARY)
   }
 
   /**
