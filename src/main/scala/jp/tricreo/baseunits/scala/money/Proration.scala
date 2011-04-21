@@ -1,0 +1,173 @@
+/*
+ * Copyright 2011 Tricreo Inc and the Others.
+ * lastModified : 2011/04/21
+ *
+ * This file is part of Tricreo.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+package jp.tricreo.baseunits.scala.money
+
+import jp.tricreo.baseunits.scala.util.Ratio
+
+
+/**比例配分の為のユーティリティ。
+ * @author j5ik2o
+ */
+object Proration {
+
+  /**指定した金額を{@code n}等分した金額の配列を返す。
+   *
+   * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
+   *
+   * <p>例えば、53円を5人で等分した場合は、<code>{11, 11, 11, 10, 10}</code>となる。</p>
+   *
+   * @param total 合計金額
+   * @param n 分割数
+   * @return 分割結果
+   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   */
+  def dividedEvenlyIntoParts(total: Money, n: Int) = {
+    val lowResult = total.dividedBy(BigDecimal(n), BigDecimal.RoundingMode.DOWN);
+    val lowResults = Array.fill(n)(lowResult)
+    val remainder = total.minus(sum(lowResults))
+    distributeRemainderOver(lowResults, remainder)
+  }
+
+  /**
+   * {@code total}のうち、{@code portion / whole}の割合の金額を返す。割り切れない場合は切り捨てる。
+   *
+   * @param total 合計額
+   * @param portion 部分量をあらわす値
+   * @param whole 全体量をあらわす値
+   * @return 部分の金額
+   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @throws ArithmeticException 引数{@code whole}が0だった場合
+   */
+  def partOfWhole(total: Money, portion: Long, whole: Long): Money =
+    partOfWhole(total, Ratio(portion, whole))
+
+  /**{@code total}のうち、{@code ratio}の割合の金額を返す。割り切れない場合は切り捨てる。
+   *
+   * @param total 合計額
+   * @param ratio 割合
+   * @return 指定した割合の金額
+   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   */
+  def partOfWhole(total: Money, ratio: Ratio): Money = {
+    val scale = defaultScaleForIntermediateCalculations(total)
+    val multiplier = ratio.decimalValue(scale, BigDecimal.RoundingMode.DOWN)
+    total.times(multiplier, BigDecimal.RoundingMode.DOWN)
+  }
+
+  /**指定した金額を{@code proportions}であらわす割合で分割した金額の配列を返す。
+   *
+   * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
+   *
+   * <p>例えば、52円を1:3:1で等分した場合は、<code>{11, 31, 10}</code>となる。</p>
+   *
+   * @param total 合計金額
+   * @param proportions 比数の配列
+   * @return 分割結果
+   * @throws IllegalArgumentException 引数{@code total}に{@code null}を与えた場合
+   * @throws IllegalArgumentException 引数{@code proportions}またはその要素に{@code null}を与えた場合
+   */
+  def proratedOver(total: Money, proportions: Array[BigDecimal]): Array[Money] = {
+    val simpleResult = new Array[Money](proportions.length)
+    val scale = defaultScaleForIntermediateCalculations(total)
+    val _ratios = ratios(proportions)
+    for (i <- 0 until _ratios.length) {
+      val multiplier = _ratios(i).decimalValue(scale, BigDecimal.RoundingMode.DOWN);
+      simpleResult(i) = total.times(multiplier, BigDecimal.RoundingMode.DOWN);
+    }
+    val remainder = total.minus(sum(simpleResult))
+    distributeRemainderOver(simpleResult, remainder)
+  }
+
+  /**
+   * 指定した金額を{@code proportions}であらわす割合で分割した金額の配列を返す。
+   *
+   * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
+   *
+   * <p>例えば、52円を1:3:1で等分した場合は、<code>{11, 31, 10}</code>となる。</p>
+   *
+   * @param total 合計金額
+   * @param longProportions 比数の配列
+   * @return 分割結果
+   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   */
+  def proratedOver[T <% Number](total: Money, longProportions: Array[T]): Array[Money] = {
+    val proportions = new Array[BigDecimal](longProportions.length)
+    for (i <- 0 until longProportions.length) {
+      proportions(i) = BigDecimal(longProportions(i).longValue)
+    }
+    proratedOver(total, proportions)
+  }
+
+  private[money] def distributeRemainderOver(amounts: Array[Money], remainder: Money) = {
+    val increments = remainder.dividedBy(remainder.minimumIncrement)
+      .decimalValue(0, BigDecimal.RoundingMode.UNNECESSARY).intValue
+
+    assert(increments <= amounts.length)
+
+    val results = new Array[Money](amounts.length)
+    for (i <- 0 until increments) {
+      results(i) = amounts(i).incremented
+    }
+    for (i <- increments until amounts.length) {
+      results(i) = amounts(i)
+    }
+    results
+  }
+
+  /**比数の配列を割合の配列に変換する。
+   *
+   * @param proportions 比の配列
+   * @return 割合の配列
+   * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
+   */
+  def ratios(proportions: Array[BigDecimal]) = {
+    val total = sum(proportions)
+    val result = new Array[Ratio](proportions.length)
+    for (i <- 0 until result.length) {
+      result(i) = Ratio(proportions(i), total)
+    }
+    result
+  }
+
+  /**{@code elements}の要素の和を返す。
+   *
+   * @param elements 配列
+   * @return 和
+   * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
+   */
+  def sum(elements: Array[BigDecimal]) =
+    elements.sum
+
+  /**{@code elements}の要素の和を返す。
+   *
+   * @param elements 配列
+   * @return 和
+   * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
+   * @throws IllegalArgumentException 引数{@code elements}の要素数が0の場合
+   */
+  def sum(elements: Array[Money]) = {
+    val sum = Money.adjustBy(0, elements(0).breachEncapsulationOfCurrency)
+    elements.foldLeft(sum)(_.plus(_))
+  }
+
+  private def defaultScaleForIntermediateCalculations(total: Money) =
+    total.breachEncapsulationOfAmount.precision + 2
+
+
+}

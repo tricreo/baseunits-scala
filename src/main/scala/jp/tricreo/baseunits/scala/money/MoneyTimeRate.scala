@@ -104,7 +104,9 @@ class MoneyTimeRate
 
 object MoneyTimeRate {
 
-  def apply(rate: TimeRate, currency: Currency) = new MoneyTimeRate(rate, currency)
+  def apply(rate: TimeRate, currency: Currency): MoneyTimeRate = new MoneyTimeRate(rate, currency)
+
+  def apply(money: Money, duration: Duration): MoneyTimeRate = new MoneyTimeRate(money, duration)
 
   def unapply(moneyTimeRate: MoneyTimeRate) = Some(moneyTimeRate.rate, moneyTimeRate.currency)
 

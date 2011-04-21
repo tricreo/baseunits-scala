@@ -10,11 +10,11 @@ class AllotmentTest extends AssertionsForJUnit {
    */
   @Test
   def test01_Equals {
-    val abc123dollars = new Allotment("ABC", Money.dollars(1.23))
-    assert(abc123dollars == new Allotment("ABC", Money.dollars(1.23)))
-    assert(abc123dollars != new Allotment("ABC", Money.euros(1.23)))
-    assert(abc123dollars != new Allotment("XYZ", Money.dollars(1.23)))
-    assert(abc123dollars != new Allotment("ABC", Money.dollars(1.24)))
+    val abc123dollars = Allotment("ABC", Money.dollars(1.23))
+    assert(abc123dollars == Allotment("ABC", Money.dollars(1.23)))
+    assert(abc123dollars != Allotment("ABC", Money.euros(1.23)))
+    assert(abc123dollars != Allotment("XYZ", Money.dollars(1.23)))
+    assert(abc123dollars != Allotment("ABC", Money.dollars(1.24)))
   }
 
   /**正負転換検証。
@@ -23,8 +23,8 @@ class AllotmentTest extends AssertionsForJUnit {
    */
   @Test
   def test02_Negated {
-    val abc123dollars = new Allotment("ABC", Money.dollars(1.23))
-    assert(abc123dollars.negated == new Allotment("ABC", Money.dollars(-1.23)))
+    val abc123dollars = Allotment("ABC", Money.dollars(1.23))
+    assert(abc123dollars.negated == Allotment("ABC", Money.dollars(-1.23)))
   }
 
 }

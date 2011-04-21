@@ -28,10 +28,10 @@ import collection.mutable.ListBuffer
  * @param allotment 割り当ての要素（単一）
  */
 class MoneyFan[T]
-(private val allotments: Iterable[Allotment[T]])
+(private val allotments: Set[Allotment[T]])
   extends Iterable[Allotment[T]] {
 
-  def this() = this (Iterable.empty[Allotment[T]])
+  def this() = this (Set.empty[Allotment[T]])
 
   def this(allotment: Allotment[T]) = this (Set(allotment))
 
@@ -47,7 +47,7 @@ class MoneyFan[T]
 
   override def hashCode: Int = allotments.hashCode
 
-  override def equals(p1: Any): Boolean = p1 match {
+  override def equals(obj: Any): Boolean = obj match {
     case that: MoneyFan[T] => allotments == that.allotments
     case _ => false
   }
@@ -106,7 +106,7 @@ class MoneyFan[T]
     new MoneyFan[T](summedAllotments).withoutZeros
   }
 
-  override def toString = allotments.toString();
+  override def toString = allotments.toString
 
   /**全ての割り当ての合計額を返す。
    *
@@ -141,8 +141,12 @@ class MoneyFan[T]
 
 object MoneyFan {
 
-  def apply[T](allotments: Iterable[Allotment[T]]) = new MoneyFan[T](allotments)
+  def apply[T](allotments: Set[Allotment[T]]): MoneyFan[T] = new MoneyFan[T](allotments)
 
-  def unapply[T](moneyFan:MoneyFan[T]) = Some(moneyFan.allotments)
+  def apply[T](allotment: Allotment[T]): MoneyFan[T] = new MoneyFan[T](allotment)
+
+  def apply[T]: MoneyFan[T] = new MoneyFan[T]
+
+  def unapply[T](moneyFan: MoneyFan[T]) = Some(moneyFan.allotments)
 
 }

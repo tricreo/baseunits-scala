@@ -391,8 +391,8 @@ class MoneyTest extends AssertionsForJUnit {
    */
   @Test
   def test25_Incremented {
-    assert(d2_51.incremented == (Money.dollars(2.52)))
-    assert(y50.incremented == (Money(51, JPY)))
+    assert(d2_51.incremented == Money.dollars(2.52))
+    assert(y50.incremented == Money(51, JPY))
   }
 
   /**

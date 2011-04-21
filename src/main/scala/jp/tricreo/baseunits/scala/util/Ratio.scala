@@ -18,12 +18,10 @@
  */
 package jp.tricreo.baseunits.scala.util
 
-import java.math.RoundingMode
 import annotation.tailrec
 
 
-/**
- * {@link Ratio}は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
+/**[[Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
  *
  * <p>このクラスの利点は、比率の計算を遅延評価できることにある。</p>
  *
@@ -36,19 +34,19 @@ import annotation.tailrec
  * gives control of the precision and rounding rules to the client, when the
  * time comes to compute a decimal value for the ratio. The client typically has
  * the responsibilities that enable an appropriate choice of these parameters.<p>
+ *
+ * @param numerator 分子をあらわす数
+ * @param denominator 分母をあらわす数
  */
 class Ratio
-(/**分子をあらわす数 */
- private val numerator: BigDecimal,
-
- /**分母をあらわす数 */
+(private val numerator: BigDecimal,
  private val denominator: BigDecimal) {
+
   if (denominator == BigDecimal(0)) {
     throw new ArithmeticException("denominator is zero")
   }
 
-  /**
-   * このオブジェクトの[[#denominator]]フィールド（分母をあらわす数）を返す。
+  /**このオブジェクトの[[#denominator]]フィールド（分母をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -57,8 +55,7 @@ class Ratio
   def breachEncapsulationOfDenominator = denominator
 
 
-  /**
-   * このオブジェクトの[[#numerator]]フィールド（分子をあらわす数）を返す。
+  /**このオブジェクトの[[#numerator]]フィールド（分子をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -67,8 +64,7 @@ class Ratio
   def breachEncapsulationOfNumerator = numerator
 
 
-  /**
-   * 比率を [[BigDecimal]]型で取得する。
+  /**比率を [[BigDecimal]]型で取得する。
    *
    * @param scale 小数点以下の有効数字
    * @param roundingMode 丸めモード
@@ -79,8 +75,7 @@ class Ratio
     BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode.id))
   }
 
-  /**
-   * このオブジェクトと、与えたオブジェクトの同一性を検証する。
+  /**このオブジェクトと、与えたオブジェクトの同一性を検証する。
    *
    * <p>与えたオブジェクト {@code anObject} が {@code null}である場合、または[[Ratio]]型や
    * そのサブクラスではない場合、{@code false}を返す。
@@ -115,8 +110,7 @@ class Ratio
 
   override def hashCode = denominator.hashCode + numerator.hashCode
 
-  /**
-   * この比率と {@code multiplier} の積からなる比率。
+  /**この比率と {@code multiplier} の積からなる比率。
    *
    * <p>計算結果は、分母は変化せず、分子は分子と {@code multiplyer} の積からなる比率となる。</p>
    *
@@ -151,8 +145,7 @@ class Ratio
 
 object Ratio {
 
-  /**
-   * インスタンスを生成する。
+  /**インスタンスを生成する。
    *
    * @param fractional 分数
    * @return 与えた分数であらわされる比率
@@ -161,8 +154,7 @@ object Ratio {
   def apply(fractional: BigDecimal): Ratio =
     new Ratio(fractional, BigDecimal(1))
 
-  /**
-   * インスタンスを生成する。
+  /**インスタンスを生成する。
    *
    * @param numerator 分子
    * @param denominator 分母
@@ -173,8 +165,7 @@ object Ratio {
   def apply(numerator: BigDecimal, denominator: BigDecimal): Ratio =
     new Ratio(numerator, denominator);
 
-  /**
-   * インスタンスを生成する。
+  /**インスタンスを生成する。
    *
    * @param numerator 分子
    * @param denominator 分母
@@ -183,5 +174,8 @@ object Ratio {
    */
   def apply(numerator: Long, denominator: Long): Ratio =
     new Ratio(BigDecimal(numerator), BigDecimal(denominator));
+
+  def unapply(ratio: Ratio) = Some(ratio.numerator, ratio.denominator)
+
 
 }

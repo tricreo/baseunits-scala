@@ -30,7 +30,7 @@ class Tally
 
   private[this] val _currency = currency
 
-  monies.find(_.breachEncapsulationOfCurrency == _currency) match {
+  monies.find(_.breachEncapsulationOfCurrency != _currency) match {
     case Some(_) => throw new IllegalArgumentException
     case None => ()
   }
@@ -49,4 +49,12 @@ class Tally
 	override def toString = monies.toString
 
   def iterator: Iterator[Money] = monies.iterator
+}
+
+object Tally{
+
+  def apply(monies: Iterable[Money]) = new Tally(monies)
+
+  def unapply(tally:Tally) = Some(tally.monies)
+
 }
