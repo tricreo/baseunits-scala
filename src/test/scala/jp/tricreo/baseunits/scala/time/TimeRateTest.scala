@@ -82,7 +82,6 @@ class TimeRateTest extends AssertionsForJUnit {
   @Test
   def test06_toString {
     val rate = TimeRate(100.00, Duration.minutes(1))
-    println(rate.toString)
     assert(rate.toString == "100.0 per 1 minute")
   }
 }

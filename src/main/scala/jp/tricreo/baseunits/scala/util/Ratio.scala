@@ -3,14 +3,22 @@ package jp.tricreo.baseunits.scala.util
 import java.math.RoundingMode
 import annotation.tailrec
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/17
- * Time: 22:32
- * To change this template use File | Settings | File Templates.
- */
 
+/**
+ * {@link Ratio}は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
+ *
+ * <p>このクラスの利点は、比率の計算を遅延評価できることにある。</p>
+ *
+ * <p>Ratio represents the unitless division of two quantities of the same type.
+ * The key to its usefulness is that it defers the calculation of a decimal
+ * value for the ratio. An object which has responsibility for the two values in
+ * the ratio and understands their quantities can create the ratio, which can
+ * then be used by any client in a unitless form, so that the client is not
+ * required to understand the units of the quantity. At the same time, this
+ * gives control of the precision and rounding rules to the client, when the
+ * time comes to compute a decimal value for the ratio. The client typically has
+ * the responsibilities that enable an appropriate choice of these parameters.<p>
+ */
 class Ratio
 (/**分子をあらわす数 */
  private val numerator: BigDecimal,
@@ -71,8 +79,7 @@ class Ratio
     case that: Ratio => {
       val me = reduce
       val you = that.reduce
-      me.denominator == you.denominator &&
-        me.numerator == you.numerator
+      me._1 == you._1 && me._2 == you._2
     }
     case _ => false
   }
@@ -83,11 +90,10 @@ class Ratio
     else gcd(denominator, numerator % denominator)
 
 
-  private def reduce: Ratio = {
+  private def reduce = {
     val gcd = this.gcd(numerator, denominator)
-    Ratio(numerator / gcd, denominator / gcd)
+    (numerator / gcd, denominator / gcd)
   }
-
 
   override def hashCode = denominator.hashCode + numerator.hashCode
 
@@ -104,8 +110,7 @@ class Ratio
     Ratio(numerator * multiplier, denominator)
 
 
-  /**
-   * この比率と {@code multiplier} の積からなる比率。
+  /**この比率と {@code multiplier} の積からなる比率。
    *
    * <p>計算結果は、分子同士・分母同士の積からなる比率となる。</p>
    *
@@ -113,9 +118,8 @@ class Ratio
    * @return 積
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def times(multiplier: Ratio): Ratio = {
+  def times(multiplier: Ratio): Ratio =
     Ratio(numerator * multiplier.numerator, denominator * multiplier.denominator)
-  }
 
   /**この比率の文字列表現を取得する。
    *
@@ -123,7 +127,6 @@ class Ratio
    *
    * @see java.lang.Object#toString()
    */
-
   override def toString = numerator.toString + "/" + denominator
 
 }

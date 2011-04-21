@@ -19,9 +19,8 @@ class CalendarMonth private[time]
    *
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
-  def asCalendarInterval = {
-    CalendarInterval.month(year, month);
-  }
+  def asCalendarInterval =
+    CalendarInterval.month(year, month)
 
   /**
    * 指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について [[TimePoint]] 型のインスタンスを返す。
@@ -30,9 +29,8 @@ class CalendarMonth private[time]
    * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def asTimePoint(timeZone: TimeZone) = {
-    TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, timeZone);
-  }
+  def asTimePoint(timeZone: TimeZone) =
+    TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, timeZone)
 
   /**
    * このインスタンスが表現する年月を含む年の元旦からその大晦日までの、期間を生成する。
@@ -41,9 +39,8 @@ class CalendarMonth private[time]
    *
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
-  def asYearInterval = {
-    CalendarInterval.year(year);
-  }
+  def asYearInterval =
+    CalendarInterval.year(year)
 
   /**このインスタンスが表す年月で、引数{@code day}で表す日を表す年月日を返す。
    *
@@ -51,9 +48,8 @@ class CalendarMonth private[time]
    * @return 日時
    * @throws IllegalArgumentException 引数{@code day}がこの月に存在しない場合
    */
-  def at(day: DayOfMonth) = {
+  def at(day: DayOfMonth) =
     CalendarDate.from(year, month, day)
-  }
 
   /**
    * このオブジェクトの[[#month]]フィールド（月）を返す。
@@ -82,13 +78,12 @@ class CalendarMonth private[time]
    * @return [[Comparable#compareTo(Object)]]に準じる
    * @throws NullPointerException 引数に{@code null}を与えた場合
    */
-  def compare(other: CalendarMonth): Int = {
+  def compare(other: CalendarMonth): Int =
     if (isBefore(other)) {
       -1
     } else if (isAfter(other)) {
       1;
     } else 0
-  }
 
   override def equals(obj: Any) = obj match {
     case that: CalendarMonth => this.month == that.month && this.year == that.year
@@ -100,18 +95,16 @@ class CalendarMonth private[time]
    *
    * @return [[DayOfMonth]]
    */
-  def getLastDay = {
+  def getLastDay =
     CalendarDate.from(year, month, getLastDayOfMonth)
-  }
 
   /**
    * 月末の日を取得する。
    *
    * @return [[DayOfMonth]]
    */
-  def getLastDayOfMonth = {
+  def getLastDayOfMonth =
     month.getLastDayOfThisMonth(year)
-  }
 
   override def hashCode: Int = month.hashCode + year.hashCode
 
@@ -125,9 +118,8 @@ class CalendarMonth private[time]
    * @param other 対象日時
    * @return 過去である場合は{@code true}、そうでない場合は{@code false}
    */
-  def isAfter(other: CalendarMonth) = {
-    isBefore(other) == false && equals(other) == false;
-  }
+  def isAfter(other: CalendarMonth) =
+    isBefore(other) == false && equals(other) == false
 
   /**
    * 指定した年月 {@code other} が、このオブジェクトが表現する年月よりも未来であるかどうかを検証する。
@@ -138,13 +130,12 @@ class CalendarMonth private[time]
    * @param other 対象年月
    * @return 未来である場合は{@code true}、そうでない場合は{@code false}
    */
-  def isBefore(other: CalendarMonth) = {
+  def isBefore(other: CalendarMonth) =
     if (year < other.year) {
       true
     } else if (year > other.year) {
       false
     } else month.isBefore(other.month)
-  }
 
   /**
    * このインスタンスが表現する年月の翌月を返す。
@@ -239,9 +230,8 @@ object CalendarMonth {
    * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
    */
-  def from(year: Int, month: Int) = {
+  def from(year: Int, month: Int) =
     new CalendarMonth(year, MonthOfYear(month))
-  }
 
   /**指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
    *
