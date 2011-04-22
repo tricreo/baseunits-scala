@@ -113,7 +113,7 @@ class Duration
    *
    * @param other 比較対照
    * @return [[Comparable#compareTo(Object)]]に準じる
-   * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+   * @throws ClassCastException 引数`other`の単位を、このオブジェクトの単位に変換できない場合
    */
   def compare(other: Duration): Int = {
     if (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) {
@@ -125,12 +125,12 @@ class Duration
     else 0
   }
 
-  /**この時間量を、指定した時間量 {@code other} で割った商（割合）を取得する。
+  /**この時間量を、指定した時間量 `other` で割った商（割合）を取得する。
    *
    * @param divisor 割る数
    * @return 割合
    * @throws IllegalArgumentException 引数divisorの単位を、このオブジェクトの単位に変換できない場合
-   * @throws ArithmeticException 引数{@code divisor}が0だった場合
+   * @throws ArithmeticException 引数`divisor`が0だった場合
    */
   def dividedBy(divisor: Duration): Ratio = {
     checkConvertible(divisor)
@@ -147,7 +147,7 @@ class Duration
   }
 
 
-  /**このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の差を返す。
+  /**このオブジェクトが表現する時間量と、引数 `other` に与えた時間量の差を返す。
    *
    * @param other 期間
    * @return 時間量の差
@@ -173,7 +173,7 @@ class Duration
     units.find(e => (baseAmount % e.getFactor) == 0).get
   }
 
-  /**このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。
+  /**このオブジェクトが表現する時間量と、引数 `other` に与えた時間量の和を返す。
    *
    * @param other 期間
    * @return 時間量の和

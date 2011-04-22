@@ -137,7 +137,7 @@ object TimeOfDay {
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
    * @return [[TimeOfDay]]
-   * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合もしくは、引数{@code minute}が0〜59の範囲ではない場合
+   * @throws IllegalArgumentException 引数`hour`が0〜23の範囲ではない場合もしくは、引数`minute`が0〜59の範囲ではない場合
    */
   def from(hour: Int, minute: Int): TimeOfDay = new TimeOfDay(HourOfDay(hour), MinuteOfHour(minute))
 

@@ -62,12 +62,12 @@ object DateSpecification {
     new FixedDateSpecification(date)
 
   /**
-   * 日付仕様「毎月{@code day}日」のインスタンスを生成する。
+   * 日付仕様「毎月`day`日」のインスタンスを生成する。
    *
    * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
    *
    * @param day 日を表す正数（1〜31）
-   * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+   * @throws IllegalArgumentException 引数`day`が1〜31の範囲ではない場合
    * @return 日付仕様
    */
   def fixed(day: Int) =

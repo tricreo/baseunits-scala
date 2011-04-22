@@ -75,7 +75,7 @@ class CalendarMinute private[time]
 
   override def hashCode = date.hashCode + time.hashCode
 
-  /**指定した年月日時分 {@code other} が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
+  /**指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
    *
    * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
@@ -86,7 +86,7 @@ class CalendarMinute private[time]
     isBefore(other) == false && equals(other) == false
   }
 
-  /**指定した年月日時分 {@code other} が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
+  /**指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
    *
    * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
@@ -144,9 +144,9 @@ object CalendarMinute {
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
    * @return [[CalendarMinute]]
-   * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合もしくは、
-   * 引数{@code day}が1〜31の範囲ではない場合もしくは、引数{@code hour}が0〜23の範囲ではない場合もしくは、
-   * 引数{@code minute}が0〜59の範囲ではない場合もしくは、引数{@code day}が{@code yearMonth}の月に存在しない場合
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
+   * 引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
+   * 引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarMinute =
     new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute))

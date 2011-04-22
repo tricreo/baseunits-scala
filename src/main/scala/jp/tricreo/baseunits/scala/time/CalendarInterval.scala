@@ -172,7 +172,7 @@ class CalendarInterval protected
 
   /**この期間の月数としての長さを取得する。
    *
-   * <p>開始日と終了日が同月であれば{@code 0}ヶ月となる。</p>
+   * <p>開始日と終了日が同月であれば`0`ヶ月となる。</p>
    *
    * @return 期間の長さ
    * @see #lengthInMonthsInt()
@@ -183,7 +183,7 @@ class CalendarInterval protected
 
   /**限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
    *
-   * <p>開始日と終了日が同月であれば{@code 0}となる。</p>
+   * <p>開始日と終了日が同月であれば`0`となる。</p>
    *
    * @return 月数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
@@ -216,7 +216,7 @@ class CalendarInterval protected
    * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
    *
    * <p>例えば [2009/01/01, 2009/01/11] で表される期間に対して、
-   * 2日間の {@code subintervalLength} を与えた場合、
+   * 2日間の `subintervalLength` を与えた場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
    * <ol>
    *   <li>[2009/01/01, 2009/01/02]</li>
@@ -368,7 +368,7 @@ object CalendarInterval {
    *
    * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
    *
-   * <p>引数 {@code length} の期間の長さの単位が "日" 未満である場合は、開始日と終了日は同日となる。<p>
+   * <p>引数 `length` の期間の長さの単位が "日" 未満である場合は、開始日と終了日は同日となる。<p>
    *
    * @param start 開始日（下側限界値）
    * @param length 期間の長さ

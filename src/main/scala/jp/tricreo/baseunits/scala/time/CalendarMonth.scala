@@ -166,9 +166,9 @@ class CalendarMonth private[time]
   def plus(length: Duration) =
     length.addedTo(this)
 
-  /**このインスタンスが表現する年月の {@code increment} ヶ月後を返す。
+  /**このインスタンスが表現する年月の `increment` ヶ月後を返す。
    *
-   * <p> {@code increment}に負数を与えてもよい。</p>
+   * <p> `increment`に負数を与えてもよい。</p>
    *
    * @param increment 加える月数
    * @return 計算結果
@@ -189,7 +189,7 @@ class CalendarMonth private[time]
 
   /**この日付の文字列表現を取得する。
    *
-   * <p>[[SimpleDateFormat]]の使用に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
+   * <p>[[SimpleDateFormat]]の使用に基づく `"yyyy-MM"`のパターンで整形する。</p>
    *
    * @see java.lang.Object#toString()
    */
@@ -235,7 +235,7 @@ object CalendarMonth {
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合
    */
   def from(year: Int, month: Int) =
     new CalendarMonth(year, MonthOfYear(month))

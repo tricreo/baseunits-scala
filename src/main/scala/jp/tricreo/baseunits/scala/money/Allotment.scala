@@ -28,7 +28,7 @@ class Allotment[T]
 (private[money] val entity: T,
  private[money] val amount: Money) {
 
-  /**このオブジェクトの{@link #amount}フィールド（金額）を返す。
+  /**このオブジェクトの`amount`フィールド（金額）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -36,7 +36,7 @@ class Allotment[T]
    */
   def breachEncapsulationOfAmount = amount
 
-  /**このオブジェクトの{@link #entity}フィールド（割り当て対象）を返す。
+  /**このオブジェクトの`entity`フィールド（割り当て対象）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *

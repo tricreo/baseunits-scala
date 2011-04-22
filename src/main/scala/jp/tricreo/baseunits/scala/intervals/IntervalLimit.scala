@@ -79,7 +79,7 @@ case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
 /**区間における「限界」を表すクラス。
  *
  * <p>このクラスを理解するにあたっては、「限界」と「限界値」の区別を正しく認識することが重要となる。
- * 限界とはこのクラス {@code this} で表される値であり、限界値とは、 [[#value]]で表される値である。</p>
+ * 限界とはこのクラス `this` で表される値であり、限界値とは、 [[#value]]で表される値である。</p>
  *
  * <p>限界が「閉じている」とは、限界値そのものを超過とみなさないことを表し、
  * 「開いている」とは、これを超過とみなすことを表す。</p>
@@ -149,7 +149,7 @@ class IntervalLimit[T <% Ordered[T]]
    * 限界値が同一で、上側限界と下側限界の比較の場合は、開閉にかかわらず下側を「小さい」と判断する。</p>
    *
    * @param other 比較対象
-   * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
+   * @return 同値であった場合は `0`、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
    */
   def compare(obj: IntervalLimit[T]): Int = {
     if (value.isInstanceOf[Limitless[T]] && obj.value.isInstanceOf[Limitless[T]]) {
@@ -191,7 +191,7 @@ object IntervalLimit {
 
   /**インスタンスを生成する。
    *
-   * <p>無限限界（{@code value}ば`Limitless[T]`だった場合は、{@code isClosed}の指定にかかわらず
+   * <p>無限限界（`value`ば`Limitless[T]`だった場合は、`isClosed`の指定にかかわらず
    * 常に閉じた限界のインスタンスを生成する。</p>
    *
    * @tparam T 限界値の型
@@ -224,7 +224,6 @@ object IntervalLimit {
   /**上側限界インスタンスを生成する。
    *
    * @tparam T 限界値の型
-   * @param <T> 限界値の型
    * @param isClosed 閉じた限界を生成する場合は `true`を指定する
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    * @return 上側限界インスタンス

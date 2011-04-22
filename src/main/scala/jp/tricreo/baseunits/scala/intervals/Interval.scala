@@ -20,9 +20,9 @@ package jp.tricreo.baseunits.scala.intervals
 
 /**「区間」を表すクラス。
  *
- * <p>閉区間とは、{@code lower <= x <= upper}であらわされる区間であり、
- * 開区間とは、{@code lower < x < upper}であらわされる区間である。
- * どちらか一方のみが {@code <=} で、他方が {@code <} である場合は、半開区間と言う。</p>
+ * <p>閉区間とは、`lower <= x <= upper`であらわされる区間であり、
+ * 開区間とは、`lower < x < upper`であらわされる区間である。
+ * どちらか一方のみが `<=` で、他方が `<` である場合は、半開区間と言う。</p>
  *
  * The rules of this class are consistent with the common mathematical
  * definition of "interval". For a simple explanation, see
@@ -130,7 +130,7 @@ class Interval[T <% Ordered[T]]
    * 両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は`true`を返す。
    * また、どちらか一方のみが単一要素区間であった場合は`false`を返す。</p>
    *
-   * <p>`other`が{@code Interval}以外であった場合は、必ず`false`を返す。</p>
+   * <p>`other`が`Interval`以外であった場合は、必ず`false`を返す。</p>
    *
    * @param other 比較対象の区間
    * @return 同一である場合は`true`、そうでない場合は`false`
@@ -201,7 +201,7 @@ class Interval[T <% Ordered[T]]
     case _: Limitless[T] => false
   }
 
-  /**指定した値 {@code value} が、この区間に含まれるかどうかを検証する。
+  /**指定した値 `value` が、この区間に含まれるかどうかを検証する。
    *
    * @param value 値
    * @return 含まれる場合は`true`、そうでない場合は`false`
@@ -275,7 +275,7 @@ class Interval[T <% Ordered[T]]
     }
 
 
-  /**指定した値 {@code value} が、この区間の下側限界を超過していないかどうかを検証する。
+  /**指定した値 `value` が、この区間の下側限界を超過していないかどうかを検証する。
    *
    * @param value 値
    * @return 超過していない場合は`true`、そうでない場合は`false`
@@ -285,7 +285,7 @@ class Interval[T <% Ordered[T]]
     else lowerLimit > value || (lowerLimit == value && includesLowerLimit == false)
 
 
-  /**指定した値 {@code value} が、この区間の上側限界を超過していないかどうかを検証する。
+  /**指定した値 `value` が、この区間の上側限界を超過していないかどうかを検証する。
    *
    * @param value 値
    * @return 超過していない場合は`true`、そうでない場合は`false`
@@ -304,7 +304,7 @@ class Interval[T <% Ordered[T]]
   /**この区間が空であるかどうかを検証する。
    *
    * <p>区間が空であるとは、上側限界値と下側限界値が同値であり、かつ、開区間であることを示す。
-   * 例えば {@code 3 < x < 3}のような状態である。</p>
+   * 例えば `3 < x < 3`のような状態である。</p>
    *
    * @return 空である場合は`true`、そうでない場合は`false`
    */
@@ -323,7 +323,7 @@ class Interval[T <% Ordered[T]]
 
   /**この区間が単一要素区間であるかどうかを検証する。
    * 単一要素区間は、上側下側の両限界を持ち、さらにそれらの限界値が同値であり、かつ、開区間ではないことを示す。
-   * 例えば {@code 3 <= x < 3}, {@code 3 < x <= 3}, {@code 3 <= x <= 3}のような状態である。
+   * 例えば `3 <= x < 3`, `3 < x <= 3`, `3 <= x <= 3`のような状態である。
    *
    * @return 単一要素区間である場合は`true`、そうでない場合は`false`
    */
@@ -348,7 +348,7 @@ class Interval[T <% Ordered[T]]
    */
   def lowerLimit = lowerLimitObject.value
 
-  /**この区間と同じ型{@code T}を持つ、新しい区間を生成する。
+  /**この区間と同じ型`T`を持つ、新しい区間を生成する。
    *
    * @param isLower 下側限界値. 限界値がない場合は、[[Limitless[T]]]
    * @param lowerClosed 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
@@ -425,11 +425,11 @@ class Interval[T <% Ordered[T]]
 
   /**区間をグラフィカルに確認するためのデバッグ用メソッド。
    *
-   * <p>単一要素区間はキャラクタ{@code @}で表示する。
-   * 下側限界がない場合はキャラクタ{@code <}で表示し、上側限界がない場合はキャラクタ{@code >}で表示する。
-   * 下側限界が開区間である場合はキャラクタ{@code (} 、閉区間である場合はキャラクタ{ @code [}で表示する。
-   * 上側限界が開区間である場合はキャラクタ{ @code )}、閉区間である場合はキャラクタ{@code ]}で表示する。
-   * 区間内の要素はキャラクタ{@code -}で表示する。</p>
+   * <p>単一要素区間はキャラクタ`@`で表示する。
+   * 下側限界がない場合はキャラクタ`<`で表示し、上側限界がない場合はキャラクタ`>`で表示する。
+   * 下側限界が開区間である場合はキャラクタ`(` 、閉区間である場合はキャラクタ{ @code [}で表示する。
+   * 上側限界が開区間である場合はキャラクタ{ @code )}、閉区間である場合はキャラクタ`]`で表示する。
+   * 区間内の要素はキャラクタ`-`で表示する。</p>
    *
    * @return 文字列
    */
@@ -502,7 +502,7 @@ class Interval[T <% Ordered[T]]
   /**この区間の下側<b>補</b>区間と与えた区間 `other` の共通部分を返す。
    *
    * @param other 比較対象の区間
-   * @return この区間の下側の補区間と、与えた区間の共通部分。存在しない場合は {@code None}
+   * @return この区間の下側の補区間と、与えた区間の共通部分。存在しない場合は `None`
    */
   private def leftComplementRelativeTo(other: Interval[T]): Option[Interval[T]] =
   // この区間の下側限界値の方が小さいか等しい場合、下側の補区間に共通部分は無い
@@ -542,7 +542,7 @@ class Interval[T <% Ordered[T]]
   /**この区間の上側<b>補</b>区間と与えた区間 `other` の共通部分を返す。
    *
    * @param other 比較対象の区間
-   * @return この区間の上側の補区間と、与えた区間の共通部分。存在しない場合は {@code None}
+   * @return この区間の上側の補区間と、与えた区間の共通部分。存在しない場合は `None`
    */
   private def rightComplementRelativeTo(other: Interval[T]): Option[Interval[T]] =
   // この区間の上側限界値の方が大きいか等しい場合、上側の補区間に共通部分は無い
@@ -569,7 +569,7 @@ object Interval {
   /**下側限界のみを持つ区間を生成する。
    * 下側限界値は区間に含む（閉じている）区間である。
    *
-   * @param <T> 限界値の型
+   * @tparam T 限界値の型
    * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */
@@ -635,7 +635,7 @@ object Interval {
    *
    * <p>上側限界値は区間に含まない（開いている）区間である。</p>
    *
-   * @param <T> 限界値の型
+   * @tparam T 限界値の型
    * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */
@@ -645,7 +645,7 @@ object Interval {
    *
    * <p>上側限界値は区間に含む（閉じている）区間である。</p>
    *
-   * @param <T> 限界値の型
+   * @tparam T 限界値の型
    * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */

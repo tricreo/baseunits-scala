@@ -48,7 +48,7 @@ sealed class MonthOfYear
    */
   def breachEncapsulationOfValue = value
 
-  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+  /**指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
    * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
@@ -57,7 +57,7 @@ sealed class MonthOfYear
    */
   def isAfter(other: MonthOfYear) = isBefore(other) == false && equals(other) == false;
 
-  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+  /**指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
    * <p>お互いが同一日時である場合は `false` を返す。</p>
    *

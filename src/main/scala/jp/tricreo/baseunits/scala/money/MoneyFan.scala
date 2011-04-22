@@ -66,7 +66,7 @@ class MoneyFan[T]
   /**この [[MoneyFan]]の [[Allotment}]を `Allotment#negated`した [[Set]]で構成される
    * 新しい [[MoneyFan]]を返す。
    *
-   * @return {@link MoneyFan}
+   * @return `MoneyFan`
    */
   def negated = {
     val negatedAllotments = allotments.map(_.negated).toSet

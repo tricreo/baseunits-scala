@@ -99,7 +99,7 @@ class TimePoint private[time]
     else if (isAfter(otherPoint)) 1
     else 0
 
-  /**このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
+  /**このオブジェクトと、与えたオブジェクト `other`の同一性を検証する。
    *
    * <p>与えたオブジェクトが[TimePoint]]型であった場合、
    * 同じ日時を指している場合は`true`、そうでない場合は`false`を返す。</p>
@@ -121,7 +121,7 @@ class TimePoint private[time]
    */
   def isAfter(interval: TimeInterval) = interval.isBefore(Limit(this))
 
-  /**指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
+  /**指定した瞬間 `other` が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
    *
    * <p>同一日時である場合は `false` を返す。</p>
    *
@@ -138,7 +138,7 @@ class TimePoint private[time]
    */
   def isBefore(interval: TimeInterval) = interval.isAfter(Limit(this))
 
-  /**指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
+  /**指定した瞬間 `other` が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
    *
    * <p>同一日時である場合は `false` を返す。</p>
    *
@@ -147,7 +147,7 @@ class TimePoint private[time]
    */
   def isBefore(other: TimePoint) = millisecondsFromEpoc < other.millisecondsFromEpoc
 
-  /**指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間{@code other}の年月日が等価であるかを調べる。
+  /**指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間`other`の年月日が等価であるかを調べる。
    *
    * @param other 対象瞬間
    * @param zone タイムゾーン
@@ -204,7 +204,7 @@ class TimePoint private[time]
   }
 
   /**
-   * このインスタンスがあらわす瞬間を開始瞬間、{@code end}を終了瞬間とする、期間を返す。
+   * このインスタンスがあらわす瞬間を開始瞬間、`end`を終了瞬間とする、期間を返す。
    *
    * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
    *
@@ -216,6 +216,8 @@ class TimePoint private[time]
 
 }
 
+/**コンパニオンオブジェクト。
+ */
 object TimePoint {
 
   val GMT = TimeZone.getTimeZone("Universal")
@@ -321,8 +323,8 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合もしくは、
-   *  引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+   * @throws IllegalArgumentException 引数`hour`の値が0〜11の範囲ではない場合もしくは、
+   *  引数`amPm`の値が `"AM"` または `"PM"` ではない場合
    */
   def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int,
              millisecond: Int) = {
@@ -341,8 +343,8 @@ object TimePoint {
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合もしくは、
-   * 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合もしく
+   * @throws IllegalArgumentException 引数`hour`の値が0〜11の範囲ではない場合もしくは、
+   * 引数`amPm`の値が `"AM"` または `"PM"` ではない場合もしく
    */
   def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int,
              millisecond: Int, zone: TimeZone): TimePoint =

@@ -108,9 +108,9 @@ class Ratio
 
   override def hashCode = denominator.hashCode + numerator.hashCode
 
-  /**この比率と {@code multiplier} の積からなる比率。
+  /**この比率と `multiplier` の積からなる比率。
    *
-   * <p>計算結果は、分母は変化せず、分子は分子と {@code multiplyer} の積からなる比率となる。</p>
+   * <p>計算結果は、分母は変化せず、分子は分子と `multiplyer` の積からなる比率となる。</p>
    *
    * @param multiplier 乗数
    * @return 積
@@ -119,7 +119,7 @@ class Ratio
     Ratio(numerator * multiplier, denominator)
 
 
-  /**この比率と {@code multiplier} の積からなる比率。
+  /**この比率と `multiplier` の積からなる比率。
    *
    * <p>計算結果は、分子同士・分母同士の積からなる比率となる。</p>
    *
@@ -154,7 +154,7 @@ object Ratio {
    * @param numerator 分子
    * @param denominator 分母
    * @return 引数に与えた分子、分母からなる比
-   * @throws ArithmeticException 引数{@code denominator}が0だった場合
+   * @throws ArithmeticException 引数`denominator`が0だった場合
    */
   def apply(numerator: BigDecimal, denominator: BigDecimal): Ratio =
     new Ratio(numerator, denominator)
@@ -164,7 +164,7 @@ object Ratio {
    * @param numerator 分子
    * @param denominator 分母
    * @return 引数に与えた分子、分母からなる比率
-   * @throws ArithmeticException 引数{@code denominator}が0だった場合
+   * @throws ArithmeticException 引数`denominator`が0だった場合
    */
   def apply(numerator: Long, denominator: Long): Ratio =
     new Ratio(BigDecimal(numerator), BigDecimal(denominator))

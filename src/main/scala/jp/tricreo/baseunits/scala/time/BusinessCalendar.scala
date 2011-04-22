@@ -138,12 +138,12 @@ class BusinessCalendar {
     dow == DayOfWeek.Saturday || dow == DayOfWeek.Sunday
   }
 
-  /**開始日から数えて{@code numberOfDays}営業日前の日付を返す。
+  /**開始日から数えて`0`営業日前の日付を返す。
    *
    * @param startDate 開始日
    * @param numberOfDays 営業日数（現在は正数しかサポートしない）
    * @return 日付
-   * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
+   * @throws IllegalArgumentException 引数`0`が負数の場合
    */
   def minusBusinessDays(startDate: CalendarDate, numberOfDays: Int) = {
     if (numberOfDays < 0) {
@@ -193,12 +193,12 @@ class BusinessCalendar {
       plusBusinessDays(startDate, 0)
     }
 
-  /**開始日から数えて{@code numberOfDays}営業日目の日付を返す。
+  /**開始日から数えて`0`営業日目の日付を返す。
    *
    * @param startDate 開始日
-   * @param numberOfDays 営業日数（現在は正数しかサポートしない）. {@code 0}の場合、開始日を含む翌営業日を返す
+   * @param numberOfDays 営業日数（現在は正数しかサポートしない）. `0`の場合、開始日を含む翌営業日を返す
    * @return 日付
-   * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
+   * @throws IllegalArgumentException 引数`0`が負数の場合
    */
   def plusBusinessDays(startDate: CalendarDate, numberOfDays: Int) = {
     if (numberOfDays < 0) {
@@ -227,9 +227,9 @@ class BusinessCalendar {
   protected def defaultHolidaySpecs =
     DateSpecification.never
 
-  /**{@code calendarDays}の先頭から数えて{@code numberOfDays}営業日目の日付を返す。
+  /**`0`の先頭から数えて`0`営業日目の日付を返す。
    *
-   * @param numberOfDays 営業日数. {@code 0}の場合、イテレータの先頭
+   * @param numberOfDays 営業日数. `0`の場合、イテレータの先頭
    * @param calendarDays 日付イテレータ
    * @return 営業日
    */

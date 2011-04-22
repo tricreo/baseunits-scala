@@ -78,7 +78,7 @@ class CalendarDate private[time]
   def asYearInterval =
     CalendarInterval.year(yearMonth.breachEncapsulationOfYear)
 
-  /**このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
+  /**このインスタンスが表す日付で、引数`timeOfDay`で表す時を表す日時を返す。
    *
    * @param timeOfDay 時
    * @return 日時
@@ -120,7 +120,7 @@ class CalendarDate private[time]
 
   override def hashCode = day.hashCode + yearMonth.hashCode
 
-  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+  /**指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
    * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
@@ -130,7 +130,7 @@ class CalendarDate private[time]
   def isAfter(other: CalendarDate) =
     isBefore(other) == false && equals(other) == false
 
-  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+  /**指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
    * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
@@ -160,9 +160,9 @@ class CalendarDate private[time]
    */
   def plus(length: Duration) = length.addedTo(this)
 
-  /**このインスタンスが表現する日の {@code increment} 日後を返す。
+  /**このインスタンスが表現する日の `increment` 日後を返す。
    *
-   * <p> {@code increment}に負数を与えてもよい。</p>
+   * <p> `increment`に負数を与えてもよい。</p>
    *
    * @param increment 加える日数
    * @return 計算結果
@@ -176,9 +176,9 @@ class CalendarDate private[time]
     CalendarDate.from(year, month, day)
   }
 
-  /**このインスタンスが表現する日の {@code increment} ヶ月後を返す。
+  /**このインスタンスが表現する日の `increment` ヶ月後を返す。
    *
-   * <p> {@code increment}に負数を与えてもよい。</p>
+   * <p> `increment`に負数を与えてもよい。</p>
    *
    * @param increment 加える月数
    * @return 計算結果
@@ -205,7 +205,7 @@ class CalendarDate private[time]
    */
   def startAsTimePoint(zone: TimeZone) = TimePoint.atMidnight(this, zone)
 
-  /**このインスタンスが表現する日付を開始日とし、指定した日付 {@code otherDate} を終了日とする期間を取得する。
+  /**このインスタンスが表現する日付を開始日とし、指定した日付 `otherDate` を終了日とする期間を取得する。
    *
    * @param otherDate 終了日
    * @return 期間
@@ -215,7 +215,7 @@ class CalendarDate private[time]
 
   /**この日付の文字列表現を取得する。
    *
-   * <p>[[SimpleDateFormat]]の使用に基づく {@code "yyyy-MM-dd"}のパターンで整形する。</p>
+   * <p>[[SimpleDateFormat]]の使用に基づく `"yyyy-MM-dd"`のパターンで整形する。</p>
    *
    * @see java.lang.Object#toString()
    */
@@ -266,7 +266,7 @@ object CalendarDate {
    * @param yearMonth 年月
    * @param day 日
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+   * @throws IllegalArgumentException 引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(yearMonth: CalendarMonth, day: DayOfMonth): CalendarDate =
     new CalendarDate(yearMonth, day)
@@ -277,8 +277,8 @@ object CalendarDate {
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合もしくは、
-   * 引数{@code day}が1〜31の範囲ではない場合もしくは、引数{@code day}が{@code yearMonth}の月に存在しない場合
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
+   * 引数`day`が1〜31の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int): CalendarDate =
     new CalendarDate(CalendarMonth.from(year, month), DayOfMonth(day))
@@ -289,7 +289,7 @@ object CalendarDate {
    * @param month 月
    * @param day 日
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数{@code day}が{@code year}年の{@code month}の月に存在しない場合
+   * @throws IllegalArgumentException 引数`day`が`year`年の`month`の月に存在しない場合
    */
   def from(year: Int, month: MonthOfYear, day: DayOfMonth): CalendarDate =
     from(CalendarMonth.from(year, month), day)

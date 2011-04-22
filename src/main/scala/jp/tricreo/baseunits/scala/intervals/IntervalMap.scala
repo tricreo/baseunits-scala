@@ -78,7 +78,7 @@ class LinearIntervalMap[A <% Ordered[A], B]
   private def findKeyIntervalContaining(key: LimitValue[A]): Option[Interval[A]] =
     intervalMap.keys.find(_.includes(key))
 
-  /**この写像が保持するキーとしての区間のうち、指定した区間 {@code otherInterval}と共通部分を持つ
+  /**この写像が保持するキーとしての区間のうち、指定した区間 `otherInterval`と共通部分を持つ
    * 区間の列を取得する。
    *
    * <p>戻り値の列は、区間の自然順にソートされている。</p>
