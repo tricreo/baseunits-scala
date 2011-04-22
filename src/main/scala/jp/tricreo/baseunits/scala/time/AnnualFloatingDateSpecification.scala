@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -26,8 +26,8 @@ class AnnualFloatingDateSpecification private[time]
  private[time] val occurrence: Int)
   extends AnnualDateSpecification {
 
-  require(1 <= month && month <= 12);
-	require(1 <= occurrence && occurrence <= 5);
+  require(1 <= month && month <= 12)
+	require(1 <= occurrence && occurrence <= 5)
 
   override def isSatisfiedBy(date:CalendarDate) =
 		ofYear(date.asCalendarMonth.breachEncapsulationOfYear).equals(date)

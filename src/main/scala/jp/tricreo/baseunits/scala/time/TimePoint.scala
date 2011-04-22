@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -211,7 +211,7 @@ class TimePoint private[time]
    */
   def toString(pattern: String, zone: TimeZone) = {
     val format = new SimpleDateFormat(pattern)
-    format.setTimeZone(zone);
+    format.setTimeZone(zone)
     format.format(asJavaUtilDate)
   }
 
@@ -252,7 +252,7 @@ object TimePoint {
          minute: Int, second: Int, millisecond: Int, zone: TimeZone): TimePoint = {
     at(yearMonth.breachEncapsulationOfYear,
       yearMonth.breachEncapsulationOfMonth.value,
-      date.value, hour, minute, second, millisecond, zone);
+      date.value, hour, minute, second, millisecond, zone)
   }
 
   /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
@@ -366,7 +366,7 @@ object TimePoint {
    */
   def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int,
              millisecond: Int, zone: TimeZone): TimePoint =
-    at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, zone);
+    at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, zone)
 
   /**世界標準時における、指定した日時を表すインスタンスを取得する。
    *
@@ -405,7 +405,7 @@ object TimePoint {
    * @return [[TimePoint]]
    */
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int): TimePoint =
-    at(year, month, date, hour, minute, second, millisecond, GMT);
+    at(year, month, date, hour, minute, second, millisecond, GMT)
 
   /**指定したタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
    *
@@ -477,7 +477,7 @@ object TimePoint {
    * @return [[TimePoint]]
    */
   def from(milliseconds: Long): TimePoint = {
-    val result = new TimePoint(milliseconds);
+    val result = new TimePoint(milliseconds)
     //assert FAR_FUTURE == null || result.isBefore(FAR_FUTURE);
     //assert FAR_PAST == null || result.isAfter(FAR_PAST);
     result

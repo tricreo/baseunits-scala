@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -33,7 +33,7 @@ class Money
   extends Ordered[Money] {
 
   if (amount.scale != currency.getDefaultFractionDigits) {
-    throw new IllegalArgumentException("Scale of amount does not match currency");
+    throw new IllegalArgumentException("Scale of amount does not match currency")
   }
 
   override def equals(obj: Any) = obj match {
@@ -139,7 +139,7 @@ class Money
    * @return 金額
    */
   def dividedBy(divisor: Double): Money = {
-    dividedBy(divisor, Money.DEFAULT_ROUNDING_MODE);
+    dividedBy(divisor, Money.DEFAULT_ROUNDING_MODE)
   }
 
   /**この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
@@ -244,7 +244,7 @@ class Money
    * @return 金額
    */
   def negated =
-    Money(BigDecimal(amount.bigDecimal.negate), currency);
+    Money(BigDecimal(amount.bigDecimal.negate), currency)
 
 
   /**指定した時間量に対する、この金額の割合を返す。
@@ -283,7 +283,7 @@ class Money
    * @return 掛けた金額
    */
   def times(factor: BigDecimal): Money = {
-    times(factor, Money.DEFAULT_ROUNDING_MODE);
+    times(factor, Money.DEFAULT_ROUNDING_MODE)
   }
 
   /**この金額に{@code factor}を掛けた金額を返す。
@@ -308,7 +308,7 @@ class Money
    * @return 掛けた金額
    */
   def times(amount: Double): Money =
-    times(BigDecimal(amount));
+    times(BigDecimal(amount))
 
   /**この金額に{@code amount}を掛けた金額を返す。
    *
@@ -357,7 +357,7 @@ class Money
   //	}
 
   private[money] def hasSameCurrencyAs(arg: Money) =
-    currency.equals(arg.currency) || arg.amount.equals(BigDecimal(0)) || amount.equals(BigDecimal(0));
+    currency.equals(arg.currency) || arg.amount.equals(BigDecimal(0)) || amount.equals(BigDecimal(0))
 
   /**この金額に、最小の単位金額を足した金額、つまりこの金額よりも1ステップ分大きな金額を返す。
    *
@@ -383,16 +383,16 @@ class Money
 
   private def checkHasSameCurrencyAs(aMoney: Money) {
     if (hasSameCurrencyAs(aMoney) == false) {
-      throw new ClassCastException(aMoney.toString() + " is not same currency as " + this.toString());
+      throw new ClassCastException(aMoney.toString() + " is not same currency as " + this.toString())
     }
   }
 
   //  TODO: Provide some currency-dependent formatting. Java 1.4 Currency doesn't do it.
   //  public String formatString() {
-  //      return currency.formatString(amount());
+  //      return currency.formatString(amount())
   //  }
   //  public String localString() {
-  //      return currency.getFormat().format(amount());
+  //      return currency.getFormat().format(amount())
   //  }
 
 }
@@ -423,7 +423,7 @@ object Money {
    * @return {@code amount}で表す量のドルを表すインスタンス
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def dollars(amount: BigDecimal) = adjustBy(amount, USD);
+  def dollars(amount: BigDecimal) = adjustBy(amount, USD)
 
   /**{@code amount}で表す量のドルを表すインスタンスを返す。
    *
@@ -463,15 +463,9 @@ object Money {
    */
   def sum(monies: Iterable[Money]) = {
     if (monies.isEmpty) {
-      Money.zero(Currency.getInstance(Locale.getDefault()));
+      Money.zero(Currency.getInstance(Locale.getDefault))
     } else {
-      val iterator = monies.iterator
-      var sum = iterator.next
-      while (iterator.hasNext) {
-        val each = iterator.next
-        sum = sum + each
-      }
-      sum
+      monies.reduceLeft(_ + _)
     }
   }
 

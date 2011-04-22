@@ -6,25 +6,25 @@ import org.junit.{Test, After}
 import jp.tricreo.baseunits.scala.time.{CalendarDate, TimeSource, TimePoint}
 
 /**[[Clock]]のテストクラス。
+ * @author j5ik2o
  */
 class ClockTest extends AssertionsForJUnit {
 
-  val dec1_5am_gmt = TimePoint.atGMT(2004, 12, 1, 5, 0);
+  val dec1_5am_gmt = TimePoint.atGMT(2004, 12, 1, 5, 0)
 
-  val gmt = TimeZone.getTimeZone("Universal");
+  val gmt = TimeZone.getTimeZone("Universal")
 
-  val pt = TimeZone.getTimeZone("America/Los_Angeles");
+  val pt = TimeZone.getTimeZone("America/Los_Angeles")
 
-  val ct = TimeZone.getTimeZone("America/Chicago");
+  val ct = TimeZone.getTimeZone("America/Chicago")
 
-  /**現在時間を問われた時、常に[[#dec1_5am_gmt]]を返す [[TimeSource]] */
+  /** 現在時間を問われた時、常に[[#dec1_5am_gmt]]を返す [[TimeSource]] */
   val dummySourceDec1_5h = new TimeSource() {
     override def now = dec1_5am_gmt
   }
 
 
   /**テストの情報を破棄する。
-   *
    * @throws Exception 例外が発生した場合
    */
   @After
@@ -33,7 +33,6 @@ class ClockTest extends AssertionsForJUnit {
   }
 
   /**[[Clock#now()]]のテスト。
-   *
    * @throws Exception 例外が発生した場合
    */
   @Test
@@ -43,9 +42,7 @@ class ClockTest extends AssertionsForJUnit {
   }
 
   /**[[Clock#now()]]で例外が発生しないこと。
-   *
    * [ 1466694 ] Clock.now() should use default TimeSource
-   *
    * @throws Exception 例外が発生した場合
    */
   @Test
@@ -54,7 +51,6 @@ class ClockTest extends AssertionsForJUnit {
   }
 
   /**[[Clock#setDefaultTimeZone(TimeZone)]]のテスト。
-   *
    * @throws Exception 例外が発生した場合
    */
   @Test
@@ -71,19 +67,17 @@ class ClockTest extends AssertionsForJUnit {
   }
 
   /**[[Clock#today()]]のテスト。
-   *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test04_TodayWithoutTimeZone {
     Clock.timeSource = dummySourceDec1_5h
-
     try {
       Clock.today
       fail("Clock cannot answer today() without a timezone.")
     } catch {
       case _: RuntimeException => // Correctly threw exception
+      case _ => fail
     }
-
   }
 }

@@ -321,7 +321,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
       "2010-11-08 2010-11-09 2010-11-10 2010-11-11 2010-11-12 " +
       "2010-11-15 2010-11-16 2010-11-17 2010-11-18 2010-11-19 " +
       "2010-11-22 2010-11-24 2010-11-25 2010-11-26 " +
-      "2010-11-29 2010-11-30 "));
+      "2010-11-29 2010-11-30 "))
   }
 
 
@@ -385,7 +385,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
         try {
           dates += CalendarDate.parse(string, "yyyy/MM/dd")
         } catch {
-          case e: ParseException => throw new Error(e);
+          case e: ParseException => throw new Error(e)
         }
       }
       dates.toSet

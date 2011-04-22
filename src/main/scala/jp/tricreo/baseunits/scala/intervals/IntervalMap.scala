@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -21,7 +21,7 @@ package jp.tricreo.baseunits.scala.intervals
 import collection.immutable.{MapLike, Map}
 import collection.Iterator
 
-/**区間に対して値をマッピングするトレイト。
+/**区間に対して値をマッピングする抽象クラス。
  *
  * @tparam K キーとなる区間の型
  * @tparam V 値の型
@@ -58,8 +58,6 @@ class LinearIntervalMap[A <% Ordered[A], B]
   extends IntervalMap[A, B] {
 
   def this() = this (Map.empty[Interval[A], B])
-
-  //  override def empty: IntervalMap[A, B] = new LinearIntervalMap[A, B]()
 
   override def toString(): String = intervalMap.toString
 
@@ -98,7 +96,6 @@ class LinearIntervalMap[A <% Ordered[A], B]
 
   def iterator: Iterator[(Interval[A], B)] = intervalMap.iterator
 
-  //def +[B1 >: B](kv: (Interval[A], B1)): Map[Interval[A], B1] = intervalMap.+(kv)
   def +[B1 >: B](kv: (Interval[A], B1)): LinearIntervalMap[A, B1] = {
     val removed = this.-(kv._1)
     val result = removed.intervalMap.+(kv)
@@ -126,18 +123,13 @@ class LinearIntervalMap[A <% Ordered[A], B]
     new LinearIntervalMap(currentMap)
   }
 
-  //  override def updated[B1 >: B](key: Interval[A], value: B1): IntervalMap[A, B1] =
-  //    new LinearIntervalMap(intervalMap.updated(key, value))
-
 }
 
 object LinearIntervalMap {
 
-  //implicit def toMap[A <: Ordered[A], B](src: LinearIntervalMap[A, B]) = src.intervalMap
+  def apply[A <% Ordered[A], B]:LinearIntervalMap[A, B] = new LinearIntervalMap
 
-  def apply[A <% Ordered[A], B]:LinearIntervalMap[A, B] = new LinearIntervalMap[A, B]
-
-  def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]):LinearIntervalMap[A, B] = new LinearIntervalMap[A, B](intervalMap)
+  def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]):LinearIntervalMap[A, B] = new LinearIntervalMap(intervalMap)
 
   def unapply[A <% Ordered[A], B](linearIntervalMap:LinearIntervalMap[A,B]) =
     Some(linearIntervalMap.intervalMap)

@@ -265,7 +265,7 @@ class IntevalTest extends AssertionsForJUnit {
     // confusion at the moment, I decided to throw this in.
     try {
       Interval.closed(Limit(BigDecimal(2.0)), Limit(BigDecimal(1.0)))
-      fail("Lower bound mustn't be isAbove isUpper bound.");
+      fail("Lower bound mustn't be isAbove isUpper bound.")
     } catch {
       case _: IllegalArgumentException => ()
       // success

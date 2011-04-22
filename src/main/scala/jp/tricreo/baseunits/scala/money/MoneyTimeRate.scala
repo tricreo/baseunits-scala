@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -73,7 +73,7 @@ class MoneyTimeRate
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration): Money =
-    over(duration, BigDecimal.RoundingMode.UNNECESSARY);
+    over(duration, BigDecimal.RoundingMode.UNNECESSARY)
 
 
   /**時間量に対してこの割合を適用した場合の金額を返す。

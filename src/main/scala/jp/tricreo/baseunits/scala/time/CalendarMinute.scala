@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -167,7 +167,7 @@ object CalendarMinute {
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateTimeString: String, pattern: String): CalendarMinute = {
-    val arbitraryZone = TimeZone.getTimeZone("Universal");
+    val arbitraryZone = TimeZone.getTimeZone("Universal")
     //Any timezone works, as long as the same one is used throughout.
     val point = TimePoint.parse(dateTimeString, pattern, arbitraryZone)
     CalendarMinute.from(point.calendarDate(arbitraryZone), point.asTimeOfDay(arbitraryZone))

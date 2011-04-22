@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -93,7 +93,7 @@ class TimeRate
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal = {
-    over(duration, scale, roundingMode);
+    over(duration, scale, roundingMode)
   }
 
   /**スケールを取得する。

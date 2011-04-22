@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -181,7 +181,7 @@ object TimeUnit {
   val quarter = TimeUnit(Type.quarter, Type.month, TimeUnitConversionFactor.monthsPerQuarter)
 
   /**年単位 */
-  val year = TimeUnit(Type.year, Type.month, TimeUnitConversionFactor.monthsPerYear);
+  val year = TimeUnit(Type.year, Type.month, TimeUnitConversionFactor.monthsPerYear)
 
   private val DESCENDING_MS_BASED = List(
     week,

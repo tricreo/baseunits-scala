@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -89,7 +89,7 @@ object DateSpecification {
    * @return 日付仕様
    */
   def fixed(month: Int, day: Int) =
-    new AnnualFixedDateSpecification(MonthOfYear(month), DayOfMonth(day));
+    new AnnualFixedDateSpecification(MonthOfYear(month), DayOfMonth(day))
 
   /**
    * どの日付にもマッチしない日付仕様を返す。
@@ -117,7 +117,7 @@ object DateSpecification {
    * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
    */
   def nthOccuranceOfWeekdayInEveryMonth(dayOfWeek: DayOfWeek, n: Int): DateSpecification =
-    new MonthlyFloatingDateSpecification(dayOfWeek, n);
+    new MonthlyFloatingDateSpecification(dayOfWeek, n)
 
   /**
    * X月の第Y◎曜日仕様のインスタンスを生成する。
@@ -129,6 +129,6 @@ object DateSpecification {
    * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
    */
   def nthOccuranceOfWeekdayInMonth(month: Int, dayOfWeek: DayOfWeek, n: Int): DateSpecification =
-    new AnnualFloatingDateSpecification(month, dayOfWeek, n);
+    new AnnualFloatingDateSpecification(month, dayOfWeek, n)
 
 }

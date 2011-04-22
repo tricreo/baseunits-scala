@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -21,9 +21,8 @@ package jp.tricreo.baseunits.scala.money
 import collection.Iterator
 import collection.mutable.ListBuffer
 
-/**
- * 割り当ての集合。
- *
+/**割り当ての集合。
+ * @author j5ik2o
  * @tparam T 割り当て対象
  * @param allotment 割り当ての要素（単一）
  */
@@ -61,22 +60,22 @@ class MoneyFan[T]
    */
   def minus(subtracted: MoneyFan[T]) = plus(subtracted.negated)
 
-  /**
-   * この {@link MoneyFan}の {@link Allotment}を {@link Allotment#negated()}した {@link Set}で構成される
+  def -(subtracted: MoneyFan[T]) = minus(subtracted)
+
+
+  /**この {@link MoneyFan}の {@link Allotment}を {@link Allotment#negated()}した {@link Set}で構成される
    * 新しい {@link MoneyFan}を返す。
    *
    * @return {@link MoneyFan}
    */
   def negated = {
-    var negatedAllotments = Set.empty[Allotment[T]]
-    for (allotment <- allotments) {
-      negatedAllotments += (allotment.negated)
-    }
+    val negatedAllotments = allotments.map(_.negated).toSet
     new MoneyFan[T](negatedAllotments)
   }
 
-  /**
-   * この{@link MoneyFan}に{@code added}を足した和を返す。
+  def unary_- = negated
+
+  /**この{@link MoneyFan}に{@code added}を足した和を返す。
    *
    * <p>同じ割り当て対象に対する割当額は、マージする。また、割当額が0の {@link Allotment} は取り除く。</p>
    *
@@ -85,26 +84,26 @@ class MoneyFan[T]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def plus(added: MoneyFan[T]) = {
-    var allEntities = Set.empty[T]
-    for (allotment <- allotments) {
-      allEntities += (allotment.entity)
-    }
-    for (allotment <- added.allotments) {
-      allEntities += (allotment.entity)
-    }
-    var summedAllotments = Set.empty[Allotment[T]]
-    for (entity <- allEntities) {
-      if (this.allotment(entity) == None) {
-        summedAllotments += (added.allotment(entity).get)
-      } else if (added.allotment(entity) == None) {
-        summedAllotments += (this.allotment(entity).get)
-      } else {
-        val sum = this.allotment(entity).get.amount.plus(added.allotment(entity).get.amount);
-        summedAllotments += (new Allotment[T](entity, sum))
-      }
+    val allEntities = allotments.map(_.entity) ++ added.allotments.map(_.entity)
+    val summedAllotments = allEntities.map {
+      entity =>
+        allotment(entity) match {
+          case None => added.allotment(entity).get
+          case Some(thisAllotment) => {
+            added.allotment(entity) match {
+              case None => thisAllotment
+              case Some(addedAllotment) => {
+                val sum = thisAllotment.amount.plus(addedAllotment.amount)
+                new Allotment[T](entity, sum)
+              }
+            }
+          }
+        }
     }
     new MoneyFan[T](summedAllotments).withoutZeros
   }
+
+  def +(added: MoneyFan[T]) = plus(added)
 
   override def toString = allotments.toString
 
@@ -115,26 +114,21 @@ class MoneyFan[T]
   def total = asTally.net
 
   private def asTally = {
+//    val moneies = allotments.map(_.amount)
     val moneies = ListBuffer.empty[Money]
     for (allotment <- allotments) {
       moneies += (allotment.amount)
     }
-    new Tally(moneies.toList)
+    new Tally(moneies)
   }
 
-  /**
-   * このインスタンスが保持する {@link Allotment} のうち、割り当て金額が{@code 0}であるものを取り除いた
+  /**このインスタンスが保持する {@link Allotment} のうち、割り当て金額が{@code 0}であるものを取り除いた
    * 新しい {@link MoneyFan}を返す。
    *
    * @return {@link MoneyFan}
    */
   private def withoutZeros = {
-    var nonZeroAllotments = Set.empty[Allotment[T]]
-    for (allotment <- allotments) {
-      if (allotment.breachEncapsulationOfAmount.isZero == false) {
-        nonZeroAllotments += (allotment)
-      }
-    }
+    val nonZeroAllotments = allotments.filter(_.breachEncapsulationOfAmount.isZero == false).toSet
     new MoneyFan[T](nonZeroAllotments)
   }
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -221,15 +221,15 @@ class CalendarMonth private[time]
   }
 
   def asJavaCalendarUniversalZoneMidnight = {
-    val zone = TimeZone.getTimeZone("Universal");
-    val calendar = Calendar.getInstance(zone);
-    calendar.set(Calendar.YEAR, year);
-    calendar.set(Calendar.MONTH, month.value - 1);
-    calendar.set(Calendar.DATE, 1);
-    calendar.set(Calendar.HOUR_OF_DAY, 0);
-    calendar.set(Calendar.MINUTE, 0);
-    calendar.set(Calendar.SECOND, 0);
-    calendar.set(Calendar.MILLISECOND, 0);
+    val zone = TimeZone.getTimeZone("Universal")
+    val calendar = Calendar.getInstance(zone)
+    calendar.set(Calendar.YEAR, year)
+    calendar.set(Calendar.MONTH, month.value - 1)
+    calendar.set(Calendar.DATE, 1)
+    calendar.set(Calendar.HOUR_OF_DAY, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
     calendar;
   }
 }
@@ -273,7 +273,7 @@ object CalendarMonth {
     val arbitraryZone = TimeZone.getTimeZone("Universal")
     //Any timezone works, as long as the same one is used throughout.
     val point = TimePoint.parse(dateString, pattern, arbitraryZone)
-    CalendarMonth.from(point, arbitraryZone);
+    CalendarMonth.from(point, arbitraryZone)
   }
 
   /**

@@ -7,11 +7,11 @@ import jp.tricreo.baseunits.scala.util.Ratio
 import collection.mutable.ListBuffer
 
 class MoneyTest extends AssertionsForJUnit {
-  val USD = Currency.getInstance("USD");
+  val USD = Currency.getInstance("USD")
 
-  val JPY = Currency.getInstance("JPY");
+  val JPY = Currency.getInstance("JPY")
 
-  val EUR = Currency.getInstance("EUR");
+  val EUR = Currency.getInstance("EUR")
 
   var d15: Money = _
 

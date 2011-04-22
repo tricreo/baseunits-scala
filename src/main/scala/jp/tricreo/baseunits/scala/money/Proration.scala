@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -38,7 +38,7 @@ object Proration {
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def dividedEvenlyIntoParts(total: Money, n: Int) = {
-    val lowResult = total.dividedBy(BigDecimal(n), BigDecimal.RoundingMode.DOWN);
+    val lowResult = total.dividedBy(BigDecimal(n), BigDecimal.RoundingMode.DOWN)
     val lowResults = Array.fill(n)(lowResult)
     val remainder = total.minus(sum(lowResults))
     distributeRemainderOver(lowResults, remainder)
@@ -83,12 +83,11 @@ object Proration {
    * @throws IllegalArgumentException 引数{@code proportions}またはその要素に{@code null}を与えた場合
    */
   def proratedOver(total: Money, proportions: Array[BigDecimal]): Array[Money] = {
-    val simpleResult = new Array[Money](proportions.length)
     val scale = defaultScaleForIntermediateCalculations(total)
-    val _ratios = ratios(proportions)
-    for (i <- 0 until _ratios.length) {
-      val multiplier = _ratios(i).decimalValue(scale, BigDecimal.RoundingMode.DOWN);
-      simpleResult(i) = total.times(multiplier, BigDecimal.RoundingMode.DOWN);
+    val simpleResult = ratios(proportions).map{
+      e =>
+      val multiplier = e.decimalValue(scale, BigDecimal.RoundingMode.DOWN)
+      total.times(multiplier, BigDecimal.RoundingMode.DOWN)
     }
     val remainder = total.minus(sum(simpleResult))
     distributeRemainderOver(simpleResult, remainder)
@@ -107,10 +106,7 @@ object Proration {
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def proratedOver[T <% Number](total: Money, longProportions: Array[T]): Array[Money] = {
-    val proportions = new Array[BigDecimal](longProportions.length)
-    for (i <- 0 until longProportions.length) {
-      proportions(i) = BigDecimal(longProportions(i).longValue)
-    }
+    val proportions = longProportions.map(e => BigDecimal(e.longValue))
     proratedOver(total, proportions)
   }
 
@@ -138,11 +134,7 @@ object Proration {
    */
   def ratios(proportions: Array[BigDecimal]) = {
     val total = sum(proportions)
-    val result = new Array[Ratio](proportions.length)
-    for (i <- 0 until result.length) {
-      result(i) = Ratio(proportions(i), total)
-    }
-    result
+    proportions.map(e => Ratio(e, total))
   }
 
   /**{@code elements}の要素の和を返す。

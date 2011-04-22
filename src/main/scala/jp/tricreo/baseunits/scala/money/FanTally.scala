@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -18,42 +18,48 @@
  */
 package jp.tricreo.baseunits.scala.money
 
-import collection.Iterator
-
 /**[[MoneyFan]]の集合。
- *
- * @param <T> 割り当ての対象
+ * @tparam T 割り当ての対象
+ * @param fans [[MapFan]]の[[Iterable]]
  */
 class FanTally[T]
 (private[money] val fans: Iterable[MoneyFan[T]])
   extends Iterable[MoneyFan[T]] {
 
+  import collection.Iterator
+
   def this(fan: MoneyFan[T]) = this (Iterable.fill(1)(fan))
 
   def iterator: Iterator[MoneyFan[T]] = fans.iterator
 
-  /**要素の {@link MoneyFan}を全てマージしたものを返す。
-   * @return {@link MoneyFan}
+  /**要素の[[MoneyFan]]を全てマージしたものを返す。
+   * @return [[MoneyFan]]
    */
   def net: MoneyFan[T] = {
-    var sum = new MoneyFan[T]
-    for (val fan <- fans) {
-      sum = sum.plus(fan)
-    }
-    sum
+    val sum = new MoneyFan[T]
+    fans.foldLeft(sum)(_.plus(_))
+//    for (fan <- fans) {
+//      sum = sum.plus(fan)
+//    }
+//    sum
   }
 
   override def toString = fans.toString
 
-  /**要素の {@link MoneyFan}が含む {@link Allotment}の合計額を返す。
+  /**要素の[[MoneyFan]]が含む[[Allotment]]の合計額を返す。
    * @return 合計額
    */
   def total: Money = net.total
 
 }
 
+/**コンパニオンオブジェクト。
+ */
 object FanTally {
 
+  /**
+   *
+   */
   def apply[T](fans: Iterable[MoneyFan[T]]) = new FanTally[T](fans)
 
   def unapply[T](fanTally: FanTally[T]) = Some(fanTally.fans)

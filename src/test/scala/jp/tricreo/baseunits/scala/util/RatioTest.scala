@@ -14,8 +14,7 @@ import java.math.RoundingMode
 
 class RatioTest extends AssertionsForJUnit {
 
-  /**
-   * [[BigDecimal]]で構成する[[Ratio]]の挙動テスト。
+  /**[[BigDecimal]]で構成する[[Ratio]]の挙動テスト。
    *
    * <ul>
    *   <li>{@code 3/2}であらわす割合について、小数点第1位までで丸めなかった場合は1.5である。</li>
@@ -67,8 +66,7 @@ class RatioTest extends AssertionsForJUnit {
     }
   }
 
-  /**
-   * {@code long}で構成する[[Ratio]]の挙動テスト。
+  /**{@code long}で構成する[[Ratio]]の挙動テスト。
    *
    * <p>{@code 9001/3000}であらわす割合（3.00033…）について、小数点第6位までで切り上げた場合は3.000334である。</p>
    *
@@ -81,8 +79,7 @@ class RatioTest extends AssertionsForJUnit {
     assert(result == BigDecimal("3.000334"))
   }
 
-  /**
-   * [[Ratio#of(BigDecimal)]]のテスト。
+  /**[[Ratio#of(BigDecimal)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -94,8 +91,7 @@ class RatioTest extends AssertionsForJUnit {
     assert(ratio.decimalValue(5, BigDecimal.RoundingMode.UNNECESSARY) == BigDecimal("3.14159"))
   }
 
-  /**
-   * [[Ratio#equals(Object)]]のテスト。
+  /**[[Ratio#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -125,8 +121,7 @@ class RatioTest extends AssertionsForJUnit {
     assert(Ratio(100, 200) == Ratio(10, 20))
   }
 
-  /**
-   * [[Ratio#times(BigDecimal)]]のテスト。
+  /**[[Ratio#times(BigDecimal)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -137,8 +132,7 @@ class RatioTest extends AssertionsForJUnit {
     assert(product == Ratio(BigDecimal("9901.1"), BigDecimal(3000)))
   }
 
-  /**
-   * [[Ratio#times(Ratio)]]のテスト。
+  /**[[Ratio#times(Ratio)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -150,8 +144,7 @@ class RatioTest extends AssertionsForJUnit {
     assert(r1.times(r2) == expectedProduct)
   }
 
-  /**
-   * [[Ratio#toString()]]のテスト。
+  /**[[Ratio#toString()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

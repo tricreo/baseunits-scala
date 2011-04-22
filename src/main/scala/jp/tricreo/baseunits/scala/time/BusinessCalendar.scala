@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -35,7 +35,7 @@ class BusinessCalendar {
    * @param date 休日として取り扱う「日」
    */
   def addHoliday(date: CalendarDate) {
-    addHolidaySpec(DateSpecification.fixed(date));
+    addHolidaySpec(DateSpecification.fixed(date))
   }
 
   /**休日として取り扱う「日」を追加する。
@@ -212,7 +212,7 @@ class BusinessCalendar {
    */
   def plusBusinessDays(startDate: CalendarDate, numberOfDays: Int) = {
     if (numberOfDays < 0) {
-      throw new IllegalArgumentException("Negative numberOfDays not supported");
+      throw new IllegalArgumentException("Negative numberOfDays not supported")
     }
     val iterator = CalendarInterval.everFrom(Limit(startDate)).daysIterator
     nextNumberOfBusinessDays(numberOfDays, iterator)

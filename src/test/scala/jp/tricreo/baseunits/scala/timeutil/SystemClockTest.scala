@@ -6,12 +6,11 @@ import jp.tricreo.baseunits.scala.time.TimePoint
 import java.util.Date
 import scala.math._
 
-/**
- * [[SystemClock]]のテストクラス。
+/**[[SystemClock]]のテストクラス。
+ * @author j5ik2o
  */
 class SystemClockTest extends AssertionsForJUnit {
   /**[[SystemClock]]のテスト。
-   *
    * @throws Exception 例外が発生した場合
    */
   @Test

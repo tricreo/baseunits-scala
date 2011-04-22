@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -138,7 +138,7 @@ class Duration
    * @throws ArithmeticException 引数{@code divisor}が0だった場合
    */
   def dividedBy(divisor: Duration): Ratio = {
-    checkConvertible(divisor);
+    checkConvertible(divisor)
     Ratio(inBaseUnits, divisor.inBaseUnits)
   }
 
@@ -309,11 +309,11 @@ class Duration
   }
 
   private def checkGreaterThanOrEqualTo(other: Duration) {
-    require((compareTo(other) < 0) == false, this + " is before " + other);
+    require((compareTo(other) < 0) == false, this + " is before " + other)
   }
 
   private def isConvertibleTo(other: Duration) =
-    unit.isConvertibleTo(other.unit);
+    unit.isConvertibleTo(other.unit)
 
   private def toNormalizedString(units: List[TimeUnit]): String = {
     val buffer = new StringBuffer
@@ -363,16 +363,16 @@ object Duration {
                                           milliseconds: Long): Duration = {
     var result = Duration.days(days)
     if (hours != 0) {
-      result = result.plus(Duration.hours(hours));
+      result = result.plus(Duration.hours(hours))
     }
     if (minutes != 0) {
-      result = result.plus(Duration.minutes(minutes));
+      result = result.plus(Duration.minutes(minutes))
     }
     if (seconds != 0) {
-      result = result.plus(Duration.seconds(seconds));
+      result = result.plus(Duration.seconds(seconds))
     }
     if (milliseconds != 0) {
-      result = result.plus(Duration.milliseconds(milliseconds));
+      result = result.plus(Duration.milliseconds(milliseconds))
     }
     result
   }
@@ -407,7 +407,7 @@ object Duration {
    * @return 時間量
    */
   def months(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.month);
+    Duration(howMany, TimeUnit.month)
 
   /**長さが {@code howMany} 四半期の時間量を取得する。
    *
@@ -415,7 +415,7 @@ object Duration {
    * @return 時間量
    */
   def quarters(howMany: Int): Duration = {
-    Duration(howMany, TimeUnit.quarter);
+    Duration(howMany, TimeUnit.quarter)
   }
 
   /**長さが {@code howMany} ミリの時間量を取得する。

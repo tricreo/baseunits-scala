@@ -45,7 +45,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
   @Test
   def test01_Iterate {
     var intervalSequence = new IntervalSeq[Int]
-    assert(intervalSequence.isEmpty == true);
+    assert(intervalSequence.isEmpty == true)
     intervalSequence :+= empty
     intervalSequence :+= c5_10c
     intervalSequence :+= o10_12c
@@ -59,7 +59,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     assert(it.hasNext == false)
     try {
       it.next
-      fail("Should throw NoSuchElementException");
+      fail("Should throw NoSuchElementException")
     } catch {
       case e: NoSuchElementException =>
       // success
@@ -85,7 +85,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     assert(it.hasNext == false)
     try {
       it.next
-      fail("Should throw NoSuchElementException");
+      fail("Should throw NoSuchElementException")
     } catch {
       case e: NoSuchElementException => // success
       case _ => fail()
@@ -109,7 +109,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     assert(it.hasNext == false)
     try {
       it.next
-      fail("Should throw NoSuchElementException");
+      fail("Should throw NoSuchElementException")
     } catch {
       case e: NoSuchElementException => // success
       case _ => fail()
@@ -122,7 +122,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
    */
   @Test
   def test04_Intersections {
-    var intervalSequence = IntervalSeq[Int]();
+    var intervalSequence = IntervalSeq[Int]()
     intervalSequence :+= o10_12c
     intervalSequence :+= o11_20c
     intervalSequence :+= c20_25c
@@ -135,7 +135,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     assert(it.hasNext == false)
     try {
       it.next
-      fail("Should throw NoSuchElementException");
+      fail("Should throw NoSuchElementException")
     } catch {
       case e: NoSuchElementException =>
       case _ => fail()
@@ -161,8 +161,8 @@ class IntervalSeqTest extends AssertionsForJUnit {
     assert(it.next == o25_30c)
     assert(it.hasNext == false)
     try {
-      it.next();
-      fail("Should throw NoSuchElementException");
+      it.next()
+      fail("Should throw NoSuchElementException")
     } catch {
       case e: NoSuchElementException =>
       // success

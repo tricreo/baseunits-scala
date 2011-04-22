@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -163,7 +163,7 @@ object Ratio {
    * @throws ArithmeticException 引数{@code denominator}が0だった場合
    */
   def apply(numerator: BigDecimal, denominator: BigDecimal): Ratio =
-    new Ratio(numerator, denominator);
+    new Ratio(numerator, denominator)
 
   /**インスタンスを生成する。
    *
@@ -173,7 +173,7 @@ object Ratio {
    * @throws ArithmeticException 引数{@code denominator}が0だった場合
    */
   def apply(numerator: Long, denominator: Long): Ratio =
-    new Ratio(BigDecimal(numerator), BigDecimal(denominator));
+    new Ratio(BigDecimal(numerator), BigDecimal(denominator))
 
   def unapply(ratio: Ratio) = Some(ratio.numerator, ratio.denominator)
 

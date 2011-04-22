@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -91,7 +91,7 @@ object HourOfDay {
    * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
    */
   def apply(initial: Int, amPm: String) =
-    new HourOfDay(convertTo24hour(initial, amPm));
+    new HourOfDay(convertTo24hour(initial, amPm))
 
 
   def unapply(hourOfDay: HourOfDay) = Some(hourOfDay.value)

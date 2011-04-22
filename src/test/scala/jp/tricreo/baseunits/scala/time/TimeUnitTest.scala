@@ -4,18 +4,11 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import java.util.Calendar
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/15
- * Time: 22:45
- * To change this template use File | Settings | File Templates.
+/**{@link TimeUnit}のテストクラス。
+ * @author j5ik2o
  */
-
 class TimeUnitTest extends AssertionsForJUnit {
-  /**
-   * [[TimeUnit]]のインスタンスがシリアライズできるかどうか検証する。
-   *
+  /**[[TimeUnit]]のインスタンスがシリアライズできるかどうか検証する。
    * @throws Exception 例外が発生した場合
    */
   @Test

@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -30,7 +30,7 @@ abstract class AnnualDateSpecification extends DateSpecification {
     if (interval.includes(Limit(firstTry))) {
       Some(firstTry)
     } else {
-      val secondTry = ofYear(interval.start.toValue.asCalendarMonth.breachEncapsulationOfYear + 1);
+      val secondTry = ofYear(interval.start.toValue.asCalendarMonth.breachEncapsulationOfYear + 1)
       if (interval.includes(Limit(secondTry))) {
         Some(secondTry)
       } else None

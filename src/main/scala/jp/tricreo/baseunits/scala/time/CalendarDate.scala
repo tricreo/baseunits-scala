@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Tricreo Inc and the Others.
- * lastModified : 2011/04/21
+ * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
  *
@@ -71,7 +71,7 @@ class CalendarDate private[time]
    * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimeInterval(zone: TimeZone) =
-    TimeInterval.startingFrom(Limit(startAsTimePoint(zone)), true, Duration.days(1), false);
+    TimeInterval.startingFrom(Limit(startAsTimePoint(zone)), true, Duration.days(1), false)
 
   /**このインスタンスが表現する日を含む年を表す期間を取得する。
    *
