@@ -318,8 +318,8 @@ class Duration
   private def toNormalizedString(units: List[TimeUnit]): String = {
     val buffer = new StringBuffer
     var remainder = inBaseUnits
-    var first = true;
-    for (aUnit <- units) {
+    var first = true
+    units.foreach{ aUnit =>
       val portion = remainder / aUnit.getFactor
       if (portion > 0) {
         if (first == false) {
@@ -329,7 +329,7 @@ class Duration
         }
         buffer.append(aUnit.toString(portion))
       }
-      remainder = remainder % aUnit.getFactor
+      remainder %= aUnit.getFactor
     }
     buffer.toString
   }

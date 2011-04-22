@@ -43,9 +43,7 @@ class BusinessCalendar {
    * @param days 休日として取り扱う「日」
    */
   def addHolidays(days: Set[CalendarDate]) {
-    for (date <- days) {
-      addHolidaySpec(DateSpecification.fixed(date))
-    }
+    days.foreach(e => addHolidaySpec(DateSpecification.fixed(e)))
   }
 
   /**休日として取り扱う「日付仕様」を追加する。
@@ -249,7 +247,7 @@ class BusinessCalendar {
                                        calendarDays: Iterator[CalendarDate]) = {
     val businessDays = businessDaysOnly(calendarDays)
     var result: Option[CalendarDate] = None
-    for (i <- 0 to numberOfDays) {
+    for(i <- 0 to numberOfDays){
       result = Some(businessDays.next)
     }
     result.get

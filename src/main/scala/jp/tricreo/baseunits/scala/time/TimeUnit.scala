@@ -90,7 +90,7 @@ final class TimeUnit private[time]
    */
   def nextFinerUnit = {
     val descending = descendingUnits
-    var index = -1;
+    var index = -1
     for (i <- 0 until descending.length) {
       if (descending(i) == this) {
         index = i
