@@ -23,7 +23,7 @@ import mutable.{ListBuffer, Builder}
 
 
 class UpperLowerOrdering[T <% Ordered[T]]
-(inverseLower: Boolean, inverseUpper: Boolean)
+(private val inverseLower: Boolean, private val inverseUpper: Boolean)
   extends Ordering[Interval[T]] {
 
   private[this] val lowerFactor = if (inverseLower) -1 else 1
@@ -45,12 +45,17 @@ class UpperLowerOrdering[T <% Ordered[T]]
 }
 
 object UpperLowerOrdering {
+
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new UpperLowerOrdering[T](inverseLower, inverseUpper)
+
+  def unapply[T <% Ordered[T]](upperLowerOrdering: UpperLowerOrdering[T]) =
+    Some(upperLowerOrdering.inverseLower, upperLowerOrdering.inverseUpper)
+
 }
 
 class LowerUpperOrdering[T <% Ordered[T]]
-(inverseLower: Boolean, inverseUpper: Boolean)
+(private val inverseLower: Boolean, private val inverseUpper: Boolean)
   extends Ordering[Interval[T]] {
 
   private[this] val lowerFactor = if (inverseLower) -1 else 1
@@ -71,8 +76,12 @@ class LowerUpperOrdering[T <% Ordered[T]]
 }
 
 object LowerUpperOrdering {
+
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
+
+  def unapply[T <% Ordered[T]](lowerUpperOrdering:LowerUpperOrdering[T]) =
+    Some(lowerUpperOrdering.inverseLower, lowerUpperOrdering.inverseUpper)
 }
 
 /**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval]] の列）を表すクラス。

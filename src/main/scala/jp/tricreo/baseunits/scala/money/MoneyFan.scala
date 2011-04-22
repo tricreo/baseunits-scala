@@ -22,6 +22,7 @@ import collection.Iterator
 import collection.mutable.ListBuffer
 
 /**割り当ての集合。
+ *
  * @author j5ik2o
  * @tparam T 割り当て対象
  * @param allotment 割り当ての要素（単一）
@@ -36,10 +37,10 @@ class MoneyFan[T]
 
   def iterator: Iterator[Allotment[T]] = allotments.iterator
 
-  /**{@link MoneyFan}が保持する {@link Allotment}のうち、割り当て対象が {@code anEntity}であるものを返す。
+  /**`MoneyFan`が保持する `Allotment`のうち、割り当て対象が `anEntity`であるものを返す。
    *
    * @param anEntity 割り当て対象
-   * @return {@link Allotment}。見つからなかった場合は`None`
+   * @return `Allotment`。見つからなかった場合は`None`
    */
   def allotment(anEntity: T): Option[Allotment[T]] =
     allotments.find(_.entity == anEntity)
@@ -52,18 +53,18 @@ class MoneyFan[T]
   }
 
 
-  /**この{@link MoneyFan}から{@code subtracted}を引いた差を返す。
+  /**この[[MoneyFan]]から`subtracted`を引いた差を返す。
    *
-   * @param subtracted {@link MoneyFan}
-   * @return {@link MoneyFan}
+   * @param subtracted [[MoneyFan]]
+   * @return [[MoneyFan]]
    */
   def minus(subtracted: MoneyFan[T]) = plus(subtracted.negated)
 
   def -(subtracted: MoneyFan[T]) = minus(subtracted)
 
 
-  /**この {@link MoneyFan}の {@link Allotment}を {@link Allotment#negated()}した {@link Set}で構成される
-   * 新しい {@link MoneyFan}を返す。
+  /**この [[MoneyFan]]の [[Allotment}]を `Allotment#negated`した [[Set]]で構成される
+   * 新しい [[MoneyFan]]を返す。
    *
    * @return {@link MoneyFan}
    */
@@ -74,12 +75,12 @@ class MoneyFan[T]
 
   def unary_- = negated
 
-  /**この{@link MoneyFan}に{@code added}を足した和を返す。
+  /**この[[MoneyFan}]に`added`を足した和を返す。
    *
-   * <p>同じ割り当て対象に対する割当額は、マージする。また、割当額が0の {@link Allotment} は取り除く。</p>
+   * <p>同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[Allotment]] は取り除く。</p>
    *
-   * @param added {@link MoneyFan}
-   * @return {@link MoneyFan}
+   * @param added [[MoneyFan]]
+   * @return [[MoneyFan]]
    */
   def plus(added: MoneyFan[T]) = {
     val allEntities = allotments.map(_.entity) ++ added.allotments.map(_.entity)
@@ -112,7 +113,6 @@ class MoneyFan[T]
   def total = asTally.net
 
   private def asTally = {
-//    val moneies = allotments.map(_.amount)
     val moneies = ListBuffer.empty[Money]
     for (allotment <- allotments) {
       moneies += (allotment.amount)
@@ -120,10 +120,10 @@ class MoneyFan[T]
     new Tally(moneies)
   }
 
-  /**このインスタンスが保持する {@link Allotment} のうち、割り当て金額が{@code 0}であるものを取り除いた
-   * 新しい {@link MoneyFan}を返す。
+  /**このインスタンスが保持する [[Allotment]] のうち、割り当て金額が`0`であるものを取り除いた
+   * 新しい [[MoneyFan]]を返す。
    *
-   * @return {@link MoneyFan}
+   * @return [[MoneyFan]]
    */
   private def withoutZeros = {
     val nonZeroAllotments = allotments.filter(_.breachEncapsulationOfAmount.isZero == false).toSet

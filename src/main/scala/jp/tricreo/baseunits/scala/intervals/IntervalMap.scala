@@ -123,6 +123,8 @@ class LinearIntervalMap[A <% Ordered[A], B]
 
 }
 
+/**コンパニオンオブジェクト。
+ */
 object LinearIntervalMap {
 
   def apply[A <% Ordered[A], B]:LinearIntervalMap[A, B] = new LinearIntervalMap

@@ -41,7 +41,7 @@ class MoneyTimeRate
       money.breachEncapsulationOfCurrency)
 
   /**
-   * このオブジェクトの{@link #currency}フィールド（通貨単位）を返す。
+   * このオブジェクトの`currency`フィールド（通貨単位）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -49,7 +49,7 @@ class MoneyTimeRate
    */
   def breachEncapsulationOfCurrency = currency
 
-  /**このオブジェクトの{@link #rate}フィールド（単位時間当たりの数量）を返す。
+  /**このオブジェクトの`rate`フィールド（単位時間当たりの数量）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *

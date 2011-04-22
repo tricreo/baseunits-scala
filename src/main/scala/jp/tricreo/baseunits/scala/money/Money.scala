@@ -25,6 +25,7 @@ import jp.tricreo.baseunits.scala.time.Duration
 
 /**金額を表すクラス。
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
+ * 
  * @author j5ik2o
  */
 @serializable
@@ -55,11 +56,11 @@ class Money
 
   /**金額同士の比較を行う。
    *
-   * <p>相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は {@link ClassCastException}を
-   * スローするが、どちらか片方の量が{@code 0}である場合は例外をスローしない。</p>
+   * <p>相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は [[ClassCastException]]を
+   * スローするが、どちらか片方の量が`0`である場合は例外をスローしない。</p>
    *
-   * <p>例えば{@code 10 USD}と{@code 0 JPY}は、後者の方が小さい。
-   * また、{@code 0 USD}と{@code 0 JPY}は同じである。</p>
+   * <p>例えば`10 USD`と`0 JPY`は、後者の方が小さい。
+   * また、`0 USD`と`0 JPY`は同じである。</p>
    *
    * @param that 比較対象
    * @return {@link Comparable#compareTo(Object)}に準じる
@@ -84,7 +85,7 @@ class Money
     minus(other)
   }
 
-  /**この金額に対して、指定した{@code ratio}の割合の金額を返す。
+  /**この金額に対して、指定した`ratio`の割合の金額を返す。
    *
    * @param ratio 割合
    * @param scale スケール
@@ -96,7 +97,7 @@ class Money
     Money.adjustBy(newAmount, currency)
   }
 
-  /**この金額に対して、指定した{@code ratio}の割合の金額を返す。
+  /**この金額に対して、指定した`ratio`の割合の金額を返す。
    *
    * @param ratio 割合
    * @param roundingMode 丸めモード
@@ -105,7 +106,7 @@ class Money
   def applying(ratio: Ratio, roundingMode: BigDecimal.RoundingMode.Value): Money =
     applying(ratio, currency.getDefaultFractionDigits, roundingMode)
 
-  /**このオブジェクトの{@link #amount}フィールド（量）を返す。
+  /**このオブジェクトの`amount`フィールド（量）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -120,7 +121,7 @@ class Money
    */
   def breachEncapsulationOfAmount = amount
 
-  /**このオブジェクトの{@link #currency}フィールド（通貨単位）を返す。
+  /**このオブジェクトの`currency`フィールド（通貨単位）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *

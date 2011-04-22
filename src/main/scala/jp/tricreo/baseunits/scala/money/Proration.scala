@@ -26,11 +26,11 @@ import jp.tricreo.baseunits.scala.util.Ratio
  */
 object Proration {
 
-  /**指定した金額を{@code n}等分した金額の配列を返す。
+  /**指定した金額を`n`等分した金額の配列を返す。
    *
    * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
    *
-   * <p>例えば、53円を5人で等分した場合は、<code>{11, 11, 11, 10, 10}</code>となる。</p>
+   * <p>例えば、53円を5人で等分した場合は、`{11, 11, 11, 10, 10}`となる。</p>
    *
    * @param total 合計金額
    * @param n 分割数
@@ -43,19 +43,18 @@ object Proration {
     distributeRemainderOver(lowResults, remainder)
   }
 
-  /**
-   * {@code total}のうち、{@code portion / whole}の割合の金額を返す。割り切れない場合は切り捨てる。
+  /**`total`のうち、`portion / whole`の割合の金額を返す。割り切れない場合は切り捨てる。
    *
    * @param total 合計額
    * @param portion 部分量をあらわす値
    * @param whole 全体量をあらわす値
    * @return 部分の金額
-   * @throws ArithmeticException 引数{@code whole}が0だった場合
+   * @throws ArithmeticException 引数`whole`が0だった場合
    */
   def partOfWhole(total: Money, portion: Long, whole: Long): Money =
     partOfWhole(total, Ratio(portion, whole))
 
-  /**{@code total}のうち、{@code ratio}の割合の金額を返す。割り切れない場合は切り捨てる。
+  /**`total`のうち、`ratio`の割合の金額を返す。割り切れない場合は切り捨てる。
    *
    * @param total 合計額
    * @param ratio 割合
@@ -67,11 +66,11 @@ object Proration {
     total.times(multiplier, BigDecimal.RoundingMode.DOWN)
   }
 
-  /**指定した金額を{@code proportions}であらわす割合で分割した金額の配列を返す。
+  /**指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
    *
    * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
    *
-   * <p>例えば、52円を1:3:1で等分した場合は、<code>{11, 31, 10}</code>となる。</p>
+   * <p>例えば、52円を1:3:1で等分した場合は、`{11, 31, 10}`となる。</p>
    *
    * @param total 合計金額
    * @param proportions 比数の配列
@@ -89,11 +88,11 @@ object Proration {
   }
 
   /**
-   * 指定した金額を{@code proportions}であらわす割合で分割した金額の配列を返す。
+   * 指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
    *
    * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
    *
-   * <p>例えば、52円を1:3:1で等分した場合は、<code>{11, 31, 10}</code>となる。</p>
+   * <p>例えば、52円を1:3:1で等分した場合は、`{11, 31, 10}`となる。</p>
    *
    * @param total 合計金額
    * @param longProportions 比数の配列
@@ -130,7 +129,7 @@ object Proration {
     proportions.map(e => Ratio(e, total))
   }
 
-  /**{@code elements}の要素の和を返す。
+  /**`elements`の要素の和を返す。
    *
    * @param elements 配列
    * @return 和
@@ -138,11 +137,11 @@ object Proration {
   def sum(elements: Array[BigDecimal]) =
     elements.sum
 
-  /**{@code elements}の要素の和を返す。
+  /**`elements`の要素の和を返す。
    *
    * @param elements 配列
    * @return 和
-   * @throws IllegalArgumentException 引数{@code elements}の要素数が0の場合
+   * @throws IllegalArgumentException 引数`elements`の要素数が0の場合
    */
   def sum(elements: Array[Money]) = {
     require(elements.size > 0)
