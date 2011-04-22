@@ -3,14 +3,8 @@ package jp.tricreo.baseunits.scala.time
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/18
- * Time: 14:54
- * To change this template use File | Settings | File Templates.
+/**`MinuteOfHour`のテストクラス。
  */
-
 class MinuteOfHourTest extends AssertionsForJUnit {
 
   /**

@@ -18,6 +18,27 @@
  */
 package jp.tricreo.baseunits.scala.intervals
 
+/**「区間」を表すクラス。
+ *
+ * <p>閉区間とは、{@code lower <= x <= upper}であらわされる区間であり、
+ * 開区間とは、{@code lower < x < upper}であらわされる区間である。
+ * どちらか一方のみが {@code <=} で、他方が {@code <} である場合は、半開区間と言う。</p>
+ *
+ * The rules of this class are consistent with the common mathematical
+ * definition of "interval". For a simple explanation, see
+ * http://en.wikipedia.org/wiki/Interval_(mathematics)
+ *
+ * Interval (and its "ConcreteInterval" subclass) can be used for any objects
+ * that have a natural ordering reflected by implementing the Comparable
+ * interface. For example, Integer implements Comparable, so if you want to
+ * check if an Integer is within a range, make an Interval. Any class of yours
+ * which implements Comparable can have intervals defined this way.
+ *
+ * @author j5ik2o
+ * @tparam T 区間要素の型
+ * @param lower 下側限界
+ * @param upper 上側限界
+ */
 @serializable
 class Interval[T <% Ordered[T]]
 (private var lower: IntervalLimit[T],
@@ -96,8 +117,7 @@ class Interval[T <% Ordered[T]]
     lowerPass && upperPass
   }
 
-  /**
-   * この区間と同じ限界値を持つ、新しい開区間を生成する。
+  /**この区間と同じ限界値を持つ、新しい開区間を生成する。
    *
    * @return 新しい開区間
    */
@@ -283,7 +303,6 @@ class Interval[T <% Ordered[T]]
 
   /**この区間が空であるかどうかを検証する。
    *
-   *
    * <p>区間が空であるとは、上側限界値と下側限界値が同値であり、かつ、開区間であることを示す。
    * 例えば {@code 3 < x < 3}のような状態である。</p>
    *
@@ -303,9 +322,8 @@ class Interval[T <% Ordered[T]]
   def isOpen = includesLowerLimit == false && includesUpperLimit == false
 
   /**この区間が単一要素区間であるかどうかを検証する。
-   *
-   * <p>単一要素区間は、上側下側の両限界を持ち、さらにそれらの限界値が同値であり、かつ、開区間ではないことを示す。
-   * 例えば {@code 3 <= x < 3}, {@code 3 < x <= 3}, {@code 3 <= x <= 3}のような状態である。</p>
+   * 単一要素区間は、上側下側の両限界を持ち、さらにそれらの限界値が同値であり、かつ、開区間ではないことを示す。
+   * 例えば {@code 3 <= x < 3}, {@code 3 < x <= 3}, {@code 3 <= x <= 3}のような状態である。
    *
    * @return 単一要素区間である場合は`true`、そうでない場合は`false`
    */
@@ -535,21 +553,21 @@ class Interval[T <% Ordered[T]]
 
 }
 
-/**
- * Intervalコンパニオンオブジェクト
+/**Intervalコンパニオンオブジェクト
  */
 object Interval {
 
   def apply[T <% Ordered[T]](lower: IntervalLimit[T], upper: IntervalLimit[T]) = new Interval(lower, upper)
 
-  /**抽出子メソッド
+  /**抽出子メソッド。
+   *
    * @tparam T 限界値の型
    * @return 分解されたフィールドを含むTupleのOption型
    */
   def unapply[T <% Ordered[T]](interval: Interval[T]) = Some(interval.lowerLimitObject, interval.upperLimitObject)
 
   /**下側限界のみを持つ区間を生成する。
-   * <p>下側限界値は区間に含む（閉じている）区間である。</p>
+   * 下側限界値は区間に含む（閉じている）区間である。
    *
    * @param <T> 限界値の型
    * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
@@ -559,7 +577,7 @@ object Interval {
 
   /**閉区間を生成する。
    *
-   * @param <T> 限界値の型
+   * @tparam T 限界値の型
    * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 閉区間
@@ -572,7 +590,7 @@ object Interval {
    *
    * <p>下側限界値は区間に含まない（開いている）区間である。</p>
    *
-   * @param <T> 限界値の型
+   * @tparam T 限界値の型
    * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */
@@ -583,7 +601,7 @@ object Interval {
 
   /**開区間を生成する。
    *
-   * @param <T> 限界値の型
+   * @tparam T 限界値の型
    * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 開区間
@@ -592,10 +610,9 @@ object Interval {
   def open[T <% Ordered[T]](lower: LimitValue[T], upper: LimitValue[T]) = new Interval(lower, false, upper, false)
 
   /**区間を生成する。
+   * 主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。
    *
-   * <p>主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。</p>
-   *
-   * @param <T> 限界値の型
+   * @tparam T 限界値の型
    * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @param lowerIncluded 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
    * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
@@ -608,10 +625,9 @@ object Interval {
 
   /**単一要素区間を生成する。
    *
+   * @tparam T 限界値の型
    * @param element 単一要素となる値
-   * @param <T> 限界値の型
    * @return 区間
-   * @throws IllegalArgumentException 引数に[[Limitless[T]]]を与えた場合
    */
   def singleElement[T <% Ordered[T]](element: LimitValue[T]) = closed(element, element)
 

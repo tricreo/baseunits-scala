@@ -6,6 +6,8 @@ import java.util.{Locale, Currency}
 import jp.tricreo.baseunits.scala.util.Ratio
 import collection.mutable.ListBuffer
 
+/**`Money`のテストクラス。
+ */
 class MoneyTest extends AssertionsForJUnit {
   val USD = Currency.getInstance("USD")
 

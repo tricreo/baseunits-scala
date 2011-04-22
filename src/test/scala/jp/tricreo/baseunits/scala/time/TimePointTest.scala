@@ -5,14 +5,9 @@ import java.util.{Calendar, Date => JDate}
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/03/28
- * Time: 23:20
- * To change this template use File | Settings | File Templates.
- */
 
+/**`TimePoint`のテストクラス。
+ */
 class TimePointTest extends AssertionsForJUnit {
 
   @Test

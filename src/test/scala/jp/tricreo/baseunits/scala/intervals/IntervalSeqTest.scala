@@ -4,14 +4,8 @@ import org.junit.Test
 import org.scalatest.junit.AssertionsForJUnit
 import collection.mutable.ListBuffer
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/05
- * Time: 10:12
- * To change this template use File | Settings | File Templates.
+/**`IntervalSeq`のテストクラス。
  */
-
 class IntervalSeqTest extends AssertionsForJUnit {
 
   private val c5_10c = Interval.closed(Limit(5), Limit(10))

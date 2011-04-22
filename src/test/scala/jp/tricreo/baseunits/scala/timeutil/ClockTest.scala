@@ -5,7 +5,7 @@ import java.util.TimeZone
 import org.junit.{Test, After}
 import jp.tricreo.baseunits.scala.time.{CalendarDate, TimeSource, TimePoint}
 
-/**[[Clock]]のテストクラス。
+/**`Clock`のテストクラス。
  * @author j5ik2o
  */
 class ClockTest extends AssertionsForJUnit {

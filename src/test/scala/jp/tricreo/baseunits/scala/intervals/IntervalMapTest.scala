@@ -3,7 +3,7 @@ package jp.tricreo.baseunits.scala.intervals
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**[[jp.tricreo.baseunits.scala.intervals.IntervalMap]]のためのテストクラス。
+/**`IntervalMap`のテストクラス。
  */
 class IntervalMapTest extends AssertionsForJUnit {
   /**[[jp.tricreo.baseunits.scala.intervals.IntervalMap]]に対する参照メソッドのテスト。

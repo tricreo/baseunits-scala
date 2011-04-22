@@ -4,14 +4,9 @@ import org.scalatest.junit.AssertionsForJUnit
 import java.util.TimeZone
 import org.junit.Test
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/18
- * Time: 16:02
- * To change this template use File | Settings | File Templates.
- */
 
+/**`TimeOfDay`のテストクラス。
+ */
 class TimeOfDayTest extends AssertionsForJUnit {
 
   val CST = TimeZone.getTimeZone("CST")

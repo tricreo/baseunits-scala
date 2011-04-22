@@ -21,6 +21,8 @@ package jp.tricreo.baseunits.scala.money
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
+/**`Proration`のテストクラス。
+ */
 class ProrationTest extends AssertionsForJUnit {
   /**
    * {@link Proration#proratedOver(Money, long[])}

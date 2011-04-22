@@ -3,9 +3,7 @@ package jp.tricreo.baseunits.scala.time
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**
- * [[jp.tricreo.baseunits.scala.time.DayOfMonth]]のためのテストクラス。
- * @author j5ik2o
+/**`DayOfMonth`のテストクラス。
  */
 class DayOfMonthTest extends AssertionsForJUnit {
   /**

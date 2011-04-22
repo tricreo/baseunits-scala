@@ -22,8 +22,7 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import collection.mutable.ListBuffer
 
-/**
- * [[MoneyFan]]のテストクラス。
+/**`MoneyFan`のテストクラス。
  */
 class MoneyFanTest extends AssertionsForJUnit {
   /**

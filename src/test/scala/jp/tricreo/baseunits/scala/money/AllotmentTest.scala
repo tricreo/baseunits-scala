@@ -3,6 +3,8 @@ package jp.tricreo.baseunits.scala.money
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
+/**`Allotment`のテストクラス。
+ */
 class AllotmentTest extends AssertionsForJUnit {
   /**等価性検証。
    *

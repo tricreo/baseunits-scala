@@ -4,14 +4,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import jp.tricreo.baseunits.scala.intervals.Limit
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/18
- * Time: 12:29
- * To change this template use File | Settings | File Templates.
+/**`TimeInterval`のテストクラス。
  */
-
 class TimeIntervalTest extends AssertionsForJUnit {
 
   val dec19_2003 = TimePoint.atMidnightGMT(2003, 12, 19)

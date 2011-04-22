@@ -5,6 +5,8 @@ import org.junit.{Test, Before, After}
 import java.text.ParseException
 import jp.tricreo.baseunits.scala.intervals.Limit
 
+/**`BusinessCalendar`のテストクラス。
+ */
 class BusinessCalendarTest extends AssertionsForJUnit {
 
   def japaneseBusinessCalendar = {

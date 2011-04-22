@@ -5,14 +5,8 @@ import java.util.TimeZone
 import org.junit.Test
 import jp.tricreo.baseunits.scala.intervals.{Limitless, Limit}
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/18
- * Time: 14:09
- * To change this template use File | Settings | File Templates.
+/**`CalendarInterval`のテストクラス。
  */
-
 class CalendarIntervalTest extends AssertionsForJUnit {
 
   val may1 = CalendarDate.from(2004, 5, 1)

@@ -4,14 +4,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import java.util.TimeZone
 import org.junit.Test
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/19
- * Time: 3:52
- * To change this template use File | Settings | File Templates.
+/**`CalendarMinute`のテストクラス。
  */
-
 class CalendarMinuteTest extends AssertionsForJUnit {
   val feb17_1_23 = CalendarMinute.from(2003, 2, 17, 1, 23)
 

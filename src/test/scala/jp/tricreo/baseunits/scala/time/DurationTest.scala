@@ -5,14 +5,8 @@ import org.junit.Test
 import java.math.RoundingMode
 import jp.tricreo.baseunits.scala.intervals.Limit
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/04/18
- * Time: 15:06
- * To change this template use File | Settings | File Templates.
+/**`Duration`のテストクラス。
  */
-
 class DurationTest extends AssertionsForJUnit {
   /**
    * [[Duration]]のインスタンスがシリアライズできるかどうか検証する。

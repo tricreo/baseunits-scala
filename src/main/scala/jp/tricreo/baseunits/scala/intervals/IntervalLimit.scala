@@ -18,12 +18,22 @@
  */
 package jp.tricreo.baseunits.scala.intervals
 
-
+/**限界値を表すトレイト。
+ */
 trait LimitValue[T] extends Ordered[LimitValue[T]] {
-  def toValue = this match {
-    case Limit(value) => value
-  }
-  def toValueOrElse(default:T) = this match {
+  /**限界値を返す。
+   *
+   * @return 限界値
+   * @throws NoSuchElementException 無限の場合
+   */
+  def toValue = toValueOrElse(throw new NoSuchElementException)
+
+  /**限界値を返す。
+   *
+   * @param default 無限の場合の式
+   * @return 限界値。無限の場合は`default`を返す。
+   */
+  def toValueOrElse(default: => T) = this match {
     case Limit(value) => value
     case _:Limitless[T] => default
   }
@@ -48,6 +58,8 @@ object LimitValue {
   //  }
 }
 
+/**有限値を表すクラス。
+ */
 case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
   def compare(that: LimitValue[T]) = that match {
     case that: Limit[T] => value compare that.value
@@ -55,6 +67,8 @@ case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
   }
 }
 
+/**無限値を表すクラス。
+ */
 case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
   def compare(that: LimitValue[T]) = that match {
     case that: Limitless[T] => 0

@@ -23,7 +23,8 @@ import org.junit.Test
 import jp.tricreo.baseunits.scala.time.{TimeRate, Duration}
 import java.util.Currency
 
-
+/**`MoneyTimeRate`のテストクラス。
+ */
 class MoneyTimeRateTest extends AssertionsForJUnit {
   /**{@link MoneyTimeRate#equals(Object)}のテスト。
    *

@@ -5,6 +5,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import collection.mutable.ListBuffer
 import util.Random
 
+/**`Inteval`のテストクラス。
+ */
 class IntevalTest extends AssertionsForJUnit {
 
   val c5_10c = Interval.closed(Limit(BigDecimal(5)), Limit(BigDecimal(10)))

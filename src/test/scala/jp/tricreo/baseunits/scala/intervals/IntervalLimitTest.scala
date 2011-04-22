@@ -5,14 +5,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import collection.mutable.ListBuffer
 import util.Random
 
-/**
- * Created by IntelliJ IDEA.
- * User: junichi
- * Date: 11/03/29
- * Time: 0:58
- * To change this template use File | Settings | File Templates.
+/**`IntervalLimit`のテストクラス。
  */
-
 class IntervalLimitTest extends AssertionsForJUnit {
   @Test
   def test01_Equals {

@@ -4,6 +4,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import java.util.{Calendar, TimeZone}
 
+/**`CalendarDate`のテストクラス。
+ */
 class CalendarDateTest extends AssertionsForJUnit {
   val feb17 = CalendarDate.from(2003, 2, 17)
 
