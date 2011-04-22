@@ -42,6 +42,8 @@ abstract class IntervalMap[A <% Ordered[A], +B]
   override def updated[B1 >: B](key: Interval[A], value: B1): IntervalMap[A, B1] =
     new LinearIntervalMap(intervalMap.updated(key, value))
 
+  def get(key: LimitValue[A]): Option[B]
+
   def +[B1 >: B](kv: (Interval[A], B1)): IntervalMap[A, B1]
 
   /**指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に `true` を返す。

@@ -252,7 +252,7 @@ object IntervalSeq {
    * @param intervals
    * @return IntervalSeq[T]
    */
-  def apply[T <% Ordered[T]]: To[T] = new IntervalSeq[T]()
+  def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
 
   /**抽出子メソッド。
    *

@@ -155,13 +155,14 @@ class TimePoint private[time]
    */
   def isSameDayAs(other: TimePoint, zone: TimeZone) = calendarDate(zone) == other.calendarDate(zone)
 
-  /**
-   * この日時の、指定した時間の長さ分過去の日時を取得する。
+  /**この日時の、指定した時間の長さ分過去の日時を取得する。
    *
    * @param duration 時間の長さ
    * @return 過去の日時
    */
-  def -(duration: Duration) = duration.subtractedFrom(this)
+  def minus(duration: Duration) = duration.subtractedFrom(this)
+
+  def -(duration: Duration) = minus(duration)
 
   /**
    * このオブジェクトが表現する瞬間の、ちょうど1日後を取得する。

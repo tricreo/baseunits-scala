@@ -77,6 +77,8 @@ object LimitValue {
     case value: T => Limit(value)
   }
 
+    implicit def toLimit[T <% Ordered[T]](value: T) = Limit(value)
+
 }
 
 /**有限の限界値を表すクラス。
