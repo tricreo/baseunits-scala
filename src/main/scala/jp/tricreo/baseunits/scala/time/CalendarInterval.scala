@@ -41,7 +41,7 @@ class CalendarInterval protected
    * @param zone タイムゾーン
    * @return 時間の期間
    */
-  def asTimeInterval(zone: TimeZone) {
+  def asTimeInterval(zone: TimeZone) = {
     val startPoint = lowerLimit.toValue.asTimeInterval(zone).start
     val endPoint = upperLimit.toValue.asTimeInterval(zone).end
     TimeInterval.over(startPoint, endPoint)
