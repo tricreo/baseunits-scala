@@ -21,6 +21,7 @@ package jp.tricreo.baseunits.scala.time
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import jp.tricreo.baseunits.scala.intervals.Limit
+import jp.tricreo.baseunits.scala.tests.SerializationTester
 
 /**`TimeInterval`のテストクラス。
  */
@@ -45,7 +46,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
   @Test
   def test01_Serialization {
     val interval = TimeInterval.closed(Limit(dec20_2003), Limit(dec22_2003))
-    //SerializationTester.assertCanBeSerialized(interval)
+    SerializationTester.assertCanBeSerialized(interval)
   }
 
   /**

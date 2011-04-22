@@ -20,6 +20,15 @@ package jp.tricreo.baseunits.scala.time
 
 import jp.tricreo.baseunits.scala.intervals.{Limit, Limitless, LimitValue, Interval}
 
+/**期間（時間の区間）を表すクラス。
+ * 限界の表現には [[TimePoint]]を利用する。
+ *
+ * @author j5ik2o
+ * @param startValue 開始時間
+ * @param startIncluded 開始時間を含める場合は`true`
+ * @param endValue 終了時間
+ * @param endIncluded 終了時間を含める場合は`false`
+ */
 class TimeInterval
 (startValue: LimitValue[TimePoint], startIncluded: Boolean,
  endValue: LimitValue[TimePoint], endIncluded: Boolean)
@@ -257,7 +266,7 @@ object TimeInterval {
    * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
    */
   def over(start: LimitValue[TimePoint], end: LimitValue[TimePoint]): TimeInterval =
-    // Uses the common default for time intervals, [start, end).
+  // Uses the common default for time intervals, [start, end).
     over(start, true, end, false)
 
   /**終了日時と期間の長さより、期間を返す。
