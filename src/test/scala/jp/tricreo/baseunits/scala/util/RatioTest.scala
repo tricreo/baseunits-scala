@@ -98,7 +98,7 @@ class RatioTest extends AssertionsForJUnit {
   @Test
   def test04_Equals {
     val r = Ratio(100, 200)
-    assert(r.equals(r) == (true))
+    assert(r.equals(r) == true)
 
     assert(Ratio(100, 200) == Ratio(100, 200))
     assert(Ratio(100, 200) == Ratio(100, 200))
@@ -117,8 +117,7 @@ class RatioTest extends AssertionsForJUnit {
     assert(Ratio(100, 201).hashCode != Ratio(100, 200).hashCode)
     assert(Ratio(100, 200).hashCode != Ratio(10, 20).hashCode)
 
-    // THINK 等価なんだけどな。
-    assert(Ratio(100, 200) == Ratio(10, 20))
+    assert(Ratio(100, 200).reduce == Ratio(10, 20).reduce)
   }
 
   /**[[Ratio#times(BigDecimal)]]のテスト。

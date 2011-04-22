@@ -45,7 +45,6 @@ class CalendarMonth private[time]
    *
    * @param timeZone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimePoint(timeZone: TimeZone) =
     TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, timeZone)
@@ -60,11 +59,11 @@ class CalendarMonth private[time]
   def asYearInterval =
     CalendarInterval.year(year)
 
-  /**このインスタンスが表す年月で、引数{@code day}で表す日を表す年月日を返す。
+  /**このインスタンスが表す年月で、引数`day`で表す日を表す年月日を返す。
    *
    * @param day 日（1〜31）
    * @return 日時
-   * @throws IllegalArgumentException 引数{@code day}がこの月に存在しない場合
+   * @throws IllegalArgumentException 引数`day`がこの月に存在しない場合
    */
   def at(day: DayOfMonth) =
     CalendarDate.from(year, month, day)
@@ -94,13 +93,12 @@ class CalendarMonth private[time]
    *
    * @param other 比較対象
    * @return [[Comparable#compareTo(Object)]]に準じる
-   * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(other: CalendarMonth): Int =
     if (isBefore(other)) {
       -1
     } else if (isAfter(other)) {
-      1;
+      1
     } else 0
 
   override def equals(obj: Any) = obj match {
@@ -127,26 +125,23 @@ class CalendarMonth private[time]
   override def hashCode: Int = month.hashCode + year.hashCode
 
 
-  /**
-   * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+  /**指定した日 `other`が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-   * また、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日時
-   * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+   * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: CalendarMonth) =
     isBefore(other) == false && equals(other) == false
 
   /**
-   * 指定した年月 {@code other} が、このオブジェクトが表現する年月よりも未来であるかどうかを検証する。
+   * 指定した年月 `other`が、このオブジェクトが表現する年月よりも未来であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-   * また、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象年月
-   * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+   * @return 未来である場合は`true`、そうでない場合は`false`
    */
   def isBefore(other: CalendarMonth) =
     if (year < other.year) {
@@ -155,15 +150,13 @@ class CalendarMonth private[time]
       false
     } else month.isBefore(other.month)
 
-  /**
-   * このインスタンスが表現する年月の翌月を返す。
+  /**このインスタンスが表現する年月の翌月を返す。
    *
    * @return 翌月
    */
   def nextMonth = plusMonths(1)
 
-  /**
-   * このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
+  /**このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
    *
    * <p>引数の長さの単位が "月" 未満である場合は、元の年月をそのまま返す。<p>
    *
@@ -173,8 +166,7 @@ class CalendarMonth private[time]
   def plus(length: Duration) =
     length.addedTo(this)
 
-  /**
-   * このインスタンスが表現する年月の {@code increment} ヶ月後を返す。
+  /**このインスタンスが表現する年月の {@code increment} ヶ月後を返す。
    *
    * <p> {@code increment}に負数を与えてもよい。</p>
    *
@@ -189,15 +181,13 @@ class CalendarMonth private[time]
     CalendarMonth.from(year, month)
   }
 
-  /**
-   * このインスタンスが表現する年月の前月を返す。
+  /**このインスタンスが表現する年月の前月を返す。
    *
    * @return 前月
    */
   def previousDay = plusMonths(-1)
 
-  /**
-   * この日付の文字列表現を取得する。
+  /**この日付の文字列表現を取得する。
    *
    * <p>[[SimpleDateFormat]]の使用に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
    *
@@ -207,8 +197,7 @@ class CalendarMonth private[time]
 
   //default for console
 
-  /**
-   * この日付を、指定したパターンで整形し、その文字列表現を取得する。
+  /**この日付を、指定したパターンで整形し、その文字列表現を取得する。
    *
    * @param pattern パターン
    * @return 文字列表現
@@ -256,13 +245,11 @@ object CalendarMonth {
    * @param year 年
    * @param month 月
    * @return [[CalendarMonth]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(year: Int, month: MonthOfYear) =
     new CalendarMonth(year, month)
 
-  /**
-   * 指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
+  /**指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
    *
    * @param dateString 年月を表す文字列
    * @param pattern 解析パターン文字列
@@ -276,13 +263,11 @@ object CalendarMonth {
     CalendarMonth.from(point, arbitraryZone)
   }
 
-  /**
-   * 指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[CalendarDate]]のインスタンスを生成する。
+  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
    * @param zone タイムゾーン
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarMonth = {
     val calendar = timePoint.asJavaCalendar

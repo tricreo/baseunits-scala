@@ -63,7 +63,6 @@ class TimeRate
    * @return 絶対量
    * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
    * @throws ArithmeticException 引数{@code duration}の時間量が単位時間で割り切れない場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration): BigDecimal = over(duration, BigDecimal.RoundingMode.UNNECESSARY)
 
@@ -77,7 +76,6 @@ class TimeRate
    * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
    * @throws ArithmeticException 引数 {@code roundingMode} に [[RoundingMode#UNNECESSARY]] を指定したにもかかわらず、
    * 			引数{@code duration}の時間量が単位時間で割り切れない場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration, scale: Int, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal =
     duration.dividedBy(unit).times(quantity).decimalValue(scale, roundingMode)
@@ -87,10 +85,9 @@ class TimeRate
    * @param duration 時間量
    * @param roundingMode 丸めモード
    * @return 絶対量
-   * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
+   * @throws 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
    * @throws ArithmeticException 引数 {@code roundingMode} に [[RoundingMode#UNNECESSARY]] を指定したにもかかわらず、
    * 			引数{@code duration}の時間量が単位時間で割り切れない場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal = {
     over(duration, scale, roundingMode)

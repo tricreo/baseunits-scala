@@ -44,10 +44,9 @@ abstract class IntervalMap[A <% Ordered[A], +B]
 
   def +[B1 >: B](kv: (Interval[A], B1)): IntervalMap[A, B1]
 
-  /**指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に {@code true} を返す。
+  /**指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に `true` を返す。
    * @param interval 区間
-   * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は`true`、そうでない場合は`false`
    */
   def containsIntersectingKey(interval: Interval[A]): Boolean
 
@@ -86,7 +85,6 @@ class LinearIntervalMap[A <% Ordered[A], B]
    *
    * @param otherInterval 対象区間
    * @return 指定した区間と共通部分を持つ区間の列
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   private def intersectingKeys(otherInterval: Interval[A]): List[Interval[A]] =
     intervalMap.keys.map {

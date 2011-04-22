@@ -50,21 +50,19 @@ sealed class MonthOfYear
 
   /**指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日時
-   * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: MonthOfYear) = isBefore(other) == false && equals(other) == false;
 
   /**指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日
-   * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 未来である場合は`true`、そうでない場合は`false`
    */
   def isBefore(other: MonthOfYear) = value < other.value
 

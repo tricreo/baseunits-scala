@@ -50,21 +50,19 @@ class MinuteOfHour private[time]
 
   /**同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来かどうか調べる。
    *
-   * <p>等価である場合は{@code false}を返す。</p>
+   * <p>等価である場合は`false`を返す。</p>
    *
    * @param another 基準分
-   * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来である場合は`true`、そうでない場合は`false`
    */
   def isAfter(another: MinuteOfHour) = value > another.value;
 
   /**同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去かどうか調べる。
    *
-   * <p>等価である場合は{@code false}を返す。</p>
+   * <p>等価である場合は`false`を返す。</p>
    *
    * @param another 基準分
-   * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は`true`、そうでない場合は`false`
    */
   def isBefore(another: MinuteOfHour) = value < another.value
 

@@ -75,9 +75,9 @@ object LowerUpperOrdering {
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
 }
 
-/**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval 区間]] の列）を表すクラス。
+/**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval]] の列）を表すクラス。
  *
- * @tparam T [[jp.tricreo.beseunits.scala.intervals.Interval 区間]]の型
+ * @tparam T [[jp.tricreo.beseunits.scala.intervals.Interval]]の型
  * @param intervals
  * @param ordering
  */

@@ -35,7 +35,6 @@ class MoneyTimeRate
    *
    * @param money 金額
    * @param duration 時間量
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def this(money: Money, duration: Duration) =
     this (TimeRate(money.breachEncapsulationOfAmount, duration),
@@ -70,7 +69,6 @@ class MoneyTimeRate
    *
    * @param duration 時間量
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration): Money =
     over(duration, BigDecimal.RoundingMode.UNNECESSARY)
@@ -82,7 +80,6 @@ class MoneyTimeRate
    * @param scale スケール
    * @param roundMode 丸めモード
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration, scale: Int, roundMode: BigDecimal.RoundingMode.Value): Money =
     Money(rate.over(duration, scale, roundMode), currency)
@@ -92,7 +89,6 @@ class MoneyTimeRate
    * @param duration 時間量
    * @param roundMode 丸めモード
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def over(duration: Duration, roundMode: BigDecimal.RoundingMode.Value): Money =
     over(duration, rate.scale, roundMode)

@@ -38,7 +38,6 @@ class CalendarDate private[time]
    *
    * @param other 比較対象
    * @return [[Comparable#compareTo(Object)]]に準じる
-   * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(other: CalendarDate): Int = {
     if (isBefore(other)) {
@@ -68,7 +67,6 @@ class CalendarDate private[time]
    *
    * @param zone タイムゾーン
    * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimeInterval(zone: TimeZone) =
     TimeInterval.startingFrom(Limit(startAsTimePoint(zone)), true, Duration.days(1), false)
@@ -124,22 +122,20 @@ class CalendarDate private[time]
 
   /**指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-   * また、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日時
-   * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+   * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: CalendarDate) =
     isBefore(other) == false && equals(other) == false
 
   /**指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-   * また、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日時
-   * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+   * @return 未来である場合は`true`、そうでない場合は`false`
    */
   def isBefore(other: CalendarDate) =
     if (yearMonth.isBefore(other.yearMonth)) {
@@ -148,8 +144,7 @@ class CalendarDate private[time]
       false
     } else day.isBefore(other.day)
 
-  /**
-   * このインスタンスが表現する日の翌日を返す。
+  /**このインスタンスが表現する日の翌日を返す。
    *
    * @return 翌日
    */
@@ -207,7 +202,6 @@ class CalendarDate private[time]
    *
    * @param zone タイムゾーン
    * @return このインスタンスが表現する日の午前0時を表現する日時
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def startAsTimePoint(zone: TimeZone) = TimePoint.atMidnight(this, zone)
 
@@ -272,7 +266,6 @@ object CalendarDate {
    * @param yearMonth 年月
    * @param day 日
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
    */
   def from(yearMonth: CalendarMonth, day: DayOfMonth): CalendarDate =
@@ -284,9 +277,8 @@ object CalendarDate {
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+   * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合もしくは、
+   * 引数{@code day}が1〜31の範囲ではない場合もしくは、引数{@code day}が{@code yearMonth}の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int): CalendarDate =
     new CalendarDate(CalendarMonth.from(year, month), DayOfMonth(day))
@@ -307,7 +299,6 @@ object CalendarDate {
    * @param timePoint 瞬間
    * @param zone タイムゾーン
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarDate = {
     val calendar = timePoint.asJavaCalendar

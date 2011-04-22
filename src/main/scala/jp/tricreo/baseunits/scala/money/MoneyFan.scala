@@ -39,7 +39,7 @@ class MoneyFan[T]
   /**{@link MoneyFan}が保持する {@link Allotment}のうち、割り当て対象が {@code anEntity}であるものを返す。
    *
    * @param anEntity 割り当て対象
-   * @return {@link Allotment}。見つからなかった場合は{@code null}
+   * @return {@link Allotment}。見つからなかった場合は`None`
    */
   def allotment(anEntity: T): Option[Allotment[T]] =
     allotments.find(_.entity == anEntity)
@@ -56,7 +56,6 @@ class MoneyFan[T]
    *
    * @param subtracted {@link MoneyFan}
    * @return {@link MoneyFan}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def minus(subtracted: MoneyFan[T]) = plus(subtracted.negated)
 
@@ -81,7 +80,6 @@ class MoneyFan[T]
    *
    * @param added {@link MoneyFan}
    * @return {@link MoneyFan}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def plus(added: MoneyFan[T]) = {
     val allEntities = allotments.map(_.entity) ++ added.allotments.map(_.entity)

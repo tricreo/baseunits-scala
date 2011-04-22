@@ -43,19 +43,19 @@ class Interval[T <% Ordered[T]]
 
   /**インスタンスを生成する。
    *
-   * @param isLower 下側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
-   * @param isLowerClosed 下限値が閉区間である場合は {@code true}を指定する
-   * @param isUpper 上側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
-   * @param isUpperClosed 上限値が閉区間である場合は {@code true}を指定する
+   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isLowerClosed 下限値が閉区間である場合は `true`を指定する
+   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isUpperClosed 上限値が閉区間である場合は `true`を指定する
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
   def this(lower: LimitValue[T], isLowerClosed: Boolean, upper: LimitValue[T], isUpperClosed: Boolean) = {
     this (IntervalLimit.lower(isLowerClosed, lower), IntervalLimit.upper(isUpperClosed, upper))
   }
 
-  /**この区間の<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
+  /**この区間の<b>補</b>区間と与えた区間 `other` の共通部分を返す。
    *
-   * <p>この区間と与えた区間に共通部分がない場合は、 {@code other} を要素とする要素数1の区間列を返す。
+   * <p>この区間と与えた区間に共通部分がない場合は、 `other` を要素とする要素数1の区間列を返す。
    * 与えた区間が、この区間を完全に内包する場合は、2つの区間に分かれるため、要素数が2の区間列を返す。
    * 逆にこの区間が、与えた区間を完全に内包する場合は、要素数0の区間列を返す。
    * 上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。</p>
@@ -83,10 +83,10 @@ class Interval[T <% Ordered[T]]
   }
 
 
-  /**この区間が、指定した区間 {@code other}を完全に内包するかどうかを検証する。
+  /**この区間が、指定した区間 `other`を完全に内包するかどうかを検証する。
    *
    * @param other 区間
-   * @return 完全に内包する場合は{@code true}、そうでない場合は{@code false}
+   * @return 完全に内包する場合は`true`、そうでない場合は`false`
    */
   def covers(other: Interval[T]) = {
     val lowerPass = includes(other.lowerLimit) ||
@@ -104,16 +104,16 @@ class Interval[T <% Ordered[T]]
   def emptyOfSameType = newOfSameType(lowerLimit, false, lowerLimit, false)
 
 
-  /**この区間と、与えた区間 {@code other}の同一性を検証する。
+  /**この区間と、与えた区間 `other`の同一性を検証する。
    *
-   * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は{@code false}を返す。
-   * 両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は{@code true}を返す。
-   * また、どちらか一方のみが単一要素区間であった場合は{@code false}を返す。</p>
+   * <p>両者が共に空の区間であった場合は`true`、どちらか一方のみが空の区間であった場合は`false`を返す。
+   * 両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は`true`を返す。
+   * また、どちらか一方のみが単一要素区間であった場合は`false`を返す。</p>
    *
-   * <p>{@code other}が{@code Interval}以外であった場合は、必ず{@code false}を返す。</p>
+   * <p>`other`が{@code Interval}以外であった場合は、必ず`false`を返す。</p>
    *
    * @param other 比較対象の区間
-   * @return 同一である場合は{@code true}、そうでない場合は{@code false}
+   * @return 同一である場合は`true`、そうでない場合は`false`
    */
   override def equals(obj: Any) = obj match {
     case other: Interval[T] =>
@@ -127,7 +127,7 @@ class Interval[T <% Ordered[T]]
     case _ => false
   }
 
-  /**この区間と与えた区間 {@code other} の間にある区間を取得する。
+  /**この区間と与えた区間 `other` の間にある区間を取得する。
    *
    * <p>例えば、[3, 5) と [10, 20) の gap は、[5, 19) である。
    * 2つの区間が共通部分を持つ場合は、空の区間を返す。</p>
@@ -155,7 +155,7 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 下側限界がある場合は{@code true}、そうでない場合は{@code false}
+   * @return 下側限界がある場合は`true`、そうでない場合は`false`
    */
   def hasLowerLimit = lowerLimit match {
     case _: Limit[T] => true
@@ -174,7 +174,7 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 上側限界がある場合は{@code true}、そうでない場合は{@code false}
+   * @return 上側限界がある場合は`true`、そうでない場合は`false`
    */
   def hasUpperLimit = upperLimit match {
     case _: Limit[T] => true
@@ -184,7 +184,7 @@ class Interval[T <% Ordered[T]]
   /**指定した値 {@code value} が、この区間に含まれるかどうかを検証する。
    *
    * @param value 値
-   * @return 含まれる場合は{@code true}、そうでない場合は{@code false}
+   * @return 含まれる場合は`true`、そうでない場合は`false`
    */
   def includes(value: LimitValue[T]): Boolean = isBelow(value) == false && isAbove(value) == false
 
@@ -199,7 +199,7 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 下側限界が閉じている場合は{@code true}、そうでない場合は{@code false}
+   * @return 下側限界が閉じている場合は`true`、そうでない場合は`false`
    */
   def includesLowerLimit = lowerLimitObject.isClosed
 
@@ -214,11 +214,11 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 上側限界値が閉じている場合は{@code true}、そうでない場合は{@code false}
+   * @return 上側限界値が閉じている場合は`true`、そうでない場合は`false`
    */
   def includesUpperLimit = upperLimitObject.isClosed
 
-  /**この区間と与えた区間 {@code other} の積集合（共通部分）を返す。
+  /**この区間と与えた区間 `other` の積集合（共通部分）を返す。
    *
    * <p>共通部分が存在しない場合は、空の区間を返す。</p>
    *
@@ -240,10 +240,10 @@ class Interval[T <% Ordered[T]]
       case _ => false
     }
 
-  /**この区間と、与えた区間{@code other}の間に共通部分が存在するかどうか検証する。
+  /**この区間と、与えた区間`other`の間に共通部分が存在するかどうか検証する。
    *
    * @param other 対象区間
-   * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
+   * @return 共通部分が存在する場合は`true`、そうでない場合は`false`
    */
   def intersects(other: Interval[T]) =
     if (equalBothLimitless(upperLimit, other.upperLimit)) true
@@ -258,7 +258,7 @@ class Interval[T <% Ordered[T]]
   /**指定した値 {@code value} が、この区間の下側限界を超過していないかどうかを検証する。
    *
    * @param value 値
-   * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+   * @return 超過していない場合は`true`、そうでない場合は`false`
    */
   def isAbove(value: LimitValue[T]) =
     if (hasLowerLimit == false) false
@@ -268,7 +268,7 @@ class Interval[T <% Ordered[T]]
   /**指定した値 {@code value} が、この区間の上側限界を超過していないかどうかを検証する。
    *
    * @param value 値
-   * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+   * @return 超過していない場合は`true`、そうでない場合は`false`
    */
   def isBelow(value: LimitValue[T]): Boolean =
     if (hasUpperLimit == false) false
@@ -277,7 +277,7 @@ class Interval[T <% Ordered[T]]
 
   /**この区間が閉区間であるかどうかを検証する。
    *
-   * @return 閉区間である場合は{@code true}、そうでない場合（半開区間を含む）は{@code false}
+   * @return 閉区間である場合は`true`、そうでない場合（半開区間を含む）は`false`
    */
   def isClosed = includesLowerLimit && includesUpperLimit
 
@@ -287,7 +287,7 @@ class Interval[T <% Ordered[T]]
    * <p>区間が空であるとは、上側限界値と下側限界値が同値であり、かつ、開区間であることを示す。
    * 例えば {@code 3 < x < 3}のような状態である。</p>
    *
-   * @return 空である場合は{@code true}、そうでない場合は{@code false}
+   * @return 空である場合は`true`、そうでない場合は`false`
    */
   def isEmpty: Boolean = (upperLimit, lowerLimit) match {
   // TODO: Consider explicit isEmpty interval
@@ -298,7 +298,7 @@ class Interval[T <% Ordered[T]]
 
   /**この区間が開区間であるかどうかを検証する。
    *
-   * @return 開区間である場合は{@code true}、そうでない場合（半開区間を含む）は{@code false}
+   * @return 開区間である場合は`true`、そうでない場合（半開区間を含む）は`false`
    */
   def isOpen = includesLowerLimit == false && includesUpperLimit == false
 
@@ -307,7 +307,7 @@ class Interval[T <% Ordered[T]]
    * <p>単一要素区間は、上側下側の両限界を持ち、さらにそれらの限界値が同値であり、かつ、開区間ではないことを示す。
    * 例えば {@code 3 <= x < 3}, {@code 3 < x <= 3}, {@code 3 <= x <= 3}のような状態である。</p>
    *
-   * @return 単一要素区間である場合は{@code true}、そうでない場合は{@code false}
+   * @return 単一要素区間である場合は`true`、そうでない場合は`false`
    */
   def isSingleElement =
     if (hasUpperLimit == false) false
@@ -326,16 +326,16 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 下側限界値. 限界がない場合は、{@code Limitless[T]}
+   * @return 下側限界値. 限界がない場合は、[[Limitless[T]]]
    */
   def lowerLimit = lowerLimitObject.value
 
   /**この区間と同じ型{@code T}を持つ、新しい区間を生成する。
    *
-   * @param isLower 下側限界値. 限界値がない場合は、{@code Limitless[T]}
-   * @param lowerClosed 下限値を区間に含む（閉じた下側限界）場合は{@code true}を指定する
-   * @param isUpper 上側限界値. 限界値がない場合は、{@code Limitless[T]}
-   * @param upperClosed 上限値を区間に含む（閉じた上側限界）場合は{@code true}を指定する
+   * @param isLower 下側限界値. 限界値がない場合は、[[Limitless[T]]]
+   * @param lowerClosed 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
+   * @param isUpper 上側限界値. 限界値がない場合は、[[Limitless[T]]]
+   * @param upperClosed 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 新しい区間
    */
   def newOfSameType(lower: LimitValue[T], lowerClosed: Boolean, upper: LimitValue[T], upperClosed: Boolean) =
@@ -366,11 +366,11 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 上側限界値. 限界がない場合は、{@code Limitless[T]}
+   * @return 上側限界値. 限界がない場合は、[[Limitless[T]]]
    */
   def upperLimit = upperLimitObject.value
 
-  /**この区間と与えた区間 {@code other} の下側限界値のうち、より大きい（限界の狭い、制約の大きい）限界値を返す。
+  /**この区間と与えた区間 `other` の下側限界値のうち、より大きい（限界の狭い、制約の大きい）限界値を返す。
    *
    * @param other 比較対象の限界値
    * @return より大きい限界値
@@ -382,7 +382,7 @@ class Interval[T <% Ordered[T]]
     else other.lowerLimit
 
 
-  /**この区間と与えた区間 {@code other} の上側限界値のうち、より小さい（限界の狭い、制約の大きい）限界値を返す。
+  /**この区間と与えた区間 `other` の上側限界値のうち、より小さい（限界の狭い、制約の大きい）限界値を返す。
    *
    * @param other 比較対象の限界値
    * @return より小さい限界値
@@ -465,10 +465,10 @@ class Interval[T <% Ordered[T]]
     includes(limit) || other.includes(limit)
   }
 
-  /**この区間と与えた区間 {@code other} の上側限界値のうち、より大きい（限界の広い、制約の小さい）限界値を返す。
+  /**この区間と与えた区間 `other` の上側限界値のうち、より大きい（限界の広い、制約の小さい）限界値を返す。
    *
    * @param other 比較対象の限界値
-   * @return より小さい限界値. この区間に上側限界がない場合は {@code Limitless[T]}
+   * @return より小さい限界値. この区間に上側限界がない場合は [[Limitless[T]]]
    */
   private def greaterOfUpperLimits(other: Interval[T]): Option[LimitValue[T]] =
     if (upperLimit == Limitless[T]) {
@@ -481,7 +481,7 @@ class Interval[T <% Ordered[T]]
         Some(other.upperLimit)
     }
 
-  /**この区間の下側<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
+  /**この区間の下側<b>補</b>区間と与えた区間 `other` の共通部分を返す。
    *
    * @param other 比較対象の区間
    * @return この区間の下側の補区間と、与えた区間の共通部分。存在しない場合は {@code None}
@@ -494,10 +494,10 @@ class Interval[T <% Ordered[T]]
       Some(newOfSameType(other.lowerLimit, other.includesLowerLimit, lowerLimit,
         includesLowerLimit == false))
 
-  /**この区間と与えた区間 {@code other} の下側限界値のうち、より小さい（限界の広い、制約の小さい）限界値を返す。
+  /**この区間と与えた区間 `other` の下側限界値のうち、より小さい（限界の広い、制約の小さい）限界値を返す。
    *
    * @param other 比較対象の限界値
-   * @return より小さい限界値. この区間に下側限界がない場合は {@code Limitless[T]}
+   * @return より小さい限界値. この区間に下側限界がない場合は [[Limitless[T]]]
    */
   private def lesserOfLowerLimits(other: Interval[T]) =
     lowerLimit match {
@@ -521,7 +521,7 @@ class Interval[T <% Ordered[T]]
     includes(limit) || other.includes(limit)
   }
 
-  /**この区間の上側<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
+  /**この区間の上側<b>補</b>区間と与えた区間 `other` の共通部分を返す。
    *
    * @param other 比較対象の区間
    * @return この区間の上側の補区間と、与えた区間の共通部分。存在しない場合は {@code None}
@@ -552,7 +552,7 @@ object Interval {
    * <p>下側限界値は区間に含む（閉じている）区間である。</p>
    *
    * @param <T> 限界値の型
-   * @param isLower 下側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */
   def andMore[T <% Ordered[T]](lower: LimitValue[T]) = closed(lower, Limitless[T])
@@ -560,8 +560,8 @@ object Interval {
   /**閉区間を生成する。
    *
    * @param <T> 限界値の型
-   * @param isLower 下側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
-   * @param isUpper 上側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 閉区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -573,7 +573,7 @@ object Interval {
    * <p>下側限界値は区間に含まない（開いている）区間である。</p>
    *
    * @param <T> 限界値の型
-   * @param isLower 下側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */
   def moreThan[T <% Ordered[T]](lower: LimitValue[T]) = open(lower, Limitless[T])
@@ -584,8 +584,8 @@ object Interval {
   /**開区間を生成する。
    *
    * @param <T> 限界値の型
-   * @param isLower 下側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
-   * @param isUpper 上側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 開区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -596,10 +596,10 @@ object Interval {
    * <p>主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。</p>
    *
    * @param <T> 限界値の型
-   * @param isLower 下側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
-   * @param lowerIncluded 下限値を区間に含む（閉じた下側限界）場合は{@code true}を指定する
-   * @param isUpper 上側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
-   * @param upperIncluded 上限値を区間に含む（閉じた上側限界）場合は{@code true}を指定する
+   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param lowerIncluded 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
+   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param upperIncluded 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -611,7 +611,7 @@ object Interval {
    * @param element 単一要素となる値
    * @param <T> 限界値の型
    * @return 区間
-   * @throws IllegalArgumentException 引数に{@code Limitless[T]}を与えた場合
+   * @throws IllegalArgumentException 引数に[[Limitless[T]]]を与えた場合
    */
   def singleElement[T <% Ordered[T]](element: LimitValue[T]) = closed(element, element)
 
@@ -620,7 +620,7 @@ object Interval {
    * <p>上側限界値は区間に含まない（開いている）区間である。</p>
    *
    * @param <T> 限界値の型
-   * @param isUpper 上側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */
   def under[T <% Ordered[T]](upper: LimitValue[T]) = open(Limitless[T], upper)
@@ -630,7 +630,7 @@ object Interval {
    * <p>上側限界値は区間に含む（閉じている）区間である。</p>
    *
    * @param <T> 限界値の型
-   * @param isUpper 上側限界値. {@code Limitless[T]}の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
    * @return 区間
    */
   def upTo[T <% Ordered[T]](upper: LimitValue[T]) = closed(Limitless[T], upper)

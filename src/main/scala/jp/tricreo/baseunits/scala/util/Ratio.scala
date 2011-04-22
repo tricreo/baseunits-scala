@@ -69,7 +69,6 @@ class Ratio
    * @param scale 小数点以下の有効数字
    * @param roundingMode 丸めモード
    * @return この比率の [[BigDecimal]] 型の表現
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def decimalValue(scale: Int, roundingMode: BigDecimal.RoundingMode.Value) = {
     BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode.id))
@@ -77,23 +76,19 @@ class Ratio
 
   /**このオブジェクトと、与えたオブジェクトの同一性を検証する。
    *
-   * <p>与えたオブジェクト {@code anObject} が {@code null}である場合、または[[Ratio]]型や
-   * そのサブクラスではない場合、{@code false}を返す。
-   * 与えたオブジェクトの、分母と分子が共に一致する場合、{@code true}を返す。</p>
+   * <p>与えたオブジェクト[[Ratio]]型や
+   * そのサブクラスではない場合、`false`を返す。
+   * 与えたオブジェクトの、分母と分子が共に一致する場合、`true`を返す。</p>
    *
-   * <p>{@code 2/3} と {@code 4/6} は、評価結果としては同一であるが、分母同士、分子同士が
-   * 異なるため、このメソッドでは {@code true} と判断されず、 {@code false} となる。
+   * <p>`2/3` と `4/6` は、評価結果としては同一であるが、分母同士、分子同士が
+   * 異なるため、このメソッドでは `true` と判断されず、 `false` となる。
    *
    * @param obj 比較対象オブジェクト
-   * @return 同一の場合は{@code true}、そうでない場合は{@code false}
+   * @return 同一の場合は`true`、そうでない場合は`false`
    * @see java.lang.Object#equals(java.lang.Object)
    */
   override def equals(obj: Any): Boolean = obj match {
-    case that: Ratio => {
-      val me = reduce
-      val you = that.reduce
-      me._1 == you._1 && me._2 == you._2
-    }
+    case that: Ratio => this.denominator == that.denominator && this.numerator == that.numerator
     case _ => false
   }
 
@@ -102,10 +97,13 @@ class Ratio
     if (denominator == 0) numerator
     else gcd(denominator, numerator % denominator)
 
-
-  private def reduce = {
+  /**通分した[[jp.tricreo.baseunits.scala.util.Ratio]]を返す。
+   *
+   * @return 通分した[[jp.tricreo.baseunits.scala.util.Ratio]]
+   */
+  def reduce = {
     val gcd = this.gcd(numerator, denominator)
-    (numerator / gcd, denominator / gcd)
+    new Ratio(numerator / gcd, denominator / gcd)
   }
 
   override def hashCode = denominator.hashCode + numerator.hashCode
@@ -116,7 +114,6 @@ class Ratio
    *
    * @param multiplier 乗数
    * @return 積
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def times(multiplier: BigDecimal): Ratio =
     Ratio(numerator * multiplier, denominator)
@@ -128,7 +125,6 @@ class Ratio
    *
    * @param multiplier 乗数比率
    * @return 積
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def times(multiplier: Ratio): Ratio =
     Ratio(numerator * multiplier.numerator, denominator * multiplier.denominator)
@@ -149,7 +145,6 @@ object Ratio {
    *
    * @param fractional 分数
    * @return 与えた分数であらわされる比率
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def apply(fractional: BigDecimal): Ratio =
     new Ratio(fractional, BigDecimal(1))
@@ -159,7 +154,6 @@ object Ratio {
    * @param numerator 分子
    * @param denominator 分母
    * @return 引数に与えた分子、分母からなる比
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ArithmeticException 引数{@code denominator}が0だった場合
    */
   def apply(numerator: BigDecimal, denominator: BigDecimal): Ratio =
@@ -176,6 +170,5 @@ object Ratio {
     new Ratio(BigDecimal(numerator), BigDecimal(denominator))
 
   def unapply(ratio: Ratio) = Some(ratio.numerator, ratio.denominator)
-
 
 }

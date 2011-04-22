@@ -322,7 +322,7 @@ class DurationTest extends AssertionsForJUnit {
   def test17_StartingFromTimePoint {
     val dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0)
     val dec20At3 = TimePoint.atGMT(2003, 12, 20, 03, 0, 0, 0)
-    val dec20_1_3 = dec20At1.until(dec20At3)
+    val dec20_1_3 = dec20At1.until(Limit(dec20At3))
     assert(Duration.hours(2).startingFromTimePoint(Limit(dec20At1)) == dec20_1_3)
   }
 

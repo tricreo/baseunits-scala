@@ -35,7 +35,6 @@ object Proration {
    * @param total 合計金額
    * @param n 分割数
    * @return 分割結果
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def dividedEvenlyIntoParts(total: Money, n: Int) = {
     val lowResult = total.dividedBy(BigDecimal(n), BigDecimal.RoundingMode.DOWN)
@@ -51,7 +50,6 @@ object Proration {
    * @param portion 部分量をあらわす値
    * @param whole 全体量をあらわす値
    * @return 部分の金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ArithmeticException 引数{@code whole}が0だった場合
    */
   def partOfWhole(total: Money, portion: Long, whole: Long): Money =
@@ -62,7 +60,6 @@ object Proration {
    * @param total 合計額
    * @param ratio 割合
    * @return 指定した割合の金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def partOfWhole(total: Money, ratio: Ratio): Money = {
     val scale = defaultScaleForIntermediateCalculations(total)
@@ -79,8 +76,6 @@ object Proration {
    * @param total 合計金額
    * @param proportions 比数の配列
    * @return 分割結果
-   * @throws IllegalArgumentException 引数{@code total}に{@code null}を与えた場合
-   * @throws IllegalArgumentException 引数{@code proportions}またはその要素に{@code null}を与えた場合
    */
   def proratedOver(total: Money, proportions: Array[BigDecimal]): Array[Money] = {
     val scale = defaultScaleForIntermediateCalculations(total)
@@ -103,7 +98,6 @@ object Proration {
    * @param total 合計金額
    * @param longProportions 比数の配列
    * @return 分割結果
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def proratedOver[T <% Number](total: Money, longProportions: Array[T]): Array[Money] = {
     val proportions = longProportions.map(e => BigDecimal(e.longValue))
@@ -130,7 +124,6 @@ object Proration {
    *
    * @param proportions 比の配列
    * @return 割合の配列
-   * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
    */
   def ratios(proportions: Array[BigDecimal]) = {
     val total = sum(proportions)
@@ -141,7 +134,6 @@ object Proration {
    *
    * @param elements 配列
    * @return 和
-   * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
    */
   def sum(elements: Array[BigDecimal]) =
     elements.sum
@@ -150,10 +142,10 @@ object Proration {
    *
    * @param elements 配列
    * @return 和
-   * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
    * @throws IllegalArgumentException 引数{@code elements}の要素数が0の場合
    */
   def sum(elements: Array[Money]) = {
+    require(elements.size > 0)
     val sum = Money.adjustBy(0, elements(0).breachEncapsulationOfCurrency)
     elements.foldLeft(sum)(_.plus(_))
   }

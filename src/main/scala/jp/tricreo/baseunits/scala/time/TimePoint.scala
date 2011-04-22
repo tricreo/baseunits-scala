@@ -20,7 +20,7 @@ package jp.tricreo.baseunits.scala.time
 
 import java.text.SimpleDateFormat
 import java.util.{Date => JDate, Calendar, TimeZone}
-import jp.tricreo.baseunits.scala.intervals.Limit
+import jp.tricreo.baseunits.scala.intervals.{LimitValue, Limit}
 
 /**ミリ秒精度で、ある時間の一点をあらわすクラス。
  * <p>タイムゾーンを持っている。</p>
@@ -41,7 +41,6 @@ class TimePoint private[time]
    *
    * @param zone タイムゾーン
    * @return [[Calendar]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asJavaCalendar(zone: TimeZone): Calendar = {
     val result = Calendar.getInstance(zone)
@@ -59,7 +58,6 @@ class TimePoint private[time]
    *
    * @param zone タイムゾーン
    * @return 時分
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimeOfDay(zone: TimeZone) = {
     val calendar = asJavaCalendar(zone)
@@ -70,7 +68,6 @@ class TimePoint private[time]
    *
    * @param zone タイムゾーン
    * @return 午前0時（深夜）の瞬間を表す [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def backToMidnight(zone: TimeZone) = calendarDate(zone).asTimeInterval(zone).start
 
@@ -87,7 +84,6 @@ class TimePoint private[time]
    *
    * @param zone タイムゾーン
    * @return 日付
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def calendarDate(zone: TimeZone) = CalendarDate.from(this, zone)
 
@@ -97,7 +93,6 @@ class TimePoint private[time]
    *
    * @param otherPoint 比較対象
    * @return [[Comparable#compareTo(Object)]]に準じる
-   * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(otherPoint: TimePoint): Int =
     if (isBefore(otherPoint)) -1
@@ -106,8 +101,8 @@ class TimePoint private[time]
 
   /**このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
    *
-   * <p>与えたオブジェクトが {@code null} ではなく、かつ [[TimePoint]]型であった場合、
-   * 同じ日時を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
+   * <p>与えたオブジェクトが[TimePoint]]型であった場合、
+   * 同じ日時を指している場合は`true`、そうでない場合は`false`を返す。</p>
    *
    * @see java.lang.Object#equals(java.lang.Object)
    */
@@ -122,18 +117,16 @@ class TimePoint private[time]
   /**このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
    *
    * @param interval 基準期間
-   * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 期間の終了後に位置する場合は`true`、そうでない場合は`false`
    */
   def isAfter(interval: TimeInterval) = interval.isBefore(Limit(this))
 
   /**指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
    *
-   * <p>同一日時である場合は {@code false} を返す。</p>
+   * <p>同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日時
-   * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 未来である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: TimePoint) = millisecondsFromEpoc > other.millisecondsFromEpoc
 
@@ -141,18 +134,16 @@ class TimePoint private[time]
   /**このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
    *
    * @param interval 基準期間
-   * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 期間の開始前に位置する場合は`true`、そうでない場合は`false`
    */
   def isBefore(interval: TimeInterval) = interval.isAfter(Limit(this))
 
   /**指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
    *
-   * <p>同一日時である場合は {@code false} を返す。</p>
+   * <p>同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日時
-   * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isBefore(other: TimePoint) = millisecondsFromEpoc < other.millisecondsFromEpoc
 
@@ -160,8 +151,7 @@ class TimePoint private[time]
    *
    * @param other 対象瞬間
    * @param zone タイムゾーン
-   * @return 等価である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 等価である場合は`true`、そうでない場合は`false`
    */
   def isSameDayAs(other: TimePoint, zone: TimeZone) = calendarDate(zone) == other.calendarDate(zone)
 
@@ -170,7 +160,6 @@ class TimePoint private[time]
    *
    * @param duration 時間の長さ
    * @return 過去の日時
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def -(duration: Duration) = duration.subtractedFrom(this)
 
@@ -189,7 +178,6 @@ class TimePoint private[time]
    *
    * @param duration 時間の長さ
    * @return 未来の日時
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def +(duration: Duration) = duration.addedTo(this)
 
@@ -220,10 +208,10 @@ class TimePoint private[time]
    *
    * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
    *
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param end 終了日時（上側限界値）. `LimitValue[TimePoint]`の場合は、限界がないことを表す
    * @return [[TimeInterval]]
    */
-  def until(end: TimePoint) = TimeInterval.over(Limit(this), Limit(end))
+  def until(end: LimitValue[TimePoint]) = TimeInterval.over(Limit(this), end)
 
 
 }
@@ -246,7 +234,6 @@ object TimePoint {
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(yearMonth: CalendarMonth, date: DayOfMonth, hour: Int,
          minute: Int, second: Int, millisecond: Int, zone: TimeZone): TimePoint = {
@@ -266,7 +253,6 @@ object TimePoint {
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int, zone: TimeZone): TimePoint = {
     val calendar = Calendar.getInstance(zone)
@@ -290,7 +276,6 @@ object TimePoint {
    * @param second 秒
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, zone: TimeZone): TimePoint = {
     at(year, month, date, hour, minute, second, 0, zone)
@@ -305,11 +290,9 @@ object TimePoint {
    * @param minute 分
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, zone: TimeZone): TimePoint = {
+  def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, zone: TimeZone): TimePoint =
     at(year, month, date, hour, minute, 0, 0, zone)
-  }
 
   /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
@@ -322,12 +305,10 @@ object TimePoint {
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int,
-         millisecond: Int, zone: TimeZone): TimePoint = {
+         millisecond: Int, zone: TimeZone): TimePoint =
     at(year, month.value, date.value, hour, minute, second, millisecond, zone)
-  }
 
   /**世界標準時における、指定した日時を表すインスタンスを取得する。
    *
@@ -340,8 +321,8 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+   * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合もしくは、
+   *  引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
    */
   def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int,
              millisecond: Int) = {
@@ -360,9 +341,8 @@ object TimePoint {
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
-   * @throws IllegalArgumentException 引数{@code zone}に{@code null}を与えた場合
+   * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合もしくは、
+   * 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合もしく
    */
   def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int,
              millisecond: Int, zone: TimeZone): TimePoint =
@@ -412,7 +392,6 @@ object TimePoint {
    * @param calendarDate 日付
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def atMidnight(calendarDate: CalendarDate, zone: TimeZone): TimePoint =
     at(calendarDate.asCalendarMonth,
@@ -425,7 +404,6 @@ object TimePoint {
    * @param date 日
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def atMidnight(year: Int, month: Int, date: Int, zone: TimeZone): TimePoint =
     at(year, month, date, 0, 0, 0, 0, zone)
@@ -444,7 +422,6 @@ object TimePoint {
    *
    * @param calendar 元となる日時情報を表す [[Calendar]]インスタンス
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(calendar: Calendar): TimePoint =
     from(calendar.getTime)
@@ -455,7 +432,6 @@ object TimePoint {
    * @param time 時間
    * @param zone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(date: CalendarDate, time: TimeOfDay, zone: TimeZone): TimePoint =
     at(date.asCalendarMonth, date.breachEncapsulationOfDay,
@@ -466,7 +442,6 @@ object TimePoint {
    *
    * @param javaDate 元となる日時情報を表す [[Date]]インスタンス
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(javaDate: JDate): TimePoint =
     from(javaDate.getTime)
@@ -490,7 +465,6 @@ object TimePoint {
    * @param zone タイムゾーン
    * @return [[TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def parse(dateTimeString: String, pattern: String, timeZone: TimeZone) = {
     val sdf = new SimpleDateFormat(pattern)
@@ -505,7 +479,6 @@ object TimePoint {
    * @param pattern 解析パターン
    * @return [[TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def parseGMTFrom(dateTimeString: String, pattern: String) =
     parse(dateTimeString, pattern, GMT)

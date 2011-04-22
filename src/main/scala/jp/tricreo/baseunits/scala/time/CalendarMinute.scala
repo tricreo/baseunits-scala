@@ -39,11 +39,9 @@ class CalendarMinute private[time]
    *
    * @param timeZone タイムゾーン
    * @return [[TimePoint]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def asTimePoint(timeZone: TimeZone): TimePoint = {
+  def asTimePoint(timeZone: TimeZone): TimePoint =
     TimePoint.from(date, time, timeZone)
-  }
 
   /**このオブジェクトの[[#date]]フィールド（年月日）を返す。
    *
@@ -79,11 +77,10 @@ class CalendarMinute private[time]
 
   /**指定した年月日時分 {@code other} が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象年月日時分
-   * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: CalendarMinute): Boolean = {
     isBefore(other) == false && equals(other) == false
@@ -91,11 +88,10 @@ class CalendarMinute private[time]
 
   /**指定した年月日時分 {@code other} が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象年月日時分
-   * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 未来である場合は`true`、そうでない場合は`false`
    */
   def isBefore(other: CalendarMinute) = {
     if (date.isBefore(other.date)) {
@@ -122,7 +118,6 @@ class CalendarMinute private[time]
     point.toString(pattern, zone)
   }
 
-
 }
 
 object CalendarMinute {
@@ -138,7 +133,6 @@ object CalendarMinute {
    * @param aDate 年月日
    * @param aTime 時分
    * @return [[CalendarMinute]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(aDate: CalendarDate, aTime: TimeOfDay): CalendarMinute = new CalendarMinute(aDate, aTime)
 
@@ -150,11 +144,9 @@ object CalendarMinute {
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
    * @return [[CalendarMinute]]
-   * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+   * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合もしくは、
+   * 引数{@code day}が1〜31の範囲ではない場合もしくは、引数{@code hour}が0〜23の範囲ではない場合もしくは、
+   * 引数{@code minute}が0〜59の範囲ではない場合もしくは、引数{@code day}が{@code yearMonth}の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarMinute =
     new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute))

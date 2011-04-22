@@ -41,7 +41,6 @@ class Duration
    *
    * @param day 元となる日付
    * @return このオブジェクトが表現する長さの時間が経過した未来の日付
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def addedTo(day: CalendarDate) = {
     //		only valid for days and larger units
@@ -64,7 +63,6 @@ class Duration
    *
    * @param month 元となる年月
    * @return このオブジェクトが表現する長さの時間が経過した未来の年月
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def addedTo(month: CalendarMonth) = {
     //		only valid for days and larger units
@@ -85,7 +83,6 @@ class Duration
    *
    * @param point 元となる日時
    * @return このオブジェクトが表現する長さの時間が経過した未来の日時
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @see #addAmountToTimePoint(long, TimePoint)
    */
   def addedTo(point: TimePoint): TimePoint =
@@ -117,7 +114,6 @@ class Duration
    * @param other 比較対照
    * @return [[Comparable#compareTo(Object)]]に準じる
    * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
-   * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(other: Duration): Int = {
     if (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) {
@@ -134,7 +130,6 @@ class Duration
    * @param divisor 割る数
    * @return 割合
    * @throws IllegalArgumentException 引数divisorの単位を、このオブジェクトの単位に変換できない場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ArithmeticException 引数{@code divisor}が0だった場合
    */
   def dividedBy(divisor: Duration): Ratio = {
@@ -156,9 +151,8 @@ class Duration
    *
    * @param other 期間
    * @return 時間量の差
-   * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
-   * @throws IllegalArgumentException 引数otherの長さが、このオブジェクトよりも長い場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、
+   * どちらのquantityも0ではない場合もしくは、引数otherの長さが、このオブジェクトよりも長い場合
    */
   def minus(other: Duration): Duration = {
     checkConvertible(other)
@@ -184,7 +178,6 @@ class Duration
    * @param other 期間
    * @return 時間量の和
    * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def plus(other: Duration): Duration = {
     checkConvertible(other)
@@ -196,7 +189,6 @@ class Duration
    *
    * @param end 終了日時（上側限界値）
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def preceding(end: LimitValue[TimePoint]): TimeInterval =
     TimeInterval.preceding(end.asInstanceOf[Limit[TimePoint]], this)
@@ -207,9 +199,8 @@ class Duration
    *
    * <p>この時間量の単位が "日" 未満である場合は、開始日と終了日は同日となる。<p>
    *
-   * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param start 開始日時（下側限界値）. `Limitless[CalendarDate]`の場合は、限界がないことを表す
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def startingFromCalendarDate(start: LimitValue[CalendarDate]): CalendarInterval =
     CalendarInterval.startingFrom(start, this)
@@ -218,9 +209,8 @@ class Duration
    *
    * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
    *
-   * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param start 開始日時（下側限界値）. `Limitless[CalendarDate]`の場合は、限界がないことを表す
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def startingFromTimePoint(start: LimitValue[TimePoint]): TimeInterval =
     TimeInterval.startingFrom(start.asInstanceOf[Limit[TimePoint]], this)
@@ -232,7 +222,6 @@ class Duration
    *
    * @param day 元となる日付
    * @return このオブジェクトが表現する長さのを引いた、過去の日付
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def subtractedFrom(day: CalendarDate): CalendarDate = {
     //		only valid for days and larger units
@@ -253,7 +242,6 @@ class Duration
    *
    * @param point 元となる日時
    * @return このオブジェクトが表現する長さのを引いた、過去の日時
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @see #addAmountToTimePoint(long, TimePoint)
    */
   def subtractedFrom(point: TimePoint): TimePoint =
@@ -337,11 +325,11 @@ class Duration
 
 object Duration {
 
-  /**長さ {@code 0} の期間 */
-  val NONE = milliseconds(0)
+  /**長さ `0` の期間 */
+  val None = milliseconds(0)
 
 
-  /**長さが {@code howMany} 日の時間量を取得する。
+  /**長さが `howMany` 日の時間量を取得する。
    *
    * @param howMany 時間の長さ（日）
    * @return 時間量
@@ -349,8 +337,8 @@ object Duration {
   def days(howMany: Int): Duration =
     Duration(howMany, TimeUnit.day)
 
-  /**長さが {@code days}日 + {@code hours}時間 + {@code minute}分 + {@code seconds}秒
-   * + {@code milliseconds}ミリ秒 の時間量を取得する。
+  /**長さが `days`日 + `hours`時間 + `minute`分 + `seconds`秒
+   * + `milliseconds`ミリ秒 の時間量を取得する。
    *
    * @param days 時間の長さ（日）
    * @param hours 時間の長さ（時間）
@@ -377,7 +365,7 @@ object Duration {
     result
   }
 
-  /**長さが {@code howMany} 時間の時間量を取得する。
+  /**長さが `howMany` 時間の時間量を取得する。
    *
    * @param howMany 時間の長さ（時間）
    * @return 時間量
@@ -385,7 +373,7 @@ object Duration {
   def hours(howMany: Int): Duration =
     Duration(howMany, TimeUnit.hour)
 
-  /**長さが {@code howMany} ミリ秒の時間量を取得する。
+  /**長さが `howMany` ミリ秒の時間量を取得する。
    *
    * @param howMany 時間の長さ（ミリ秒）
    * @return 時間量
@@ -393,7 +381,7 @@ object Duration {
   def milliseconds(howMany: Long): Duration =
     Duration(howMany, TimeUnit.millisecond)
 
-  /**長さが {@code howMany} 分の時間量を取得する。
+  /**長さが `howMany` 分の時間量を取得する。
    *
    * @param howMany 時間の長さ（分）
    * @return 時間量
@@ -401,7 +389,7 @@ object Duration {
   def minutes(howMany: Int): Duration =
     Duration(howMany, TimeUnit.minute)
 
-  /**長さが {@code howMany} ヶ月の時間量を取得する。
+  /**長さが `howMany` ヶ月の時間量を取得する。
    *
    * @param howMany 時間の長さ（月）
    * @return 時間量
@@ -409,7 +397,7 @@ object Duration {
   def months(howMany: Int): Duration =
     Duration(howMany, TimeUnit.month)
 
-  /**長さが {@code howMany} 四半期の時間量を取得する。
+  /**長さが `howMany` 四半期の時間量を取得する。
    *
    * @param howMany 時間の長さ（四半期）
    * @return 時間量
@@ -418,7 +406,7 @@ object Duration {
     Duration(howMany, TimeUnit.quarter)
   }
 
-  /**長さが {@code howMany} ミリの時間量を取得する。
+  /**長さが `howMany` ミリの時間量を取得する。
    *
    * @param howMany 時間の長さ（ミリ）
    * @return 時間量
@@ -426,7 +414,7 @@ object Duration {
   def seconds(howMany: Int): Duration =
     Duration(howMany, TimeUnit.second)
 
-  /**長さが {@code howMany} 週間の時間量を取得する。
+  /**長さが `howMany` 週間の時間量を取得する。
    *
    * @param howMany 時間の長さ（週）
    * @return 時間量
@@ -434,7 +422,7 @@ object Duration {
   def weeks(howMany: Int): Duration =
     Duration(howMany, TimeUnit.week)
 
-  /**長さが {@code howMany} 年の時間量を取得する。
+  /**長さが `howMany` 年の時間量を取得する。
    *
    * @param howMany 時間の長さ（年）
    * @return 時間量

@@ -38,7 +38,6 @@ class TimeOfDay private[time]
    * @param date 年月日
    * @param timeZone タイムゾーン
    * @return 瞬間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimePointGiven(date: CalendarDate, timeZone: TimeZone): TimePoint = {
     val timeOfDayOnDate = on(date)
@@ -79,11 +78,10 @@ class TimeOfDay private[time]
 
   /**このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
    *
-   * <p>等価の場合は{@code false}を返す。</p>
+   * <p>等価の場合は`false`を返す。</p>
    *
    * @param another 基準時分
-   * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 未来である場合は`true`、そうでない場合は`false`
    */
   def isAfter(another: TimeOfDay) = {
     hour.isAfter(another.hour) || (hour == another.hour && minute.isAfter(another.minute))
@@ -91,11 +89,10 @@ class TimeOfDay private[time]
 
   /**このインスタンスがあらわす時分が、指定した時分よりも過去であるかどうか調べる。
    *
-   * <p>等価の場合は{@code false}を返す。</p>
+   * <p>等価の場合は`false`を返す。</p>
    *
    * @param another 基準時分
-   * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isBefore(another: TimeOfDay) = {
     hour.isBefore(another.hour) || (hour == another.hour && minute.isBefore(another.minute))
@@ -105,7 +102,6 @@ class TimeOfDay private[time]
    *
    * @param date 年月日
    * @return [[CalendarMinute]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def on(date: CalendarDate) =
     CalendarMinute.from(date, this)
@@ -121,7 +117,6 @@ object TimeOfDay {
    *
    * @param hour 時
    * @param minute 分
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def apply(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = new TimeOfDay(hour, minute)
 
@@ -133,7 +128,6 @@ object TimeOfDay {
    * @param hour 時
    * @param minute 分
    * @return [[TimeOfDay]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def from(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = apply(hour, minute)
 
@@ -143,8 +137,7 @@ object TimeOfDay {
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
    * @return [[TimeOfDay]]
-   * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
+   * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合もしくは、引数{@code minute}が0〜59の範囲ではない場合
    */
   def from(hour: Int, minute: Int): TimeOfDay = new TimeOfDay(HourOfDay(hour), MinuteOfHour(minute))
 

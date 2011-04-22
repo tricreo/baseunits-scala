@@ -39,7 +39,7 @@ class TimeInterval
    * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
    * <p>この期間が終了日時（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
-   * {@code true}を返すので、無限ループに注意すること。</p>
+   * `true`を返すので、無限ループに注意すること。</p>
    *
    * @return 日時の反復子
    * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
@@ -73,7 +73,7 @@ class TimeInterval
 
   /**この期間の終了日時を取得する。
    *
-   * @return この期間の終了日時. 上側限界がない場合は {@code null}
+   * @return この期間の終了日時. 上側限界がない場合は `Limitless[CalendarDate]`
    */
   def end = upperLimit
 
@@ -83,7 +83,6 @@ class TimeInterval
    *
    * @param interval 比較対象の期間
    * @return 積集合（共通部分）
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def intersect(interval: TimeInterval) = super.intersect(interval).asInstanceOf[TimeInterval]
 
@@ -91,8 +90,7 @@ class TimeInterval
   /**指定した日時が、この期間の開始日時以前でないかどうかを検証する。
    *
    * @param point 日時
-   * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 開始日時以前でない場合は`true`、そうでない場合は`false`
    * @see Interval#isAbove(Comparable)
    */
   def isAfter(point: LimitValue[TimePoint]) = isAbove(point)
@@ -100,15 +98,14 @@ class TimeInterval
   /**指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
    *
    * @param point 日時
-   * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 終了日時以後でない場合は`true`、そうでない場合は`false`
    * @see Interval#isBelow(Comparable)
    */
   def isBefore(point: LimitValue[TimePoint]) = isBelow(point)
 
   /**この期間の長さを取得する。
    *
-   * @return 長さ. もし開始日時または終了日時が存在しない（無限）場合は{@code null}を返す。
+   * @return 長さ.
    * @throws IllegalStateException この期間が開始日時（下側限界）または終了日時（下側限界）を持たない場合
    */
   def length = {
@@ -121,10 +118,10 @@ class TimeInterval
 
   /**この期間と同じ型を持つ、新しい期間を返す。
    *
-   * @param start 下側限界値. 限界値がない場合は、{@code null}
-   * @param isStartClosed 下限値を期間に含む（閉じた下側限界）場合は{@code true}を指定する
-   * @param end 上側限界値. 限界値がない場合は、{@code null}
-   * @param isEndClosed 上限値を期間に含む（閉じた上側限界）場合は{@code true}を指定する
+   * @param start 下側限界値. 限界値がない場合は、`Limitless[TimePoint]`
+   * @param isStartClosed 下限値を期間に含む（閉じた下側限界）場合は`true`を指定する
+   * @param end 上側限界値. 限界値がない場合は、`Limitless[TimePoint]`
+   * @param isEndClosed 上限値を期間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 新しい期間
    */
   override def newOfSameType(start: LimitValue[TimePoint],
@@ -135,7 +132,7 @@ class TimeInterval
 
   /**この期間の開始日時を取得する。
    *
-   * @return この期間の開始日時. 下側限界がない場合は {@code null}
+   * @return この期間の開始日時. 下側限界がない場合は `Limitless[T]`
    */
   def start = lowerLimit
 
@@ -157,12 +154,11 @@ class TimeInterval
    * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
    * <p>この期間が終了日時（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
-   * {@code true}を返すので、無限ループに注意すること。</p>
+   * `true`を返すので、無限ループに注意すること。</p>
    *
    * @param subintervalLength 反復子が返す期間の長さ
    * @return 期間の反復子
    * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def subintervalIterator(subintervalLength: Duration): Iterator[TimeInterval] = {
     if (hasLowerLimit == false) {
@@ -199,8 +195,8 @@ object TimeInterval {
 
   /**開始日時と終了日時より、閉期間を返す。
    *
-   * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
+   * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @return 期間
    * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
    */
@@ -211,7 +207,7 @@ object TimeInterval {
    *
    * <p>開始日時は期間に含む（閉じている）区間である。</p>
    *
-   * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @return 期間
    */
   def everFrom(start: LimitValue[TimePoint]): TimeInterval =
@@ -221,7 +217,7 @@ object TimeInterval {
    *
    * <p>終了日時は期間に含まない（開いている）区間である。</p>
    *
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @return 期間
    */
   def everPreceding(end: LimitValue[TimePoint]): TimeInterval =
@@ -229,8 +225,8 @@ object TimeInterval {
 
   /**開始日時と終了日時より、開期間を返す。
    *
-   * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
+   * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @return 期間
    * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
    */
@@ -241,10 +237,10 @@ object TimeInterval {
    *
    * <p>主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。</p>
    *
-   * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-   * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-   * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
+   * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
+   * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は`true`を指定する
+   * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
+   * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 期間
    * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
    */
@@ -255,8 +251,8 @@ object TimeInterval {
    *
    * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。</p>
    *
-   * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
+   * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @return 期間
    * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
    */
@@ -266,12 +262,11 @@ object TimeInterval {
 
   /**終了日時と期間の長さより、期間を返す。
    *
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-   * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
+   * @param end 終了日時（上側限界値）.
+   * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は`true`を指定する
    * @param length 期間の長さ
-   * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
+   * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def preceding(end: Limit[TimePoint], startClosed: Boolean, length: Duration, endClosed: Boolean): TimeInterval = {
     val start = end.value - length
@@ -280,10 +275,9 @@ object TimeInterval {
 
   /**終了日時と期間の長さより、期間を返す。
    *
-   * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param end 終了日時（上側限界値）.
    * @param length 期間の長さ
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def preceding(end: Limit[TimePoint], length: Duration): TimeInterval = {
     // Uses the common default for time intervals, [start, end).
@@ -293,11 +287,10 @@ object TimeInterval {
   /**開始日時と期間の長さより、期間を返す。
    *
    * @param start 開始日時（下側限界値）
-   * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
+   * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は`true`を指定する
    * @param length 期間の長さ
-   * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
+   * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def startingFrom(start: Limit[TimePoint], startClosed: Boolean, length: Duration, endClosed: Boolean): TimeInterval = {
     val end = start.value + length
@@ -311,7 +304,6 @@ object TimeInterval {
    * @param start 開始日時（下側限界値）
    * @param length 期間の長さ
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def startingFrom(start: Limit[TimePoint], length: Duration): TimeInterval = {
     // Uses the common default for time intervals, [start, end).

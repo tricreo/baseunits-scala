@@ -40,7 +40,6 @@ class CalendarInterval protected
    *
    * @param zone タイムゾーン
    * @return 時間の期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def asTimeInterval(zone: TimeZone) {
     val startPoint = lowerLimit.toValue.asTimeInterval(zone).start
@@ -63,7 +62,7 @@ class CalendarInterval protected
    * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
    * <p>この期間が開始日（下側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
-   * {@code true}を返すので、無限ループに注意すること。</p>
+   * `true`を返すので、無限ループに注意すること。</p>
    *
    * @return 日付の反復子
    * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
@@ -111,7 +110,7 @@ class CalendarInterval protected
    * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
    * <p>この期間が終了日（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
-   * {@code true}を返すので、無限ループに注意すること。</p>
+   * `true`を返すので、無限ループに注意すること。</p>
    *
    * @return 日付の反復子
    * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
@@ -147,9 +146,9 @@ class CalendarInterval protected
 
   /**終了日を取得する。
    *
-   * @return 終了日. 開始日がない場合は{@code null}
+   * @return 終了日. 開始日がない場合は`Limitless[CalendarDate]`
    */
-  def end: CalendarDate = upperLimit.toValue
+  def end = upperLimit
 
   /**この期間の日数としての長さを取得する。
    *
@@ -166,7 +165,7 @@ class CalendarInterval protected
   def lengthInDaysInt = {
     require(hasLowerLimit && hasUpperLimit)
     val calStart = start.toValue.asJavaCalendarUniversalZoneMidnight
-    val calEnd = end.plusDays(1).asJavaCalendarUniversalZoneMidnight
+    val calEnd = end.toValue.plusDays(1).asJavaCalendarUniversalZoneMidnight
     val diffMillis = calEnd.getTimeInMillis - calStart.getTimeInMillis
     (diffMillis / TimeUnitConversionFactor.millisecondsPerDay.value).asInstanceOf[Int]
   }
@@ -193,7 +192,7 @@ class CalendarInterval protected
     require(hasLowerLimit && hasUpperLimit)
 
     val calStart = start.toValue.asJavaCalendarUniversalZoneMidnight
-    val calEnd = end.plusDays(1).asJavaCalendarUniversalZoneMidnight
+    val calEnd = end.toValue.plusDays(1).asJavaCalendarUniversalZoneMidnight
     val yearDiff = calEnd.get(Calendar.YEAR) - calStart.get(Calendar.YEAR)
     val monthDiff = yearDiff * 12 + calEnd.get(Calendar.MONTH) - calStart.get(Calendar.MONTH)
     monthDiff;
@@ -208,7 +207,7 @@ class CalendarInterval protected
 
   /**開始日を取得する。
    *
-   * @return 開始日. 開始日がない場合は{@code null}
+   * @return 開始日. 開始日がない場合は`Limitless[CalendarDate]`
    */
   def start = lowerLimit
 
@@ -231,7 +230,7 @@ class CalendarInterval protected
    * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
    *
    * <p>この期間が終了日（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
-   * {@code true}を返すので、無限ループに注意すること。</p>
+   * `true`を返すので、無限ループに注意すること。</p>
    *
    * @param subintervalLength 反復子が返す期間の長さ
    * @return 期間の反復子
@@ -259,7 +258,7 @@ class CalendarInterval protected
           throw new NoSuchElementException
         }
         val current = _next
-        _next = segmentLength.startingFromCalendarDate(Limit(_next.end.plusDays(1)))
+        _next = segmentLength.startingFromCalendarDate(Limit(_next.end.toValue.plusDays(1)))
         current
       }
     }
@@ -278,7 +277,7 @@ object CalendarInterval {
    *
    * <p>開始日は期間に含む（閉じている）区間である。</p>
    *
-   * @param startDate 開始日（下側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param startDate 開始日（下側限界値）. `Limitless[CalendarDate]`の場合は、限界がないことを表す
    * @return 期間
    */
   def everFrom(startDate: LimitValue[CalendarDate]): CalendarInterval =
@@ -288,7 +287,7 @@ object CalendarInterval {
    *
    * <p>終了日は期間に含む（閉じている）区間である。</p>
    *
-   * @param endDate 終了日（上側限界値）. {@code null}の場合は、限界がないことを表す
+   * @param endDate 終了日（上側限界値）. `Limitless[CalendarDate]`の場合は、限界がないことを表す
    * @return 期間
    */
   def everPreceding(endDate: LimitValue[CalendarDate]): CalendarInterval =
@@ -374,7 +373,6 @@ object CalendarInterval {
    * @param start 開始日（下側限界値）
    * @param length 期間の長さ
    * @return 期間
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def startingFrom(start: LimitValue[CalendarDate], length: Duration): CalendarInterval = {
     // Uses the common default for calendar intervals, [start, end].

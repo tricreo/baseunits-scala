@@ -36,8 +36,7 @@ final class TimeUnit private[time]
    * <p>例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）日単位に変換できない。</p>
    *
    * @param other 変換先単位
-   * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 変換できる場合は`true`、そうでない場合は`false`
    */
   def isConvertibleTo(other: TimeUnit) = valueBaseType == other.valueBaseType
 
@@ -45,7 +44,7 @@ final class TimeUnit private[time]
    *
    * <p>例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）ミリ秒単位に変換できない。</p>
    *
-   * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
+   * @return 変換できる場合は`true`、そうでない場合は`false`
    */
   def isConvertibleToMilliseconds = isConvertibleTo(TimeUnit.millisecond)
 

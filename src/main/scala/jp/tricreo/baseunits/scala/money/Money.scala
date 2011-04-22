@@ -64,7 +64,6 @@ class Money
    * @param that 比較対象
    * @return {@link Comparable#compareTo(Object)}に準じる
    * @throws ClassCastException 比較対象の通貨単位が異なり、かつ双方の量がどちらも0ではない場合
-   * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def compare(that: Money) = {
     require(currency == that.currency)
@@ -91,7 +90,6 @@ class Money
    * @param scale スケール
    * @param roundingMode 丸めモード
    * @return 指定した割合の金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def applying(ratio: Ratio, scale: Int, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     val newAmount = ratio.times(amount).decimalValue(scale, roundingMode)
@@ -103,7 +101,6 @@ class Money
    * @param ratio 割合
    * @param roundingMode 丸めモード
    * @return 指定した割合の金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def applying(ratio: Ratio, roundingMode: BigDecimal.RoundingMode.Value): Money =
     applying(ratio, currency.getDefaultFractionDigits, roundingMode)
@@ -147,7 +144,6 @@ class Money
    * @param divisor 除数
    * @param roundingMode 丸めモード
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def dividedBy(divisor: BigDecimal, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     val newAmount = amount.bigDecimal.divide(divisor.bigDecimal, roundingMode.id)
@@ -159,7 +155,6 @@ class Money
    * @param divisor 除数
    * @param roundingMode 丸めモード
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def dividedBy(divisor: Double, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     dividedBy(BigDecimal(divisor), roundingMode)
@@ -169,7 +164,6 @@ class Money
    *
    * @param divisor 除数
    * @return 割合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
    * @throws ArithmeticException 引数{@code divisor}の量が0だった場合
    */
@@ -180,49 +174,47 @@ class Money
 
   /**このインスタンがあらわす金額が、{@code other}よりも大きいかどうか調べる。
    *
-   * <p>等価の場合は{@code false}とする。</p>
+   * <p>等価の場合は`false`とする。</p>
    *
    * @param other 基準金額
-   * @return 大きい場合は{@code true}、そうでない場合は{@code false}
+   * @return 大きい場合は`true`、そうでない場合は`false`
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
-   * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def isGreaterThan(other: Money) =
     this > other
 
   /**このインスタンがあらわす金額が、{@code other}よりも小さいかどうか調べる。
    *
-   * <p>等価の場合は{@code false}とする。</p>
+   * <p>等価の場合は`false`とする。</p>
    *
    * @param other 基準金額
-   * @return 小さい場合は{@code true}、そうでない場合は{@code false}
+   * @return 小さい場合は`true`、そうでない場合は`false`
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
-   * @throws NullPointerException 引数に{@code null}を与えた場合
    */
   def isLessThan(other: Money) =
     this < other
 
   /**このインスタンがあらわす金額が、負の金額かどうか調べる。
    *
-   * <p>ゼロの場合は{@code false}とする。</p>
+   * <p>ゼロの場合は`false`とする。</p>
    *
-   * @return 負の金額である場合は{@code true}、そうでない場合は{@code false}
+   * @return 負の金額である場合は`true`、そうでない場合は`false`
    */
   def isNegative =
     amount < BigDecimal(0)
 
   /**このインスタンがあらわす金額が、正の金額かどうか調べる。
    *
-   * <p>ゼロの場合は{@code false}とする。</p>
+   * <p>ゼロの場合は`false`とする。</p>
    *
-   * @return 正の金額である場合は{@code true}、そうでない場合は{@code false}
+   * @return 正の金額である場合は`true`、そうでない場合は`false`
    */
   def isPositive =
     amount > BigDecimal(0)
 
   /**このインスタンがあらわす金額が、ゼロかどうか調べる。
    *
-   * @return ゼロである場合は{@code true}、そうでない場合は{@code false}
+   * @return ゼロである場合は`true`、そうでない場合は`false`
    */
   def isZero = {
     equals(Money.adjustBy(0.0, currency))
@@ -233,7 +225,6 @@ class Money
    * @param other 金額
    * @return 差し引き金額
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def minus(other: Money) = {
     plus(other.negated)
@@ -251,7 +242,6 @@ class Money
    *
    * @param duration 時間量
    * @return 割合
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def per(duration: Duration): MoneyTimeRate =
     new MoneyTimeRate(this, duration)
@@ -260,7 +250,6 @@ class Money
    *
    * @param other 金額
    * @return 足した金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
    */
   def plus(other: Money): Money = {
@@ -294,7 +283,6 @@ class Money
    * @param factor 係数
    * @param roundingMode 丸めモード
    * @return 掛けた金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def times(factor: BigDecimal, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     Money.adjustBy(amount * factor, currency, roundingMode)
@@ -315,7 +303,6 @@ class Money
    * @param amount 係数
    * @param roundingMode 丸めモード
    * @return 掛けた金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def times(amount: Double, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     times(BigDecimal(amount), roundingMode)
@@ -337,7 +324,7 @@ class Money
 
   /**指定したロケールにおける、単位つきの金額表現の文字列を返す。
    *
-   * @param locale ロケール。{@code null}の場合は {@link Locale#getDefault()} を利用する。
+   * @param locale ロケール。`null`の場合は {@link Locale#getDefault()} を利用する。
    * @return 金額の文字列表現
    */
   def toString(locale: Locale) = {
@@ -421,7 +408,6 @@ object Money {
    *
    * @param amount 量
    * @return {@code amount}で表す量のドルを表すインスタンス
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def dollars(amount: BigDecimal) = adjustBy(amount, USD)
 
@@ -439,7 +425,6 @@ object Money {
    * round off the amount.
    * @param amount 量
    * @return {@code amount}で表す量のユーロを表すインスタンス
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def euros(amount: BigDecimal) = adjustBy(amount, EUR)
 
@@ -459,7 +444,6 @@ object Money {
    * @return 合計金額
    * @throws ClassCastException 引数の通貨単位の中に通貨単位が異なるものを含む場合。
    * 				ただし、量が0の金額については通貨単位を考慮しないので例外は発生しない。
-   * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
    */
   def sum(monies: Iterable[Money]) = {
     if (monies.isEmpty) {
@@ -475,7 +459,6 @@ object Money {
    * @param amount 量
    * @param currency 通貨単位
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def adjustBy(amount: BigDecimal, currency: Currency): Money = {
     adjustBy(amount, currency, BigDecimal.RoundingMode.UNNECESSARY)
@@ -487,7 +470,6 @@ object Money {
    * @param currency 通貨単位
    * @param roundingMode 丸めモード
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def adjustBy(rawAmount: BigDecimal, currency: Currency, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     val amount = rawAmount.setScale(currency.getDefaultFractionDigits, roundingMode)
@@ -500,12 +482,9 @@ object Money {
    * @param dblAmount 量
    * @param currency 通貨単位
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
-  def adjustBy(dblAmount: Double, currency: Currency): Money = {
+  def adjustBy(dblAmount: Double, currency: Currency): Money =
     adjustBy(dblAmount, currency, DEFAULT_ROUNDING_MODE)
-  }
-
 
   /**Because of the indefinite precision of double, this method must round off
    * the value. This method gives the client control of the rounding mode.
@@ -514,7 +493,6 @@ object Money {
    * @param currency 通貨単位
    * @param roundingMode 丸めモード
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def adjustRound(dblAmount: Double, currency: Currency, roundingMode: BigDecimal.RoundingMode.Value): Money = {
     val rawAmount = BigDecimal(dblAmount)
@@ -526,7 +504,6 @@ object Money {
    *
    * @param amount 量
    * @return {@code amount}で表す量の円を表すインスタンス
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def yens(amount: BigDecimal) = adjustBy(amount, JPY)
 
@@ -542,7 +519,6 @@ object Money {
    *
    * @param currency 通貨単位
    * @return 金額
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def zero(currency: Currency) = adjustBy(0.0, currency)
 

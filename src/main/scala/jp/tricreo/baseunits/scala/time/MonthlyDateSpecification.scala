@@ -66,7 +66,6 @@ abstract class MonthlyDateSpecification extends DateSpecification {
    *
    * @param month 年月
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def ofYearMonth(month: CalendarMonth): CalendarDate
 }

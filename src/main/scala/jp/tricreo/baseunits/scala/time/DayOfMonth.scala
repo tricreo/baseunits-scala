@@ -18,17 +18,18 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-/**
- * 1ヶ月間の中の特定の「日」を表すクラス。
- *
+/**1ヶ月間の中の特定の「日」を表すクラス。
  * <p>タイムゾーンの概念はない。</p>
+ *
+ * @author j5ik2o
+ * @param value 日をあらわす正数（1〜31）
  */
 @serializable
 class DayOfMonth
 (private[time] val value: Int)
   extends Ordered[DayOfMonth] {
 
-  require(value >= DayOfMonth.MIN && value <= DayOfMonth.MAX,
+  require(value >= DayOfMonth.Min && value <= DayOfMonth.Max,
     "Illegal value for day of month: " + value
       + ", please use a value between 1 and 31")
 
@@ -49,13 +50,12 @@ class DayOfMonth
     case _ => false
   }
 
-  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+  /**指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日時
-   * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: DayOfMonth) = {
     isBefore(other) == false && equals(other) == false
@@ -67,12 +67,10 @@ class DayOfMonth
    * また、29日は閏年の2月に適用可能であるが、平年の2月には適用不可能である。</p>
    *
    * @param month 年月
-   * @return 適用可能な場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 適用可能な場合は`true`、そうでない場合は`false`
    */
-  def isApplyable(month: CalendarMonth) = {
+  def isApplyable(month: CalendarMonth) =
     month.getLastDayOfMonth.isBefore(this) == false
-  }
 
   /**この日を、指定した年月に適用可能かどうか調べる。
    *
@@ -81,20 +79,17 @@ class DayOfMonth
    *
    * @param year 年
    * @param month 月
-   * @return 適用可能な場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 適用可能な場合は`true`、そうでない場合は`false`
    */
-  def isApplyable(year: Int, month: MonthOfYear) = {
+  def isApplyable(year: Int, month: MonthOfYear) =
     month.getLastDayOfThisMonth(year).isBefore(this) == false;
-  }
 
-  /**指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+  /**指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
-   * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+   * <p>お互いが同一日時である場合は `false` を返す。</p>
    *
    * @param other 対象日
-   * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 未来である場合は`true`、そうでない場合は`false`
    */
   def isBefore(other: DayOfMonth): Boolean = value < other.value
 
@@ -102,8 +97,7 @@ class DayOfMonth
    *
    * @param month 年月
    * @return [[CalendarDate]]
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-   * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
+   * @throws IllegalArgumentException 引数`month`の月にこの日が存在しない場合
    */
   def on(month: CalendarMonth): CalendarDate = {
     CalendarDate.from(month, this)
@@ -114,8 +108,8 @@ class DayOfMonth
 }
 
 object DayOfMonth {
-  val MIN = 1
-  val MAX = 31
+  val Min = 1
+  val Max = 31
 
   def apply(value: Int) = new DayOfMonth(value)
 

@@ -62,7 +62,6 @@ class BusinessCalendar {
    *
    * @param calendarDays 元となる反復子
    * @return 営業日のみを返す反復子
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def businessDaysOnly(calendarDays: Iterator[CalendarDate]) = {
     new Iterator[CalendarDate] {
@@ -112,8 +111,7 @@ class BusinessCalendar {
    * 業態によってはオーバーライドの可能性があるので注意すること。</p>
    *
    * @param day 日
-   * @return 営業日に当たる場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 営業日に当たる場合は`true`、そうでない場合は`false`
    */
   def isBusinessDay(day: CalendarDate) =
     isWeekend(day) == false && isHoliday(day) == false
@@ -123,7 +121,7 @@ class BusinessCalendar {
    * <p>休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。</p>
    *
    * @param day 日
-   * @return 休日に当たる場合は{@code true}、そうでない場合は{@code false}
+   * @return 休日に当たる場合は`true`、そうでない場合は`false`
    */
   def isHoliday(day: CalendarDate) =
     holidaySpecs.isSatisfiedBy(day)
@@ -133,8 +131,7 @@ class BusinessCalendar {
    * <p>週末とは、土曜日と日曜日のことである。</p>
    *
    * @param day 日
-   * @return 週末に当たる場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 週末に当たる場合は`true`、そうでない場合は`false`
    */
   def isWeekend(day: CalendarDate) = {
     val dow = day.dayOfWeek
@@ -147,7 +144,6 @@ class BusinessCalendar {
    * @param numberOfDays 営業日数（現在は正数しかサポートしない）
    * @return 日付
    * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
-   * @throws IllegalArgumentException 引数{@code startDate}に{@code null}を与えた場合
    */
   def minusBusinessDays(startDate: CalendarDate, numberOfDays: Int) = {
     if (numberOfDays < 0) {
@@ -163,7 +159,6 @@ class BusinessCalendar {
    *
    * @param day 基準日
    * @return 営業日
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def nearestNextBusinessDay(day: CalendarDate) =
     if (isBusinessDay(day)) {
@@ -178,7 +173,6 @@ class BusinessCalendar {
    *
    * @param day 基準日
    * @return 営業日
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def nearestPrevBusinessDay(day: CalendarDate) =
     if (isBusinessDay(day)) {
@@ -191,7 +185,6 @@ class BusinessCalendar {
    *
    * @param startDate 基準日
    * @return 翌営業日
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def nextBusinessDay(startDate: CalendarDate): CalendarDate =
     if (isBusinessDay(startDate)) {
@@ -206,7 +199,6 @@ class BusinessCalendar {
    * @param numberOfDays 営業日数（現在は正数しかサポートしない）. {@code 0}の場合、開始日を含む翌営業日を返す
    * @return 日付
    * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
-   * @throws IllegalArgumentException 引数{@code startDate}に{@code null}を与えた場合
    */
   def plusBusinessDays(startDate: CalendarDate, numberOfDays: Int) = {
     if (numberOfDays < 0) {
@@ -220,7 +212,6 @@ class BusinessCalendar {
    *
    * @param startDate 基準日
    * @return 前営業日
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   def prevBusinessDay(startDate: CalendarDate) =
     if (isBusinessDay(startDate)) {
@@ -241,7 +232,6 @@ class BusinessCalendar {
    * @param numberOfDays 営業日数. {@code 0}の場合、イテレータの先頭
    * @param calendarDays 日付イテレータ
    * @return 営業日
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
    */
   private def nextNumberOfBusinessDays(numberOfDays: Int,
                                        calendarDays: Iterator[CalendarDate]) = {

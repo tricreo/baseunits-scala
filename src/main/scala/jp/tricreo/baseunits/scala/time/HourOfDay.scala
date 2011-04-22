@@ -51,8 +51,7 @@ class HourOfDay private
   /**同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来かどうか調べる。
    *
    * @param another 基準時
-   * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来である場合は`true`、そうでない場合は`false`
    */
   def isAfter(another: HourOfDay) = value > another.value;
 
@@ -60,8 +59,7 @@ class HourOfDay private
    * 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去かどうか調べる。
    *
    * @param another 基準時
-   * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
-   * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+   * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去である場合は`true`、そうでない場合は`false`
    */
   def isBefore(another: HourOfDay) = value < another.value;
 
@@ -87,8 +85,7 @@ object HourOfDay {
    * @param initial 時をあらわす正数
    * @param amPm 午前午後を表す文字列
    * @return 時（0〜11）
-   * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+   * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合もしくは、引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
    */
   def apply(initial: Int, amPm: String) =
     new HourOfDay(convertTo24hour(initial, amPm))
@@ -102,8 +99,8 @@ object HourOfDay {
    * @param hour 時（0〜11）
    * @param amPm 午前午後を表す文字列
    * @return 24時間制における時
-   * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
-   * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+   * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合もしくは、
+   * 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
    */
   def convertTo24hour(hour: Int, amPm: String): Int = {
     require("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm),

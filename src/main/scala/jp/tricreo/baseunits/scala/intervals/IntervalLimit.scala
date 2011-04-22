@@ -23,6 +23,10 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
   def toValue = this match {
     case Limit(value) => value
   }
+  def toValueOrElse(default:T) = this match {
+    case Limit(value) => value
+    case _:Limitless[T] => default
+  }
 
   override def equals(obj: Any) = obj match {
     case that: LimitValue[T] => (this compare that) == 0
@@ -66,16 +70,16 @@ case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
  * <p>限界が「閉じている」とは、限界値そのものを超過とみなさないことを表し、
  * 「開いている」とは、これを超過とみなすことを表す。</p>
  *
- * <p>無限限界とは、限界を制限しないことであり、 [[#value]] が {@code null} であることで
+ * <p>無限限界とは、限界を制限しないことであり、 [[#value]] が `Limitless[T]` であることで
  * この状態を表現する。無限限界は常に開いていると考える。
- * 逆に、無限限界ではない限界（[[#value]] が {@code null} ではないもの）を有限限界と呼ぶ。</p>
+ * 逆に、無限限界ではない限界（[[#value]] が `Limitless[T]` ではないもの）を有限限界と呼ぶ。</p>
  *
  * <p>下側限界とは、限界値以下（または未満）の値を超過とみなす限界を表し、
  * 上側限界とは、限界値以上（または超える）の値を超過とみなす限界を表す。</p>
  *
  * @tparam T 限界の型
- * @param isClosed 限界が閉じている場合 {@code true}
- * @param isLower 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false}
+ * @param isClosed 限界が閉じている場合 `true`
+ * @param isLower 下側限界を表す場合は `true`、上側限界を表す場合は `false`
  * @param value 限界値 [[Limitless[T]]]の場合は、限界がないことを表す。
  */
 @serializable
@@ -91,7 +95,7 @@ class IntervalLimit[T <% Ordered[T]]
 
   /**この限界が無限限界であるかどうかを検証する。
    *
-   * @return 無限限界である場合は{@code true}、そうでない場合は{@code false}
+   * @return 無限限界である場合は`true`、そうでない場合は`false`
    */
   def infinity = value match {
     case _: Limitless[T] => true
@@ -99,12 +103,12 @@ class IntervalLimit[T <% Ordered[T]]
   }
 
   /**この限界が開いているかどうかを検証する。
-   * @return 開いている場合は{@code true}、そうでない場合は{@code false}
+   * @return 開いている場合は`true`、そうでない場合は`false`
    */
   def isOpen = isClosed == false
 
   /**この限界が上側限界であるかどうかを検証する。
-   * @return 上限値の場合は{@code true}、そうでない場合は{@code false}
+   * @return 上限値の場合は`true`、そうでない場合は`false`
    */
   def isUpper = isLower == false
 
@@ -173,13 +177,13 @@ object IntervalLimit {
 
   /**インスタンスを生成する。
    *
-   * <p>無限限界（{@code value}ば{@code null}だった場合は、{@code isClosed}の指定にかかわらず
+   * <p>無限限界（{@code value}ば`Limitless[T]`だった場合は、{@code isClosed}の指定にかかわらず
    * 常に閉じた限界のインスタンスを生成する。</p>
    *
    * @tparam T 限界値の型
-   * @param isClosed 閉じた限界を生成する場合は {@code true}を指定する
-   * @param isLower 下側限界を生成する場合は {@code true}、上側限界を生成する場合は {@code false}を指定する
-   * @param value 限界値. {@code null}の場合は、限界がないことを表す
+   * @param isClosed 閉じた限界を生成する場合は `true`を指定する
+   * @param isLower 下側限界を生成する場合は `true`、上側限界を生成する場合は `false`を指定する
+   * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    */
   def apply[T <% Ordered[T]](isClosed: Boolean, isLower: Boolean, value: LimitValue[T]) =
     new IntervalLimit[T](if (value.isInstanceOf[Limitless[T]]) false else isClosed, isLower, value)
@@ -197,8 +201,8 @@ object IntervalLimit {
   /**下側限界インスタンスを生成する。
    *
    * @tparam T 限界値の型
-   * @param isClosed 閉じた限界を生成する場合は {@code true}を指定する
-   * @param value 限界値. {@code null}の場合は、限界がないことを表す
+   * @param isClosed 閉じた限界を生成する場合は `true`を指定する
+   * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    * @return 下側限界インスタンス
    */
   def lower[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(isClosed, true, value)
@@ -207,8 +211,8 @@ object IntervalLimit {
    *
    * @tparam T 限界値の型
    * @param <T> 限界値の型
-   * @param isClosed 閉じた限界を生成する場合は {@code true}を指定する
-   * @param value 限界値. {@code null}の場合は、限界がないことを表す
+   * @param isClosed 閉じた限界を生成する場合は `true`を指定する
+   * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    * @return 上側限界インスタンス
    */
   def upper[T <% Ordered[T]](isClosed: Boolean, value: LimitValue[T]) = apply(isClosed, false, value)
