@@ -238,10 +238,36 @@ object IntervalSeq {
 
     }
 
+  /**ファクトリメソッド。
+   *
+   * @tparam T 限界値の型
+   * @param intervals
+   * @return IntervalSeq[T]
+   */
   def apply[T <% Ordered[T]](intervals: From[T]) = new IntervalSeq(intervals)
 
-  def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
+  /**ファクトリメソッド。
+   *
+   * @tparam T 限界値の型
+   * @param intervals
+   * @return IntervalSeq[T]
+   */
+  def apply[T <% Ordered[T]]: To[T] = new IntervalSeq[T]()
 
+  /**抽出子メソッド。
+   *
+   * @tparam T 限界値の型
+   * @param intervals
+   * @return Some(intervals: Seq[Interval[T]], ordering: Ordering[Interval[T]])
+   */
+  def unapply[T <% Ordered[T]](intervalSeq:IntervalSeq[T]) =
+    Some(intervalSeq.intervals, intervalSeq.ordering)
+
+  /**ビルダーを生成するメソッド。
+   *
+   * @tparam T 限界値の型
+   * @return ビルダー
+   */
   def newBuilder[T <% Ordered[T]](ordering: Ordering[Interval[T]]): Builder[Elem[T], To[T]] = new IntervalSeqBuilder[T](Some(ordering))
 
 }

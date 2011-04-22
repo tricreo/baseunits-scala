@@ -19,8 +19,12 @@
 package jp.tricreo.baseunits.scala.intervals
 
 /**限界値を表すトレイト。
+ *
+ * @author j5ik2o
+ * @tparam T 限界値の型
  */
 trait LimitValue[T] extends Ordered[LimitValue[T]] {
+
   /**限界値を返す。
    *
    * @return 限界値
@@ -35,7 +39,7 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
    */
   def toValueOrElse(default: => T) = this match {
     case Limit(value) => value
-    case _:Limitless[T] => default
+    case _: Limitless[T] => default
   }
 
   override def equals(obj: Any) = obj match {
@@ -45,35 +49,63 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
       case me: Limitless[T] => false
     }
   }
+
 }
 
+/**コンパニオンオブジェクト。
+ *
+ * @authro j5ik2o
+ */
 object LimitValue {
-  //  implicit def toLimitObject[T <% Ordered[T]](lv:LimitValue[T]) = lv match{
-  //    case Limit(result) => result
-  //  }
 
-  //  implicit def toLimitValue[T <% Ordered[T]](limitObject:T) = limitObject match{
-  //    case null => Limitless[T]
-  //    case _ => Limit(limitObject)
-  //  }
+  /**[[LimitValue]]を[[Limit]]の限界値に変換する。
+   *
+   * @param limitValue [[LimitValue]]
+   * @throws IllegalArgumentException limitValueがLimitless[T]の場合
+   */
+  implicit def toValue[T <% Ordered[T]](limitValue: LimitValue[T]) = limitValue match {
+    case Limit(value) => value
+    case _: Limitless[T] => throw new IllegalArgumentException("implicit conversion from Limitless[T] can't do.")
+  }
+
+  /**値を[[LimitValue]]に変換する。
+   *
+   * @param value 値
+   */
+  implicit def toLimitValue[T <% Ordered[T]](value: T) = value match {
+    case null => Limitless[T]
+    case value: T => Limit(value)
+  }
+
 }
 
-/**有限値を表すクラス。
+/**有限の限界値を表すクラス。
+ *
+ * @author j5ik2o
+ * @tparam T 限界値の型
+ * @param value 限界値
  */
 case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
+
   def compare(that: LimitValue[T]) = that match {
     case that: Limit[T] => value compare that.value
     case _ => 1
   }
+
 }
 
-/**無限値を表すクラス。
+/**無限の限界値を表すクラス。
+ *
+ * @author j5ik2o
+ * @tparam T 限界値の型
  */
 case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
+
   def compare(that: LimitValue[T]) = that match {
     case that: Limitless[T] => 0
     case _ => -1
   }
+
 }
 
 /**区間における「限界」を表すクラス。

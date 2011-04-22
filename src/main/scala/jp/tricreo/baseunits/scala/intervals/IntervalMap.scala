@@ -63,7 +63,7 @@ class LinearIntervalMap[A <% Ordered[A], B]
   def containsIntersectingKey(otherInterval: Interval[A]): Boolean =
     intersectingKeys(otherInterval).isEmpty == false
 
-  private def directPut(source:Map[Interval[A], B],intervalSequence: List[Interval[A]], value: B) = {
+  private def directPut(source: Map[Interval[A], B], intervalSequence: List[Interval[A]], value: B) = {
     val keyValues = collection.mutable.Map.empty[Interval[A], B]
     keyValues ++= source
     intervalSequence.foreach {
@@ -127,11 +127,29 @@ class LinearIntervalMap[A <% Ordered[A], B]
  */
 object LinearIntervalMap {
 
-  def apply[A <% Ordered[A], B]:LinearIntervalMap[A, B] = new LinearIntervalMap
+  /**ファクトリメソッド。
+   *
+   * @tparam A キーの型
+   * @tparam B 値の型
+   * @return LinearIntervalMap[A, B]
+   */
+  def apply[A <% Ordered[A], B]: LinearIntervalMap[A, B] = new LinearIntervalMap
 
-  def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]):LinearIntervalMap[A, B] = new LinearIntervalMap(intervalMap)
+  /**ファクトリメソッド。
+   *
+   * @tparam A キーの型
+   * @tparam B 値の型
+   * @return LinearIntervalMap[A, B]
+   */
+  def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]): LinearIntervalMap[A, B] = new LinearIntervalMap(intervalMap)
 
-  def unapply[A <% Ordered[A], B](linearIntervalMap:LinearIntervalMap[A,B]) =
+  /**抽出子メソッド。
+   *
+   * @tparam A キーの型
+   * @tparam B 値の型
+   * @return Some(intervalMap: Map[Interval[A], B])
+   */
+  def unapply[A <% Ordered[A], B](linearIntervalMap: LinearIntervalMap[A, B]) =
     Some(linearIntervalMap.intervalMap)
 
 }
