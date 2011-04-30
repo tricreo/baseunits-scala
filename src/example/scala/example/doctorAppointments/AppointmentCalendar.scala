@@ -32,15 +32,17 @@ class AppointmentCalendar private[doctorAppointments]
   }
 
   def dailyScheduleFor(calDate: CalendarDate): List[Appointment] = {
-    val daysAppointments = ListBuffer.empty[Appointment]
+//    val daysAppointments = ListBuffer.empty[Appointment]
     val day = calDate.asTimeInterval(defaultZone)
 
-    for (event <- events) {
-      if (event.timeInterval.intersects(day)) {
-        daysAppointments += event
-      }
-    }
-    daysAppointments.result
+    events.filter(_.timeInterval.intersects(day)).toList
+
+//    for (event <- events) {
+//      if (event.timeInterval.intersects(day)) {
+//        daysAppointments += event
+//      }
+//    }
+//    daysAppointments.result
   }
 
 }

@@ -18,7 +18,7 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-import jp.tricreo.baseunits.scala.intervals.{Limit, Limitless, LimitValue, Interval}
+import jp.tricreo.baseunits.scala.intervals.{Limit, LimitValue, Interval}
 
 /**期間（時間の区間）を表すクラス。
  * 限界の表現には [[TimePoint]]を利用する。
@@ -34,7 +34,9 @@ class TimeInterval
  endValue: LimitValue[TimePoint], endIncluded: Boolean)
   extends Interval[TimePoint](startValue, startIncluded, endValue, endIncluded) {
 
-  /**この期間の開始日時を起点として、前回の日時の1日後の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
+  import jp.tricreo.baseunits.scala.intervals.Limit
+
+  /**この期間の開始日時を起点として、前回の日時の`1日後`の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
    * <p>例えば [2009/01/01 13:00, 2009/01/04 05:00) で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
@@ -195,6 +197,8 @@ class TimeInterval
 /**コンパニオンオブジェクト。
  */
 object TimeInterval {
+
+  import jp.tricreo.baseunits.scala.intervals.{Limitless, LimitValue}
 
   def apply(start: LimitValue[TimePoint],
             startClosed: Boolean,
