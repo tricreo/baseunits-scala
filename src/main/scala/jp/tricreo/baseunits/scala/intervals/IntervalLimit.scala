@@ -241,7 +241,7 @@ object IntervalLimit {
   /**抽出子メソッド。
    *
    * @tparam T 限界値の型
-   * @param intervalLimit [[IntervalLimit]]
+   * @param intervalLimit [[jp.tricreo.baseunits.scala.intervals.IntervalLimit]]
    * @return Option[(Boolean, Boolean, T)]
    */
   def unapply[T <% Ordered[T]](intervalLimit: IntervalLimit[T]): Option[(Boolean, Boolean, LimitValue[T])] =
