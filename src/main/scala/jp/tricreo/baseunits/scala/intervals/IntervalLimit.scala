@@ -58,9 +58,10 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
  */
 object LimitValue {
 
-  /**[[LimitValue]]を[[Limit]]の限界値に変換する。
+  /**`LimitValue`を[[jp.tricreo.baseunits.scala.intervals.Limit]]の限界値に変換する。
    *
-   * @param limitValue [[LimitValue]]
+   * @param limitValue [[jp.tricreo.baseunits.scala.intervals.LimitValue]]
+   * @return [[jp.tricreo.baseunits.scala.intervals.Limit]]
    * @throws IllegalArgumentException limitValueがLimitless[T]の場合
    */
   implicit def toValue[T <% Ordered[T]](limitValue: LimitValue[T]) = limitValue match {
@@ -68,9 +69,10 @@ object LimitValue {
     case _: Limitless[T] => throw new IllegalArgumentException("implicit conversion from Limitless[T] can't do.")
   }
 
-  /**値を[[LimitValue]]に変換する。
+  /**値を[[jp.tricreo.baseunits.scala.intervals.LimitValue]]に変換する。
    *
    * @param value 値
+   * @return [[jp.tricreo.baseunits.scala.intervals.Limit]]
    */
   implicit def toLimitValue[T <% Ordered[T]](value: T) = value match {
     case null => Limitless[T]
@@ -113,14 +115,14 @@ case class Limitless[T <% Ordered[T]]() extends LimitValue[T] {
 /**区間における「限界」を表すクラス。
  *
  * <p>このクラスを理解するにあたっては、「限界」と「限界値」の区別を正しく認識することが重要となる。
- * 限界とはこのクラス `this` で表される値であり、限界値とは、 [[#value]]で表される値である。</p>
+ * 限界とはこのクラス `this` で表される値であり、限界値とは、 `value`で表される値である。</p>
  *
  * <p>限界が「閉じている」とは、限界値そのものを超過とみなさないことを表し、
  * 「開いている」とは、これを超過とみなすことを表す。</p>
  *
- * <p>無限限界とは、限界を制限しないことであり、 [[#value]] が `Limitless[T]` であることで
+ * <p>無限限界とは、限界を制限しないことであり、 `value` が `Limitless[T]` であることで
  * この状態を表現する。無限限界は常に開いていると考える。
- * 逆に、無限限界ではない限界（[[#value]] が `Limitless[T]` ではないもの）を有限限界と呼ぶ。</p>
+ * 逆に、無限限界ではない限界（`value` が `Limitless[T]` ではないもの）を有限限界と呼ぶ。</p>
  *
  * <p>下側限界とは、限界値以下（または未満）の値を超過とみなす限界を表し、
  * 上側限界とは、限界値以上（または超える）の値を超過とみなす限界を表す。</p>
@@ -128,7 +130,7 @@ case class Limitless[T <% Ordered[T]]() extends LimitValue[T] {
  * @tparam T 限界の型
  * @param isClosed 限界が閉じている場合 `true`
  * @param isLower 下側限界を表す場合は `true`、上側限界を表す場合は `false`
- * @param value 限界値 [[Limitless[T]]]の場合は、限界がないことを表す。
+ * @param value 限界値 [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す。
  */
 class IntervalLimit[T <% Ordered[T]]
 (val isClosed: Boolean,
