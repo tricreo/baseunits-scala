@@ -23,13 +23,12 @@ import java.lang.String
 
 /**時間の単位を表す列挙型。
  */
-@serializable
 final class TimeUnit private[time]
 (private[time] val id: Int,
  private[time] val valueType: TimeUnit.Type,
  private[time] val valueBaseType: TimeUnit.Type,
  private[time] val factor: TimeUnitConversionFactor)
-  extends Ordered[TimeUnit] {
+  extends Ordered[TimeUnit] with Serializable {
 
   /**この単位で表される値を、指定した単位に変換できるかどうかを検証する。
    * 例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）日単位に変換できない。

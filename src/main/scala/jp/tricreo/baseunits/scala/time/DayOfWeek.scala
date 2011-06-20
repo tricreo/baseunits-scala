@@ -25,10 +25,9 @@ import java.util.Calendar
  *
  * <p>タイムゾーンの概念はない。</p>
  */
-@serializable
 final class DayOfWeek private[time]
 (private[time] val value: Int,
- private[time] val name: String) {
+ private[time] val name: String) extends Serializable {
   /**このオブジェクトの[[#value]]フィールド（[[Calendar]]に定義する曜日をあらわす定数値）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>

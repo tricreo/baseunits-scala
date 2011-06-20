@@ -28,11 +28,10 @@ import java.util.TimeZone
  * @param date 年月日
  * @param time 時分
  */
-@serializable
 class CalendarMinute private[time]
 (private[time] val date: CalendarDate,
  private[time] val time: TimeOfDay)
-  extends Ordered[CalendarMinute] {
+  extends Ordered[CalendarMinute] with Serializable{
 
 
   /**指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について [[TimePoint]] 型のインスタンスを返す。

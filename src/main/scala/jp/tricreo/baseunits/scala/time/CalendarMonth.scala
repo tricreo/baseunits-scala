@@ -25,11 +25,10 @@ import java.util.{Calendar, TimeZone}
  * <p>[[java.util.Date]]と異なり、月未満（日以下）の概念を持っていない。また、[[TimePoint]]と異なり、
  * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
-@serializable
 class CalendarMonth private[time]
 (private[time] val year: Int,
  private[time] val month: MonthOfYear)
-  extends Ordered[CalendarMonth] {
+  extends Ordered[CalendarMonth] with Serializable {
 
   /**このインスタンスが表現する年月の1日からその月末までの、期間を生成する。
    *

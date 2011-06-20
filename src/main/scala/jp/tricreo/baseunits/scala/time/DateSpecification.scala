@@ -18,7 +18,7 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-import jp.tricreo.scala.ddd.base.model.spec.Specification
+import org.sisioh.dddbase.spec.Specification
 
 
 /**日付の仕様を表現するオブジェクト。

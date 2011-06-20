@@ -23,10 +23,9 @@ package jp.tricreo.baseunits.scala.time
  * <p>[[java.util.Date]]と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
  * @param value 分をあらわす正数
  */
-@serializable
 class MinuteOfHour private[time]
 (private[time] val value: Int)
-  extends Ordered[MinuteOfHour] {
+  extends Ordered[MinuteOfHour] with Serializable {
 
   require(MinuteOfHour.MIN <= value && value <= MinuteOfHour.MAX,
     "Illegal value for 24 hour: " + value + ", please use a value between 0 and 23")

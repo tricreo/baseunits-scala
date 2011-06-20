@@ -39,10 +39,9 @@ package jp.tricreo.baseunits.scala.intervals
  * @param lower 下側限界
  * @param upper 上側限界
  */
-@serializable
 class Interval[T <% Ordered[T]]
 (private var lower: IntervalLimit[T],
- private var upper: IntervalLimit[T]) {
+ private var upper: IntervalLimit[T]) extends Serializable {
 
   import collection.mutable.ListBuffer
 

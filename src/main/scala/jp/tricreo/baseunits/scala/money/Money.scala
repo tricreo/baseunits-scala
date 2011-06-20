@@ -25,13 +25,12 @@ import jp.tricreo.baseunits.scala.time.Duration
 
 /**金額を表すクラス。
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
- * 
+ *
  * @author j5ik2o
  */
-@serializable
 class Money
 (val amount: BigDecimal, val currency: Currency)
-  extends Ordered[Money] {
+  extends Ordered[Money] with Serializable {
 
   if (amount.scale != currency.getDefaultFractionDigits) {
     throw new IllegalArgumentException("Scale of amount does not match currency")
@@ -320,7 +319,7 @@ class Money
     times(BigDecimal(amount))
 
   override def toString = {
-    currency.getSymbol() + " " + amount
+    currency.getSymbol + " " + amount
   }
 
   /**指定したロケールにおける、単位つきの金額表現の文字列を返す。

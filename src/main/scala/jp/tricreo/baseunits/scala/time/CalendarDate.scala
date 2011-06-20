@@ -26,11 +26,10 @@ import jp.tricreo.baseunits.scala.intervals.Limit
  * <p>[[Date]]と異なり、時間の概念を持っていない。また、[[TimePoint]]と異なり、
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
-@serializable
 class CalendarDate private[time]
 (private[time] val yearMonth: CalendarMonth,
  private[time] val day: DayOfMonth)
-  extends Ordered[CalendarDate] {
+  extends Ordered[CalendarDate] with Serializable {
 
   /**年月日同士の比較を行う。
    *
@@ -258,7 +257,7 @@ object CalendarDate {
   def apply(yearMonth: CalendarMonth, day: DayOfMonth) =
     from(yearMonth, day)
 
-  def unapply(calendarDate:CalendarDate) =
+  def unapply(calendarDate: CalendarDate) =
     Some(calendarDate.yearMonth, calendarDate.day)
 
   /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。

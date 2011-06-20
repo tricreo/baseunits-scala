@@ -22,10 +22,9 @@ package jp.tricreo.baseunits.scala.time
  *
  * <p>[[java.util.Date]]と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
-@serializable
 class HourOfDay private
 (private[time] val value: Int)
-  extends Ordered[HourOfDay] {
+  extends Ordered[HourOfDay] with Serializable {
 
   require(value >= HourOfDay.MIN && value <= HourOfDay.MAX,
     "Illegal value for 24 hour: %d , please use a value between 0 and 23".format(value))

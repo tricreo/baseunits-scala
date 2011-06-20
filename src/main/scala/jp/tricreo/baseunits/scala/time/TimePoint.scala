@@ -26,10 +26,10 @@ import jp.tricreo.baseunits.scala.intervals.{LimitValue, Limit}
  * <p>タイムゾーンを持っている。</p>
  * @param millisecondsFromEpoc エポックからの経過ミリ秒
  */
-@serializable
+
 class TimePoint private[time]
 (private[time] val millisecondsFromEpoc: Long)
-  extends Ordered[TimePoint] {
+  extends Ordered[TimePoint] with Serializable {
 
   /**このオブジェクトが表現する瞬間をGMTとして扱い、[[Calendar]]型として取得する。
    *

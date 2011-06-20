@@ -26,11 +26,10 @@ import java.util.{GregorianCalendar, Calendar}
  * @param lastDayOfThisMonth その月の最終日
  * @param calendarValue [[Calendar]]に定義する月をあらわす定数値
  */
-@serializable
 sealed class MonthOfYear
 (private[time] val value: Int,
  private[time] val lastDayOfThisMonth: DayOfMonth,
- private[time] val calendarValue: Int) {
+ private[time] val calendarValue: Int) extends Serializable {
 
   /**このオブジェクトの[[#calendarValue]]フィールド（[[Calendar]]に定義する月をあらわす定数値）を返す。
    *

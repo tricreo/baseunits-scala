@@ -26,11 +26,10 @@ import java.util.TimeZone
  * @param hour 時
  * @param minute 分
  */
-@serializable
 class TimeOfDay private[time]
 (private[time] val hour: HourOfDay,
  private[time] val minute: MinuteOfHour)
-  extends Ordered[TimeOfDay] {
+  extends Ordered[TimeOfDay] with Serializable {
 
 
   /**指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について [[TimePoint]] 型のインスタンスを返す。

@@ -28,11 +28,10 @@ import jp.tricreo.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Inter
  * @param startValue 開始日
  * @param endValue 終了日
  */
-@serializable
 class CalendarInterval protected
 (startValue: LimitValue[CalendarDate],
  endValue: LimitValue[CalendarDate])
-  extends Interval[CalendarDate](startValue, true, endValue, true) {
+  extends Interval[CalendarDate](startValue, true, endValue, true) with Serializable {
 
   /**この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
    *
@@ -270,7 +269,7 @@ object CalendarInterval {
   def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]) =
     new CalendarInterval(startValue, endValue)
 
-  def unapply(calendarInterval:CalendarInterval) =
+  def unapply(calendarInterval: CalendarInterval) =
     Some(calendarInterval.start, calendarInterval.end)
 
   /**開始日より、下側限界のみを持つ期間を生成する。

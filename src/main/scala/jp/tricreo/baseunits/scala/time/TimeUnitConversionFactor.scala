@@ -18,10 +18,9 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-@serializable
 private[time] final class TimeUnitConversionFactor
 (val value: Int)
-  extends Ordered[TimeUnitConversionFactor] {
+  extends Ordered[TimeUnitConversionFactor] with Serializable {
   def compare(that: TimeUnitConversionFactor) = value - that.value
 }
 

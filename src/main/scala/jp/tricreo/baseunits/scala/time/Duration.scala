@@ -26,11 +26,10 @@ import jp.tricreo.baseunits.scala.intervals.{Limit, LimitValue}
  *
  * <p>負の時間量は表現しない。</p>
  */
-@serializable
 class Duration
 (val quantity: Long,
  val unit: TimeUnit)
-  extends Ordered[Duration] {
+  extends Ordered[Duration] with Serializable {
 
   require(quantity >= 0, "Quantity: " + quantity + " must be zero or positive")
 

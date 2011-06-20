@@ -24,10 +24,9 @@ package jp.tricreo.baseunits.scala.time
  * @author j5ik2o
  * @param value 日をあらわす正数（1〜31）
  */
-@serializable
 class DayOfMonth
 (private[time] val value: Int)
-  extends Ordered[DayOfMonth] {
+  extends Ordered[DayOfMonth] with Serializable {
 
   require(value >= DayOfMonth.Min && value <= DayOfMonth.Max,
     "Illegal value for day of month: " + value

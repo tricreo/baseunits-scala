@@ -18,8 +18,9 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-import jp.tricreo.scala.ddd.base.model.spec.Specification
+
 import jp.tricreo.baseunits.scala.intervals.Limit
+import org.sisioh.dddbase.spec.Specification
 
 /**営業日カレンダー。
  *

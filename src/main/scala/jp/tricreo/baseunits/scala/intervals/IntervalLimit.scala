@@ -101,7 +101,7 @@ case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
  * @author j5ik2o
  * @tparam T 限界値の型
  */
-case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
+case class Limitless[T <% Ordered[T]]() extends LimitValue[T] {
 
   def compare(that: LimitValue[T]) = that match {
     case that: Limitless[T] => 0
@@ -130,12 +130,11 @@ case class Limitless[T <% Ordered[T]] extends LimitValue[T] {
  * @param isLower 下側限界を表す場合は `true`、上側限界を表す場合は `false`
  * @param value 限界値 [[Limitless[T]]]の場合は、限界がないことを表す。
  */
-@serializable
 class IntervalLimit[T <% Ordered[T]]
 (val isClosed: Boolean,
  val isLower: Boolean,
  val value: LimitValue[T])
-  extends Ordered[IntervalLimit[T]] {
+  extends Ordered[IntervalLimit[T]] with Serializable {
 
   private def lowerToInt(t: Int, f: Int) = if (isLower) t else f
 

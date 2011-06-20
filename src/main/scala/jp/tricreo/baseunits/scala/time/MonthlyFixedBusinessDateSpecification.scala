@@ -27,12 +27,12 @@ object Shifter {
   val Next = NextShifter
 }
 
-case class NextShifter extends Shifter {
+case class NextShifter() extends Shifter {
   def shift(date: CalendarDate, cal: BusinessCalendar) =
     cal.nearestNextBusinessDay(date)
 }
 
-case class PrevShifter extends Shifter {
+case class PrevShifter() extends Shifter {
   def shift(date: CalendarDate, cal: BusinessCalendar) =
     cal.nearestPrevBusinessDay(date)
 }
