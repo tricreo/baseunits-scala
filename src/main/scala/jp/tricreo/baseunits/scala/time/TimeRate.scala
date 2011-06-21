@@ -36,14 +36,15 @@ class TimeRate
    */
   def this(quantity: String, unit: Duration) = this (BigDecimal(quantity), unit)
 
-  /**このオブジェクトの[[#quantity]]フィールド（単位時間あたりの量）を返す。
+  /**このオブジェクトの`quantity`フィールド（単位時間あたりの量）を返す。
    *　CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 単位時間あたりの量
    */
   def breachEncapsulationOfQuantity = quantity
 
-  /**このオブジェクトの[[#unit]]フィールド（単位時間）を返す。
+  /**このオブジェクトの`unit`フィールド（単位時間）を返す。
+   *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 単位時間
@@ -77,7 +78,7 @@ class TimeRate
    * @param roundingMode 丸めモード
    * @return 絶対量
    * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-   * @throws ArithmeticException 引数 `roundingMode` に `RoundingMode#UNNECESSARY` を指定したにもかかわらず、
+   * @throws ArithmeticException 引数 `roundingMode` に `RoundingMode.UNNECESSARY` を指定したにもかかわらず、
    * 			引数`duration`の時間量が単位時間で割り切れない場合
    */
   def over(duration: Duration, scale: Int, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal =
@@ -89,7 +90,7 @@ class TimeRate
    * @param roundingMode 丸めモード
    * @return 絶対量
    * @throws 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-   * @throws ArithmeticException 引数 `roundingMode` に `RoundingMode#UNNECESSARY` を指定したにもかかわらず、
+   * @throws ArithmeticException 引数 `roundingMode` に `RoundingMode.UNNECESSARY` を指定したにもかかわらず、
    * 			引数`duration`の時間量が単位時間で割り切れない場合
    */
   def over(duration: Duration, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal = {

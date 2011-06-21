@@ -24,24 +24,24 @@ import java.util.{GregorianCalendar, Calendar}
  *
  * @param value 1 based: January = 1, February = 2, ...
  * @param lastDayOfThisMonth その月の最終日
- * @param calendarValue [[Calendar]]に定義する月をあらわす定数値
+ * @param calendarValue [[java.util.Calendar]]に定義する月をあらわす定数値
  */
 sealed class MonthOfYear
 (private[time] val value: Int,
  private[time] val lastDayOfThisMonth: DayOfMonth,
  private[time] val calendarValue: Int) extends Serializable {
 
-  /**このオブジェクトの[[#calendarValue]]フィールド（[[Calendar]]に定義する月をあらわす定数値）を返す。
+  /**このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
-   * @return [[Calendar]]に定義する月をあらわす定数値（[[Calendar#JANUARY]]〜[[Calendar#DECEMBER]]）
+   * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
    */
   def breachEncapsulationOfCalendarValue = calendarValue;
 
-  /**このオブジェクトの[[#value]]フィールド（月をあらわす数 1〜12）を返す。
+  /**このオブジェクトの`value`フィールド（月をあらわす数 1〜12）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 月をあらわす数（1〜12）
    */
@@ -49,16 +49,16 @@ sealed class MonthOfYear
 
   /**指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(other: MonthOfYear) = isBefore(other) == false && equals(other) == false;
+  def isAfter(other: MonthOfYear) = isBefore(other) == false && equals(other) == false
 
   /**指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象日
    * @return 未来である場合は`true`、そうでない場合は`false`
@@ -84,8 +84,11 @@ sealed class MonthOfYear
   private[time] def getLastDayOfThisMonth(year: Int) = lastDayOfThisMonth
 
 }
-
+/**コンパニオンオブジェクト。
+ *
+ */
 object MonthOfYear {
+
   /**January */
   val Jan = MonthOfYear(1, DayOfMonth(31), Calendar.JANUARY)
 

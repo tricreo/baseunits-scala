@@ -32,7 +32,7 @@ class DayOfMonth
     "Illegal value for day of month: " + value
       + ", please use a value between 1 and 31")
 
-	/**このオブジェクトの[[#value]]フィールド（日をあらわす正数）を返す。
+	/**このオブジェクトの`value`フィールド（日をあらわす正数）を返す。
 	 *
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 *
@@ -85,7 +85,7 @@ class DayOfMonth
 
   /**指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象日
    * @return 未来である場合は`true`、そうでない場合は`false`
@@ -95,7 +95,7 @@ class DayOfMonth
   /**指定した年月のこの日を返す。
    *
    * @param month 年月
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`の月にこの日が存在しない場合
    */
   def on(month: CalendarMonth): CalendarDate = {

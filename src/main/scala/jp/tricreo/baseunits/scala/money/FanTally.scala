@@ -18,9 +18,9 @@
  */
 package jp.tricreo.baseunits.scala.money
 
-/**[[MoneyFan]]の集合。
+/**[[jp.tricreo.baseunits.scala.money.MoneyFan]]の集合。
  * @tparam T 割り当ての対象
- * @param fans [[MapFan]]の[[Iterable]]
+ * @param fans [[jp.tricreo.baseunits.scala.money.MapFan]]の[[scala.Iterable]]
  */
 class FanTally[T]
 (private[money] val fans: Iterable[MoneyFan[T]])
@@ -32,8 +32,8 @@ class FanTally[T]
 
   def iterator: Iterator[MoneyFan[T]] = fans.iterator
 
-  /**要素の[[MoneyFan]]を全てマージしたものを返す。
-   * @return [[MoneyFan]]
+  /**要素の[[jp.tricreo.baseunits.scala.money.MoneyFan]]を全てマージしたものを返す。
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
    */
   def net: MoneyFan[T] = {
     val sum = new MoneyFan[T]
@@ -46,7 +46,7 @@ class FanTally[T]
 
   override def toString = fans.toString
 
-  /**要素の[[MoneyFan]]が含む[[Allotment]]の合計額を返す。
+  /**要素の[[jp.tricreo.baseunits.scala.money.MoneyFan]]が含む[[jp.tricreo.baseunits.scala.money.Allotment]]の合計額を返す。
    * @return 合計額
    */
   def total: Money = net.total

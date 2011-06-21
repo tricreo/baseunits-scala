@@ -124,7 +124,7 @@ class IntervalSeq[T <% Ordered[T]]
 
   /**ソート済みの区間で、隣り合った区間同士に挟まれる区間を区間列として返す。
    *
-   * <p>結果の区間列の [[Comparator]] は、この区間列の [[Comparator]] を流用する。</p>
+   * <p>結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。</p>
    *
    * <p>区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重なっていたり接していた場合は、
    * その区間は結果の要素に含まない。全てが重なっている場合は、空の区間列を返す。</p>
@@ -153,7 +153,7 @@ class IntervalSeq[T <% Ordered[T]]
 
   /**ソート済みの区間で、隣り合った区間同士が重なっている区間を区間列として返す。
    *
-   * <p>結果の区間列の [[Comparator]] は、この区間列の [[Comparator]] を流用する。</p>
+   * <p>結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。</p>
    *
    * <p>区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重ならなかったり接していた場合は、
    * その区間は結果の要素に含まない。全てが重ならない場合は、空の区間列を返す。</p>
@@ -242,7 +242,7 @@ object IntervalSeq {
    *
    * @tparam T 限界値の型
    * @param intervals
-   * @return IntervalSeq[T]
+   * @return [[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]
    */
   def apply[T <% Ordered[T]](intervals: From[T]) = new IntervalSeq(intervals)
 
@@ -250,7 +250,7 @@ object IntervalSeq {
    *
    * @tparam T 限界値の型
    * @param intervals
-   * @return IntervalSeq[T]
+   * @return [[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]
    */
   def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
 

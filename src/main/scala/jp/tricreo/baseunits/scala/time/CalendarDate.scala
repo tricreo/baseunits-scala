@@ -23,7 +23,8 @@ import jp.tricreo.baseunits.scala.intervals.Limit
 
 /**カレンダー上の特定の「年月日」を表すクラス。
  *
- * <p>[[Date]]と異なり、時間の概念を持っていない。また、[[TimePoint]]と異なり、
+ * <p>[[java.util.Date]]と異なり、時間の概念を持っていない。また、
+ * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
 class CalendarDate private[time]
@@ -36,7 +37,7 @@ class CalendarDate private[time]
    * <p>相対的に過去である方を「小さい」と判断する。</p>
    *
    * @param other 比較対象
-   * @return [[Comparable#compareTo(Object)]]に準じる
+   * @return [[java.util.Comparable#compareTo(Object)]]に準じる
    */
   def compare(other: CalendarDate): Int = {
     if (isBefore(other)) {
@@ -46,7 +47,7 @@ class CalendarDate private[time]
     } else 0
   }
 
-  /**このインスタンスが表現する日を含む年月を表す[[CalendarMonth]]を取得する。
+  /**このインスタンスが表現する日を含む年月を表す[[jp.tricreo.baseunits.scala.time.CalendarMonth]]を取得する。
    *
    * @return このインスタンスが表現する日を含む年月を表す期間
    */
@@ -85,7 +86,7 @@ class CalendarDate private[time]
   def at(timeOfDay: TimeOfDay) =
     CalendarMinute.from(this, timeOfDay)
 
-  /**このオブジェクトの[[#day]]フィールド（日）を返す。
+  /**このオブジェクトの`day`フィールド（日）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -93,7 +94,7 @@ class CalendarDate private[time]
    */
   def breachEncapsulationOfDay = day
 
-  /**このオブジェクトの[[#yearMonth]]フィールド（年月）を返す。
+  /**このオブジェクトの`yearMonth`フィールド（年月）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -214,7 +215,7 @@ class CalendarDate private[time]
 
   /**この日付の文字列表現を取得する。
    *
-   * <p>[[SimpleDateFormat]]の使用に基づく `"yyyy-MM-dd"`のパターンで整形する。</p>
+   * <p>[[java.text.SimpleDateFormat]]の使用に基づく `"yyyy-MM-dd"`のパターンで整形する。</p>
    *
    * @see java.lang.Object#toString()
    */
@@ -225,7 +226,7 @@ class CalendarDate private[time]
 
   /**この日付を、指定したパターンで整形し、その文字列表現を取得する。
    *
-   * @param pattern [[SimpleDateFormat]]に基づくパターン
+   * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
    * @return 整形済み時間文字列
    */
   def toString(pattern: String) = {
@@ -260,44 +261,44 @@ object CalendarDate {
   def unapply(calendarDate: CalendarDate) =
     Some(calendarDate.yearMonth, calendarDate.day)
 
-  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param yearMonth 年月
    * @param day 日
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(yearMonth: CalendarMonth, day: DayOfMonth): CalendarDate =
     new CalendarDate(yearMonth, day)
 
-  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
    * 引数`day`が1〜31の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int): CalendarDate =
     new CalendarDate(CalendarMonth.from(year, month), DayOfMonth(day))
 
-  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param year 年
    * @param month 月
    * @param day 日
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`day`が`year`年の`month`の月に存在しない場合
    */
   def from(year: Int, month: MonthOfYear, day: DayOfMonth): CalendarDate =
     from(CalendarMonth.from(year, month), day)
 
-  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[CalendarDate]]のインスタンスを生成する。
+  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
    * @param zone タイムゾーン
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarDate = {
     val calendar = timePoint.asJavaCalendar
@@ -305,11 +306,11 @@ object CalendarDate {
     from(calendar)
   }
 
-  /**指定した年月日を表す、[[CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param dateString 年月日を表す文字列
    * @param pattern 解析パターン文字列
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateString: String, pattern: String) = {

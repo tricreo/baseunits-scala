@@ -21,6 +21,8 @@ package jp.tricreo.baseunits.scala.time
 import jp.tricreo.baseunits.scala.intervals.Limit
 
 /**毎月1度だけ仕様を満たす日付仕様。
+ *
+ * @author j5ik2o
  */
 abstract class MonthlyDateSpecification extends DateSpecification {
 
@@ -65,7 +67,7 @@ abstract class MonthlyDateSpecification extends DateSpecification {
   /**指定した年月においてこの日付仕様を満たす年月日を返す。
    *
    * @param month 年月
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    */
   def ofYearMonth(month: CalendarMonth): CalendarDate
 }

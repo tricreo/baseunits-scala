@@ -54,7 +54,7 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
 
 /**コンパニオンオブジェクト。
  *
- * @authro j5ik2o
+ * @author j5ik2o
  */
 object LimitValue {
 

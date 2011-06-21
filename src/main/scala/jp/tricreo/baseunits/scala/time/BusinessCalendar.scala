@@ -55,11 +55,11 @@ class BusinessCalendar {
     holidaySpecs = holidaySpecs.or(specs)
   }
 
-  /**[[CalendarDate]]の反復子を受け取り、その反復子が返す[[CalendarDate]]のうち、
-   * 営業日に当たる[[CalendarDate]]のみを返す反復子を返す。
+  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]の反復子を受け取り、その反復子が返す[[jp.tricreo.baseunits.scala.time.CalendarDate]]のうち、
+   * 営業日に当たる[[jp.tricreo.baseunits.scala.time.CalendarDate]]のみを返す反復子を返す。
    *
    * <p>このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
-   * 引数に与えた反復子の [[Iterator#next()]] を呼び出してはならない。</p>
+   * 引数に与えた反復子の [[scala.Iterator#next()]] を呼び出してはならない。</p>
    *
    * @param calendarDays 元となる反復子
    * @return 営業日のみを返す反復子
@@ -91,7 +91,7 @@ class BusinessCalendar {
     }
   }
 
-  /**[[CalendarInterval]]で表す期間のうち、営業日の日数を返す。
+  /**[[jp.tricreo.baseunits.scala.time.CalendarInterval]]で表す期間のうち、営業日の日数を返す。
    *
    * @param interval 期間
    * @return 営業日の日数
@@ -106,7 +106,7 @@ class BusinessCalendar {
     tally
   }
 
-  /**[[CalendarDate]]が営業日に当たるかどうか調べる。
+  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が営業日に当たるかどうか調べる。
    *
    * <p>デフォルトの実装として、週末でなく休日でない日を営業日とするが、
    * 業態によってはオーバーライドの可能性があるので注意すること。</p>
@@ -117,7 +117,7 @@ class BusinessCalendar {
   def isBusinessDay(day: CalendarDate) =
     isWeekend(day) == false && isHoliday(day) == false
 
-  /**[[CalendarDate]]が休日に当たるかどうか調べる。
+  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が休日に当たるかどうか調べる。
    *
    * <p>休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。</p>
    *
@@ -127,7 +127,7 @@ class BusinessCalendar {
   def isHoliday(day: CalendarDate) =
     holidaySpecs.isSatisfiedBy(day)
 
-  /**[[CalendarDate]]が週末に当たるかどうか調べる。
+  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が週末に当たるかどうか調べる。
    *
    * <p>週末とは、土曜日と日曜日のことである。</p>
    *
@@ -223,7 +223,7 @@ class BusinessCalendar {
 
   /**Should be overriden for each particular organization.
    *
-   * @return 営業日の[[Set]]
+   * @return 営業日の[[scala.collection.Set]]
    */
   protected def defaultHolidaySpecs =
     DateSpecification.never

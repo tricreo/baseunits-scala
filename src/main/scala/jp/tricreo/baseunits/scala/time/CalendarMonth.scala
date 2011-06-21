@@ -22,8 +22,9 @@ import java.util.{Calendar, TimeZone}
 
 /**カレンダー上の特定の「年月」を表すクラス。
  *
- * <p>[[java.util.Date]]と異なり、月未満（日以下）の概念を持っていない。また、[[TimePoint]]と異なり、
- * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
+ * [[java.util.Date]]と異なり、月未満（日以下）の概念を持っていない。また、
+ * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
+ * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  */
 class CalendarMonth private[time]
 (private[time] val year: Int,
@@ -39,11 +40,11 @@ class CalendarMonth private[time]
   def asCalendarInterval =
     CalendarInterval.month(year, month)
 
-  /**
-   * 指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について [[TimePoint]] 型のインスタンスを返す。
+  /**指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について
+   * [[jp.tricreo.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
    * @param timeZone タイムゾーン
-   * @return [[TimePoint]]
+   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
    */
   def asTimePoint(timeZone: TimeZone) =
     TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, timeZone)
@@ -51,7 +52,7 @@ class CalendarMonth private[time]
   /**
    * このインスタンスが表現する年月を含む年の元旦からその大晦日までの、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
@@ -68,7 +69,7 @@ class CalendarMonth private[time]
     CalendarDate.from(year, month, day)
 
   /**
-   * このオブジェクトの[[#month]]フィールド（月）を返す。
+   * このオブジェクトの`month`フィールド（月）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -77,7 +78,7 @@ class CalendarMonth private[time]
   def breachEncapsulationOfMonth = month
 
   /**
-   * このオブジェクトの[[#year]]フィールド（西暦年をあらわす数）を返す。
+   * このオブジェクトの`year`フィールド（西暦年をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -91,7 +92,7 @@ class CalendarMonth private[time]
    * <p>相対的に過去である方を「小さい」と判断する。</p>
    *
    * @param other 比較対象
-   * @return [[Comparable#compareTo(Object)]]に準じる
+   * @return [[java.util.Comparable]] compareTo(Object)に準じる
    */
   def compare(other: CalendarMonth): Int =
     if (isBefore(other)) {
@@ -108,7 +109,7 @@ class CalendarMonth private[time]
   /**
    * 月末の日付を取得する。
    *
-   * @return [[DayOfMonth]]
+   * @return [[jp.tricreo.baseunits.scala.time.DayOfMonth]]
    */
   def getLastDay =
     CalendarDate.from(year, month, getLastDayOfMonth)
@@ -116,7 +117,7 @@ class CalendarMonth private[time]
   /**
    * 月末の日を取得する。
    *
-   * @return [[DayOfMonth]]
+   * @return [[jp.tricreo.baseunits.scala.time.DayOfMonth]]
    */
   def getLastDayOfMonth =
     month.getLastDayOfThisMonth(year)
@@ -188,7 +189,7 @@ class CalendarMonth private[time]
 
   /**この日付の文字列表現を取得する。
    *
-   * <p>[[SimpleDateFormat]]の使用に基づく `"yyyy-MM"`のパターンで整形する。</p>
+   * [[java.text.SimpleDateFormat]]の使用に基づく `"yyyy-MM"`のパターンで整形する。
    *
    * @see java.lang.Object#toString()
    */
@@ -229,30 +230,30 @@ object CalendarMonth {
   def unapply(calendarMonth: CalendarMonth) =
     Some(calendarMonth.year, calendarMonth.month)
 
-  /**指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
+  /**指定した年月を表す、[[jp.tricreo.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合
    */
   def from(year: Int, month: Int) =
     new CalendarMonth(year, MonthOfYear(month))
 
-  /**指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
+  /**指定した年月を表す、[[jp.tricreo.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
    *
    * @param year 年
    * @param month 月
-   * @return [[CalendarMonth]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
    */
   def from(year: Int, month: MonthOfYear) =
     new CalendarMonth(year, month)
 
-  /**指定した年月を表す、[[CalendarMonth]]のインスタンスを生成する。
+  /**指定した年月を表す、[[jp.tricreo.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
    *
    * @param dateString 年月を表す文字列
    * @param pattern 解析パターン文字列
-   * @return [[CalendarMonth]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateString: String, pattern: String) = {
@@ -262,11 +263,12 @@ object CalendarMonth {
     CalendarMonth.from(point, arbitraryZone)
   }
 
-  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[CalendarDate]]のインスタンスを生成する。
+  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、
+   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
    * @param zone タイムゾーン
-   * @return [[CalendarDate]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarMonth = {
     val calendar = timePoint.asJavaCalendar

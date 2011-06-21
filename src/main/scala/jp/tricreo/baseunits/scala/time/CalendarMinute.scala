@@ -22,8 +22,9 @@ import java.util.TimeZone
 
 /**カレンダー上の特定の「年月日時分」を表すクラス。
  *
- * <p>[[java.util.Date]]と異なり、分未満（秒以下）の概念を持っていない。また、[[TimePoint]]と異なり、
- * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
+ * [[java.util.Date]]と異なり、分未満（秒以下）の概念を持っていない。また、
+ * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
+ * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
  * @param date 年月日
  * @param time 時分
@@ -34,25 +35,26 @@ class CalendarMinute private[time]
   extends Ordered[CalendarMinute] with Serializable{
 
 
-  /**指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について [[TimePoint]] 型のインスタンスを返す。
+  /**指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
+   * [[jp.tricreo.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
    * @param timeZone タイムゾーン
-   * @return [[TimePoint]]
+   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
    */
   def asTimePoint(timeZone: TimeZone): TimePoint =
     TimePoint.from(date, time, timeZone)
 
-  /**このオブジェクトの[[#date]]フィールド（年月日）を返す。
+  /**このオブジェクトの`date`フィールド（年月日）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 年月日
    */
   def breachEncapsulationOfDate = date
 
-  /**このオブジェクトの[[#time]]フィールド（時分）を返す。
+  /**このオブジェクトの`time`フィールド（時分）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 時分
    */
@@ -76,7 +78,7 @@ class CalendarMinute private[time]
 
   /**指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象年月日時分
    * @return 過去である場合は`true`、そうでない場合は`false`
@@ -87,7 +89,7 @@ class CalendarMinute private[time]
 
   /**指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象年月日時分
    * @return 未来である場合は`true`、そうでない場合は`false`
@@ -108,7 +110,7 @@ class CalendarMinute private[time]
 
   /**この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
    *
-   * @param pattern [[SimpleDateFormat]]に基づくパターン
+   * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
    * @param zone タイムゾーン
    * @return 整形済み時間文字列
    */
@@ -127,22 +129,22 @@ object CalendarMinute {
     Some(calendarMinute.date, calendarMinute.time)
 
 
-  /**指定した年月日を時分表す、[[CalendarMinute]]のインスタンスを生成する。
+  /**指定した年月日を時分表す、[[jp.tricreo.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
    *
    * @param aDate 年月日
    * @param aTime 時分
-   * @return [[CalendarMinute]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
    */
   def from(aDate: CalendarDate, aTime: TimeOfDay): CalendarMinute = new CalendarMinute(aDate, aTime)
 
-  /**指定した年月日を時分表す、[[CalendarMinute]]のインスタンスを生成する。
+  /**指定した年月日を時分表す、[[jp.tricreo.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
-   * @return [[CalendarMinute]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
    * 引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
    * 引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
@@ -150,11 +152,11 @@ object CalendarMinute {
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarMinute =
     new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute))
 
-  /**指定した年月日時分を表す、[[CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日時分を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param dateTimeString 年月日時分を表す文字列
    * @param pattern 解析パターン文字列
-   * @return [[CalendarMinute]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateTimeString: String, pattern: String): CalendarMinute = {

@@ -28,11 +28,11 @@ import java.util.Calendar
 final class DayOfWeek private[time]
 (private[time] val value: Int,
  private[time] val name: String) extends Serializable {
-  /**このオブジェクトの[[#value]]フィールド（[[Calendar]]に定義する曜日をあらわす定数値）を返す。
+  /**このオブジェクトの`value`フィールド（[[java.util.Calendar]]に定義する曜日をあらわす定数値）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
-   * @return [[Calendar]]に定義する曜日をあらわす定数値（[[Calendar#SUNDAY]]〜[[Calendar#SATURDAY]]）
+   * @return [[java.util.Calendar]]に定義する曜日をあらわす定数値（`SUNDAY`〜`SATURDAY`）
    */
   def breachEncapsulationOfValue = value
 
@@ -40,6 +40,7 @@ final class DayOfWeek private[time]
 }
 
 object DayOfWeek {
+
   val Sunday = new DayOfWeek(Calendar.SUNDAY, "SUNDAY")
   val Monday = new DayOfWeek(Calendar.MONDAY, "MONDAY")
   val Tuesday = new DayOfWeek(Calendar.TUESDAY, "TUESDAY")

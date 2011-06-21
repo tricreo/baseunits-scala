@@ -21,7 +21,7 @@ package jp.tricreo.baseunits.scala.util
 import annotation.tailrec
 
 
-/**[[Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
+/**[[jp.tricreo.baseunits.scala.util.Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
  *
  * <p>このクラスの利点は、比率の計算を遅延評価できることにある。</p>
  *
@@ -46,7 +46,7 @@ class Ratio
     throw new ArithmeticException("denominator is zero")
   }
 
-  /**このオブジェクトの[[#denominator]]フィールド（分母をあらわす数）を返す。
+  /**このオブジェクトの`denominator`フィールド（分母をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -55,7 +55,7 @@ class Ratio
   def breachEncapsulationOfDenominator = denominator
 
 
-  /**このオブジェクトの[[#numerator]]フィールド（分子をあらわす数）を返す。
+  /**このオブジェクトの`numerator`フィールド（分子をあらわす数）を返す。
    *
    * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
    *
@@ -64,11 +64,11 @@ class Ratio
   def breachEncapsulationOfNumerator = numerator
 
 
-  /**比率を [[BigDecimal]]型で取得する。
+  /**比率を[[scala.math.BigDecimal]]型で取得する。
    *
    * @param scale 小数点以下の有効数字
    * @param roundingMode 丸めモード
-   * @return この比率の [[BigDecimal]] 型の表現
+   * @return この比率の [[scala.math.BigDecimal]] 型の表現
    */
   def decimalValue(scale: Int, roundingMode: BigDecimal.RoundingMode.Value) = {
     BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode.id))
@@ -76,9 +76,9 @@ class Ratio
 
   /**このオブジェクトと、与えたオブジェクトの同一性を検証する。
    *
-   * <p>与えたオブジェクト[[Ratio]]型や
+   * 与えたオブジェクト[[jp.tricreo.baseunits.scala.util.Ratio]]型や
    * そのサブクラスではない場合、`false`を返す。
-   * 与えたオブジェクトの、分母と分子が共に一致する場合、`true`を返す。</p>
+   * 与えたオブジェクトの、分母と分子が共に一致する場合、`true`を返す。
    *
    * <p>`2/3` と `4/6` は、評価結果としては同一であるが、分母同士、分子同士が
    * 異なるため、このメソッドでは `true` と判断されず、 `false` となる。

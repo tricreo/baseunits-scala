@@ -133,7 +133,7 @@ object LinearIntervalMap {
    *
    * @tparam A キーの型
    * @tparam B 値の型
-   * @return LinearIntervalMap[A, B]
+   * @return [[jp.tricreo.baseunits.scala.intervals.LinearIntervalMap]]
    */
   def apply[A <% Ordered[A], B]: LinearIntervalMap[A, B] = new LinearIntervalMap
 
@@ -141,7 +141,7 @@ object LinearIntervalMap {
    *
    * @tparam A キーの型
    * @tparam B 値の型
-   * @return LinearIntervalMap[A, B]
+   * @return [[jp.tricreo.baseunits.scala.intervals.LinearIntervalMap]]
    */
   def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]): LinearIntervalMap[A, B] = new LinearIntervalMap(intervalMap)
 
@@ -149,7 +149,7 @@ object LinearIntervalMap {
    *
    * @tparam A キーの型
    * @tparam B 値の型
-   * @return Some(intervalMap: Map[Interval[A], B])
+   * @return [[jp.tricreo.baseunits.scala.intervals.LinearIntervalMap]]
    */
   def unapply[A <% Ordered[A], B](linearIntervalMap: LinearIntervalMap[A, B]) =
     Some(linearIntervalMap.intervalMap)

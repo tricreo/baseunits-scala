@@ -63,9 +63,9 @@ class Interval[T <% Ordered[T]]
 
   /**インスタンスを生成する。
    *
-   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param isLowerClosed 下限値が閉区間である場合は `true`を指定する
-   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param isUpperClosed 上限値が閉区間である場合は `true`を指定する
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -343,15 +343,15 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 下側限界値. 限界がない場合は、[[Limitless[T]]]
+   * @return 下側限界値. 限界がない場合は、[[jp.tricreo.baseunits.scala.intervals.Limitless]]
    */
   def lowerLimit = lowerLimitObject.value
 
   /**この区間と同じ型`T`を持つ、新しい区間を生成する。
    *
-   * @param isLower 下側限界値. 限界値がない場合は、[[Limitless[T]]]
+   * @param isLower 下側限界値. 限界値がない場合は、[[jp.tricreo.baseunits.scala.intervals.Limitless]]
    * @param lowerClosed 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
-   * @param isUpper 上側限界値. 限界値がない場合は、[[Limitless[T]]]
+   * @param isUpper 上側限界値. 限界値がない場合は、[[jp.tricreo.baseunits.scala.intervals.Limitless]]
    * @param upperClosed 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 新しい区間
    */
@@ -383,7 +383,7 @@ class Interval[T <% Ordered[T]]
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
    * このクラスに新しいメソッドを追加することを検討すること。</p>
    *
-   * @return 上側限界値. 限界がない場合は、[[Limitless[T]]]
+   * @return 上側限界値. 限界がない場合は、[[jp.tricreo.baseunits.scala.intervals.Limitless]]
    */
   def upperLimit = upperLimitObject.value
 
@@ -485,7 +485,7 @@ class Interval[T <% Ordered[T]]
   /**この区間と与えた区間 `other` の上側限界値のうち、より大きい（限界の広い、制約の小さい）限界値を返す。
    *
    * @param other 比較対象の限界値
-   * @return より小さい限界値. この区間に上側限界がない場合は [[Limitless[T]]]
+   * @return より小さい限界値. この区間に上側限界がない場合は [[jp.tricreo.baseunits.scala.intervals.Limitless]]
    */
   private def greaterOfUpperLimits(other: Interval[T]): Option[LimitValue[T]] =
     if (upperLimit == Limitless[T]) {
@@ -514,7 +514,7 @@ class Interval[T <% Ordered[T]]
   /**この区間と与えた区間 `other` の下側限界値のうち、より小さい（限界の広い、制約の小さい）限界値を返す。
    *
    * @param other 比較対象の限界値
-   * @return より小さい限界値. この区間に下側限界がない場合は [[Limitless[T]]]
+   * @return より小さい限界値. この区間に下側限界がない場合は [[jp.tricreo.baseunits.scala.intervals.Limitless]]
    */
   private def lesserOfLowerLimits(other: Interval[T]) =
     lowerLimit match {
@@ -569,7 +569,7 @@ object Interval {
    * 下側限界値は区間に含む（閉じている）区間である。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def andMore[T <% Ordered[T]](lower: LimitValue[T]) = closed(lower, Limitless[T])
@@ -577,8 +577,8 @@ object Interval {
   /**閉区間を生成する。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
-   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 閉区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -590,7 +590,7 @@ object Interval {
    * <p>下側限界値は区間に含まない（開いている）区間である。</p>
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def moreThan[T <% Ordered[T]](lower: LimitValue[T]) = open(lower, Limitless[T])
@@ -601,8 +601,8 @@ object Interval {
   /**開区間を生成する。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
-   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 開区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -612,9 +612,9 @@ object Interval {
    * 主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isLower 下側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param lowerIncluded 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
-   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param upperIncluded 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
@@ -635,7 +635,7 @@ object Interval {
    * <p>上側限界値は区間に含まない（開いている）区間である。</p>
    *
    * @tparam T 限界値の型
-   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def under[T <% Ordered[T]](upper: LimitValue[T]) = open(Limitless[T], upper)
@@ -645,7 +645,7 @@ object Interval {
    * <p>上側限界値は区間に含む（閉じている）区間である。</p>
    *
    * @tparam T 限界値の型
-   * @param isUpper 上側限界値. [[Limitless[T]]]の場合は、限界がないことを表す
+   * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def upTo[T <% Ordered[T]](upper: LimitValue[T]) = closed(Limitless[T], upper)

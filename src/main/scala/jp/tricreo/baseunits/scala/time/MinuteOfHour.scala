@@ -20,7 +20,8 @@ package jp.tricreo.baseunits.scala.time
 
 /**1時間の中の特定の「分」を表すクラス。
  *
- * <p>[[java.util.Date]]と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * [[java.util.Date]]と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。
+ *
  * @param value 分をあらわす正数
  */
 class MinuteOfHour private[time]
@@ -30,9 +31,9 @@ class MinuteOfHour private[time]
   require(MinuteOfHour.MIN <= value && value <= MinuteOfHour.MAX,
     "Illegal value for 24 hour: " + value + ", please use a value between 0 and 23")
 
-  /**このオブジェクトの[[#value]]フィールド（時をあらわす正数）を返す。
+  /**このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 時をあらわす正数（0〜23）
    */
@@ -49,7 +50,7 @@ class MinuteOfHour private[time]
 
   /**同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも未来かどうか調べる。
    *
-   * <p>等価である場合は`false`を返す。</p>
+   * 等価である場合は`false`を返す。
    *
    * @param another 基準分
    * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
@@ -69,6 +70,9 @@ class MinuteOfHour private[time]
 
 }
 
+/**コンパニオンオブジェクト
+ *
+ */
 object MinuteOfHour {
 
   val MIN = 0

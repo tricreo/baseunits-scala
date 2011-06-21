@@ -21,7 +21,7 @@ package jp.tricreo.baseunits.scala.time
 import jp.tricreo.baseunits.scala.intervals.{Limit, LimitValue, Interval}
 
 /**期間（時間の区間）を表すクラス。
- * 限界の表現には [[TimePoint]]を利用する。
+ * 限界の表現には [[jp.tricreo.baseunits.scala.time.TimePoint]]を利用する。
  *
  * @author j5ik2o
  * @param startValue 開始時間
@@ -47,9 +47,7 @@ class TimeInterval
    * </ol>
    * </p>
    *
-   * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
-   *
-   * <p>この期間が終了日時（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
+   * <p>この期間が終了日時（上側限界）を持たない場合、 [[scala.collection.Iterator]] hasNext()は常に
    * `true`を返すので、無限ループに注意すること。</p>
    *
    * @return 日時の反復子
@@ -148,7 +146,8 @@ class TimeInterval
   def start = lowerLimit
 
 
-  /**この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間 [[TimeInterval]] を
+  /**この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間
+   * [[jp.tricreo.baseunits.scala.time.TimeInterval]] を
    * この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
    * <p>例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
@@ -162,9 +161,7 @@ class TimeInterval
    * </ol>
    * </p>
    *
-   * <p>返す反復子は [[Iterator#remove()]] をサポートしない。</p>
-   *
-   * <p>この期間が終了日時（上側限界）を持たない場合、 [[Iterator#hasNext()]]は常に
+   * <p>この期間が終了日時（上側限界）を持たない場合、 [[scala.collection.Iterator]] hasNext()は常に
    * `true`を返すので、無限ループに注意すること。</p>
    *
    * @param subintervalLength 反復子が返す期間の長さ

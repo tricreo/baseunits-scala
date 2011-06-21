@@ -20,7 +20,7 @@ package jp.tricreo.baseunits.scala.time
 
 /**1日の中の特定の「時」を表すクラス。
  *
- * <p>[[java.util.Date]]と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * [[java.util.Date]]と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。
  */
 class HourOfDay private
 (private[time] val value: Int)
@@ -29,10 +29,9 @@ class HourOfDay private
   require(value >= HourOfDay.MIN && value <= HourOfDay.MAX,
     "Illegal value for 24 hour: %d , please use a value between 0 and 23".format(value))
 
-  /**
-   * このオブジェクトの[[#value]]フィールド（時をあらわす正数）を返す。
+  /**このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 時をあらわす正数（0〜23）
    */
@@ -65,10 +64,14 @@ class HourOfDay private
   override def toString = "%02d".format(value)
 }
 
+/**コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object HourOfDay {
+
   val MIN = 0
   val MAX = 23
-
 
   /**インスタンスを生成する。
    *

@@ -21,6 +21,7 @@ package jp.tricreo.baseunits.scala.money
 import java.util.{Locale, Currency}
 import jp.tricreo.baseunits.scala.util.Ratio
 import jp.tricreo.baseunits.scala.time.Duration
+import math.BigDecimal.RoundingMode
 
 
 /**金額を表すクラス。
@@ -47,7 +48,8 @@ class Money
 
   override def hashCode = amount.hashCode + currency.hashCode
 
-  /**Returns a [[Money]] whose amount is the absolute amount of this [[Money]], and whose scale is this.scale().
+  /**Returns a [[jp.tricreo.baseunits.scala.money.Money]] whose amount is
+   * the absolute amount of this [[jp.tricreo.baseunits.scala.money.Money]], and whose scale is this.scale().
    *
    * @return 絶対金額
    */
@@ -55,15 +57,15 @@ class Money
 
   /**金額同士の比較を行う。
    *
-   * <p>相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は [[ClassCastException]]を
+   * <p>相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は [[java.lang.ClassCastException]] を
    * スローするが、どちらか片方の量が`0`である場合は例外をスローしない。</p>
    *
    * <p>例えば`10 USD`と`0 JPY`は、後者の方が小さい。
    * また、`0 USD`と`0 JPY`は同じである。</p>
    *
    * @param that 比較対象
-   * @return `Comparable#compareTo(Object)`に準じる
-   * @throws ClassCastException 比較対象の通貨単位が異なり、かつ双方の量がどちらも0ではない場合
+   * @return `Comparable.compareTo(Object)`に準じる
+   * @throws [[java.lang.ClassCastException]] 比較対象の通貨単位が異なり、かつ双方の量がどちらも0ではない場合
    */
   def compare(that: Money) = {
     require(currency == that.currency)
@@ -435,7 +437,7 @@ object Money {
    */
   def euros(amount: Double) = adjustBy(amount, EUR)
 
-  /**[[Iterable]]に含む全ての金額の合計金額を返す。
+  /**[[scala.Iterable]]に含む全ての金額の合計金額を返す。
    *
    * <p>合計金額の通貨単位は、 `monies`の要素の（共通した）通貨単位となるが、
    * `Collection`が空の場合は、現在のデフォルトロケールにおける通貨単位で、量が0のインスタンスを返す。</p>

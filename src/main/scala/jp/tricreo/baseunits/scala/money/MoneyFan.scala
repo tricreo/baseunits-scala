@@ -53,20 +53,21 @@ class MoneyFan[T]
   }
 
 
-  /**この[[MoneyFan]]から`subtracted`を引いた差を返す。
+  /**この[[jp.tricreo.baseunits.scala.money.MoneyFan]]から`subtracted`を引いた差を返す。
    *
-   * @param subtracted [[MoneyFan]]
-   * @return [[MoneyFan]]
+   * @param subtracted [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
    */
   def minus(subtracted: MoneyFan[T]) = plus(subtracted.negated)
 
   def -(subtracted: MoneyFan[T]) = minus(subtracted)
 
 
-  /**この [[MoneyFan]]の [[Allotment}]を `Allotment#negated`した [[Set]]で構成される
-   * 新しい [[MoneyFan]]を返す。
+  /**この [[jp.tricreo.baseunits.scala.money.MoneyFan]]の [[jp.tricreo.baseunits.scala.money.Allotment]]を\
+   * `Allotment.negated`した [[scala.collection.Set]]で構成される
+   * 新しい [[jp.tricreo.baseunits.scala.money.MoneyFan]]を返す。
    *
-   * @return `MoneyFan`
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
    */
   def negated = {
     val negatedAllotments = allotments.map(_.negated).toSet
@@ -75,12 +76,12 @@ class MoneyFan[T]
 
   def unary_- = negated
 
-  /**この[[MoneyFan}]に`added`を足した和を返す。
+  /**この[[jp.tricreo.baseunits.scala.money.MoneyFan]]に`added`を足した和を返す。
    *
-   * <p>同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[Allotment]] は取り除く。</p>
+   * <p>同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[jp.tricreo.baseunits.scala.money.Allotment]] は取り除く。</p>
    *
-   * @param added [[MoneyFan]]
-   * @return [[MoneyFan]]
+   * @param added [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
    */
   def plus(added: MoneyFan[T]) = {
     val allEntities = allotments.map(_.entity) ++ added.allotments.map(_.entity)
@@ -120,10 +121,10 @@ class MoneyFan[T]
     new Tally(moneies)
   }
 
-  /**このインスタンスが保持する [[Allotment]] のうち、割り当て金額が`0`であるものを取り除いた
-   * 新しい [[MoneyFan]]を返す。
+  /**このインスタンスが保持する [[jp.tricreo.baseunits.scala.money.Allotment]] のうち、割り当て金額が`0`であるものを取り除いた
+   * 新しい [[jp.tricreo.baseunits.scala.money.MoneyFan]]を返す。
    *
-   * @return [[MoneyFan]]
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
    */
   private def withoutZeros = {
     val nonZeroAllotments = allotments.filter(_.breachEncapsulationOfAmount.isZero == false).toSet

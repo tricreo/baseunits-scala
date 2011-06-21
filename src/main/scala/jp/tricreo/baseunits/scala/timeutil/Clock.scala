@@ -30,12 +30,12 @@ object Clock {
 
   private[this] var _timeSource: TimeSource = _
 
-  /**日付の算出に使用する `SystemClock`*/
+  /**日付の算出に使用する [[java.util.TimeZone]] */
   private[this] var _defaultTimeZone: TimeZone = _
 
-  /**この時計が日付の算出に使用する [[SystemClock]] を取得する。
+  /**この時計が日付の算出に使用する [[java.util.TimeZone]] を取得する。
    *
-   * @return 日付の算出に使用する [[SystemClock]]
+   * @return 日付の算出に使用する [[java.util.TimeZone]]
    */
   def defaultTimeZone: TimeZone = {
     // There is no reasonable automatic default.
@@ -53,7 +53,8 @@ object Clock {
   def now = timeSource.now
 
   /**このクラスが保持するステートをリセットする。
-   * このクラスは、staticに [[SystemClock]] と [[SystemClock]] を保持している。
+   * このクラスは、staticに [[java.util.TimeZone]]
+   * と[[jp.tricreo.baseunits.scala.time.TimeSource]] を保持している。
    */
   def reset {
     _defaultTimeZone = null
@@ -61,11 +62,11 @@ object Clock {
   }
 
   /**
-   * [[SystemClock]]を取得する。
+   * [[jp.tricreo.baseunits.scala.timeutil.SystemClock]]を取得する。
    *
-   * <p>デフォルトでは [[SystemClock]] を使用する。</p>
+   * デフォルトでは [[jp.tricreo.baseunits.scala.timeutil.SystemClock]] を使用する。
    *
-   * @return `TimeSource`
+   * @return [[jp.tricreo.baseunits.scala.time.TimeSource]]
    */
   def timeSource: TimeSource = {
     if (_timeSource == null) {
@@ -78,14 +79,13 @@ object Clock {
     _timeSource = value
   }
 
-  /**
-   * 今日の日付を所得する。
+  /**今日の日付を所得する。
    *
-   * <p>日付は、あらかじめ設定済みの `TimeZone` に基づき計算する。
-   * `TimeZone`を未設定の状態でこのメソッドを呼び出してはならない。</p>
+   * 日付は、あらかじめ設定済みの [[jp.tricreo.baseunits.scala.time.TimeZone]] に基づき計算する。
+   * `TimeZone`を未設定の状態でこのメソッドを呼び出してはならない。
    *
    * @return 今日の日付
-   * @throws IllegalStateException `TimeZone`が未設定の場合
+   * @throws IllegalStateException [[jp.tricreo.baseunits.scala.time.TimeZone]]が未設定の場合
    */
   def today: CalendarDate = {
     if (defaultTimeZone == null) {
