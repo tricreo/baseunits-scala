@@ -1,11 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sisioh</groupId>
+        <artifactId>sisioh-master</artifactId>
+        <version>0.0.1</version>
+    </parent>
     <groupId>jp.tricreo</groupId>
-    <artifactId>baseunits-scala</artifactId>
+    <artifactId>baseunits-scala_2.9.0-1</artifactId>
     <version>0.0.1</version>
     <name>baseunits-scala</name>
-    <inceptionYear>2010</inceptionYear>
+    <inceptionYear>2011</inceptionYear>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -34,16 +39,16 @@
                     </execution>
                 </executions>
                 <configuration>
-					<jvmArgs>
-						<jvmArg>-Xss2m</jvmArg>
-						<jvmArg>-Xmx512m</jvmArg>
-					</jvmArgs>
-					<args>
-						<arg>-deprecation</arg>
-					</args>
-					<scalaVersion>${scala.version}</scalaVersion>
-					<recompileMode>modified-only</recompileMode>
-				</configuration>
+                    <jvmArgs>
+                        <jvmArg>-Xss2m</jvmArg>
+                        <jvmArg>-Xmx512m</jvmArg>
+                    </jvmArgs>
+                    <args>
+                        <arg>-deprecation</arg>
+                    </args>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                    <recompileMode>modified-only</recompileMode>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -109,6 +114,22 @@
             <id>maven2-repository.dev.java.net</id>
             <name>Java.net Repository for Maven</name>
             <url>http://download.java.net/maven/2/</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+            <id>sisioh-maven-release</id>
+            <name>Sisioh Maven Repository</name>
+            <url>http://maven.sisioh.org/release</url>
+        </repository>
+        <repository>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <id>sisioh-maven-snapshot</id>
+            <name>Sisioh Maven Snapshot Repository</name>
+            <url>http://maven.sisioh.org/snapshot</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -208,4 +229,18 @@
         <logback.version>0.9.15</logback.version>
         <jmockit.version>0.999.4</jmockit.version>
     </properties>
+    <distributionManagement>
+        <repository>
+            <id>maven.tricreo.jp</id>
+            <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven.tricreo.jp</id>
+            <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/snapshot</url>
+        </snapshotRepository>
+        <site>
+            <id>maven.tricreo.jp</id>
+            <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/site/${project.artifactId}/${project.version}</url>
+        </site>
+    </distributionManagement>
 </project>

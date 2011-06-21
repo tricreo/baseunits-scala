@@ -1,3 +1,5 @@
+sbtPlugin := true
+
 organization := "jp.tricreo"
 
 name := "baseunits-scala"
@@ -24,3 +26,7 @@ resolvers ++= Seq(
 	"Sisioh Maven Release Repository" at "http://maven.sisioh.org/release/",
 	"Sisioh Maven Snapshot Repository" at "http://maven.sisioh.org/snapshot"
 )
+
+scalacOptions += "-deprecation"
+
+publishMavenStyle := true
