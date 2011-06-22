@@ -26,7 +26,7 @@ import java.util.{Calendar, TimeZone}
  * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
  * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
- * @authro j5ik2o
+ * @author j5ik2o
  * @param year 年
  * @param month 月
  */

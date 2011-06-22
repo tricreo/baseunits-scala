@@ -98,7 +98,7 @@ object HourOfDay {
 
   /**抽出子メソッド。
    *
-   * @param hourOfDay [[HourOfDay]]
+   * @param hourOfDay [[jp.tricreo.baseunits.scala.time.HourOfDay]]
    * @return `Option[Int]`
    */
   def unapply(hourOfDay: HourOfDay) = Some(hourOfDay.value)
