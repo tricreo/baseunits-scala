@@ -359,15 +359,15 @@ class MoneyTest extends AssertionsForJUnit {
    */
   @Test
   def test21_Print {
-    assert(d15.toString(Locale.US) == "$ 15.00")
-    assert(d15.toString(Locale.UK) == "USD 15.00")
-    assert(d15.toString(Locale.JAPAN) == "USD 15.00")
-    assert(d15.toString(Locale.CANADA) == "US$ 15.00")
+    assert(d15.toString(Some(Locale.US)) == "$ 15.00")
+    assert(d15.toString(Some(Locale.UK)) == "USD 15.00")
+    assert(d15.toString(Some(Locale.JAPAN)) == "USD 15.00")
+    assert(d15.toString(Some(Locale.CANADA)) == "US$ 15.00")
 
     val backup = Locale.getDefault
     try {
       Locale.setDefault(Locale.CANADA)
-      assert(d15.toString(null) == "US$ 15.00")
+      assert(d15.toString(None) == "US$ 15.00")
     } finally {
       Locale.setDefault(backup)
     }

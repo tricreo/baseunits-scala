@@ -329,15 +329,15 @@ class Money
 
   /**指定したロケールにおける、単位つきの金額表現の文字列を返す。
    *
-   * @param locale ロケール。`null`の場合は `Locale#getDefault()` を利用する。
+   * @param localeOption ロケールの`Option`。`None`の場合は `Locale#getDefault()` を利用する。
    * @return 金額の文字列表現
    */
-  def toString(locale: Locale) = {
-    var _locale = locale
-    if (_locale == null) {
-      _locale = Locale.getDefault
+  def toString(localeOption: Option[Locale]) = {
+    def createStrng(_locale: Locale) = currency.getSymbol(_locale) + " " + amount
+    localeOption match {
+      case Some(locale) => createStrng(locale)
+      case None => createStrng(Locale.getDefault)
     }
-    currency.getSymbol(_locale) + " " + amount
   }
 
   //	BigDecimal getAmount() {

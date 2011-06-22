@@ -28,10 +28,10 @@ import jp.tricreo.baseunits.scala.time.{CalendarDate, TimeSource}
  */
 object Clock {
 
-  private[this] var _timeSource: TimeSource = _
+  private[this] var _timeSourceOption: Option[TimeSource] = None
 
   /**日付の算出に使用する [[java.util.TimeZone]] */
-  private[this] var _defaultTimeZone: TimeZone = _
+  private[this] var _defaultTimeZoneOption: Option[TimeZone] = None
 
   /**この時計が日付の算出に使用する [[java.util.TimeZone]] を取得する。
    *
@@ -39,11 +39,11 @@ object Clock {
    */
   def defaultTimeZone: TimeZone = {
     // There is no reasonable automatic default.
-    _defaultTimeZone
+    _defaultTimeZoneOption.get
   }
 
   def defaultTimeZone_=(value: TimeZone) {
-    _defaultTimeZone = value
+    _defaultTimeZoneOption = Some(value)
   }
 
   /**現在時刻を取得する。
@@ -54,12 +54,12 @@ object Clock {
 
   /**このクラスが保持するステートをリセットする。
    *
-   * このクラスは、staticに [[java.util.TimeZone]]
+   * このクラスは、[[java.util.TimeZone]]
    * と[[jp.tricreo.baseunits.scala.time.TimeSource]] を保持している。
    */
-  def reset {
-    _defaultTimeZone = null
-    _timeSource = null
+  def reset() {
+    _defaultTimeZoneOption = None
+    _timeSourceOption = None
   }
 
   /**[[jp.tricreo.baseunits.scala.timeutil.SystemClock]]を取得する。
@@ -68,15 +68,13 @@ object Clock {
    *
    * @return [[jp.tricreo.baseunits.scala.time.TimeSource]]
    */
-  def timeSource: TimeSource = {
-    if (_timeSource == null) {
-      _timeSource = SystemClock
-    }
-    _timeSource
+  def timeSource: TimeSource = _timeSourceOption match {
+    case None => { _timeSourceOption = Some(SystemClock); _timeSourceOption.get }
+    case Some(timeSource) => timeSource
   }
 
   def timeSource_=(value: TimeSource) {
-    _timeSource = value
+    _timeSourceOption = Some(value)
   }
 
   /**今日の日付を所得する。
@@ -88,7 +86,7 @@ object Clock {
    * @throws IllegalStateException [[jp.tricreo.baseunits.scala.time.TimeZone]]が未設定の場合
    */
   def today: CalendarDate = {
-    if (defaultTimeZone == null) {
+    if (_defaultTimeZoneOption == None) {
       throw new IllegalStateException("CalendarDate cannot be computed without setting a default TimeZone.")
     }
     now.calendarDate(defaultTimeZone)
