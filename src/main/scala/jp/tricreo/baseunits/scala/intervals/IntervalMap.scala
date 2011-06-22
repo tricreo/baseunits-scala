@@ -126,6 +126,8 @@ class LinearIntervalMap[A <% Ordered[A], B]
 }
 
 /**コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
  */
 object LinearIntervalMap {
 

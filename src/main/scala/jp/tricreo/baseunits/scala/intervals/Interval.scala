@@ -553,6 +553,8 @@ class Interval[T <% Ordered[T]]
 }
 
 /**Intervalコンパニオンオブジェクト
+ *
+ * @author j5ik2o
  */
 object Interval {
 

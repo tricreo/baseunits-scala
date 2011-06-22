@@ -80,7 +80,7 @@ object LowerUpperOrdering {
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
 
-  def unapply[T <% Ordered[T]](lowerUpperOrdering:LowerUpperOrdering[T]) =
+  def unapply[T <% Ordered[T]](lowerUpperOrdering: LowerUpperOrdering[T]) =
     Some(lowerUpperOrdering.inverseLower, lowerUpperOrdering.inverseUpper)
 }
 
@@ -161,21 +161,17 @@ class IntervalSeq[T <% Ordered[T]]
    * @return 共通区間列
    */
   def intersections = {
-    val intersections = IntervalSeq
     if (intervals.size < 2) {
       IntervalSeq[T]()
     } else {
-      val seq = (1 until this.intervals.size).map {
+      val seq = (1 until this.intervals.size).flatMap {
         i =>
           val left = this.intervals(i - 1)
           val right = this.intervals(i)
           val gap = left.intersect(right)
-          if (gap.isEmpty) {
-            None
-          } else {
-            Some(gap)
-          }
-      }.flatten
+          if (gap.isEmpty) None
+          else Some(gap)
+      }
       IntervalSeq(seq)
     }
   }
@@ -203,7 +199,7 @@ class IntervalSeqBuilder[T <% Ordered[T]]
     this
   }
 
-  def clear: Unit = builder.clear
+  def clear(): Unit = builder.clear
 
   def result: IntervalSeq[T] =
     ord match {
@@ -260,7 +256,7 @@ object IntervalSeq {
    * @param intervals
    * @return Some(intervals: Seq[Interval[T]], ordering: Ordering[Interval[T]])
    */
-  def unapply[T <% Ordered[T]](intervalSeq:IntervalSeq[T]) =
+  def unapply[T <% Ordered[T]](intervalSeq: IntervalSeq[T]) =
     Some(intervalSeq.intervals, intervalSeq.ordering)
 
   /**ビルダーを生成するメソッド。

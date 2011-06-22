@@ -10,6 +10,22 @@
     <artifactId>baseunits-scala_2.9.0-1</artifactId>
     <version>0.0.1</version>
     <name>baseunits-scala</name>
+    <url>http://maven.tricreo.jp/site/${project.artifactId}/${project.version}</url>
+    <organization>
+        <name>Tricreo Project</name>
+        <url>http://tricreo.jp/</url>
+    </organization>
+    <scm>
+        <connection>
+            scm:git:git://github.com/tricreo/baseunits-scala.git
+        </connection>
+        <developerConnection>
+            scm:git:ssh://git@github.com/tricreo/baseunits-scala.git
+        </developerConnection>
+        <url>
+            https://github.com/tricreo/baseunits-scala
+        </url>
+    </scm>
     <inceptionYear>2011</inceptionYear>
     <licenses>
         <license>
