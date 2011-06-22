@@ -1,8 +1,6 @@
-package jp.tricreo.baseunits
-
 /**時間及び金額にまつわるドメインモデル群を含むクラスライブラリ。
  *
- * {http://maven.tricreo.jp/site/baseunits/latest/ baseunits}ライブラリのScala版です。
+ * [[http://maven.tricreo.jp/site/baseunits/latest/ baseunits]]ライブラリのScala版です。
  *
  * ===一般仕様===
  *
@@ -21,6 +19,6 @@ package jp.tricreo.baseunits
  * 引数が不正な場合はIllegalArgumentExceptionがスローされる。
  * 「仕様バグ」（APIドキュメント自体の記述漏れ・不整合など）と「実装バグ」（コードの不整合など）がありえる。
  */
-package object scala {
+package object jp {
 
 }
