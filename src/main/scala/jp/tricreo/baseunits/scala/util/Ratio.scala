@@ -23,9 +23,9 @@ import annotation.tailrec
 
 /**[[jp.tricreo.baseunits.scala.util.Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
  *
- * <p>このクラスの利点は、比率の計算を遅延評価できることにある。</p>
+ * このクラスの利点は、比率の計算を遅延評価できることにある。
  *
- * <p>Ratio represents the unitless division of two quantities of the same type.
+ * Ratio represents the unitless division of two quantities of the same type.
  * The key to its usefulness is that it defers the calculation of a decimal
  * value for the ratio. An object which has responsibility for the two values in
  * the ratio and understands their quantities can create the ratio, which can
@@ -33,7 +33,7 @@ import annotation.tailrec
  * required to understand the units of the quantity. At the same time, this
  * gives control of the precision and rounding rules to the client, when the
  * time comes to compute a decimal value for the ratio. The client typically has
- * the responsibilities that enable an appropriate choice of these parameters.<p>
+ * the responsibilities that enable an appropriate choice of these parameters.
  *
  * @param numerator 分子をあらわす数
  * @param denominator 分母をあらわす数
@@ -48,7 +48,7 @@ class Ratio
 
   /**このオブジェクトの`denominator`フィールド（分母をあらわす数）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 分母をあらわず数
    */
@@ -57,7 +57,7 @@ class Ratio
 
   /**このオブジェクトの`numerator`フィールド（分子をあらわす数）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 分子をあらわす数
    */
@@ -80,7 +80,7 @@ class Ratio
    * そのサブクラスではない場合、`false`を返す。
    * 与えたオブジェクトの、分母と分子が共に一致する場合、`true`を返す。
    *
-   * <p>`2/3` と `4/6` は、評価結果としては同一であるが、分母同士、分子同士が
+   * `2/3` と `4/6` は、評価結果としては同一であるが、分母同士、分子同士が
    * 異なるため、このメソッドでは `true` と判断されず、 `false` となる。
    *
    * @param obj 比較対象オブジェクト
@@ -110,7 +110,7 @@ class Ratio
 
   /**この比率と `multiplier` の積からなる比率。
    *
-   * <p>計算結果は、分母は変化せず、分子は分子と `multiplyer` の積からなる比率となる。</p>
+   * 計算結果は、分母は変化せず、分子は分子と `multiplyer` の積からなる比率となる。
    *
    * @param multiplier 乗数
    * @return 積
@@ -121,7 +121,7 @@ class Ratio
 
   /**この比率と `multiplier` の積からなる比率。
    *
-   * <p>計算結果は、分子同士・分母同士の積からなる比率となる。</p>
+   * 計算結果は、分子同士・分母同士の積からなる比率となる。
    *
    * @param multiplier 乗数比率
    * @return 積
@@ -131,7 +131,7 @@ class Ratio
 
   /**この比率の文字列表現を取得する。
    *
-   * <p>"分子/分母"という表記となる。</p>
+   * "分子/分母"という表記となる。
    *
    * @see java.lang.Object#toString()
    */

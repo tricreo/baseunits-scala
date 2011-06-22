@@ -22,6 +22,8 @@ import org.sisioh.dddbase.spec.Specification
 
 
 /**日付の仕様を表現するオブジェクト。
+ *
+ * @author j5ik2o
  */
 abstract class DateSpecification extends Specification[CalendarDate] {
 
@@ -49,11 +51,15 @@ abstract class DateSpecification extends Specification[CalendarDate] {
 
 }
 
+/**`DateSpecification`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object DateSpecification {
   /**
    * 特定のある1日だけにマッチする日付仕様のインスタンスを返す。
    *
-   * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
+   * 毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。
    *
    * @param date マッチする日
    * @return 日付仕様
@@ -64,7 +70,7 @@ object DateSpecification {
   /**
    * 日付仕様「毎月`day`日」のインスタンスを生成する。
    *
-   * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
+   * 毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。
    *
    * @param day 日を表す正数（1〜31）
    * @throws IllegalArgumentException 引数`day`が1〜31の範囲ではない場合

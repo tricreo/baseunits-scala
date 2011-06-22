@@ -60,8 +60,8 @@ class TimeRate
 
   /**指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
    *
-   * <p>レート計算における数字の丸めは行わない。</p>
-   * <p>例えば、3時間に対して時給1000円を適用すると、3000円となる。</p>
+   * レート計算における数字の丸めは行わない。
+   * 例えば、3時間に対して時給1000円を適用すると、3000円となる。
    *
    * @param duration 時間量
    * @return 絶対量
@@ -113,14 +113,33 @@ class TimeRate
 
 }
 
-/**コンパニオンオブジェクト。
+/**`TimeRate`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
  */
 object TimeRate {
 
+  /**インスタンスを生成する。
+   *
+   * @param quantity 単位時間あたりの量
+   * @param unit 単位時間
+   * @return [[jp.tricreo.baseunits.scala.time.TimeRate]]
+   */
   def apply(quantity: BigDecimal, unit: Duration): TimeRate = new TimeRate(quantity, unit)
 
+  /**インスタンスを生成する。
+   *
+   * @param quantity 単位時間あたりの量
+   * @param unit 単位時間
+   * @return [[jp.tricreo.baseunits.scala.time.TimeRate]]
+   */
   def apply(quantity: String, unit: Duration): TimeRate = new TimeRate(quantity, unit)
 
+  /**抽出子メソッド。
+   *
+   * @param [[jp.tricreo.baseunits.scala.time.TimeRate]]
+   * @return `Option[(BigDecimal, Duration)]`
+   */
   def unapply(timeRate: TimeRate) = Some(timeRate.quantity, timeRate.unit)
 
 }

@@ -18,7 +18,10 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-/**毎月Y日、を表す日付仕様。
+/**毎月?日を表す日付仕様。
+ *
+ * @author j5ik2o
+ * @param day [[jp.tricreo.baseunits.scala.time.DayOfMonth]]
  */
 class MonthlyFixedDateSpecification private[time]
 (private[time] val day: DayOfMonth)

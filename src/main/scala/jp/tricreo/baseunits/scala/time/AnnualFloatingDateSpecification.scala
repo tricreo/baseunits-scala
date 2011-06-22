@@ -18,7 +18,12 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-/**毎年X月の第Y◎曜日、を表す日付仕様。
+/**毎年?月の第?曜日を表す日付仕様。
+ *
+ * @author j5ik2o
+ * @param month 月
+ * @param dayOfWeek 曜日
+ * @param occurrence 周回数（1〜5）
  */
 class AnnualFloatingDateSpecification private[time]
 (private[time] val month: Int,

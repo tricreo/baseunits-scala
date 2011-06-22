@@ -21,6 +21,9 @@ package jp.tricreo.baseunits.scala.money
 import collection.Iterator
 
 /**同じ通貨単位の金額の集合をあらわすクラス。
+ *
+ * @author j5ik2o
+ * @param monies [[jp.tricreo.baseunits.scala.moneyMoney]]の`Iterable`
  */
 class Tally
 (private[money] val monies: Iterable[Money])
@@ -36,25 +39,39 @@ class Tally
   }
 
   /**通貨単位を返す。
-	 * @return 通貨単位
-	 */
+   * @return 通貨単位
+   */
   def currency =
     iterator.next.breachEncapsulationOfCurrency
 
-	/** 合計金額を返す。
-	 * @return 合計
-	 */
-	def net = Money.sum(monies)
+  /**合計金額を返す。
+   * @return 合計
+   */
+  def net = Money.sum(monies)
 
-	override def toString = monies.toString
+  override def toString = monies.toString
 
   def iterator: Iterator[Money] = monies.iterator
 }
 
-object Tally{
+/**`Tally`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
+object Tally {
 
+  /**インスタンスを生成する。
+   *
+   * @param monies [[jp.tricreo.baseunits.scala.moneyMoney]]の`Iterable`
+   * @return [[jp.tricreo.baseunits.scala.Tally]]
+   */
   def apply(monies: Iterable[Money]) = new Tally(monies)
 
-  def unapply(tally:Tally) = Some(tally.monies)
+  /**抽出子メソッド。
+   *
+   * @param tally [[jp.tricreo.baseunits.scala.Tally]]
+   * @return `Option[Iterable[Money]]`
+   */
+  def unapply(tally: Tally) = Some(tally.monies)
 
 }

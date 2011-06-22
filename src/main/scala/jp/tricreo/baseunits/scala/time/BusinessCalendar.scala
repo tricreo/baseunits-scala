@@ -24,8 +24,10 @@ import org.sisioh.dddbase.spec.Specification
 
 /**営業日カレンダー。
  *
- * <p>営業日と非営業日を判定する責務を持つ。非営業日とは休日（祝日）及び週末（土日）を表し、営業日とは非営業日でない日を表す。
- * 週末は休日ではないが、週末かつ休日は休日である。</p>
+ * 営業日と非営業日を判定する責務を持つ。非営業日とは休日（祝日）及び週末（土日）を表し、営業日とは非営業日でない日を表す。
+ * 週末は休日ではないが、週末かつ休日は休日である。
+ *
+ * @author j5ik2o
  */
 class BusinessCalendar {
 
@@ -58,8 +60,8 @@ class BusinessCalendar {
   /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]の反復子を受け取り、その反復子が返す[[jp.tricreo.baseunits.scala.time.CalendarDate]]のうち、
    * 営業日に当たる[[jp.tricreo.baseunits.scala.time.CalendarDate]]のみを返す反復子を返す。
    *
-   * <p>このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
-   * 引数に与えた反復子の [[scala.Iterator#next()]] を呼び出してはならない。</p>
+   * このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
+   * 引数に与えた反復子の [[scala.Iterator#next()]] を呼び出してはならない。
    *
    * @param calendarDays 元となる反復子
    * @return 営業日のみを返す反復子
@@ -108,8 +110,8 @@ class BusinessCalendar {
 
   /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が営業日に当たるかどうか調べる。
    *
-   * <p>デフォルトの実装として、週末でなく休日でない日を営業日とするが、
-   * 業態によってはオーバーライドの可能性があるので注意すること。</p>
+   * デフォルトの実装として、週末でなく休日でない日を営業日とするが、
+   * 業態によってはオーバーライドの可能性があるので注意すること。
    *
    * @param day 日
    * @return 営業日に当たる場合は`true`、そうでない場合は`false`
@@ -119,7 +121,7 @@ class BusinessCalendar {
 
   /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が休日に当たるかどうか調べる。
    *
-   * <p>休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。</p>
+   * 休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。
    *
    * @param day 日
    * @return 休日に当たる場合は`true`、そうでない場合は`false`
@@ -129,7 +131,7 @@ class BusinessCalendar {
 
   /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が週末に当たるかどうか調べる。
    *
-   * <p>週末とは、土曜日と日曜日のことである。</p>
+   * 週末とは、土曜日と日曜日のことである。
    *
    * @param day 日
    * @return 週末に当たる場合は`true`、そうでない場合は`false`
@@ -156,7 +158,7 @@ class BusinessCalendar {
 
   /**指定した日の直近営業日を取得する。
    *
-   * <p>指定日が営業日であれば当日、そうでなければ翌営業日を返す。</p>
+   * 指定日が営業日であれば当日、そうでなければ翌営業日を返す。
    *
    * @param day 基準日
    * @return 営業日
@@ -170,7 +172,7 @@ class BusinessCalendar {
 
   /**指定した日の直近過去営業日を取得する。
    *
-   * <p>指定日が営業日であれば当日、そうでなければ前営業日を返す。</p>
+   * 指定日が営業日であれば当日、そうでなければ前営業日を返す。
    *
    * @param day 基準日
    * @return 営業日

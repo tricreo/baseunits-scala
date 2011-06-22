@@ -23,8 +23,10 @@ import jp.tricreo.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Inter
 
 /**期間（日付の区間）を表すクラス。
  *
- * <p>限界の表現には [[jp.tricreo.baseunits.scala.time.CalendarDate]]を利用する。
- * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+ * 限界の表現には [[jp.tricreo.baseunits.scala.time.CalendarDate]]を利用する。
+ * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
+ *
+ * @author j5ik2o
  * @param startValue 開始日
  * @param endValue 終了日
  */
@@ -35,7 +37,7 @@ class CalendarInterval protected
 
   /**この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
    *
-   * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
+   * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。
    *
    * @param zone タイムゾーン
    * @return 時間の期間
@@ -48,7 +50,7 @@ class CalendarInterval protected
 
   /**この期間の終了日を起点として、前回の日付の前日をこの期間の開始日を超過しない範囲で順次取得する反復子を取得する。
    *
-   * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
+   * 例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
    * <ol>
    *   <li>2009/01/04</li>
@@ -56,10 +58,10 @@ class CalendarInterval protected
    *   <li>2009/01/02</li>
    *   <li>2009/01/01</li>
    * </ol>
-   * </p>
    *
-   * <p>この期間が開始日（下側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
-   * `true`を返すので、無限ループに注意すること。</p>
+   *
+   * この期間が開始日（下側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
+   * `true`を返すので、無限ループに注意すること。
    *
    * @return 日付の反復子
    * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
@@ -94,7 +96,7 @@ class CalendarInterval protected
 
   /**この期間の開始日を起点として、前回の日付の翌日をこの期間の終了日を超過しない範囲で順次取得する反復子を取得する。
    *
-   * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
+   * 例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
    * <ol>
    *   <li>2009/01/01</li>
@@ -102,10 +104,10 @@ class CalendarInterval protected
    *   <li>2009/01/03</li>
    *   <li>2009/01/04</li>
    * </ol>
-   * </p>
    *
-   * <p>この期間が終了日（上側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
-   * `true`を返すので、無限ループに注意すること。</p>
+   *
+   * この期間が終了日（上側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
+   * `true`を返すので、無限ループに注意すること。
    *
    * @return 日付の反復子
    * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
@@ -167,7 +169,7 @@ class CalendarInterval protected
 
   /**この期間の月数としての長さを取得する。
    *
-   * <p>開始日と終了日が同月であれば`0`ヶ月となる。</p>
+   * 開始日と終了日が同月であれば`0`ヶ月となる。
    *
    * @return 期間の長さ
    * @see #lengthInMonthsInt()
@@ -178,7 +180,7 @@ class CalendarInterval protected
 
   /**限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
    *
-   * <p>開始日と終了日が同月であれば`0`となる。</p>
+   * 開始日と終了日が同月であれば`0`となる。
    *
    * @return 月数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
@@ -211,7 +213,7 @@ class CalendarInterval protected
    * [[jp.tricreo.baseunits.scala.money.CalendarInterval]] を
    * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
    *
-   * <p>例えば [2009/01/01, 2009/01/11] で表される期間に対して、
+   * 例えば [2009/01/01, 2009/01/11] で表される期間に対して、
    * 2日間の `subintervalLength` を与えた場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
    * <ol>
@@ -221,10 +223,10 @@ class CalendarInterval protected
    *   <li>[2009/01/07, 2009/01/08]</li>
    *   <li>[2009/01/09, 2009/01/10]</li>
    * </ol>
-   * </p>
    *
-   * <p>この期間が終了日（上側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
-   * `true`を返すので、無限ループに注意すること。</p>
+   *
+   * この期間が終了日（上側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
+   * `true`を返すので、無限ループに注意すること。
    *
    * @param subintervalLength 反復子が返す期間の長さ
    * @return 期間の反復子
@@ -259,17 +261,32 @@ class CalendarInterval protected
   }
 }
 
+/**`CalendarInterval`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object CalendarInterval {
 
+  /**インスタンスを生成する。
+   *
+   * @param startValue 開始日
+   * @param endValue 終了日
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarInterval]]
+   */
   def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]) =
     new CalendarInterval(startValue, endValue)
 
+  /**抽出子メソッド。
+   *
+   * @param [[jp.tricreo.baseunits.scala.time.CalendarInterval]]
+   * @return `Option[(CalendarInterval)]`
+   */
   def unapply(calendarInterval: CalendarInterval) =
     Some(calendarInterval.start, calendarInterval.end)
 
   /**開始日より、下側限界のみを持つ期間を生成する。
    *
-   * <p>開始日は期間に含む（閉じている）区間である。</p>
+   * 開始日は期間に含む（閉じている）区間である。
    *
    * @param startDate 開始日（下側限界値）. `Limitless[CalendarDate]`の場合は、限界がないことを表す
    * @return 期間
@@ -279,7 +296,7 @@ object CalendarInterval {
 
   /**終了日より、上側限界のみを持つ期間を生成する。
    *
-   * <p>終了日は期間に含む（閉じている）区間である。</p>
+   * 終了日は期間に含む（閉じている）区間である。
    *
    * @param endDate 終了日（上側限界値）. `Limitless[CalendarDate]`の場合は、限界がないことを表す
    * @return 期間
@@ -290,7 +307,7 @@ object CalendarInterval {
 
   /**開始日と終了日より、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @param start 開始日
    * @param end 終了日
@@ -302,7 +319,7 @@ object CalendarInterval {
 
   /**開始日と終了日より、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @param startYear 開始日の年
    * @param startMonth 開始日の月（1〜12）
@@ -322,7 +339,7 @@ object CalendarInterval {
 
   /**指定した年月の1日からその月末までの、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @param month 開始日の年月
    * @return 期間
@@ -335,7 +352,7 @@ object CalendarInterval {
 
   /**指定した年月の1日からその月末までの、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @param year 開始日の年
    * @param month 開始日の月（1〜12）
@@ -346,7 +363,7 @@ object CalendarInterval {
 
   /**指定した年月の1日からその月末までの、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @param year 開始日の年
    * @param month 開始日の月
@@ -360,9 +377,9 @@ object CalendarInterval {
 
   /**開始日と期間の長さより、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
-   * <p>引数 `length` の期間の長さの単位が "日" 未満である場合は、開始日と終了日は同日となる。<p>
+   * 引数 `length` の期間の長さの単位が "日" 未満である場合は、開始日と終了日は同日となる。
    *
    * @param start 開始日（下側限界値）
    * @param length 期間の長さ
@@ -379,7 +396,7 @@ object CalendarInterval {
 
   /**指定した年の元旦からその年の大晦日までの、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @param year 開始日の年
    * @return 期間

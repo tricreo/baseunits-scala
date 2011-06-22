@@ -22,6 +22,9 @@ import jp.tricreo.baseunits.scala.intervals.Limit
 
 /**
  * ある特定の年月日を表す日付仕様。
+ *
+ * @author j5ik2o
+ * @param date 年月日
  */
 class FixedDateSpecification private[time]
 (private[time] val date: CalendarDate)

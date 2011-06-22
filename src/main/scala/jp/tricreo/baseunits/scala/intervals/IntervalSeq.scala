@@ -21,7 +21,14 @@ package jp.tricreo.baseunits.scala.intervals
 import scala.collection._
 import mutable.{ListBuffer, Builder}
 
-
+/**区間同士の比較を行うための`Ordering`の実装(上側優先)
+ *
+ * 上側限界による比較を優先し、同じであったら下側限界による比較を採用する。
+ *
+ * @author j5ik2o
+ * @param inverseLower 下限が逆順の場合は`true`
+ * @param inverseUpper 上限が逆順の場合は`false`
+ */
 class UpperLowerOrdering[T <% Ordered[T]]
 (private val inverseLower: Boolean, private val inverseUpper: Boolean)
   extends Ordering[Interval[T]] {
@@ -44,16 +51,39 @@ class UpperLowerOrdering[T <% Ordered[T]]
     }
 }
 
+/**`UpperLowerOrdering`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object UpperLowerOrdering {
 
+  /**インスタンスを生成する。
+   *
+   * @param inverseLower
+   * @param inverseUpper
+   * @return [[jp.tricreo.baseunits.scala.intervals.UpperLowerOrdering]]
+   */
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new UpperLowerOrdering[T](inverseLower, inverseUpper)
 
+  /**抽出子メソッド。
+   *
+   * @param upperLowerOrdering [[jp.tricreo.baseunits.scala.intervals.UpperLowerOrdering]]
+   * @return `Option[(Boolean, Boolean)]`
+   */
   def unapply[T <% Ordered[T]](upperLowerOrdering: UpperLowerOrdering[T]) =
     Some(upperLowerOrdering.inverseLower, upperLowerOrdering.inverseUpper)
 
 }
 
+/**区間同士の比較を行うための`Ordering`の実装(下側優先)
+ *
+ * 下側限界による比較を優先し、同じであったら上側限界による比較を採用する。
+ *
+ * @author j5ik2o
+ * @param inverseLower 下限が逆順の場合は`true`
+ * @param inverseUpper 上限が逆順の場合は`false`
+ */
 class LowerUpperOrdering[T <% Ordered[T]]
 (private val inverseLower: Boolean, private val inverseUpper: Boolean)
   extends Ordering[Interval[T]] {
@@ -71,14 +101,31 @@ class LowerUpperOrdering[T <% Ordered[T]]
     } else {
       val upperComparance = e1.upperLimitObject.compareTo(e2.upperLimitObject)
       val lowerComparance = e1.lowerLimitObject.compareTo(e2.lowerLimitObject)
-      if (lowerComparance != 0) (lowerComparance + lowerFactor) else (upperComparance * upperFactor)
+      if (lowerComparance != 0) (lowerComparance + lowerFactor)
+      else (upperComparance * upperFactor)
     }
 }
 
+/**`LowerUpperOrdering`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object LowerUpperOrdering {
 
+  /**インスタンスを生成する。
+   *
+   * @param inverseLower
+   * @param inverseUpper
+   * @return [[jp.tricreo.baseunits.scala.intervals.LowerUpperOrdering]]
+   */
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
+
+  /**抽出子メソッド。
+   *
+   * @param upperLowerOrdering [[jp.tricreo.baseunits.scala.intervals.LowerUpperOrdering]]
+   * @return `Option[(Boolean, Boolean)]`
+   */
 
   def unapply[T <% Ordered[T]](lowerUpperOrdering: LowerUpperOrdering[T]) =
     Some(lowerUpperOrdering.inverseLower, lowerUpperOrdering.inverseUpper)
@@ -87,8 +134,8 @@ object LowerUpperOrdering {
 /**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval]] の列）を表すクラス。
  *
  * @tparam T [[jp.tricreo.beseunits.scala.intervals.Interval]]の型
- * @param intervals
- * @param ordering
+ * @param intervals [[jp.tricreo.beseunits.scala.intervals.Interval]]の列
+ * @param ordering [[jp.tricreo.beseunits.scala.intervals.Ordering]]
  */
 class IntervalSeq[T <% Ordered[T]]
 (val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
@@ -124,10 +171,10 @@ class IntervalSeq[T <% Ordered[T]]
 
   /**ソート済みの区間で、隣り合った区間同士に挟まれる区間を区間列として返す。
    *
-   * <p>結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。</p>
+   * 結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。
    *
-   * <p>区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重なっていたり接していた場合は、
-   * その区間は結果の要素に含まない。全てが重なっている場合は、空の区間列を返す。</p>
+   * 区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重なっていたり接していた場合は、
+   * その区間は結果の要素に含まない。全てが重なっている場合は、空の区間列を返す。
    *
    * @return ギャップ区間列
    */
@@ -153,10 +200,10 @@ class IntervalSeq[T <% Ordered[T]]
 
   /**ソート済みの区間で、隣り合った区間同士が重なっている区間を区間列として返す。
    *
-   * <p>結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。</p>
+   * 結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。
    *
-   * <p>区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重ならなかったり接していた場合は、
-   * その区間は結果の要素に含まない。全てが重ならない場合は、空の区間列を返す。</p>
+   * 区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重ならなかったり接していた場合は、
+   * その区間は結果の要素に含まない。全てが重ならない場合は、空の区間列を返す。
    *
    * @return 共通区間列
    */
@@ -186,6 +233,7 @@ class IntervalSeq[T <% Ordered[T]]
 }
 
 /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]のためのビルダー。
+ *
  * @author j5ik2o
  */
 class IntervalSeqBuilder[T <% Ordered[T]]
@@ -209,7 +257,8 @@ class IntervalSeqBuilder[T <% Ordered[T]]
 
 }
 
-/**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]のためのコンパニオンオブジェクト
+/**`IntervalSeq`コンパニオンオブジェクト
+ *
  * @j5ik2o
  */
 object IntervalSeq {
@@ -234,7 +283,7 @@ object IntervalSeq {
 
     }
 
-  /**ファクトリメソッド。
+  /**インスタンスを生成する。
    *
    * @tparam T 限界値の型
    * @param intervals
@@ -242,7 +291,7 @@ object IntervalSeq {
    */
   def apply[T <% Ordered[T]](intervals: From[T]) = new IntervalSeq(intervals)
 
-  /**ファクトリメソッド。
+  /**インスタンスを生成する。
    *
    * @tparam T 限界値の型
    * @param intervals

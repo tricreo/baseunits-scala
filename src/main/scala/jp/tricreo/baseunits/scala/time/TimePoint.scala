@@ -23,7 +23,9 @@ import java.util.{Date => JDate, Calendar, TimeZone}
 import jp.tricreo.baseunits.scala.intervals.{LimitValue, Limit}
 
 /**ミリ秒精度で、ある時間の一点をあらわすクラス。
- * <p>タイムゾーンを持っている。</p>
+ *
+ * タイムゾーンを持っている。
+ *
  * @param millisecondsFromEpoc エポックからの経過ミリ秒
  */
 
@@ -90,7 +92,7 @@ class TimePoint private[time]
 
   /**瞬間同士の比較を行う。
    *
-   * <p>相対的に過去である方を「小さい」と判断する。</p>
+   * 相対的に過去である方を「小さい」と判断する。
    *
    * @param otherPoint 比較対象
    * @return [[java.util.Comparable]] compareTo(Object)に準じる
@@ -102,8 +104,8 @@ class TimePoint private[time]
 
   /**このオブジェクトと、与えたオブジェクト `other`の同一性を検証する。
    *
-   * <p>与えたオブジェクトが[[jp.tricreo.baseunits.scala.time.TimePoint]]型であった場合、
-   * 同じ日時を指している場合は`true`、そうでない場合は`false`を返す。</p>
+   * 与えたオブジェクトが[[jp.tricreo.baseunits.scala.time.TimePoint]]型であった場合、
+   * 同じ日時を指している場合は`true`、そうでない場合は`false`を返す。
    *
    * @see java.lang.Object#equals(java.lang.Object)
    */
@@ -124,7 +126,7 @@ class TimePoint private[time]
 
   /**指定した瞬間 `other` が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
    *
-   * <p>同一日時である場合は `false` を返す。</p>
+   * 同一日時である場合は `false` を返す。
    *
    * @param other 対象日時
    * @return 未来である場合は`true`、そうでない場合は`false`
@@ -141,7 +143,7 @@ class TimePoint private[time]
 
   /**指定した瞬間 `other` が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
    *
-   * <p>同一日時である場合は `false` を返す。</p>
+   * 同一日時である場合は `false` を返す。
    *
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
@@ -168,7 +170,7 @@ class TimePoint private[time]
   /**
    * このオブジェクトが表現する瞬間の、ちょうど1日後を取得する。
    *
-   * <p>日内の時間は変化しない。</p>
+   * 日内の時間は変化しない。
    *
    * @return 1日後
    */
@@ -208,7 +210,7 @@ class TimePoint private[time]
   /**
    * このインスタンスがあらわす瞬間を開始瞬間、`end`を終了瞬間とする、期間を返す。
    *
-   * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
+   * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。
    *
    * @param end 終了日時（上側限界値）. `LimitValue[TimePoint]`の場合は、限界がないことを表す
    * @return [[jp.tricreo.baseunits.scala.time.TimeInterval]]
@@ -218,14 +220,26 @@ class TimePoint private[time]
 
 }
 
-/**コンパニオンオブジェクト。
+/**`TimePoint`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
  */
 object TimePoint {
 
   val GMT = TimeZone.getTimeZone("Universal")
 
+  /**インスタンスを生成する。
+   *
+   * @param milliseconds エポックからの経過ミリ秒
+   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   */
   def apply(milliseconds: Long): TimePoint = from(milliseconds)
 
+  /**抽出子メソッド。
+   *
+   * @param [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return `Option[(Long)]`
+   */
   def unapply(timePoint: TimePoint) = Some(timePoint.millisecondsFromEpoc)
 
   /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。

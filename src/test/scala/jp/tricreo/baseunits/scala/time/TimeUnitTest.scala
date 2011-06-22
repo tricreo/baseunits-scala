@@ -41,7 +41,7 @@ class TimeUnitTest extends AssertionsForJUnit {
    */
   @Test
   def test02_ToString {
-    assert(TimeUnit.month.toString == "month")
+    assert(TimeUnit.month.name == "month")
   }
 
   /**

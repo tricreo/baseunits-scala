@@ -158,8 +158,8 @@ class DurationTest extends AssertionsForJUnit {
   /**
    * [[Duration#equals(Object)]]のテスト。
    *
-   * <p>単位が違っていても、baseUnit換算できちんと比較できること。
-   * baseUnitに互換性がなければ、必ず{@code false}となること。</p>
+   * 単位が違っていても、baseUnit換算できちんと比較できること。
+   * baseUnitに互換性がなければ、必ず{@code false}となること。
    *
    * @throws Exception 例外が発生した場合
    */

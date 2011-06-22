@@ -20,9 +20,9 @@ package jp.tricreo.baseunits.scala.intervals
 
 /**「区間」を表すクラス。
  *
- * <p>閉区間とは、`lower <= x <= upper`であらわされる区間であり、
+ * 閉区間とは、`lower <= x <= upper`であらわされる区間であり、
  * 開区間とは、`lower < x < upper`であらわされる区間である。
- * どちらか一方のみが `<=` で、他方が `<` である場合は、半開区間と言う。</p>
+ * どちらか一方のみが `<=` で、他方が `<` である場合は、半開区間と言う。
  *
  * The rules of this class are consistent with the common mathematical
  * definition of "interval". For a simple explanation, see
@@ -75,10 +75,10 @@ class Interval[T <% Ordered[T]]
 
   /**この区間の<b>補</b>区間と与えた区間 `other` の共通部分を返す。
    *
-   * <p>この区間と与えた区間に共通部分がない場合は、 `other` を要素とする要素数1の区間列を返す。
+   * この区間と与えた区間に共通部分がない場合は、 `other` を要素とする要素数1の区間列を返す。
    * 与えた区間が、この区間を完全に内包する場合は、2つの区間に分かれるため、要素数が2の区間列を返す。
    * 逆にこの区間が、与えた区間を完全に内包する場合は、要素数0の区間列を返す。
-   * 上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。</p>
+   * 上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。
    *
    * @param other 対照となる区間
    * @return 補区間と対照区間の共通部分のリスト
@@ -125,11 +125,11 @@ class Interval[T <% Ordered[T]]
 
   /**この区間と、与えた区間 `other`の同一性を検証する。
    *
-   * <p>両者が共に空の区間であった場合は`true`、どちらか一方のみが空の区間であった場合は`false`を返す。
+   * 両者が共に空の区間であった場合は`true`、どちらか一方のみが空の区間であった場合は`false`を返す。
    * 両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は`true`を返す。
-   * また、どちらか一方のみが単一要素区間であった場合は`false`を返す。</p>
+   * また、どちらか一方のみが単一要素区間であった場合は`false`を返す。
    *
-   * <p>`other`が`Interval`以外であった場合は、必ず`false`を返す。</p>
+   * `other`が`Interval`以外であった場合は、必ず`false`を返す。
    *
    * @param other 比較対象の区間
    * @return 同一である場合は`true`、そうでない場合は`false`
@@ -148,8 +148,8 @@ class Interval[T <% Ordered[T]]
 
   /**この区間と与えた区間 `other` の間にある区間を取得する。
    *
-   * <p>例えば、[3, 5) と [10, 20) の gap は、[5, 19) である。
-   * 2つの区間が共通部分を持つ場合は、空の区間を返す。</p>
+   * 例えば、[3, 5) と [10, 20) の gap は、[5, 19) である。
+   * 2つの区間が共通部分を持つ場合は、空の区間を返す。
    *
    * @param other 比較対象の区間
    * @return ギャップ区間
@@ -165,14 +165,14 @@ class Interval[T <% Ordered[T]]
 
   /**下側限界があるかどうかを取得する。
    *
-   * <p>Warning: This method should generally be used for display
+   * Warning: This method should generally be used for display
    * purposes and interactions with closely coupled classes.
-   * Look for (or add) other methods to do computations.</p>
+   * Look for (or add) other methods to do computations.
    *
-   * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+   * 警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
    * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-   * このクラスに新しいメソッドを追加することを検討すること。</p>
+   * このクラスに新しいメソッドを追加することを検討すること。
    *
    * @return 下側限界がある場合は`true`、そうでない場合は`false`
    */
@@ -184,14 +184,14 @@ class Interval[T <% Ordered[T]]
 
   /**上側限界があるかどうかを取得する。
    *
-   * <p>Warning: This method should generally be used for display
+   * Warning: This method should generally be used for display
    * purposes and interactions with closely coupled classes.
-   * Look for (or add) other methods to do computations.</p>
+   * Look for (or add) other methods to do computations.
    *
-   * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+   * 警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
    * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-   * このクラスに新しいメソッドを追加することを検討すること。</p>
+   * このクラスに新しいメソッドを追加することを検討すること。
    *
    * @return 上側限界がある場合は`true`、そうでない場合は`false`
    */
@@ -209,14 +209,14 @@ class Interval[T <% Ordered[T]]
 
   /**下側限界が閉じているかどうかを取得する。
    *
-   * <p>Warning: This method should generally be used for display
+   * Warning: This method should generally be used for display
    * purposes and interactions with closely coupled classes.
-   * Look for (or add) other methods to do computations.</p>
+   * Look for (or add) other methods to do computations.
    *
-   * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+   * 警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
    * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-   * このクラスに新しいメソッドを追加することを検討すること。</p>
+   * このクラスに新しいメソッドを追加することを検討すること。
    *
    * @return 下側限界が閉じている場合は`true`、そうでない場合は`false`
    */
@@ -224,14 +224,14 @@ class Interval[T <% Ordered[T]]
 
   /**上側限界が閉じているかどうかを取得する。
    *
-   * <p>Warning: This method should generally be used for display
+   * Warning: This method should generally be used for display
    * purposes and interactions with closely coupled classes.
-   * Look for (or add) other methods to do computations.</p>
+   * Look for (or add) other methods to do computations.
    *
-   * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+   * 警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
    * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-   * このクラスに新しいメソッドを追加することを検討すること。</p>
+   * このクラスに新しいメソッドを追加することを検討すること。
    *
    * @return 上側限界値が閉じている場合は`true`、そうでない場合は`false`
    */
@@ -239,7 +239,7 @@ class Interval[T <% Ordered[T]]
 
   /**この区間と与えた区間 `other` の積集合（共通部分）を返す。
    *
-   * <p>共通部分が存在しない場合は、空の区間を返す。</p>
+   * 共通部分が存在しない場合は、空の区間を返す。
    *
    * @param other 比較対象の区間
    * @return 積集合（共通部分）
@@ -302,14 +302,14 @@ class Interval[T <% Ordered[T]]
 
   /**この区間が空であるかどうかを検証する。
    *
-   * <p>区間が空であるとは、上側限界値と下側限界値が同値であり、かつ、開区間であることを示す。
-   * 例えば `3 < x < 3`のような状態である。</p>
+   * 区間が空であるとは、上側限界値と下側限界値が同値であり、かつ、開区間であることを示す。
+   * 例えば `3 < x < 3`のような状態である。
    *
    * @return 空である場合は`true`、そうでない場合は`false`
    */
   def isEmpty: Boolean = (upperLimit, lowerLimit) match {
-  // TODO: Consider explicit isEmpty interval
-  // A 'degenerate' interval is an isEmpty set, {}.
+    // TODO: Consider explicit isEmpty interval
+    // A 'degenerate' interval is an isEmpty set, {}.
     case (_: Limitless[T], _) | (_, _: Limitless[T]) => false
     case _ => isOpen && upperLimit == lowerLimit
   }
@@ -334,14 +334,14 @@ class Interval[T <% Ordered[T]]
 
   /**下側限界値を取得する。
    *
-   * <p>Warning: This method should generally be used for display
+   * Warning: This method should generally be used for display
    * purposes and interactions with closely coupled classes.
-   * Look for (or add) other methods to do computations.</p>
+   * Look for (or add) other methods to do computations.
    *
-   * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+   * 警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
    * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-   * このクラスに新しいメソッドを追加することを検討すること。</p>
+   * このクラスに新しいメソッドを追加することを検討すること。
    *
    * @return 下側限界値. 限界がない場合は、[[jp.tricreo.baseunits.scala.intervals.Limitless]]
    */
@@ -360,10 +360,10 @@ class Interval[T <% Ordered[T]]
 
   /**区間の文字列表現を取得する。
    *
-   * <p>空の区間である場合は "&#123;&#125;", 単一要素区間である場合は "&#123;x&#125;"を返す。
+   * 空の区間である場合は "&#123;&#125;", 単一要素区間である場合は "&#123;x&#125;"を返す。
    * また、例えば 3〜5 の開区間である場合は "(3, 5)"、閉区間である場合は "[3, 5]"、
    * 半開区間であれば "[3, 5)" または "(3, 5]" の様に、開いた限界を "()"、
-   * 閉じた限界を "[]" で表現する。</p>
+   * 閉じた限界を "[]" で表現する。
    *
    * @see java.lang.Object#toString()
    */
@@ -374,14 +374,14 @@ class Interval[T <% Ordered[T]]
 
   /**上側限界値を取得する。
    *
-   * <p>Warning: This method should generally be used for display
+   * Warning: This method should generally be used for display
    * purposes and interactions with closely coupled classes.
-   * Look for (or add) other methods to do computations.</p>
+   * Look for (or add) other methods to do computations.
    *
-   * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+   * 警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
    * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
    * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-   * このクラスに新しいメソッドを追加することを検討すること。</p>
+   * このクラスに新しいメソッドを追加することを検討すること。
    *
    * @return 上側限界値. 限界がない場合は、[[jp.tricreo.baseunits.scala.intervals.Limitless]]
    */
@@ -424,11 +424,11 @@ class Interval[T <% Ordered[T]]
 
   /**区間をグラフィカルに確認するためのデバッグ用メソッド。
    *
-   * <p>単一要素区間はキャラクタ`@`で表示する。
+   * 単一要素区間はキャラクタ`@`で表示する。
    * 下側限界がない場合はキャラクタ`<`で表示し、上側限界がない場合はキャラクタ`>`で表示する。
    * 下側限界が開区間である場合はキャラクタ`(` 、閉区間である場合はキャラクタ{ @code [}で表示する。
    * 上側限界が開区間である場合はキャラクタ{ @code )}、閉区間である場合はキャラクタ`]`で表示する。
-   * 区間内の要素はキャラクタ`-`で表示する。</p>
+   * 区間内の要素はキャラクタ`-`で表示する。
    *
    * @return 文字列
    */
@@ -552,12 +552,19 @@ class Interval[T <% Ordered[T]]
 
 }
 
-/**Intervalコンパニオンオブジェクト
+/**`Interval`コンパニオンオブジェクト
  *
  * @author j5ik2o
  */
 object Interval {
 
+  /**インスタンスを生成する。
+   *
+   * @tparam T 区間要素の型
+   * @param lower 下側限界
+   * @param upper 上側限界
+   * @return [[jp.tricreo.baseunits.scala.intervals.Interval]]
+   */
   def apply[T <% Ordered[T]](lower: IntervalLimit[T], upper: IntervalLimit[T]) = new Interval(lower, upper)
 
   /**抽出子メソッド。
@@ -589,7 +596,7 @@ object Interval {
 
   /**下側限界のみを持つ区間を生成する。
    *
-   * <p>下側限界値は区間に含まない（開いている）区間である。</p>
+   * 下側限界値は区間に含まない（開いている）区間である。
    *
    * @tparam T 限界値の型
    * @param isLower 下側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
@@ -634,7 +641,7 @@ object Interval {
 
   /**上側限界のみを持つ区間を生成する。
    *
-   * <p>上側限界値は区間に含まない（開いている）区間である。</p>
+   * 上側限界値は区間に含まない（開いている）区間である。
    *
    * @tparam T 限界値の型
    * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
@@ -644,7 +651,7 @@ object Interval {
 
   /**上側限界のみを持つ区間を生成する。
    *
-   * <p>上側限界値は区間に含む（閉じている）区間である。</p>
+   * 上側限界値は区間に含む（閉じている）区間である。
    *
    * @tparam T 限界値の型
    * @param isUpper 上側限界値. [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す

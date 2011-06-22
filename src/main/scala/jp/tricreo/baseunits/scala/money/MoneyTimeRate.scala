@@ -23,7 +23,9 @@ import jp.tricreo.baseunits.scala.time.{Duration, TimeRate}
 
 /**単位時間あたりの金額（時間量に対する金額の割合）をあらわすクラス。
  *
- * <p>例えば時給、人月単価など。</p>
+ * 例えば時給、人月単価など。
+ *
+ * @author j5ik2o
  * @param rate 単位時間あたりの数量
  * @param currency 通貨単位
  */
@@ -43,7 +45,7 @@ class MoneyTimeRate
   /**
    * このオブジェクトの`currency`フィールド（通貨単位）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 通貨単位
    */
@@ -51,7 +53,7 @@ class MoneyTimeRate
 
   /**このオブジェクトの`rate`フィールド（単位時間当たりの数量）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 単位時間あたりの数量
    */
@@ -98,12 +100,32 @@ class MoneyTimeRate
 
 }
 
+/**`MoneyTimeRate`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object MoneyTimeRate {
 
+  /**インスタンスを生成する。
+   *
+   * @param rate 単位時間あたりの数量
+   * @param currency 通貨単位
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyTimeRate]]
+   */
   def apply(rate: TimeRate, currency: Currency): MoneyTimeRate = new MoneyTimeRate(rate, currency)
 
+  /**インスタンスを生成する。
+   *
+   * @param money 金額
+   * @param duration 時間量
+   */
   def apply(money: Money, duration: Duration): MoneyTimeRate = new MoneyTimeRate(money, duration)
 
+  /**抽出子メソッド。
+   *
+   * @param [[jp.tricreo.baseunits.scala.money.MoneyTimeRate]]
+   * @return `Option[(TimeRate, Currency)]`
+   */
   def unapply(moneyTimeRate: MoneyTimeRate) = Some(moneyTimeRate.rate, moneyTimeRate.currency)
 
 }

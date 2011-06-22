@@ -19,27 +19,35 @@
 package jp.tricreo.baseunits.scala.time
 
 import java.util.Calendar
+import jp.tricreo.baseunits.scala.util.{AbstractEnum, EnumEntry}
 
-/**
- * 1週間の中の特定の「曜日」を表す列挙型。
+/**1週間の中の特定の「曜日」を表す列挙型。
  *
- * <p>タイムゾーンの概念はない。</p>
+ * タイムゾーンの概念はない。
+ *
+ * @author j5ik2o
+ * @param value 1 = Calendar.SUNDAY, 2 = Calendar.MONDAY, ...
+ * @param _name 名前
  */
 final class DayOfWeek private[time]
 (private[time] val value: Int,
- private[time] val name: String) extends Serializable {
+ _name: String) extends EnumEntry {
   /**このオブジェクトの`value`フィールド（[[java.util.Calendar]]に定義する曜日をあらわす定数値）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return [[java.util.Calendar]]に定義する曜日をあらわす定数値（`SUNDAY`〜`SATURDAY`）
    */
   def breachEncapsulationOfValue = value
 
-  override def toString = name
+  override val name = _name
 }
 
-object DayOfWeek {
+/**コンパニオンオブジェクト。
+ *
+ * @author j5i2ko
+ */
+object DayOfWeek extends AbstractEnum[DayOfWeek] {
 
   val Sunday = new DayOfWeek(Calendar.SUNDAY, "SUNDAY")
   val Monday = new DayOfWeek(Calendar.MONDAY, "MONDAY")
@@ -49,9 +57,6 @@ object DayOfWeek {
   val Friday = new DayOfWeek(Calendar.FRIDAY, "FRIDAY")
   val Saturday = new DayOfWeek(Calendar.SATURDAY, "SATURDAY")
 
-  private val values = List(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
+  Sunday % Monday % Tuesday % Wednesday % Thursday % Friday % Saturday
 
-  def apply(value: Int) = values.find(_.value == value).get
-
-  def unapply(dayOfWeek: DayOfWeek) = Some(dayOfWeek.value, dayOfWeek.name)
 }

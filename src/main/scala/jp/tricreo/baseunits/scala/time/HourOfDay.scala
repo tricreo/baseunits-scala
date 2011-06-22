@@ -21,6 +21,9 @@ package jp.tricreo.baseunits.scala.time
 /**1日の中の特定の「時」を表すクラス。
  *
  * [[java.util.Date]]と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。
+ *
+ * @author j5ik2o
+ * @param value 時をあらわす正数
  */
 class HourOfDay private
 (private[time] val value: Int)
@@ -71,6 +74,7 @@ class HourOfDay private
 object HourOfDay {
 
   val MIN = 0
+
   val MAX = 23
 
   /**インスタンスを生成する。
@@ -92,7 +96,11 @@ object HourOfDay {
   def apply(initial: Int, amPm: String) =
     new HourOfDay(convertTo24hour(initial, amPm))
 
-
+  /**抽出子メソッド。
+   *
+   * @param hourOfDay [[HourOfDay]]
+   * @return `Option[Int]`
+   */
   def unapply(hourOfDay: HourOfDay) = Some(hourOfDay.value)
 
 

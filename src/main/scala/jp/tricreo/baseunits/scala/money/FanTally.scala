@@ -19,6 +19,8 @@
 package jp.tricreo.baseunits.scala.money
 
 /**[[jp.tricreo.baseunits.scala.money.MoneyFan]]の集合。
+ *
+ * @author j5ik2o
  * @tparam T 割り当ての対象
  * @param fans [[jp.tricreo.baseunits.scala.money.MapFan]]の[[scala.Iterable]]
  */
@@ -53,15 +55,24 @@ class FanTally[T]
 
 }
 
-/**コンパニオンオブジェクト。
+/**`FanTally`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
  */
 object FanTally {
 
-  /**
+  /**インスタンスを生成する。
    *
+   * @param fans [[jp.tricreo.baseunits.scala.money.MoneyFan]]の`Iterable`
+   * @return [[jp.tricreo.baseunits.scala.money.FanTally]]
    */
   def apply[T](fans: Iterable[MoneyFan[T]]) = new FanTally[T](fans)
 
+  /**抽出子メソッド。
+   *
+   * @param fanTally [[jp.tricreo.baseunits.scala.money.FanTally]]
+   * @return `Option[Iterable[MoneyFan[T]]]`
+   */
   def unapply[T](fanTally: FanTally[T]) = Some(fanTally.fans)
 
 }

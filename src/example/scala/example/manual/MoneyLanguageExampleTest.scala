@@ -36,9 +36,9 @@ class MoneyLanguageExampleTest extends AssertionsForJUnit {
 
   /**税額の計算例。
    *
-   * <p>税率は{@code 0.06%}で、丸めモードは四捨五入（{@link RoundingMode#HALF_UP}）とするのが
+   * 税率は{@code 0.06%}で、丸めモードは四捨五入（{@link RoundingMode#HALF_UP}）とするのが
    * カナダ物品税の仕様（らしい）。そこで、{@code 3.00カナダドル}の税額を計算すると、{@code 0.18カナダドル}
-   * となる。</p>
+   * となる。
    */
   @Test
   def testMoneyBigDecimalExample {
@@ -51,8 +51,8 @@ class MoneyLanguageExampleTest extends AssertionsForJUnit {
 
   /**金銭の四則演算例。
    *
-   * <p>{@code 10.03 USドル}について、2倍, {@code 1.14 USドル}との差, {@code 2.08 USドル}との和を求める。
-   * それぞれの結果の合計を求め、{@code 41.06 USドル}であることを確認している。</p>
+   * {@code 10.03 USドル}について、2倍, {@code 1.14 USドル}との差, {@code 2.08 USドル}との和を求める。
+   * それぞれの結果の合計を求め、{@code 41.06 USドル}であることを確認している。
    */
   @Test
   def testMoneyExample {
@@ -72,7 +72,7 @@ class MoneyLanguageExampleTest extends AssertionsForJUnit {
 
   /**単位時間当たりの金額 {@link MoneyTimeRate} の使用例。
    *
-   * <p>「1日あたり{@code 400.00 USドル}」を定義し、3日間では{@code 1200.00 USドル}であることを確認。</p>
+   * 「1日あたり{@code 400.00 USドル}」を定義し、3日間では{@code 1200.00 USドル}であることを確認。
    */
   @Test
   def testMoneyRateExample_1 {
@@ -85,8 +85,8 @@ class MoneyLanguageExampleTest extends AssertionsForJUnit {
 
   /**単位時間当たりの金額 {@link MoneyTimeRate} の使用例2。
    *
-   * <p>丸め処理が入る場合の例。「3分あたり{@code 100.00ユーロ}」を定義し、1分（切り捨て）では{@code 33.33ユーロ}
-   * となることを確認。</p>
+   * 丸め処理が入る場合の例。「3分あたり{@code 100.00ユーロ}」を定義し、1分（切り捨て）では{@code 33.33ユーロ}
+   * となることを確認。
    */
   @Test
   def testMoneyRateExample_2 {

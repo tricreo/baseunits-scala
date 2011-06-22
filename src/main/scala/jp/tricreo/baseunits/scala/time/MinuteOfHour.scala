@@ -22,6 +22,7 @@ package jp.tricreo.baseunits.scala.time
  *
  * [[java.util.Date]]と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。
  *
+ * @author j5ik2o
  * @param value 分をあらわす正数
  */
 class MinuteOfHour private[time]
@@ -59,7 +60,7 @@ class MinuteOfHour private[time]
 
   /**同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも過去かどうか調べる。
    *
-   * <p>等価である場合は`false`を返す。</p>
+   * 等価である場合は`false`を返す。
    *
    * @param another 基準分
    * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも過去である場合は`true`、そうでない場合は`false`
@@ -70,8 +71,9 @@ class MinuteOfHour private[time]
 
 }
 
-/**コンパニオンオブジェクト
+/**`MinuteOfHour`コンパニオンオブジェクト。
  *
+ * @author j5ik2o
  */
 object MinuteOfHour {
 
@@ -79,8 +81,18 @@ object MinuteOfHour {
 
   val MAX = 59
 
+  /**インスタンスを生成する。
+   *
+   * @param value 分をあらわす正数
+   * @return [[jp.tricreo.baseunits.scala.time.MinuteOfHour]]
+   */
   def apply(value: Int) = new MinuteOfHour(value)
 
+  /**抽出しメソッド。
+   *
+   * @param [[jp.tricreo.baseunits.scala.time.MinuteOfHour]]
+   * @return `Option[Int]`
+   */
   def unapply(minuteOfHour:MinuteOfHour) = Some(minuteOfHour.value)
 
 }

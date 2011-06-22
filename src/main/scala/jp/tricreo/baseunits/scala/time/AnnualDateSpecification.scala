@@ -21,6 +21,7 @@ package jp.tricreo.baseunits.scala.time
 import jp.tricreo.baseunits.scala.intervals.Limit
 
 /**1年間に1度だけ仕様を満たす日付仕様。
+ *
  * @author j5ik2o
  */
 abstract class AnnualDateSpecification extends DateSpecification {

@@ -19,6 +19,10 @@
 package jp.tricreo.baseunits.scala.time
 
 /**毎年X月Y日、を表す日付仕様。
+ *
+ * @author j5ik2o
+ * @param month 月
+ * @param day 日
  */
 class AnnualFixedDateSpecification private[time]
 (private[time] val month: MonthOfYear,

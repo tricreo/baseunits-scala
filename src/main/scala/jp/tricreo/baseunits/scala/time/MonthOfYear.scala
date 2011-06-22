@@ -19,6 +19,7 @@
 package jp.tricreo.baseunits.scala.time
 
 import java.util.{GregorianCalendar, Calendar}
+import jp.tricreo.baseunits.scala.util.{AbstractEnum, EnumEntry}
 
 /**1年の中の特定の「月」を表す列挙型。
  *
@@ -27,9 +28,10 @@ import java.util.{GregorianCalendar, Calendar}
  * @param calendarValue [[java.util.Calendar]]に定義する月をあらわす定数値
  */
 sealed class MonthOfYear
-(private[time] val value: Int,
- private[time] val lastDayOfThisMonth: DayOfMonth,
- private[time] val calendarValue: Int) extends Serializable {
+(private[time] val lastDayOfThisMonth: DayOfMonth,
+ private[time] val calendarValue: Int) extends EnumEntry {
+
+  private[time] def value = ordinal
 
   /**このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
    *
@@ -84,58 +86,53 @@ sealed class MonthOfYear
   private[time] def getLastDayOfThisMonth(year: Int) = lastDayOfThisMonth
 
 }
-/**コンパニオンオブジェクト。
+
+/**`MonthOfYear`コンパニオンオブジェクト。
  *
+ * @author j5ik2o
  */
-object MonthOfYear {
+object MonthOfYear extends AbstractEnum[MonthOfYear] {
 
   /**January */
-  val Jan = MonthOfYear(1, DayOfMonth(31), Calendar.JANUARY)
+  val Jan = new MonthOfYear(DayOfMonth(31), Calendar.JANUARY)
 
   /**Feburary */
-  val Feb = new MonthOfYear(2, DayOfMonth(28), Calendar.FEBRUARY) {
+  val Feb = new MonthOfYear(DayOfMonth(28), Calendar.FEBRUARY) {
     override def getLastDayOfThisMonth(year: Int): DayOfMonth = {
       val calendar = new GregorianCalendar(year, 2, 1)
       if (calendar.isLeapYear(year)) DayOfMonth(29) else DayOfMonth(28)
     }
   }
   /**March */
-  val Mar = MonthOfYear(3, DayOfMonth(31), Calendar.MARCH)
+  val Mar = new MonthOfYear(DayOfMonth(31), Calendar.MARCH)
 
   /**April */
-  val Apr = MonthOfYear(4, DayOfMonth(30), Calendar.APRIL)
+  val Apr = new MonthOfYear(DayOfMonth(30), Calendar.APRIL)
 
   /**May */
-  val May = MonthOfYear(5, DayOfMonth(31), Calendar.MAY)
+  val May = new MonthOfYear(DayOfMonth(31), Calendar.MAY)
 
   /**June */
-  val Jun = MonthOfYear(6, DayOfMonth(30), Calendar.JUNE)
+  val Jun = new MonthOfYear(DayOfMonth(30), Calendar.JUNE)
 
   /**July */
-  val Jul = MonthOfYear(7, DayOfMonth(31), Calendar.JULY)
+  val Jul = new MonthOfYear(DayOfMonth(31), Calendar.JULY)
 
   /**August */
-  val Aug = MonthOfYear(8, DayOfMonth(31), Calendar.AUGUST)
+  val Aug = new MonthOfYear(DayOfMonth(31), Calendar.AUGUST)
 
   /**September */
-  val Sep = MonthOfYear(9, DayOfMonth(30), Calendar.SEPTEMBER)
+  val Sep = new MonthOfYear(DayOfMonth(30), Calendar.SEPTEMBER)
 
   /**October */
-  val Oct = MonthOfYear(10, DayOfMonth(31), Calendar.OCTOBER)
+  val Oct = new MonthOfYear(DayOfMonth(31), Calendar.OCTOBER)
 
   /**November */
-  val Nov = MonthOfYear(11, DayOfMonth(30), Calendar.NOVEMBER)
+  val Nov = new MonthOfYear(DayOfMonth(30), Calendar.NOVEMBER)
 
   /**December */
-  val Dec = MonthOfYear(12, DayOfMonth(31), Calendar.DECEMBER)
+  val Dec = new MonthOfYear(DayOfMonth(31), Calendar.DECEMBER)
 
-  private val values: List[MonthOfYear] = List(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
+  Jan % Feb % Mar % Apr % May % Jun % Jul % Aug % Sep % Oct % Nov % Dec
 
-  def apply(value: Int): MonthOfYear = values.find(_.value == value).get
-
-  private[time] def apply(value: Int, lastDayOfThisMonth: DayOfMonth, calendarValue: Int) =
-    new MonthOfYear(value, lastDayOfThisMonth, calendarValue)
-
-  private[time] def unapply(monthOfYear: MonthOfYear) =
-    Some(monthOfYear.value, monthOfYear.lastDayOfThisMonth, monthOfYear.calendarValue)
 }

@@ -25,9 +25,12 @@ import math.BigDecimal.RoundingMode
 
 
 /**金額を表すクラス。
- * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
+ *
+ * ある一定の「量」と「通貨単位」から成るクラスである。
  *
  * @author j5ik2o
+ * @param amount 量 [[scala.math.BigDecimal]]
+ * @param currency 通貨単位 [[java.util.Currency]]
  */
 class Money
 (val amount: BigDecimal, val currency: Currency)
@@ -57,11 +60,11 @@ class Money
 
   /**金額同士の比較を行う。
    *
-   * <p>相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は [[java.lang.ClassCastException]] を
-   * スローするが、どちらか片方の量が`0`である場合は例外をスローしない。</p>
+   * 相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は [[java.lang.ClassCastException]] を
+   * スローするが、どちらか片方の量が`0`である場合は例外をスローしない。
    *
-   * <p>例えば`10 USD`と`0 JPY`は、後者の方が小さい。
-   * また、`0 USD`と`0 JPY`は同じである。</p>
+   * 例えば`10 USD`と`0 JPY`は、後者の方が小さい。
+   * また、`0 USD`と`0 JPY`は同じである。
    *
    * @param that 比較対象
    * @return `Comparable.compareTo(Object)`に準じる
@@ -109,14 +112,14 @@ class Money
 
   /**このオブジェクトの`amount`フィールド（量）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
-   * <p>How best to handle access to the internals? It is needed for
+   * How best to handle access to the internals? It is needed for
    * database mapping, UI presentation, and perhaps a few other
    * uses. Yet giving public access invites people to do the
    * real work of the Money object elsewhere.
    * Here is an experimental approach, giving access with a
-   * warning label of sorts. Let us know how you like it.</p>
+   * warning label of sorts. Let us know how you like it.
    *
    * @return 量
    */
@@ -124,7 +127,7 @@ class Money
 
   /**このオブジェクトの`currency`フィールド（通貨単位）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 通貨単位
    */
@@ -132,7 +135,7 @@ class Money
 
   /**この金額を、`divisor`個に均等に分割した場合の金額を返す。
    *
-   * <p>丸めモードは `RoundingMode#HALF_EVEN` を適用する。</p>
+   * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
    * @param divisor 除数
    * @return 金額
@@ -176,7 +179,7 @@ class Money
 
   /**このインスタンがあらわす金額が、`other`よりも大きいかどうか調べる。
    *
-   * <p>等価の場合は`false`とする。</p>
+   * 等価の場合は`false`とする。
    *
    * @param other 基準金額
    * @return 大きい場合は`true`、そうでない場合は`false`
@@ -187,7 +190,7 @@ class Money
 
   /**このインスタンがあらわす金額が、`other`よりも小さいかどうか調べる。
    *
-   * <p>等価の場合は`false`とする。</p>
+   * 等価の場合は`false`とする。
    *
    * @param other 基準金額
    * @return 小さい場合は`true`、そうでない場合は`false`
@@ -198,7 +201,7 @@ class Money
 
   /**このインスタンがあらわす金額が、負の金額かどうか調べる。
    *
-   * <p>ゼロの場合は`false`とする。</p>
+   * ゼロの場合は`false`とする。
    *
    * @return 負の金額である場合は`true`、そうでない場合は`false`
    */
@@ -207,7 +210,7 @@ class Money
 
   /**このインスタンがあらわす金額が、正の金額かどうか調べる。
    *
-   * <p>ゼロの場合は`false`とする。</p>
+   * ゼロの場合は`false`とする。
    *
    * @return 正の金額である場合は`true`、そうでない場合は`false`
    */
@@ -261,7 +264,7 @@ class Money
 
   /**この金額に`factor`を掛けた金額を返す。
    *
-   * <p>丸めモードは `RoundingMode#HALF_EVEN` を適用する。</p>
+   * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
    * TODO: Many apps require carrying extra precision in intermediate
    * calculations. The use of Ratio is a beginning, but need a comprehensive
@@ -292,7 +295,7 @@ class Money
 
   /**この金額に`amount`を掛けた金額を返す。
    *
-   * <p>丸めモードは `RoundingMode#HALF_EVEN` を適用する。</p>
+   * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
    * @param amount 係数
    * @return 掛けた金額
@@ -312,7 +315,7 @@ class Money
 
   /**この金額に`amount`を掛けた金額を返す。
    *
-   * <p>丸めモードは `RoundingMode#HALF_EVEN` を適用する。</p>
+   * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
    * @param amount 係数
    * @return 掛けた金額
@@ -357,7 +360,7 @@ class Money
 
   /**最小の単位金額を返す。
    *
-   * <p>例えば、日本円は1円であり、US$は1セント（つまり0.01ドル）である。</p>
+   * 例えば、日本円は1円であり、US$は1セント（つまり0.01ドル）である。
    *
    * This probably should be Currency responsibility. Even then, it may need
    * to be customized for specialty apps because there are other cases, where
@@ -386,6 +389,10 @@ class Money
 
 }
 
+/**`Money`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object Money {
 
   //implicit def bigDecimalToMoney(amount: Int) = apply(amount)
@@ -405,8 +412,8 @@ object Money {
 
   /**`amount`で表す量のドルを表すインスタンスを返す。
    *
-   * <p>This creation method is safe to use. It will adjust scale, but will not
-   * round off the amount.</p>
+   * This creation method is safe to use. It will adjust scale, but will not
+   * round off the amount.
    *
    * @param amount 量
    * @return `amount`で表す量のドルを表すインスタンス
@@ -415,8 +422,8 @@ object Money {
 
   /**`amount`で表す量のドルを表すインスタンスを返す。
    *
-   * <p>WARNING: Because of the indefinite precision of double, this method must
-   * round off the value.</p>
+   * WARNING: Because of the indefinite precision of double, this method must
+   * round off the value.
    *
    * @param amount 量
    * @return `amount`で表す量のドルを表すインスタンス
@@ -439,8 +446,8 @@ object Money {
 
   /**[[scala.Iterable]]に含む全ての金額の合計金額を返す。
    *
-   * <p>合計金額の通貨単位は、 `monies`の要素の（共通した）通貨単位となるが、
-   * `Collection`が空の場合は、現在のデフォルトロケールにおける通貨単位で、量が0のインスタンスを返す。</p>
+   * 合計金額の通貨単位は、 `monies`の要素の（共通した）通貨単位となるが、
+   * `Collection`が空の場合は、現在のデフォルトロケールにおける通貨単位で、量が0のインスタンスを返す。
    *
    * @param monies 金額の集合
    * @return 合計金額

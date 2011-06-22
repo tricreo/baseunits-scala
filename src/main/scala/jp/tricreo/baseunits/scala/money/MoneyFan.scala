@@ -25,14 +25,22 @@ import collection.mutable.ListBuffer
  *
  * @author j5ik2o
  * @tparam T 割り当て対象
- * @param allotment 割り当ての要素（単一）
+ * @param allotments 割り当ての要素（複数）
  */
 class MoneyFan[T]
 (private val allotments: Set[Allotment[T]])
   extends Iterable[Allotment[T]] {
 
+  /**補助コンストラクタ。
+   *
+   * `allotments`は空のインスタンスが利用される。
+   */
   def this() = this (Set.empty[Allotment[T]])
 
+  /**補助コンストラクタ。
+   *
+   * @param allotment 割り当ての要素（単一)
+   */
   def this(allotment: Allotment[T]) = this (Set(allotment))
 
   def iterator: Iterator[Allotment[T]] = allotments.iterator
@@ -78,7 +86,7 @@ class MoneyFan[T]
 
   /**この[[jp.tricreo.baseunits.scala.money.MoneyFan]]に`added`を足した和を返す。
    *
-   * <p>同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[jp.tricreo.baseunits.scala.money.Allotment]] は取り除く。</p>
+   * 同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[jp.tricreo.baseunits.scala.money.Allotment]] は取り除く。
    *
    * @param added [[jp.tricreo.baseunits.scala.money.MoneyFan]]
    * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
@@ -132,14 +140,37 @@ class MoneyFan[T]
   }
 }
 
+/**`MoneyFan`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object MoneyFan {
 
+  /**インスタンスを生成する。
+   *
+   * @param allotments 割り当ての要素（複数）
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   */
   def apply[T](allotments: Set[Allotment[T]]): MoneyFan[T] = new MoneyFan[T](allotments)
 
+  /**インスタンスを生成する。
+   *
+   * @param allotment 割り当ての要素（単一）
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   */
   def apply[T](allotment: Allotment[T]): MoneyFan[T] = new MoneyFan[T](allotment)
 
+  /**インスタンスを生成する。
+   *
+   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   */
   def apply[T]: MoneyFan[T] = new MoneyFan[T]
 
+  /**抽出子メソッド。
+   *
+   * @param [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return `Option[Set[Allotment[T]]]`
+   */
   def unapply[T](moneyFan: MoneyFan[T]) = Some(moneyFan.allotments)
 
 }

@@ -18,7 +18,11 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-/**毎月の第Y◎曜日、を表す日付仕様。
+/**毎月の第?曜日を表す日付仕様。
+ *
+ * @author j5ik2o
+ * @param dayOfWeek [[jp.tricreo.baseunits.scala.time.DayOfWeek]]
+ * @param occurrence 周回数（1〜5）
  */
 class MonthlyFloatingDateSpecification private[time]
 (private[time] val dayOfWeek: DayOfWeek,

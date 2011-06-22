@@ -30,7 +30,7 @@ class Allotment[T]
 
   /**このオブジェクトの`amount`フィールド（金額）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 金額
    */
@@ -38,7 +38,7 @@ class Allotment[T]
 
   /**このオブジェクトの`entity`フィールド（割り当て対象）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 割り当て対象
    */
@@ -64,10 +64,25 @@ class Allotment[T]
 
 }
 
+/**`Allotment`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object Allotment {
 
+  /**インスタンスを生成する。
+   *
+   * @param entity 割り当て対象
+   * @param amount [[jp.tricreo.baseunits.scala.money.Money]]
+   * @return [[jp.tricreo.baseunits.scala.money.Allotment]]
+   */
   def apply[T](entity: T, amount: Money) = new Allotment[T](entity, amount)
 
+  /**抽出子メソッド。
+   *
+   * @param allotment [[jp.tricreo.baseunits.scala.money.Allotment]]
+   * @return `Option[(T, Money)]`
+   */
   def unapplly[T](allotment: Allotment[T]) = Some(allotment.entity, allotment.amount)
 
 }

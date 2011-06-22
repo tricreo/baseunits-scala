@@ -18,24 +18,32 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-sealed trait Shifter {
+import jp.tricreo.baseunits.scala.util.{AbstractEnum, EnumEntry}
+
+sealed trait Shifter extends EnumEntry {
   def shift(date: CalendarDate, cal: BusinessCalendar): CalendarDate
 }
 
-object Shifter {
-  val Prev = PrevShifter
-  val Next = NextShifter
+/**コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
+object Shifter extends AbstractEnum[Shifter] {
+
+  case object Next extends Shifter {
+    def shift(date: CalendarDate, cal: BusinessCalendar) =
+      cal.nearestNextBusinessDay(date)
+  }
+
+  case object Prev extends Shifter {
+    def shift(date: CalendarDate, cal: BusinessCalendar) =
+      cal.nearestPrevBusinessDay(date)
+  }
+
+  Prev % Next
+
 }
 
-case class NextShifter() extends Shifter {
-  def shift(date: CalendarDate, cal: BusinessCalendar) =
-    cal.nearestNextBusinessDay(date)
-}
-
-case class PrevShifter() extends Shifter {
-  def shift(date: CalendarDate, cal: BusinessCalendar) =
-    cal.nearestPrevBusinessDay(date)
-}
 
 /**指定日が非営業日の場合のシフト戦略。
  */

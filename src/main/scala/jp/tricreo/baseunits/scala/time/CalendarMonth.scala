@@ -25,6 +25,10 @@ import java.util.{Calendar, TimeZone}
  * [[java.util.Date]]と異なり、月未満（日以下）の概念を持っていない。また、
  * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
  * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
+ *
+ * @authro j5ik2o
+ * @param year 年
+ * @param month 月
  */
 class CalendarMonth private[time]
 (private[time] val year: Int,
@@ -33,7 +37,7 @@ class CalendarMonth private[time]
 
   /**このインスタンスが表現する年月の1日からその月末までの、期間を生成する。
    *
-   * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+   * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
@@ -71,7 +75,7 @@ class CalendarMonth private[time]
   /**
    * このオブジェクトの`month`フィールド（月）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 月
    */
@@ -80,7 +84,7 @@ class CalendarMonth private[time]
   /**
    * このオブジェクトの`year`フィールド（西暦年をあらわす数）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 西暦年をあらわす数
    */
@@ -89,7 +93,7 @@ class CalendarMonth private[time]
   /**
    * 年月日同士の比較を行う。
    *
-   * <p>相対的に過去である方を「小さい」と判断する。</p>
+   * 相対的に過去である方を「小さい」と判断する。
    *
    * @param other 比較対象
    * @return [[java.util.Comparable]] compareTo(Object)に準じる
@@ -127,7 +131,7 @@ class CalendarMonth private[time]
 
   /**指定した日 `other`が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
@@ -138,7 +142,7 @@ class CalendarMonth private[time]
   /**
    * 指定した年月 `other`が、このオブジェクトが表現する年月よりも未来であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象年月
    * @return 未来である場合は`true`、そうでない場合は`false`
@@ -158,7 +162,7 @@ class CalendarMonth private[time]
 
   /**このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
    *
-   * <p>引数の長さの単位が "月" 未満である場合は、元の年月をそのまま返す。<p>
+   * 引数の長さの単位が "月" 未満である場合は、元の年月をそのまま返す。
    *
    * @param length 時間の長さ
    * @return 未来の年月
@@ -168,7 +172,7 @@ class CalendarMonth private[time]
 
   /**このインスタンスが表現する年月の `increment` ヶ月後を返す。
    *
-   * <p> `increment`に負数を与えてもよい。</p>
+   *  `increment`に負数を与えてもよい。
    *
    * @param increment 加える月数
    * @return 計算結果
@@ -223,10 +227,25 @@ class CalendarMonth private[time]
   }
 }
 
+/**`CalendarMonth`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object CalendarMonth {
 
+  /**インスタンスを生成する。
+   *
+   * @param year 年
+   * @param month 月
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
+   */
   def apply(year: Int, month: Int) = from(year, month)
 
+  /**抽出しメソッド。
+   *
+   * @param calendarMonth [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
+   * @return `Option[(Int, Int)]`
+   */
   def unapply(calendarMonth: CalendarMonth) =
     Some(calendarMonth.year, calendarMonth.month)
 

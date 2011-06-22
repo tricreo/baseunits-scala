@@ -83,7 +83,7 @@ class LinearIntervalMap[A <% Ordered[A], B]
   /**この写像が保持するキーとしての区間のうち、指定した区間 `otherInterval`と共通部分を持つ
    * 区間の列を取得する。
    *
-   * <p>戻り値の列は、区間の自然順にソートされている。</p>
+   * 戻り値の列は、区間の自然順にソートされている。
    *
    * @param otherInterval 対象区間
    * @return 指定した区間と共通部分を持つ区間の列
@@ -125,13 +125,13 @@ class LinearIntervalMap[A <% Ordered[A], B]
 
 }
 
-/**コンパニオンオブジェクト。
+/**`LinearIntervalMap`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object LinearIntervalMap {
 
-  /**ファクトリメソッド。
+  /**インスタンスを生成する。
    *
    * @tparam A キーの型
    * @tparam B 値の型

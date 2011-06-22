@@ -22,7 +22,7 @@ import java.util.TimeZone
 
 /**1日の中の特定の「時分」を表すクラス。
  *
- * <p>[[java.util.Date]]と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * [[java.util.Date]]と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。
  * @param hour 時
  * @param minute 分
  */
@@ -112,7 +112,7 @@ class TimeOfDay private[time]
 
 }
 
-/**コンパニオンオブジェクト。
+/**`TimeOfDay`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */

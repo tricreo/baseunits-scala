@@ -23,9 +23,13 @@ import jp.tricreo.baseunits.scala.intervals.Limit
 
 /**カレンダー上の特定の「年月日」を表すクラス。
  *
- * <p>[[java.util.Date]]と異なり、時間の概念を持っていない。また、
+ * [[java.util.Date]]と異なり、時間の概念を持っていない。また、
  * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
- * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
+ * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
+ *
+ * @author j5ik2o
+ * @param yearMonth 年月
+ * @param day 日
  */
 class CalendarDate private[time]
 (private[time] val yearMonth: CalendarMonth,
@@ -34,7 +38,7 @@ class CalendarDate private[time]
 
   /**年月日同士の比較を行う。
    *
-   * <p>相対的に過去である方を「小さい」と判断する。</p>
+   * 相対的に過去である方を「小さい」と判断する。
    *
    * @param other 比較対象
    * @return [[java.util.Comparable#compareTo(Object)]]に準じる
@@ -63,7 +67,7 @@ class CalendarDate private[time]
 
   /**このインスタンスが表現する日の午前0時から丸一日を期間として取得する。
    *
-   * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開区間を生成する。</p>
+   * 生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開区間を生成する。
    *
    * @param zone タイムゾーン
    * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
@@ -88,7 +92,7 @@ class CalendarDate private[time]
 
   /**このオブジェクトの`day`フィールド（日）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 日
    */
@@ -96,7 +100,7 @@ class CalendarDate private[time]
 
   /**このオブジェクトの`yearMonth`フィールド（年月）を返す。
    *
-   * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 年月
    */
@@ -122,7 +126,7 @@ class CalendarDate private[time]
 
   /**指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
@@ -132,7 +136,7 @@ class CalendarDate private[time]
 
   /**指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
-   * <p>お互いが同一日時である場合は `false` を返す。</p>
+   * お互いが同一日時である場合は `false` を返す。
    *
    * @param other 対象日時
    * @return 未来である場合は`true`、そうでない場合は`false`
@@ -153,7 +157,7 @@ class CalendarDate private[time]
 
   /**このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
    *
-   * <p>引数の長さの単位が "日" 未満である場合は、元の日付をそのまま返す。<p>
+   * 引数の長さの単位が "日" 未満である場合は、元の日付をそのまま返す。
    *
    * @param length 時間の長さ
    * @return 未来の日付
@@ -162,7 +166,7 @@ class CalendarDate private[time]
 
   /**このインスタンスが表現する日の `increment` 日後を返す。
    *
-   * <p> `increment`に負数を与えてもよい。</p>
+   *  `increment`に負数を与えてもよい。
    *
    * @param increment 加える日数
    * @return 計算結果
@@ -178,7 +182,7 @@ class CalendarDate private[time]
 
   /**このインスタンスが表現する日の `increment` ヶ月後を返す。
    *
-   * <p> `increment`に負数を与えてもよい。</p>
+   *  `increment`に負数を与えてもよい。
    *
    * @param increment 加える月数
    * @return 計算結果
@@ -215,7 +219,7 @@ class CalendarDate private[time]
 
   /**この日付の文字列表現を取得する。
    *
-   * <p>[[java.text.SimpleDateFormat]]の使用に基づく `"yyyy-MM-dd"`のパターンで整形する。</p>
+   * [[java.text.SimpleDateFormat]]の使用に基づく `"yyyy-MM-dd"`のパターンで整形する。
    *
    * @see java.lang.Object#toString()
    */
@@ -250,14 +254,26 @@ class CalendarDate private[time]
   }
 }
 
-/**コンパニオンオブジェクト。
+/**`CalendarDate`コンパニオンオブジェクト。
+ *
  * @author j5ik2o
  */
 object CalendarDate {
 
+  /**インスタンスを生成する。
+   *
+   * @param yearMonth 年月
+   * @param day 日
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   */
   def apply(yearMonth: CalendarMonth, day: DayOfMonth) =
     from(yearMonth, day)
 
+  /**抽出子メソッド。
+   *
+   * @param [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return `Option[(CalendarMonth, DayOfMonth)]`
+   */
   def unapply(calendarDate: CalendarDate) =
     Some(calendarDate.yearMonth, calendarDate.day)
 

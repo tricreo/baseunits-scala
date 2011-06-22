@@ -26,6 +26,7 @@ import java.util.TimeZone
  * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
  * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
+ * @author j5ik2o
  * @param date 年月日
  * @param time 時分
  */
@@ -121,10 +122,26 @@ class CalendarMinute private[time]
 
 }
 
+
+/**コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object CalendarMinute {
 
+  /**インスタンスを生成する。
+   *
+   * @param aDate [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @param aTime [[jp.tricreo.baseunits.scala.time.TimeOfDay]]
+   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   */
   def apply(aDate: CalendarDate, aTime: TimeOfDay) = from(aDate, aTime)
 
+  /**抽出子メソッド。
+   *
+   * @param calendarMinute [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   * @return `Option[(CalendarDate,TimeOfDay)]`
+   */
   def unapply(calendarMinute:CalendarMinute) =
     Some(calendarMinute.date, calendarMinute.time)
 

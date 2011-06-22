@@ -18,27 +18,34 @@
  */
 package jp.tricreo.baseunits.scala.time
 
+import jp.tricreo.baseunits.scala.util.{AbstractEnum, EnumEntry}
+
+/**`TimeUnit`に変数するためのファクター。
+ *
+ * @author j5ik2o
+ * @param _name 名前
+ * @param value 値
+ */
 private[time] final class TimeUnitConversionFactor
-(val value: Int)
-  extends Ordered[TimeUnitConversionFactor] with Serializable {
-  def compare(that: TimeUnitConversionFactor) = value - that.value
+( _name: String, val value: Int) extends EnumEntry {
+  override val name = _name
 }
 
-private[time] object TimeUnitConversionFactor {
-  val identical = new TimeUnitConversionFactor(1)
-  val millisecondsPerSecond = new TimeUnitConversionFactor(1000)
-  val millisecondsPerMinute = new TimeUnitConversionFactor(60 * millisecondsPerSecond.value)
-  val millisecondsPerHour = new TimeUnitConversionFactor(60 * millisecondsPerMinute.value)
-  val millisecondsPerDay = new TimeUnitConversionFactor(24 * millisecondsPerHour.value)
-  val millisecondsPerWeek = new TimeUnitConversionFactor(7 * millisecondsPerDay.value)
-  val monthsPerQuarter = new TimeUnitConversionFactor(3)
-  val monthsPerYear = new TimeUnitConversionFactor(12)
+/**`TimeUnitConversionFactor`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
+private[time] object TimeUnitConversionFactor extends AbstractEnum[TimeUnitConversionFactor] {
+  val identical = new TimeUnitConversionFactor("identical", 1)
+  val millisecondsPerSecond = new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
+  val millisecondsPerMinute = new TimeUnitConversionFactor("millisecondsPerMinute", 60 * millisecondsPerSecond.value)
+  val millisecondsPerHour = new TimeUnitConversionFactor("millisecondsPerHour", 60 * millisecondsPerMinute.value)
+  val millisecondsPerDay = new TimeUnitConversionFactor("millisecondsPerDay", 24 * millisecondsPerHour.value)
+  val millisecondsPerWeek = new TimeUnitConversionFactor("millisecondsPerWeek", 7 * millisecondsPerDay.value)
+  val monthsPerQuarter = new TimeUnitConversionFactor("monthsPerQuarter", 3)
+  val monthsPerYear = new TimeUnitConversionFactor("monthsPerYear", 12)
 
-  private val values = List(identical, millisecondsPerSecond, millisecondsPerMinute, millisecondsPerHour,
-    millisecondsPerDay, millisecondsPerWeek, monthsPerQuarter, monthsPerYear)
-
-  def apply(value: Int) = values.find(_.value == value).get
-
-  def unapply(timeUnitConversionFactor: TimeUnitConversionFactor) = Some(timeUnitConversionFactor.value)
+  identical % millisecondsPerSecond % millisecondsPerMinute % millisecondsPerHour %
+    millisecondsPerDay % millisecondsPerWeek % monthsPerQuarter % monthsPerYear
 
 }

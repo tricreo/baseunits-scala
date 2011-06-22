@@ -38,17 +38,17 @@ class TimeInterval
 
   /**この期間の開始日時を起点として、前回の日時の`1日後`の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
-   * <p>例えば [2009/01/01 13:00, 2009/01/04 05:00) で表される期間に対してこのメソッドを呼び出した場合、
+   * 例えば [2009/01/01 13:00, 2009/01/04 05:00) で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
    * <ol>
    *   <li>2009/01/01 13:00</li>
    *   <li>2009/01/02 13:00</li>
    *   <li>2009/01/03 13:00</li>
    * </ol>
-   * </p>
    *
-   * <p>この期間が終了日時（上側限界）を持たない場合、 [[scala.collection.Iterator]] hasNext()は常に
-   * `true`を返すので、無限ループに注意すること。</p>
+   *
+   * この期間が終了日時（上側限界）を持たない場合、 [[scala.collection.Iterator]] hasNext()は常に
+   * `true`を返すので、無限ループに注意すること。
    *
    * @return 日時の反復子
    * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
@@ -88,7 +88,7 @@ class TimeInterval
 
   /**この期間と与えた期間 `interval` の積集合（共通部分）を返す。
    *
-   * <p>共通部分が存在しない場合は、空の区間を返す。</p>
+   * 共通部分が存在しない場合は、空の区間を返す。
    *
    * @param interval 比較対象の期間
    * @return 積集合（共通部分）
@@ -150,7 +150,7 @@ class TimeInterval
    * [[jp.tricreo.baseunits.scala.time.TimeInterval]] を
    * この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
-   * <p>例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
+   * 例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
    * 2日間の `subintervalLength` を与えた場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
    * <ol>
@@ -159,10 +159,10 @@ class TimeInterval
    *   <li>[2009/01/05 02:00, 2009/01/07 02:00)</li>
    *   <li>[2009/01/07 02:00, 2009/01/09 02:00)</li>
    * </ol>
-   * </p>
    *
-   * <p>この期間が終了日時（上側限界）を持たない場合、 [[scala.collection.Iterator]] hasNext()は常に
-   * `true`を返すので、無限ループに注意すること。</p>
+   *
+   * この期間が終了日時（上側限界）を持たない場合、 [[scala.collection.Iterator]] hasNext()は常に
+   * `true`を返すので、無限ループに注意すること。
    *
    * @param subintervalLength 反復子が返す期間の長さ
    * @return 期間の反復子
@@ -192,11 +192,21 @@ class TimeInterval
 }
 
 /**コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
  */
 object TimeInterval {
 
   import jp.tricreo.baseunits.scala.intervals.{Limitless, LimitValue}
 
+  /**インスタンスを生成する。
+   *
+   * @param startValue 開始時間
+   * @param startClosed 開始時間を含める場合は`true`
+   * @param endValue 終了時間
+   * @param endClosed 終了時間を含める場合は`false`
+   * @return [[jp.tricreo.baseunits.scala.time.TimeInterval]]
+   */
   def apply(start: LimitValue[TimePoint],
             startClosed: Boolean,
             end: LimitValue[TimePoint],
@@ -215,7 +225,7 @@ object TimeInterval {
 
   /**開始日時より、下側限界のみを持つ期間を返す。
    *
-   * <p>開始日時は期間に含む（閉じている）区間である。</p>
+   * 開始日時は期間に含む（閉じている）区間である。
    *
    * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @return 期間
@@ -225,7 +235,7 @@ object TimeInterval {
 
   /**終了日時より、上側限界のみを持つ期間を返す。
    *
-   * <p>終了日時は期間に含まない（開いている）区間である。</p>
+   * 終了日時は期間に含まない（開いている）区間である。
    *
    * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @return 期間
@@ -245,7 +255,7 @@ object TimeInterval {
 
   /**開始日時と終了日時より、期間を返す。
    *
-   * <p>主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。</p>
+   * 主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。
    *
    * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は`true`を指定する
@@ -259,7 +269,7 @@ object TimeInterval {
 
   /**開始日時と終了日時より、期間を返す。
    *
-   * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。</p>
+   * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。
    *
    * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
@@ -309,7 +319,7 @@ object TimeInterval {
 
   /**開始日時と期間の長さより、期間を返す。
    *
-   * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。</p>
+   * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。
    *
    * @param start 開始日時（下側限界値）
    * @param length 期間の長さ

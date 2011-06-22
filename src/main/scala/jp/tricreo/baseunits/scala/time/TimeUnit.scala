@@ -20,15 +20,20 @@ package jp.tricreo.baseunits.scala.time
 
 import java.util.Calendar
 import java.lang.String
+import jp.tricreo.baseunits.scala.util.{EnumEntry, AbstractEnum}
 
 /**時間の単位を表す列挙型。
+ *
+ * @author j5ik2o
  */
 final class TimeUnit private[time]
-(private[time] val id: Int,
+(_name:String,
  private[time] val valueType: TimeUnit.Type,
  private[time] val valueBaseType: TimeUnit.Type,
  private[time] val factor: TimeUnitConversionFactor)
-  extends Ordered[TimeUnit] with Serializable {
+  extends EnumEntry {
+
+  override val name = _name
 
   /**この単位で表される値を、指定した単位に変換できるかどうかを検証する。
    * 例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）日単位に変換できない。
@@ -45,7 +50,7 @@ final class TimeUnit private[time]
    */
   def isConvertibleToMilliseconds = isConvertibleTo(TimeUnit.millisecond)
 
-  override def toString = valueType.name
+//  override def toString = valueType.name
 
   /**この単位の計数の基数とすることができる最小の単位を取得する。
    * 例えば、分単位はミリ秒単位で計数できるが、四半期単位は（一ヶ月の長さが毎月異なるため）月単位までしか計数できない。
@@ -104,79 +109,69 @@ final class TimeUnit private[time]
     buffer.toString
   }
 
-  def compare(that: TimeUnit): Int = id - that.id
 }
 
-/**コンパニオンオブジェクト。 */
-object TimeUnit {
+/**`TimeUnit`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
+object TimeUnit extends AbstractEnum[TimeUnit] {
 
-  private[time] final class Type(val value: Int, val name: String) {
+  private[time] final class Type(override val ordinal: Int,override val name: String) extends EnumEntry {
     override def equals(obj: Any): Boolean = obj match {
-      case that: Type => value == that.value && name == that.name
+      case that: Type => ordinal == that.ordinal && name == that.name
       case _ => false
     }
 
-    override def toString: String = name
-
-    override def hashCode: Int = value.hashCode + name.hashCode
+    override def hashCode: Int = ordinal.hashCode + name.hashCode
   }
 
-  private[time] object Type {
+  private[time] object Type extends AbstractEnum[Type]{
 
-    val millisecond = Type(1, "millisecond")
-    val second = Type(2, "second")
-    val minute = Type(3, "minute")
-    val hour = Type(4, "hour")
-    val day = Type(5, "day")
-    val week = Type(6, "week")
-    val month = Type(7, "month")
-    val quarter = Type(8, "quarter")
-    val year = Type(9, "year")
+    val millisecond = new Type(1, "millisecond")
+    val second = new Type(2, "second")
+    val minute = new Type(3, "minute")
+    val hour = new Type(4, "hour")
+    val day = new Type(5, "day")
+    val week = new Type(6, "week")
+    val month = new Type(7, "month")
+    val quarter = new Type(8, "quarter")
+    val year = new Type(9, "year")
 
-    private val values = List(Type.millisecond,
-      Type.second,
-      Type.minute,
-      Type.hour,
-      Type.day,
-      Type.week,
-      Type.month,
-      Type.year)
+    Type.millisecond % Type.second % Type.minute %
+      Type.hour % Type.day % Type.week %
+      Type.month % Type.year
 
-    private[time] def apply(value: Int): Type = values.find(_.value == value).get
-
-    private[time] def apply(value: Int, name: String): Type = new Type(value, name)
-
-    private[time] def unapply(timeUnitType: Type) = Some(timeUnitType.value, timeUnitType.toString)
   }
-
-  private var nextId = 0
 
   /**ミリ秒単位 */
-  val millisecond = TimeUnit(Type.millisecond, Type.millisecond, TimeUnitConversionFactor.identical)
+  val millisecond = new TimeUnit("millisecond", Type.millisecond, Type.millisecond, TimeUnitConversionFactor.identical)
 
   /**秒単位 */
-  val second = TimeUnit(Type.second, Type.millisecond, TimeUnitConversionFactor.millisecondsPerSecond)
+  val second = new TimeUnit("second", Type.second, Type.millisecond, TimeUnitConversionFactor.millisecondsPerSecond)
 
   /**分単位 */
-  val minute = TimeUnit(Type.minute, Type.millisecond, TimeUnitConversionFactor.millisecondsPerMinute)
+  val minute = new TimeUnit("minute", Type.minute, Type.millisecond, TimeUnitConversionFactor.millisecondsPerMinute)
 
   /**時単位 */
-  val hour = TimeUnit(Type.hour, Type.millisecond, TimeUnitConversionFactor.millisecondsPerHour)
+  val hour = new TimeUnit("hour", Type.hour, Type.millisecond, TimeUnitConversionFactor.millisecondsPerHour)
 
   /**日単位 */
-  val day = TimeUnit(Type.day, Type.millisecond, TimeUnitConversionFactor.millisecondsPerDay)
+  val day = new TimeUnit("day", Type.day, Type.millisecond, TimeUnitConversionFactor.millisecondsPerDay)
 
   /**週単位 */
-  val week = TimeUnit(Type.week, Type.millisecond, TimeUnitConversionFactor.millisecondsPerWeek)
+  val week = new TimeUnit("week",Type.week, Type.millisecond, TimeUnitConversionFactor.millisecondsPerWeek)
 
   /**月単位 */
-  val month = TimeUnit(Type.month, Type.month, TimeUnitConversionFactor.identical)
+  val month = new TimeUnit("month",Type.month, Type.month, TimeUnitConversionFactor.identical)
 
   /**四半期単位 */
-  val quarter = TimeUnit(Type.quarter, Type.month, TimeUnitConversionFactor.monthsPerQuarter)
+  val quarter = new TimeUnit("quarter",Type.quarter, Type.month, TimeUnitConversionFactor.monthsPerQuarter)
 
   /**年単位 */
-  val year = TimeUnit(Type.year, Type.month, TimeUnitConversionFactor.monthsPerYear)
+  val year = new TimeUnit("year",Type.year, Type.month, TimeUnitConversionFactor.monthsPerYear)
+
+  millisecond % second % minute % hour % day % week % month % quarter % year
 
   private val DESCENDING_MS_BASED = List(
     week,
@@ -205,16 +200,5 @@ object TimeUnit {
     year,
     month
   )
-
-  private[time] def apply(valueType: TimeUnit.Type,
-                          valueBaseType: TimeUnit.Type,
-                          factor: TimeUnitConversionFactor) = {
-    val result = new TimeUnit(nextId, valueType, valueBaseType, factor)
-    nextId += 1
-    result
-  }
-
-  private[time] def unapply(timeUnit: TimeUnit) =
-    Some(timeUnit.id, timeUnit.valueType, timeUnit.valueBaseType, timeUnit.factor)
 
 }
