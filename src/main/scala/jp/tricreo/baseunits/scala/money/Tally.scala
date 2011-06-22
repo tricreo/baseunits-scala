@@ -29,6 +29,10 @@ class Tally
 (private[money] val monies: Iterable[Money])
   extends Iterable[Money] {
 
+  /**インスタンスを生成する。
+   *
+   * @param monies [[jp.tricreo.baseunits.scala.moneyMoney]]の可変引数
+   */
   def this(monies: Money*) = this (monies.toIterable)
 
   private[this] val _currency = currency

@@ -31,13 +31,13 @@ class MoneyFan[T]
 (private val allotments: Set[Allotment[T]])
   extends Iterable[Allotment[T]] {
 
-  /**補助コンストラクタ。
+  /**インスタンスを生成する。
    *
    * `allotments`は空のインスタンスが利用される。
    */
   def this() = this (Set.empty[Allotment[T]])
 
-  /**補助コンストラクタ。
+  /**インスタンスを生成する。
    *
    * @param allotment 割り当ての要素（単一)
    */

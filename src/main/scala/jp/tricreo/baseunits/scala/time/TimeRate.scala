@@ -37,6 +37,7 @@ class TimeRate
   def this(quantity: String, unit: Duration) = this (BigDecimal(quantity), unit)
 
   /**このオブジェクトの`quantity`フィールド（単位時間あたりの量）を返す。
+   *
    *　CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 単位時間あたりの量

@@ -30,6 +30,10 @@ class FanTally[T]
 
   import collection.Iterator
 
+  /**インスタンスを生成する。
+   *
+   * @param fans [[jp.tricreo.baseunits.scala.money.MapFan]]
+   */
   def this(fan: MoneyFan[T]) = this (Iterable.fill(1)(fan))
 
   def iterator: Iterator[MoneyFan[T]] = fans.iterator

@@ -53,6 +53,7 @@ object Clock {
   def now = timeSource.now
 
   /**このクラスが保持するステートをリセットする。
+   *
    * このクラスは、staticに [[java.util.TimeZone]]
    * と[[jp.tricreo.baseunits.scala.time.TimeSource]] を保持している。
    */
@@ -61,8 +62,7 @@ object Clock {
     _timeSource = null
   }
 
-  /**
-   * [[jp.tricreo.baseunits.scala.timeutil.SystemClock]]を取得する。
+  /**[[jp.tricreo.baseunits.scala.timeutil.SystemClock]]を取得する。
    *
    * デフォルトでは [[jp.tricreo.baseunits.scala.timeutil.SystemClock]] を使用する。
    *

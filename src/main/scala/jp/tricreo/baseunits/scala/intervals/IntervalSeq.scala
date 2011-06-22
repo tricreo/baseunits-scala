@@ -133,6 +133,7 @@ object LowerUpperOrdering {
 
 /**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval]] の列）を表すクラス。
  *
+ * @author j5ik2o
  * @tparam T [[jp.tricreo.beseunits.scala.intervals.Interval]]の型
  * @param intervals [[jp.tricreo.beseunits.scala.intervals.Interval]]の列
  * @param ordering [[jp.tricreo.beseunits.scala.intervals.Ordering]]
@@ -146,8 +147,18 @@ class IntervalSeq[T <% Ordered[T]]
   override protected def newBuilder: Builder[Interval[T], IntervalSeq[T]] =
     IntervalSeq.newBuilder[T](ordering)
 
+  /**インスタンスを生成する。
+   *
+   * `intervals`は空を利用し、`ordering`は`UpperLowerOrdering[T](true, false)`を利用する。
+   */
   def this() = this (Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
 
+  /**インスタンスを生成する。
+   *
+   * `ordering`は`UpperLowerOrdering[T](true, false)`を利用する。
+   *
+   * @param intervals [[jp.tricreo.beseunits.scala.intervals.Interval]]の列
+   */
   def this(intervals: Seq[Interval[T]]) = this (intervals, UpperLowerOrdering[T](true, false))
 
 
@@ -259,7 +270,7 @@ class IntervalSeqBuilder[T <% Ordered[T]]
 
 /**`IntervalSeq`コンパニオンオブジェクト
  *
- * @j5ik2o
+ * @author j5ik2o
  */
 object IntervalSeq {
 

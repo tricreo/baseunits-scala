@@ -127,6 +127,7 @@ case class Limitless[T <% Ordered[T]]() extends LimitValue[T] {
  * 下側限界とは、限界値以下（または未満）の値を超過とみなす限界を表し、
  * 上側限界とは、限界値以上（または超える）の値を超過とみなす限界を表す。
  *
+ * @author j5ik2o
  * @tparam T 限界の型
  * @param isClosed 限界が閉じている場合 `true`
  * @param isLower 下側限界を表す場合は `true`、上側限界を表す場合は `false`

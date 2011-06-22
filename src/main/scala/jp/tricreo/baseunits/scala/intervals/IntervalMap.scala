@@ -23,6 +23,7 @@ import collection.Iterator
 
 /**区間に対して値をマッピングする抽象クラス。
  *
+ * @author j5ik2o
  * @tparam K キーとなる区間の型
  * @tparam V 値の型
  */
@@ -58,6 +59,10 @@ class LinearIntervalMap[A <% Ordered[A], B]
 (protected val intervalMap: Map[Interval[A], B])
   extends IntervalMap[A, B] {
 
+  /**インスタンスを生成する。
+   *
+   * `intervalMap`は空を利用する。
+   */
   def this() = this (Map.empty[Interval[A], B])
 
   override def toString(): String = intervalMap.toString

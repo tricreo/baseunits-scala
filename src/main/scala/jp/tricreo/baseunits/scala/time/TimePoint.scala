@@ -26,6 +26,7 @@ import jp.tricreo.baseunits.scala.intervals.{LimitValue, Limit}
  *
  * タイムゾーンを持っている。
  *
+ * @author j5ik2o
  * @param millisecondsFromEpoc エポックからの経過ミリ秒
  */
 
