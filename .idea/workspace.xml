@@ -15,52 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3f6126d-a195-495d-b6af-88fc6cb63f83" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/util/Enum.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/example/scala/example/manual/MoneyLanguageExampleTest.scala" afterPath="$PROJECT_DIR$/src/example/scala/example/manual/MoneyLanguageExampleTest.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/Interval.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/Interval.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/IntervalLimit.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/IntervalLimit.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/IntervalMap.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/IntervalMap.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/IntervalSeq.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals/IntervalSeq.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Allotment.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Allotment.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/FanTally.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/FanTally.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Money.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Money.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/MoneyFan.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/MoneyFan.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/MoneyTimeRate.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/MoneyTimeRate.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Proration.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Proration.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Tally.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/money/Tally.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/AnnualDateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/AnnualDateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/AnnualFixedDateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/AnnualFixedDateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/AnnualFloatingDateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/AnnualFloatingDateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/BusinessCalendar.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/BusinessCalendar.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarDate.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarDate.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarInterval.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarInterval.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarMinute.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarMinute.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarMonth.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/CalendarMonth.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/DateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/DateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/DayOfMonth.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/DayOfMonth.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/DayOfWeek.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/DayOfWeek.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/Duration.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/Duration.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/FixedDateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/FixedDateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/HourOfDay.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/HourOfDay.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MinuteOfHour.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MinuteOfHour.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthOfYear.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthOfYear.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthlyFixedBusinessDateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthlyFixedBusinessDateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthlyFixedDateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthlyFixedDateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthlyFloatingDateSpecification.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/MonthlyFloatingDateSpecification.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeInterval.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeInterval.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeOfDay.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeOfDay.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimePoint.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimePoint.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeRate.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeRate.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeSource.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeSource.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeUnit.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeUnit.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeUnitConversionFactor.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/time/TimeUnitConversionFactor.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/timeutil/SystemClock.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/timeutil/SystemClock.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/util/Ratio.scala" afterPath="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/util/Ratio.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/jp/tricreo/baseunits/scala/time/DurationTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/jp/tricreo/baseunits/scala/time/DurationTest.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/jp/tricreo/baseunits/scala/time/TimeUnitTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/jp/tricreo/baseunits/scala/time/TimeUnitTest.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/jp/tricreo/baseunits/scala/util/RatioTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/jp/tricreo/baseunits/scala/util/RatioTest.scala" />
     </list>
     <ignored path="baseunits-scala.iws" />
     <ignored path=".idea/workspace.xml" />
