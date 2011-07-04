@@ -1,4 +1,4 @@
-Baseunits for Scala
+# Baseunits for Scala
 
 This is a class library including domain models to deal with time and money.
 
