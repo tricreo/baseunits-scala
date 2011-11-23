@@ -8,6 +8,9 @@ version := "0.0.1"
 
 scalaVersion := "2.9.0-1"
 
+sbtVersion := "0.11.0"
+
+
 libraryDependencies ++= Seq(
 	"junit" % "junit" % "4.8.1" % "test",
 	"org.hamcrest" % "hamcrest-library" % "1.1" % "test",
