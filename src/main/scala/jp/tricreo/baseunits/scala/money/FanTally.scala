@@ -41,14 +41,8 @@ class FanTally[T]
   /**要素の[[jp.tricreo.baseunits.scala.money.MoneyFan]]を全てマージしたものを返す。
    * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
    */
-  def net: MoneyFan[T] = {
-    val sum = new MoneyFan[T]
-    fans.foldLeft(sum)(_.plus(_))
-//    for (fan <- fans) {
-//      sum = sum.plus(fan)
-//    }
-//    sum
-  }
+  def net: MoneyFan[T] =
+    fans.foldLeft(new MoneyFan[T])(_ plus _)
 
   override def toString = fans.toString
 
