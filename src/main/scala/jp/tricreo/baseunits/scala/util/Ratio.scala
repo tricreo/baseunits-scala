@@ -106,7 +106,7 @@ class Ratio
     new Ratio(numerator / gcd, denominator / gcd)
   }
 
-  override def hashCode = denominator.hashCode + numerator.hashCode
+  override def hashCode = denominator.## + numerator.##
 
   /**この比率と `multiplier` の積からなる比率。
    *

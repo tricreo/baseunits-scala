@@ -20,7 +20,8 @@ package jp.tricreo.baseunits.scala.time
 
 import jp.tricreo.baseunits.scala.intervals.Limit
 
-/**1年間に1度だけ仕様を満たす日付仕様。
+/**
+ * 1年間に1度だけ仕様を満たす日付仕様。
  *
  * @author j5ik2o
  */
@@ -38,15 +39,14 @@ abstract class AnnualDateSpecification extends DateSpecification {
     }
   }
 
-  override def iterateOver(interval:CalendarInterval) = {
+  override def iterateOver(interval: CalendarInterval) = {
     new Iterator[CalendarDate] {
 
       var _next = firstOccurrenceIn(interval)
 
-      var year = _next match{
-        case Some(o) => o.asCalendarMonth.breachEncapsulationOfYear
-        case None => -1
-      }
+      var year = _next map {
+        o => o.asCalendarMonth.breachEncapsulationOfYear
+      } getOrElse (-1)
 
       override def hasNext = _next != None
 
@@ -57,7 +57,7 @@ abstract class AnnualDateSpecification extends DateSpecification {
         val current = _next
         year += 1
         _next = Some(ofYear(year))
-        if (interval.includes(Limit(_next.get)) == false){
+        if (interval.includes(Limit(_next.get)) == false) {
           _next = None
         }
         current.get
@@ -65,7 +65,8 @@ abstract class AnnualDateSpecification extends DateSpecification {
     }
   }
 
-  /**指定した年においてこの日付仕様を満たす年月日を返す。
+  /**
+   * 指定した年においてこの日付仕様を満たす年月日を返す。
    *
    * @param year 西暦年をあらわす数
    * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]

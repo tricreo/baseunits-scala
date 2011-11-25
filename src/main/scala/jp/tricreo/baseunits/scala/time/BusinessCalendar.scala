@@ -18,11 +18,11 @@
  */
 package jp.tricreo.baseunits.scala.time
 
-
 import jp.tricreo.baseunits.scala.intervals.Limit
 import org.sisioh.dddbase.spec.Specification
 
-/**営業日カレンダー。
+/**
+ * 営業日カレンダー。
  *
  * 営業日と非営業日を判定する責務を持つ。非営業日とは休日（祝日）及び週末（土日）を表し、営業日とは非営業日でない日を表す。
  * 週末は休日ではないが、週末かつ休日は休日である。
@@ -33,7 +33,8 @@ class BusinessCalendar {
 
   private[time] var holidaySpecs: Specification[CalendarDate] = defaultHolidaySpecs
 
-  /**休日として取り扱う「日」を追加する。
+  /**
+   * 休日として取り扱う「日」を追加する。
    *
    * @param date 休日として取り扱う「日」
    */
@@ -41,7 +42,8 @@ class BusinessCalendar {
     addHolidaySpec(DateSpecification.fixed(date))
   }
 
-  /**休日として取り扱う「日」を追加する。
+  /**
+   * 休日として取り扱う「日」を追加する。
    *
    * @param days 休日として取り扱う「日」
    */
@@ -49,7 +51,8 @@ class BusinessCalendar {
     days.foreach(e => addHolidaySpec(DateSpecification.fixed(e)))
   }
 
-  /**休日として取り扱う「日付仕様」を追加する。
+  /**
+   * 休日として取り扱う「日付仕様」を追加する。
    *
    * @param specs 休日として取り扱う「日付仕様」
    */
@@ -57,7 +60,8 @@ class BusinessCalendar {
     holidaySpecs = holidaySpecs.or(specs)
   }
 
-  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]の反復子を受け取り、その反復子が返す[[jp.tricreo.baseunits.scala.time.CalendarDate]]のうち、
+  /**
+   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]の反復子を受け取り、その反復子が返す[[jp.tricreo.baseunits.scala.time.CalendarDate]]のうち、
    * 営業日に当たる[[jp.tricreo.baseunits.scala.time.CalendarDate]]のみを返す反復子を返す。
    *
    * このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
@@ -93,7 +97,8 @@ class BusinessCalendar {
     }
   }
 
-  /**[[jp.tricreo.baseunits.scala.time.CalendarInterval]]で表す期間のうち、営業日の日数を返す。
+  /**
+   * [[jp.tricreo.baseunits.scala.time.CalendarInterval]]で表す期間のうち、営業日の日数を返す。
    *
    * @param interval 期間
    * @return 営業日の日数
@@ -108,7 +113,8 @@ class BusinessCalendar {
     tally
   }
 
-  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が営業日に当たるかどうか調べる。
+  /**
+   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]が営業日に当たるかどうか調べる。
    *
    * デフォルトの実装として、週末でなく休日でない日を営業日とするが、
    * 業態によってはオーバーライドの可能性があるので注意すること。
@@ -119,7 +125,8 @@ class BusinessCalendar {
   def isBusinessDay(day: CalendarDate) =
     isWeekend(day) == false && isHoliday(day) == false
 
-  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が休日に当たるかどうか調べる。
+  /**
+   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]が休日に当たるかどうか調べる。
    *
    * 休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。
    *
@@ -129,7 +136,8 @@ class BusinessCalendar {
   def isHoliday(day: CalendarDate) =
     holidaySpecs.isSatisfiedBy(day)
 
-  /**[[jp.tricreo.baseunits.scala.time.CalendarDate]]が週末に当たるかどうか調べる。
+  /**
+   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]が週末に当たるかどうか調べる。
    *
    * 週末とは、土曜日と日曜日のことである。
    *
@@ -141,7 +149,8 @@ class BusinessCalendar {
     dow == DayOfWeek.Saturday || dow == DayOfWeek.Sunday
   }
 
-  /**開始日から数えて`0`営業日前の日付を返す。
+  /**
+   * 開始日から数えて`0`営業日前の日付を返す。
    *
    * @param startDate 開始日
    * @param numberOfDays 営業日数（現在は正数しかサポートしない）
@@ -156,7 +165,8 @@ class BusinessCalendar {
     nextNumberOfBusinessDays(numberOfDays, iterator)
   }
 
-  /**指定した日の直近営業日を取得する。
+  /**
+   * 指定した日の直近営業日を取得する。
    *
    * 指定日が営業日であれば当日、そうでなければ翌営業日を返す。
    *
@@ -170,7 +180,8 @@ class BusinessCalendar {
       nextBusinessDay(day)
     }
 
-  /**指定した日の直近過去営業日を取得する。
+  /**
+   * 指定した日の直近過去営業日を取得する。
    *
    * 指定日が営業日であれば当日、そうでなければ前営業日を返す。
    *
@@ -184,7 +195,8 @@ class BusinessCalendar {
       prevBusinessDay(day)
     }
 
-  /**指定した日の翌営業日を取得する。
+  /**
+   * 指定した日の翌営業日を取得する。
    *
    * @param startDate 基準日
    * @return 翌営業日
@@ -196,7 +208,8 @@ class BusinessCalendar {
       plusBusinessDays(startDate, 0)
     }
 
-  /**開始日から数えて`0`営業日目の日付を返す。
+  /**
+   * 開始日から数えて`0`営業日目の日付を返す。
    *
    * @param startDate 開始日
    * @param numberOfDays 営業日数（現在は正数しかサポートしない）. `0`の場合、開始日を含む翌営業日を返す
@@ -211,7 +224,8 @@ class BusinessCalendar {
     nextNumberOfBusinessDays(numberOfDays, iterator)
   }
 
-  /**指定した日の前営業日を取得する。
+  /**
+   * 指定した日の前営業日を取得する。
    *
    * @param startDate 基準日
    * @return 前営業日
@@ -223,24 +237,26 @@ class BusinessCalendar {
       minusBusinessDays(startDate, 0)
     }
 
-  /**Should be overriden for each particular organization.
+  /**
+   * Should be overriden for each particular organization.
    *
    * @return 営業日の[[scala.collection.Set]]
    */
   protected def defaultHolidaySpecs =
     DateSpecification.never
 
-  /**`0`の先頭から数えて`0`営業日目の日付を返す。
+  /**
+   * `0`の先頭から数えて`0`営業日目の日付を返す。
    *
    * @param numberOfDays 営業日数. `0`の場合、イテレータの先頭
    * @param calendarDays 日付イテレータ
    * @return 営業日
    */
   private def nextNumberOfBusinessDays(numberOfDays: Int,
-                                       calendarDays: Iterator[CalendarDate]) = {
+    calendarDays: Iterator[CalendarDate]) = {
     val businessDays = businessDaysOnly(calendarDays)
     var result: Option[CalendarDate] = None
-    for(i <- 0 to numberOfDays){
+    for (i <- 0 to numberOfDays) {
       result = Some(businessDays.next)
     }
     result.get

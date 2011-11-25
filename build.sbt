@@ -1,6 +1,4 @@
-sbtPlugin := true
-
-organization := "jp.tricreo"
+organization := "org.sisioh"
 
 name := "baseunits-scala"
 
@@ -32,4 +30,13 @@ resolvers ++= Seq(
 
 scalacOptions += "-deprecation"
 
-publishMavenStyle := true
+publishTo <<= (version) { version: String =>
+  if (version.trim.endsWith("SNAPSHOT")) {
+	Some(Resolver.ssh("sisioh-repo-snapshot", 
+    	"maven.sisioh.org", "/var/www/maven.sisioh.org/snapshot"))
+  }else{
+	Some(Resolver.ssh("sisioh-repo-release", 
+    	"maven.sisioh.org", "/var/www/maven.sisioh.org/release"))
+  }
+}
+
