@@ -1,9 +1,11 @@
 <component name="libraryTable">
   <library name="org.hamcrest_hamcrest-library_1.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-library/jars/hamcrest-library-1.1.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-library/jars/hamcrest-library-1.1.jar!/"></root>
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC> </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-library/srcs/hamcrest-library-1.1-sources.jar!/"></root>
+    </SOURCES>
   </library>
 </component>

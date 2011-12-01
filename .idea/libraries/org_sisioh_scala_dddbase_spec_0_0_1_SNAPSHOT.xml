@@ -1,9 +1,11 @@
 <component name="libraryTable">
   <library name="org.sisioh_scala-dddbase-spec_0.0.1-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.ivy2/cache/org.sisioh/scala-dddbase-spec/jars/scala-dddbase-spec-0.0.1-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.sisioh/scala-dddbase-spec/jars/scala-dddbase-spec-0.0.1-SNAPSHOT.jar!/"></root>
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC> </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.sisioh/scala-dddbase-spec/srcs/scala-dddbase-spec-0.0.1-SNAPSHOT-sources.jar!/"></root>
+    </SOURCES>
   </library>
 </component>

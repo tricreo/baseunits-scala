@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="org.jmock_jmock_2.4.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.ivy2/cache/org.jmock/jmock/jars/jmock-2.4.0.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.jmock/jmock/jars/jmock-2.4.0.jar!/"></root>
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC> </JAVADOC>
+    <SOURCES> </SOURCES>
   </library>
 </component>

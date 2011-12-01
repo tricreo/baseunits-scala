@@ -1,9 +1,11 @@
 <component name="libraryTable">
   <library name="ch.qos.logback_logback-core_0.9.15">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-0.9.15.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-0.9.15.jar!/"></root>
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC> </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/ch.qos.logback/logback-core/srcs/logback-core-0.9.15-sources.jar!/"></root>
+    </SOURCES>
   </library>
 </component>

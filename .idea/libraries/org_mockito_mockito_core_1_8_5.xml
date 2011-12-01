@@ -1,9 +1,11 @@
 <component name="libraryTable">
   <library name="org.mockito_mockito-core_1.8.5">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-core/jars/mockito-core-1.8.5.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-core/jars/mockito-core-1.8.5.jar!/"></root>
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC> </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-core/srcs/mockito-core-1.8.5-sources.jar!/"></root>
+    </SOURCES>
   </library>
 </component>

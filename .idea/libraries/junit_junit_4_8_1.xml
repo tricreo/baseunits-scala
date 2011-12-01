@@ -1,9 +1,11 @@
 <component name="libraryTable">
   <library name="junit_junit_4.8.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.8.1.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.8.1.jar!/"></root>
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC> </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/srcs/junit-4.8.1-sources.jar!/"></root>
+    </SOURCES>
   </library>
 </component>
