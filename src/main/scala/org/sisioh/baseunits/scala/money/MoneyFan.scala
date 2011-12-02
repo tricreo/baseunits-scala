@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.money
+package org.sisioh.baseunits.scala.money
 
 import collection.Iterator
 import collection.mutable.ListBuffer
@@ -61,21 +61,21 @@ class MoneyFan[T]
   }
 
 
-  /**この[[jp.tricreo.baseunits.scala.money.MoneyFan]]から`subtracted`を引いた差を返す。
+  /**この[[org.sisioh.baseunits.scala.money.MoneyFan]]から`subtracted`を引いた差を返す。
    *
-   * @param subtracted [[jp.tricreo.baseunits.scala.money.MoneyFan]]
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @param subtracted [[org.sisioh.baseunits.scala.money.MoneyFan]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def minus(subtracted: MoneyFan[T]) = plus(subtracted.negated)
 
   def -(subtracted: MoneyFan[T]) = minus(subtracted)
 
 
-  /**この [[jp.tricreo.baseunits.scala.money.MoneyFan]]の [[jp.tricreo.baseunits.scala.money.Allotment]]を\
+  /**この [[org.sisioh.baseunits.scala.money.MoneyFan]]の [[org.sisioh.baseunits.scala.money.Allotment]]を\
    * `Allotment.negated`した [[scala.collection.Set]]で構成される
-   * 新しい [[jp.tricreo.baseunits.scala.money.MoneyFan]]を返す。
+   * 新しい [[org.sisioh.baseunits.scala.money.MoneyFan]]を返す。
    *
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def negated = {
     val negatedAllotments = allotments.map(_.negated).toSet
@@ -84,12 +84,12 @@ class MoneyFan[T]
 
   def unary_- = negated
 
-  /**この[[jp.tricreo.baseunits.scala.money.MoneyFan]]に`added`を足した和を返す。
+  /**この[[org.sisioh.baseunits.scala.money.MoneyFan]]に`added`を足した和を返す。
    *
-   * 同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[jp.tricreo.baseunits.scala.money.Allotment]] は取り除く。
+   * 同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[org.sisioh.baseunits.scala.money.Allotment]] は取り除く。
    *
-   * @param added [[jp.tricreo.baseunits.scala.money.MoneyFan]]
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @param added [[org.sisioh.baseunits.scala.money.MoneyFan]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def plus(added: MoneyFan[T]) = {
     val allEntities = allotments.map(_.entity) ++ added.allotments.map(_.entity)
@@ -129,10 +129,10 @@ class MoneyFan[T]
     new Tally(moneies)
   }
 
-  /**このインスタンスが保持する [[jp.tricreo.baseunits.scala.money.Allotment]] のうち、割り当て金額が`0`であるものを取り除いた
-   * 新しい [[jp.tricreo.baseunits.scala.money.MoneyFan]]を返す。
+  /**このインスタンスが保持する [[org.sisioh.baseunits.scala.money.Allotment]] のうち、割り当て金額が`0`であるものを取り除いた
+   * 新しい [[org.sisioh.baseunits.scala.money.MoneyFan]]を返す。
    *
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   private def withoutZeros = {
     val nonZeroAllotments = allotments.filter(_.breachEncapsulationOfAmount.isZero == false).toSet
@@ -149,26 +149,26 @@ object MoneyFan {
   /**インスタンスを生成する。
    *
    * @param allotments 割り当ての要素（複数）
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def apply[T](allotments: Set[Allotment[T]]): MoneyFan[T] = new MoneyFan[T](allotments)
 
   /**インスタンスを生成する。
    *
    * @param allotment 割り当ての要素（単一）
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def apply[T](allotment: Allotment[T]): MoneyFan[T] = new MoneyFan[T](allotment)
 
   /**インスタンスを生成する。
    *
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def apply[T]: MoneyFan[T] = new MoneyFan[T]
 
   /**抽出子メソッド。
    *
-   * @param [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+   * @param [[org.sisioh.baseunits.scala.money.MoneyFan]]
    * @return `Option[Set[Allotment[T]]]`
    */
   def unapply[T](moneyFan: MoneyFan[T]) = Some(moneyFan.allotments)

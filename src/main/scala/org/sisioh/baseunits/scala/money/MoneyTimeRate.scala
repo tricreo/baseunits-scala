@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,10 +16,10 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.money
+package org.sisioh.baseunits.scala.money
 
 import java.util.Currency
-import jp.tricreo.baseunits.scala.time.{Duration, TimeRate}
+import org.sisioh.baseunits.scala.time.{Duration, TimeRate}
 
 /**単位時間あたりの金額（時間量に対する金額の割合）をあらわすクラス。
  *
@@ -110,7 +110,7 @@ object MoneyTimeRate {
    *
    * @param rate 単位時間あたりの数量
    * @param currency 通貨単位
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyTimeRate]]
+   * @return [[org.sisioh.baseunits.scala.money.MoneyTimeRate]]
    */
   def apply(rate: TimeRate, currency: Currency): MoneyTimeRate = new MoneyTimeRate(rate, currency)
 
@@ -123,7 +123,7 @@ object MoneyTimeRate {
 
   /**抽出子メソッド。
    *
-   * @param [[jp.tricreo.baseunits.scala.money.MoneyTimeRate]]
+   * @param [[org.sisioh.baseunits.scala.money.MoneyTimeRate]]
    * @return `Option[(TimeRate, Currency)]`
    */
   def unapply(moneyTimeRate: MoneyTimeRate) = Some(moneyTimeRate.rate, moneyTimeRate.currency)

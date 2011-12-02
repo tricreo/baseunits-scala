@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,10 +16,10 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.timeutil
+package org.sisioh.baseunits.scala.timeutil
 
 import java.util.TimeZone
-import jp.tricreo.baseunits.scala.time.{CalendarDate, TimeSource}
+import org.sisioh.baseunits.scala.time.{CalendarDate, TimeSource}
 
 /**時計を表すクラス。
  * このクラスはステートを持つstaticなユーティリティクラスである。
@@ -55,18 +55,18 @@ object Clock {
   /**このクラスが保持するステートをリセットする。
    *
    * このクラスは、[[java.util.TimeZone]]
-   * と[[jp.tricreo.baseunits.scala.time.TimeSource]] を保持している。
+   * と[[org.sisioh.baseunits.scala.time.TimeSource]] を保持している。
    */
   def reset() {
     _defaultTimeZoneOption = None
     _timeSourceOption = None
   }
 
-  /**[[jp.tricreo.baseunits.scala.timeutil.SystemClock]]を取得する。
+  /**[[org.sisioh.baseunits.scala.timeutil.SystemClock]]を取得する。
    *
-   * デフォルトでは [[jp.tricreo.baseunits.scala.timeutil.SystemClock]] を使用する。
+   * デフォルトでは [[org.sisioh.baseunits.scala.timeutil.SystemClock]] を使用する。
    *
-   * @return [[jp.tricreo.baseunits.scala.time.TimeSource]]
+   * @return [[org.sisioh.baseunits.scala.time.TimeSource]]
    */
   def timeSource: TimeSource = _timeSourceOption match {
     case None => { _timeSourceOption = Some(SystemClock); _timeSourceOption.get }
@@ -79,11 +79,11 @@ object Clock {
 
   /**今日の日付を所得する。
    *
-   * 日付は、あらかじめ設定済みの [[jp.tricreo.baseunits.scala.time.TimeZone]] に基づき計算する。
+   * 日付は、あらかじめ設定済みの [[org.sisioh.baseunits.scala.time.TimeZone]] に基づき計算する。
    * `TimeZone`を未設定の状態でこのメソッドを呼び出してはならない。
    *
    * @return 今日の日付
-   * @throws IllegalStateException [[jp.tricreo.baseunits.scala.time.TimeZone]]が未設定の場合
+   * @throws IllegalStateException [[org.sisioh.baseunits.scala.time.TimeZone]]が未設定の場合
    */
   def today: CalendarDate = {
     if (_defaultTimeZoneOption == None) {

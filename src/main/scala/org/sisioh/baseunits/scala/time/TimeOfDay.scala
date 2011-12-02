@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 import java.util.TimeZone
 
@@ -33,7 +33,7 @@ class TimeOfDay private[time]
 
 
   /**指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について
-   * [[jp.tricreo.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
+   * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
    * @param date 年月日
    * @param timeZone タイムゾーン
@@ -99,10 +99,10 @@ class TimeOfDay private[time]
   }
 
   /**指定した年月日における、このインスタンスがあらわす時分について
-   * [[jp.tricreo.baseunits.scala.time.CalendarMinute]] 型のインスタンスを返す。
+   * [[org.sisioh.baseunits.scala.time.CalendarMinute]] 型のインスタンスを返す。
    *
    * @param date 年月日
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    */
   def on(date: CalendarDate) =
     CalendarMinute.from(date, this)
@@ -127,25 +127,25 @@ object TimeOfDay {
 
   /**抽出子メソッド。
    *
-   * @param timeOfDay [[jp.tricreo.baseunits.scala.time.TimeOfDay]]
+   * @param timeOfDay [[org.sisioh.baseunits.scala.time.TimeOfDay]]
    */
   def unapply(timeOfDay: TimeOfDay) = Some(timeOfDay.hour, timeOfDay.minute)
 
 
-  /**指定した時分を表す、[[jp.tricreo.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
+  /**指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
    *
    * @param hour 時
    * @param minute 分
-   * @return [[jp.tricreo.baseunits.scala.time.TimeOfDay]]
+   * @return [[org.sisioh.baseunits.scala.time.TimeOfDay]]
    */
   def from(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = apply(hour, minute)
 
   /**
-   * 指定した時分を表す、[[jp.tricreo.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
+   * 指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
    *
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
-   * @return [[jp.tricreo.baseunits.scala.time.TimeOfDay]]
+   * @return [[org.sisioh.baseunits.scala.time.TimeOfDay]]
    * @throws IllegalArgumentException 引数`hour`が0〜23の範囲ではない場合もしくは、引数`minute`が0〜59の範囲ではない場合
    */
   def from(hour: Int, minute: Int): TimeOfDay = new TimeOfDay(HourOfDay(hour), MinuteOfHour(minute))

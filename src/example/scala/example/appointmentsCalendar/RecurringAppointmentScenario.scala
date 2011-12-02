@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -23,7 +23,7 @@ import java.util.TimeZone
 import org.junit.Test
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
-import jp.tricreo.baseunits.scala.time.{Duration, TimePoint, CalendarDate, TimeOfDay}
+import org.sisioh.baseunits.scala.time.{Duration, TimePoint, CalendarDate, TimeOfDay}
 
 /**Example.
  */

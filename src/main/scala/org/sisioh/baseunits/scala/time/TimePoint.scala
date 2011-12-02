@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,11 +16,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 import java.text.SimpleDateFormat
 import java.util.{Date => JDate, Calendar, TimeZone}
-import jp.tricreo.baseunits.scala.intervals.{LimitValue, Limit}
+import org.sisioh.baseunits.scala.intervals.{LimitValue, Limit}
 
 /**ミリ秒精度で、ある時間の一点をあらわすクラス。
  *
@@ -68,10 +68,10 @@ class TimePoint private[time]
   }
 
   /**このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す
-   * [[jp.tricreo.baseunits.scala.time.TimePoint]]を取得する。
+   * [[org.sisioh.baseunits.scala.time.TimePoint]]を取得する。
    *
    * @param zone タイムゾーン
-   * @return 午前0時（深夜）の瞬間を表す [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return 午前0時（深夜）の瞬間を表す [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def backToMidnight(zone: TimeZone) = calendarDate(zone).asTimeInterval(zone).start
 
@@ -105,7 +105,7 @@ class TimePoint private[time]
 
   /**このオブジェクトと、与えたオブジェクト `other`の同一性を検証する。
    *
-   * 与えたオブジェクトが[[jp.tricreo.baseunits.scala.time.TimePoint]]型であった場合、
+   * 与えたオブジェクトが[[org.sisioh.baseunits.scala.time.TimePoint]]型であった場合、
    * 同じ日時を指している場合は`true`、そうでない場合は`false`を返す。
    *
    * @see java.lang.Object#equals(java.lang.Object)
@@ -214,7 +214,7 @@ class TimePoint private[time]
    * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。
    *
    * @param end 終了日時（上側限界値）. `LimitValue[TimePoint]`の場合は、限界がないことを表す
-   * @return [[jp.tricreo.baseunits.scala.time.TimeInterval]]
+   * @return [[org.sisioh.baseunits.scala.time.TimeInterval]]
    */
   def until(end: LimitValue[TimePoint]) = TimeInterval.over(Limit(this), end)
 
@@ -232,13 +232,13 @@ object TimePoint {
   /**インスタンスを生成する。
    *
    * @param milliseconds エポックからの経過ミリ秒
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def apply(milliseconds: Long): TimePoint = from(milliseconds)
 
   /**抽出子メソッド。
    *
-   * @param [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @param [[org.sisioh.baseunits.scala.time.TimePoint]]
    * @return `Option[(Long)]`
    */
   def unapply(timePoint: TimePoint) = Some(timePoint.millisecondsFromEpoc)
@@ -252,7 +252,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def at(yearMonth: CalendarMonth, date: DayOfMonth, hour: Int,
          minute: Int, second: Int, millisecond: Int, zone: TimeZone): TimePoint = {
@@ -271,7 +271,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int, zone: TimeZone): TimePoint = {
     val calendar = Calendar.getInstance(zone)
@@ -294,7 +294,7 @@ object TimePoint {
    * @param minute 分
    * @param second 秒
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, zone: TimeZone): TimePoint = {
     at(year, month, date, hour, minute, second, 0, zone)
@@ -308,7 +308,7 @@ object TimePoint {
    * @param hour 時
    * @param minute 分
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, zone: TimeZone): TimePoint =
     at(year, month, date, hour, minute, 0, 0, zone)
@@ -323,7 +323,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int,
          millisecond: Int, zone: TimeZone): TimePoint =
@@ -339,7 +339,7 @@ object TimePoint {
    * @param minute 分
    * @param second 秒
    * @param millisecond ミリ秒
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    * @throws IllegalArgumentException 引数`hour`の値が0〜11の範囲ではない場合もしくは、
    *  引数`amPm`の値が `"AM"` または `"PM"` ではない場合
    */
@@ -359,7 +359,7 @@ object TimePoint {
    * @param second 秒
    * @param millisecond ミリ秒
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    * @throws IllegalArgumentException 引数`hour`の値が0〜11の範囲ではない場合もしくは、
    * 引数`amPm`の値が `"AM"` または `"PM"` ではない場合もしく
    */
@@ -374,7 +374,7 @@ object TimePoint {
    * @param date 日
    * @param hour 時
    * @param minute 分
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int): TimePoint =
     atGMT(year, month, date, hour, minute, 0, 0)
@@ -387,7 +387,7 @@ object TimePoint {
    * @param hour 時
    * @param minute 分
    * @param second 秒
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int): TimePoint =
     atGMT(year, month, date, hour, minute, second, 0)
@@ -401,7 +401,7 @@ object TimePoint {
    * @param minute 分
    * @param second 秒
    * @param millisecond ミリ秒
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int): TimePoint =
     at(year, month, date, hour, minute, second, millisecond, GMT)
@@ -410,7 +410,7 @@ object TimePoint {
    *
    * @param calendarDate 日付
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def atMidnight(calendarDate: CalendarDate, zone: TimeZone): TimePoint =
     at(calendarDate.asCalendarMonth,
@@ -422,7 +422,7 @@ object TimePoint {
    * @param month 月（1〜12）
    * @param date 日
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def atMidnight(year: Int, month: Int, date: Int, zone: TimeZone): TimePoint =
     at(year, month, date, 0, 0, 0, 0, zone)
@@ -432,15 +432,15 @@ object TimePoint {
    * @param year 年
    * @param month 月（1〜12）
    * @param date 日
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def atMidnightGMT(year: Int, month: Int, date: Int): TimePoint =
     atMidnight(year, month, date, GMT)
 
-  /**[[java.util.Calendar]]を[[jp.tricreo.baseunits.scala.time.TimePoint]]に変換する。
+  /**[[java.util.Calendar]]を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
    *
    * @param calendar 元となる日時情報を表す [[java.util.Calendar]]インスタンス
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def from(calendar: Calendar): TimePoint =
     from(calendar.getTime)
@@ -450,25 +450,25 @@ object TimePoint {
    * @param date 日付
    * @param time 時間
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def from(date: CalendarDate, time: TimeOfDay, zone: TimeZone): TimePoint =
     at(date.asCalendarMonth, date.breachEncapsulationOfDay,
       time.breachEncapsulationOfHour.value, time.breachEncapsulationOfMinute.value,
       0, 0, zone)
 
-  /**[[java.utilDate]]を[[jp.tricreo.baseunits.scala.time.TimePoint]]に変換する。
+  /**[[java.utilDate]]を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
    *
    * @param javaDate 元となる日時情報を表す [[java.util.Date]]インスタンス
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def from(javaDate: JDate): TimePoint =
     from(javaDate.getTime)
 
-  /**エポックからの経過ミリ秒を [[jp.tricreo.baseunits.scala.time.TimePoint]] に変換する。
+  /**エポックからの経過ミリ秒を [[org.sisioh.baseunits.scala.time.TimePoint]] に変換する。
    *
    * @param milliseconds エポックからの経過ミリ秒
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def from(milliseconds: Long): TimePoint = {
     val result = new TimePoint(milliseconds)
@@ -478,12 +478,12 @@ object TimePoint {
   }
 
   /**日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す
-   * [[jp.tricreo.baseunits.scala.time.TimePoint]]を返す。
+   * [[org.sisioh.baseunits.scala.time.TimePoint]]を返す。
    *
    * @param dateTimeString 日時を表す文字列
    * @param pattern 解析パターン
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateTimeString: String, pattern: String, timeZone: TimeZone) = {
@@ -494,11 +494,11 @@ object TimePoint {
   }
 
   /**日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す
-   * [[jp.tricreo.baseunits.scala.time.TimePoint]]を返す。
+   * [[org.sisioh.baseunits.scala.time.TimePoint]]を返す。
    *
    * @param dateString 日時を表す文字列
    * @param pattern 解析パターン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parseGMTFrom(dateTimeString: String, pattern: String) =

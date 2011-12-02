@@ -6,7 +6,7 @@
         <artifactId>sisioh-master</artifactId>
         <version>0.0.1</version>
     </parent>
-    <groupId>jp.tricreo</groupId>
+    <groupId>org.sisioh</groupId>
     <artifactId>baseunits-scala_2.9.0-1</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <name>baseunits-scala</name>

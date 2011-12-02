@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 /**1ヶ月間の中の特定の「日」を表すクラス。
  *
@@ -96,7 +96,7 @@ class DayOfMonth
   /**指定した年月のこの日を返す。
    *
    * @param month 年月
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`の月にこの日が存在しない場合
    */
   def on(month: CalendarMonth): CalendarDate = {
@@ -118,13 +118,13 @@ object DayOfMonth {
   /**インスタンスを生成する。
    *
    * @param value 日をあらわす正数（1〜31）
-   * @return [[jp.tricreo.baseunits.scala.time.DayOfMonth]]
+   * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
   def apply(value: Int) = new DayOfMonth(value)
 
   /**抽出子メソッド。
    *
-   * @param dayOfMonth [[jp.tricreo.baseunits.scala.time.DayOfMonth]]
+   * @param dayOfMonth [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    * @return `Option[Int]`
    */
   def unapply(dayOfMonth: DayOfMonth) = Some(dayOfMonth.value)

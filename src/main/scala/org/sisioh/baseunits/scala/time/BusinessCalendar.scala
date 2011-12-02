@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,9 +16,9 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
-import jp.tricreo.baseunits.scala.intervals.Limit
+import org.sisioh.baseunits.scala.intervals.Limit
 import org.sisioh.dddbase.spec.Specification
 
 /**
@@ -61,8 +61,8 @@ class BusinessCalendar {
   }
 
   /**
-   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]の反復子を受け取り、その反復子が返す[[jp.tricreo.baseunits.scala.time.CalendarDate]]のうち、
-   * 営業日に当たる[[jp.tricreo.baseunits.scala.time.CalendarDate]]のみを返す反復子を返す。
+   * [[org.sisioh.baseunits.scala.time.CalendarDate]]の反復子を受け取り、その反復子が返す[[org.sisioh.baseunits.scala.time.CalendarDate]]のうち、
+   * 営業日に当たる[[org.sisioh.baseunits.scala.time.CalendarDate]]のみを返す反復子を返す。
    *
    * このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
    * 引数に与えた反復子の [[scala.Iterator#next()]] を呼び出してはならない。
@@ -98,7 +98,7 @@ class BusinessCalendar {
   }
 
   /**
-   * [[jp.tricreo.baseunits.scala.time.CalendarInterval]]で表す期間のうち、営業日の日数を返す。
+   * [[org.sisioh.baseunits.scala.time.CalendarInterval]]で表す期間のうち、営業日の日数を返す。
    *
    * @param interval 期間
    * @return 営業日の日数
@@ -114,7 +114,7 @@ class BusinessCalendar {
   }
 
   /**
-   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]が営業日に当たるかどうか調べる。
+   * [[org.sisioh.baseunits.scala.time.CalendarDate]]が営業日に当たるかどうか調べる。
    *
    * デフォルトの実装として、週末でなく休日でない日を営業日とするが、
    * 業態によってはオーバーライドの可能性があるので注意すること。
@@ -126,7 +126,7 @@ class BusinessCalendar {
     isWeekend(day) == false && isHoliday(day) == false
 
   /**
-   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]が休日に当たるかどうか調べる。
+   * [[org.sisioh.baseunits.scala.time.CalendarDate]]が休日に当たるかどうか調べる。
    *
    * 休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。
    *
@@ -137,7 +137,7 @@ class BusinessCalendar {
     holidaySpecs.isSatisfiedBy(day)
 
   /**
-   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]が週末に当たるかどうか調べる。
+   * [[org.sisioh.baseunits.scala.time.CalendarDate]]が週末に当たるかどうか調べる。
    *
    * 週末とは、土曜日と日曜日のことである。
    *

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,13 +16,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.money
+package org.sisioh.baseunits.scala.money
 
-/**[[jp.tricreo.baseunits.scala.money.MoneyFan]]の集合。
+/**[[org.sisioh.baseunits.scala.money.MoneyFan]]の集合。
  *
  * @author j5ik2o
  * @tparam T 割り当ての対象
- * @param fans [[jp.tricreo.baseunits.scala.money.MapFan]]の[[scala.Iterable]]
+ * @param fans [[org.sisioh.baseunits.scala.money.MapFan]]の[[scala.Iterable]]
  */
 class FanTally[T]
 (private[money] val fans: Iterable[MoneyFan[T]])
@@ -32,21 +32,21 @@ class FanTally[T]
 
   /**インスタンスを生成する。
    *
-   * @param fans [[jp.tricreo.baseunits.scala.money.MapFan]]
+   * @param fans [[org.sisioh.baseunits.scala.money.MapFan]]
    */
   def this(fan: MoneyFan[T]) = this (Iterable.fill(1)(fan))
 
   def iterator: Iterator[MoneyFan[T]] = fans.iterator
 
-  /**要素の[[jp.tricreo.baseunits.scala.money.MoneyFan]]を全てマージしたものを返す。
-   * @return [[jp.tricreo.baseunits.scala.money.MoneyFan]]
+  /**要素の[[org.sisioh.baseunits.scala.money.MoneyFan]]を全てマージしたものを返す。
+   * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def net: MoneyFan[T] =
     fans.foldLeft(new MoneyFan[T])(_ plus _)
 
   override def toString = fans.toString
 
-  /**要素の[[jp.tricreo.baseunits.scala.money.MoneyFan]]が含む[[jp.tricreo.baseunits.scala.money.Allotment]]の合計額を返す。
+  /**要素の[[org.sisioh.baseunits.scala.money.MoneyFan]]が含む[[org.sisioh.baseunits.scala.money.Allotment]]の合計額を返す。
    * @return 合計額
    */
   def total: Money = net.total
@@ -61,14 +61,14 @@ object FanTally {
 
   /**インスタンスを生成する。
    *
-   * @param fans [[jp.tricreo.baseunits.scala.money.MoneyFan]]の`Iterable`
-   * @return [[jp.tricreo.baseunits.scala.money.FanTally]]
+   * @param fans [[org.sisioh.baseunits.scala.money.MoneyFan]]の`Iterable`
+   * @return [[org.sisioh.baseunits.scala.money.FanTally]]
    */
   def apply[T](fans: Iterable[MoneyFan[T]]) = new FanTally[T](fans)
 
   /**抽出子メソッド。
    *
-   * @param fanTally [[jp.tricreo.baseunits.scala.money.FanTally]]
+   * @param fanTally [[org.sisioh.baseunits.scala.money.FanTally]]
    * @return `Option[Iterable[MoneyFan[T]]]`
    */
   def unapply[T](fanTally: FanTally[T]) = Some(fanTally.fans)

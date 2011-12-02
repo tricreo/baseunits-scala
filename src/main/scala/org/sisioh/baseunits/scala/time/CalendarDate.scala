@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,15 +16,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 import java.util.{Calendar, TimeZone}
-import jp.tricreo.baseunits.scala.intervals.Limit
+import org.sisioh.baseunits.scala.intervals.Limit
 
 /**カレンダー上の特定の「年月日」を表すクラス。
  *
  * [[java.util.Date]]と異なり、時間の概念を持っていない。また、
- * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
+ * [[org.sisioh.baseunits.scala.time.TimePoint]]と異なり、
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
  * @author j5ik2o
@@ -51,7 +51,7 @@ class CalendarDate private[time]
     } else 0
   }
 
-  /**このインスタンスが表現する日を含む年月を表す[[jp.tricreo.baseunits.scala.time.CalendarMonth]]を取得する。
+  /**このインスタンスが表現する日を含む年月を表す[[org.sisioh.baseunits.scala.time.CalendarMonth]]を取得する。
    *
    * @return このインスタンスが表現する日を含む年月を表す期間
    */
@@ -264,57 +264,57 @@ object CalendarDate {
    *
    * @param yearMonth 年月
    * @param day 日
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    */
   def apply(yearMonth: CalendarMonth, day: DayOfMonth) =
     from(yearMonth, day)
 
   /**抽出子メソッド。
    *
-   * @param [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @param [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @return `Option[(CalendarMonth, DayOfMonth)]`
    */
   def unapply(calendarDate: CalendarDate) =
     Some(calendarDate.yearMonth, calendarDate.day)
 
-  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param yearMonth 年月
    * @param day 日
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(yearMonth: CalendarMonth, day: DayOfMonth): CalendarDate =
     new CalendarDate(yearMonth, day)
 
-  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
    * 引数`day`が1〜31の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int): CalendarDate =
     new CalendarDate(CalendarMonth.from(year, month), DayOfMonth(day))
 
-  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param year 年
    * @param month 月
    * @param day 日
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`day`が`year`年の`month`の月に存在しない場合
    */
   def from(year: Int, month: MonthOfYear, day: DayOfMonth): CalendarDate =
     from(CalendarMonth.from(year, month), day)
 
-  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+  /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarDate = {
     val calendar = timePoint.asJavaCalendar
@@ -322,11 +322,11 @@ object CalendarDate {
     from(calendar)
   }
 
-  /**指定した年月日を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param dateString 年月日を表す文字列
    * @param pattern 解析パターン文字列
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateString: String, pattern: String) = {

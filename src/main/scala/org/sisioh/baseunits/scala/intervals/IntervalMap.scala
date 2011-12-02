@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.intervals
+package org.sisioh.baseunits.scala.intervals
 
 import collection.immutable.{MapLike, Map}
 import collection.Iterator
@@ -140,7 +140,7 @@ object LinearIntervalMap {
    *
    * @tparam A キーの型
    * @tparam B 値の型
-   * @return [[jp.tricreo.baseunits.scala.intervals.LinearIntervalMap]]
+   * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
    */
   def apply[A <% Ordered[A], B]: LinearIntervalMap[A, B] = new LinearIntervalMap
 
@@ -148,7 +148,7 @@ object LinearIntervalMap {
    *
    * @tparam A キーの型
    * @tparam B 値の型
-   * @return [[jp.tricreo.baseunits.scala.intervals.LinearIntervalMap]]
+   * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
    */
   def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]): LinearIntervalMap[A, B] = new LinearIntervalMap(intervalMap)
 
@@ -156,7 +156,7 @@ object LinearIntervalMap {
    *
    * @tparam A キーの型
    * @tparam B 値の型
-   * @return [[jp.tricreo.baseunits.scala.intervals.LinearIntervalMap]]
+   * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
    */
   def unapply[A <% Ordered[A], B](linearIntervalMap: LinearIntervalMap[A, B]) =
     Some(linearIntervalMap.intervalMap)

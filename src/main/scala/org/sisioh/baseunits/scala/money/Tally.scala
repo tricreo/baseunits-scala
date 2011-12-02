@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,14 +16,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.money
+package org.sisioh.baseunits.scala.money
 
 import collection.Iterator
 
 /**同じ通貨単位の金額の集合をあらわすクラス。
  *
  * @author j5ik2o
- * @param monies [[jp.tricreo.baseunits.scala.moneyMoney]]の`Iterable`
+ * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の`Iterable`
  */
 class Tally
 (private[money] val monies: Iterable[Money])
@@ -31,7 +31,7 @@ class Tally
 
   /**インスタンスを生成する。
    *
-   * @param monies [[jp.tricreo.baseunits.scala.moneyMoney]]の可変引数
+   * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の可変引数
    */
   def this(monies: Money*) = this (monies.toIterable)
 
@@ -66,14 +66,14 @@ object Tally {
 
   /**インスタンスを生成する。
    *
-   * @param monies [[jp.tricreo.baseunits.scala.moneyMoney]]の`Iterable`
-   * @return [[jp.tricreo.baseunits.scala.Tally]]
+   * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の`Iterable`
+   * @return [[org.sisioh.baseunits.scala.Tally]]
    */
   def apply(monies: Iterable[Money]) = new Tally(monies)
 
   /**抽出子メソッド。
    *
-   * @param tally [[jp.tricreo.baseunits.scala.Tally]]
+   * @param tally [[org.sisioh.baseunits.scala.Tally]]
    * @return `Option[Iterable[Money]]`
    */
   def unapply(tally: Tally) = Some(tally.monies)

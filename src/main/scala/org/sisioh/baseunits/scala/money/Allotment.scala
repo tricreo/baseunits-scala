@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.money
+package org.sisioh.baseunits.scala.money
 
 /**何かに対するお金の割り当てをあらわす。
  *
@@ -73,14 +73,14 @@ object Allotment {
   /**インスタンスを生成する。
    *
    * @param entity 割り当て対象
-   * @param amount [[jp.tricreo.baseunits.scala.money.Money]]
-   * @return [[jp.tricreo.baseunits.scala.money.Allotment]]
+   * @param amount [[org.sisioh.baseunits.scala.money.Money]]
+   * @return [[org.sisioh.baseunits.scala.money.Allotment]]
    */
   def apply[T](entity: T, amount: Money) = new Allotment[T](entity, amount)
 
   /**抽出子メソッド。
    *
-   * @param allotment [[jp.tricreo.baseunits.scala.money.Allotment]]
+   * @param allotment [[org.sisioh.baseunits.scala.money.Allotment]]
    * @return `Option[(T, Money)]`
    */
   def unapplly[T](allotment: Allotment[T]) = Some(allotment.entity, allotment.amount)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,12 +16,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.util
+package org.sisioh.baseunits.scala.util
 
 import annotation.tailrec
 
 
-/**[[jp.tricreo.baseunits.scala.util.Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
+/**[[org.sisioh.baseunits.scala.util.Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
  *
  * このクラスの利点は、比率の計算を遅延評価できることにある。
  *
@@ -76,7 +76,7 @@ class Ratio
 
   /**このオブジェクトと、与えたオブジェクトの同一性を検証する。
    *
-   * 与えたオブジェクト[[jp.tricreo.baseunits.scala.util.Ratio]]型や
+   * 与えたオブジェクト[[org.sisioh.baseunits.scala.util.Ratio]]型や
    * そのサブクラスではない場合、`false`を返す。
    * 与えたオブジェクトの、分母と分子が共に一致する場合、`true`を返す。
    *
@@ -97,9 +97,9 @@ class Ratio
     if (denominator == 0) numerator
     else gcd(denominator, numerator % denominator)
 
-  /**通分した[[jp.tricreo.baseunits.scala.util.Ratio]]を返す。
+  /**通分した[[org.sisioh.baseunits.scala.util.Ratio]]を返す。
    *
-   * @return 通分した[[jp.tricreo.baseunits.scala.util.Ratio]]
+   * @return 通分した[[org.sisioh.baseunits.scala.util.Ratio]]
    */
   def reduce = {
     val gcd = this.gcd(numerator, denominator)

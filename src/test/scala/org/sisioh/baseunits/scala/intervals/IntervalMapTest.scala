@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.intervals
+package org.sisioh.baseunits.scala.intervals
 
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
@@ -24,7 +24,7 @@ import org.junit.Test
 /**`IntervalMap`のテストクラス。
  */
 class IntervalMapTest extends AssertionsForJUnit {
-  /**[[jp.tricreo.baseunits.scala.intervals.IntervalMap]]に対する参照メソッドのテスト。
+  /**[[org.sisioh.baseunits.scala.intervals.IntervalMap]]に対する参照メソッドのテスト。
    *
    * <ul>
    *   <li>[[IntervalMap#containsKey(Comparable)]]</li>
@@ -68,7 +68,7 @@ class IntervalMapTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[jp.tricreo.baseunits.scala.intervals.IntervalMap#remove(Interval)]]のテスト。
+   * [[org.sisioh.baseunits.scala.intervals.IntervalMap#remove(Interval)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -85,7 +85,7 @@ class IntervalMapTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[jp.tricreo.baseunits.scala.intervals.IntervalMap#put(Interval, Object)]]で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
+   * [[org.sisioh.baseunits.scala.intervals.IntervalMap#put(Interval, Object)]]で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -109,7 +109,7 @@ class IntervalMapTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[jp.tricreo.baseunits.scala.intervals.IntervalMap#put(Interval, Object)]]で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
+   * [[org.sisioh.baseunits.scala.intervals.IntervalMap#put(Interval, Object)]]で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
    *
    * @throws Exception 例外が発生した場合
    */

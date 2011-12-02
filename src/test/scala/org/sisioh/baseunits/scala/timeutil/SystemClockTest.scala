@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,11 +16,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.timeutil
+package org.sisioh.baseunits.scala.timeutil
 
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
-import jp.tricreo.baseunits.scala.time.TimePoint
+import org.sisioh.baseunits.scala.time.TimePoint
 import java.util.Date
 import scala.math._
 

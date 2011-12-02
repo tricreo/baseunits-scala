@@ -1,4 +1,4 @@
-package jp.tricreo.baseunits.scala
+package org.sisioh.baseunits.scala
 
 /**金額を表すクラスを中心としたクラス群。
  *

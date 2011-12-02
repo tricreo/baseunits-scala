@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -19,12 +19,12 @@
 package example.socialSecurityBenefits
 
 import org.scalatest.junit.AssertionsForJUnit
-import jp.tricreo.baseunits.scala.money.Money
-import jp.tricreo.baseunits.scala.util.Ratio
+import org.sisioh.baseunits.scala.money.Money
+import org.sisioh.baseunits.scala.util.Ratio
 import org.junit.{Ignore, Test}
 import org.junit.Assert._
-import jp.tricreo.baseunits.scala.time.{CalendarInterval, CalendarDate}
-import jp.tricreo.baseunits.scala.intervals.Limit
+import org.sisioh.baseunits.scala.time.{CalendarInterval, CalendarDate}
+import org.sisioh.baseunits.scala.intervals.Limit
 
 class SocialSecurityBenefitExample extends AssertionsForJUnit {
   /*

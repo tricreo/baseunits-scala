@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.intervals
+package org.sisioh.baseunits.scala.intervals
 
 import org.junit.Test
 import org.scalatest.junit.AssertionsForJUnit
@@ -50,7 +50,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
 
   private val all = Interval.open(Limitless[Int], Limitless[Int])
 
-  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#iterator]]のテスト。
+  /**[[org.sisioh.baseunits.scala.intervals.IntervalSeq#iterator]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -79,7 +79,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     }
   }
 
-  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#add(Interval)]]が順不同で行われた場合の[[IntervalSequence]]のテスト。
+  /**[[org.sisioh.baseunits.scala.intervals.IntervalSeq#add(Interval)]]が順不同で行われた場合の[[IntervalSequence]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -104,7 +104,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     }
   }
 
-  /**重なる区間を含んだ[[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]のテスト。
+  /**重なる区間を含んだ[[org.sisioh.baseunits.scala.intervals.IntervalSeq]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -128,7 +128,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     }
   }
 
-  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#intersections]]のテスト。
+  /**[[org.sisioh.baseunits.scala.intervals.IntervalSeq#intersections]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -154,7 +154,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     }
   }
 
-  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#gaps]]のテスト。
+  /**[[org.sisioh.baseunits.scala.intervals.IntervalSeq#gaps]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -182,7 +182,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
     }
   }
 
-  /**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq#extent]]のテスト。
+  /**[[org.sisioh.baseunits.scala.intervals.IntervalSeq#extent]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

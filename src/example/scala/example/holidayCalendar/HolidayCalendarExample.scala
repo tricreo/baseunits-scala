@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -22,7 +22,7 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
-import jp.tricreo.baseunits.scala.time._
+import org.sisioh.baseunits.scala.time._
 
 class HolidayCalendarExample extends AssertionsForJUnit {
 

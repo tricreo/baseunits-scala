@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,14 +16,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 import java.util.{TimeZone, Calendar}
-import jp.tricreo.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Interval}
+import org.sisioh.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Interval}
 
 /**期間（日付の区間）を表すクラス。
  *
- * 限界の表現には [[jp.tricreo.baseunits.scala.time.CalendarDate]]を利用する。
+ * 限界の表現には [[org.sisioh.baseunits.scala.time.CalendarDate]]を利用する。
  * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
  *
  * @author j5ik2o
@@ -210,7 +210,7 @@ class CalendarInterval protected
 
   /**
    * この期間の開始日を起点として、指定した時間の長さを持ち前回の終了日の翌日を開始日とする期間
-   * [[jp.tricreo.baseunits.scala.money.CalendarInterval]] を
+   * [[org.sisioh.baseunits.scala.money.CalendarInterval]] を
    * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
    *
    * 例えば [2009/01/01, 2009/01/11] で表される期間に対して、
@@ -271,14 +271,14 @@ object CalendarInterval {
    *
    * @param startValue 開始日
    * @param endValue 終了日
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarInterval]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarInterval]]
    */
   def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]) =
     new CalendarInterval(startValue, endValue)
 
   /**抽出子メソッド。
    *
-   * @param [[jp.tricreo.baseunits.scala.time.CalendarInterval]]
+   * @param [[org.sisioh.baseunits.scala.time.CalendarInterval]]
    * @return `Option[(CalendarInterval)]`
    */
   def unapply(calendarInterval: CalendarInterval) =

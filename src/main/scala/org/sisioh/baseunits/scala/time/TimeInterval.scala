@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,12 +16,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
-import jp.tricreo.baseunits.scala.intervals.{Limit, LimitValue, Interval}
+import org.sisioh.baseunits.scala.intervals.{Limit, LimitValue, Interval}
 
 /**期間（時間の区間）を表すクラス。
- * 限界の表現には [[jp.tricreo.baseunits.scala.time.TimePoint]]を利用する。
+ * 限界の表現には [[org.sisioh.baseunits.scala.time.TimePoint]]を利用する。
  *
  * @author j5ik2o
  * @param startValue 開始時間
@@ -34,7 +34,7 @@ class TimeInterval
  endValue: LimitValue[TimePoint], endIncluded: Boolean)
   extends Interval[TimePoint](startValue, startIncluded, endValue, endIncluded) {
 
-  import jp.tricreo.baseunits.scala.intervals.Limit
+  import org.sisioh.baseunits.scala.intervals.Limit
 
   /**この期間の開始日時を起点として、前回の日時の`1日後`の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
@@ -147,7 +147,7 @@ class TimeInterval
 
 
   /**この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間
-   * [[jp.tricreo.baseunits.scala.time.TimeInterval]] を
+   * [[org.sisioh.baseunits.scala.time.TimeInterval]] を
    * この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
    * 例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
@@ -197,7 +197,7 @@ class TimeInterval
  */
 object TimeInterval {
 
-  import jp.tricreo.baseunits.scala.intervals.{Limitless, LimitValue}
+  import org.sisioh.baseunits.scala.intervals.{Limitless, LimitValue}
 
   /**インスタンスを生成する。
    *
@@ -205,7 +205,7 @@ object TimeInterval {
    * @param startClosed 開始時間を含める場合は`true`
    * @param endValue 終了時間
    * @param endClosed 終了時間を含める場合は`false`
-   * @return [[jp.tricreo.baseunits.scala.time.TimeInterval]]
+   * @return [[org.sisioh.baseunits.scala.time.TimeInterval]]
    */
   def apply(start: LimitValue[TimePoint],
             startClosed: Boolean,

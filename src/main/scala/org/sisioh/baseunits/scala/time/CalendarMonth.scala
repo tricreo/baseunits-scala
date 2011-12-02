@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,14 +16,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 import java.util.{Calendar, TimeZone}
 
 /**カレンダー上の特定の「年月」を表すクラス。
  *
  * [[java.util.Date]]と異なり、月未満（日以下）の概念を持っていない。また、
- * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
+ * [[org.sisioh.baseunits.scala.time.TimePoint]]と異なり、
  * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
  * @author j5ik2o
@@ -45,10 +45,10 @@ class CalendarMonth private[time]
     CalendarInterval.month(year, month)
 
   /**指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について
-   * [[jp.tricreo.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
+   * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
    * @param timeZone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def asTimePoint(timeZone: TimeZone) =
     TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, timeZone)
@@ -113,7 +113,7 @@ class CalendarMonth private[time]
   /**
    * 月末の日付を取得する。
    *
-   * @return [[jp.tricreo.baseunits.scala.time.DayOfMonth]]
+   * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
   def getLastDay =
     CalendarDate.from(year, month, getLastDayOfMonth)
@@ -121,7 +121,7 @@ class CalendarMonth private[time]
   /**
    * 月末の日を取得する。
    *
-   * @return [[jp.tricreo.baseunits.scala.time.DayOfMonth]]
+   * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
   def getLastDayOfMonth =
     month.getLastDayOfThisMonth(year)
@@ -237,42 +237,42 @@ object CalendarMonth {
    *
    * @param year 年
    * @param month 月
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMonth]]
    */
   def apply(year: Int, month: Int) = from(year, month)
 
   /**抽出しメソッド。
    *
-   * @param calendarMonth [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
+   * @param calendarMonth [[org.sisioh.baseunits.scala.time.CalendarMonth]]
    * @return `Option[(Int, Int)]`
    */
   def unapply(calendarMonth: CalendarMonth) =
     Some(calendarMonth.year, calendarMonth.month)
 
-  /**指定した年月を表す、[[jp.tricreo.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
+  /**指定した年月を表す、[[org.sisioh.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合
    */
   def from(year: Int, month: Int) =
     new CalendarMonth(year, MonthOfYear(month))
 
-  /**指定した年月を表す、[[jp.tricreo.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
+  /**指定した年月を表す、[[org.sisioh.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
    *
    * @param year 年
    * @param month 月
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMonth]]
    */
   def from(year: Int, month: MonthOfYear) =
     new CalendarMonth(year, month)
 
-  /**指定した年月を表す、[[jp.tricreo.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
+  /**指定した年月を表す、[[org.sisioh.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
    *
    * @param dateString 年月を表す文字列
    * @param pattern 解析パターン文字列
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMonth]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMonth]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateString: String, pattern: String) = {
@@ -283,11 +283,11 @@ object CalendarMonth {
   }
 
   /**指定したタイムゾーン上で指定した瞬間が属する日付を元に、
-   * [[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+   * [[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
    * @param zone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    */
   def from(timePoint: TimePoint, zone: TimeZone): CalendarMonth = {
     val calendar = timePoint.asJavaCalendar

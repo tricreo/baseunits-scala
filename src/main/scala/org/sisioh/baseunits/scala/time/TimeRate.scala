@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 /**単位時間あたりの何らかの量（時間に対する割合）を表すクラス。
  *
@@ -125,7 +125,7 @@ object TimeRate {
    *
    * @param quantity 単位時間あたりの量
    * @param unit 単位時間
-   * @return [[jp.tricreo.baseunits.scala.time.TimeRate]]
+   * @return [[org.sisioh.baseunits.scala.time.TimeRate]]
    */
   def apply(quantity: BigDecimal, unit: Duration): TimeRate = new TimeRate(quantity, unit)
 
@@ -133,13 +133,13 @@ object TimeRate {
    *
    * @param quantity 単位時間あたりの量
    * @param unit 単位時間
-   * @return [[jp.tricreo.baseunits.scala.time.TimeRate]]
+   * @return [[org.sisioh.baseunits.scala.time.TimeRate]]
    */
   def apply(quantity: String, unit: Duration): TimeRate = new TimeRate(quantity, unit)
 
   /**抽出子メソッド。
    *
-   * @param [[jp.tricreo.baseunits.scala.time.TimeRate]]
+   * @param [[org.sisioh.baseunits.scala.time.TimeRate]]
    * @return `Option[(BigDecimal, Duration)]`
    */
   def unapply(timeRate: TimeRate) = Some(timeRate.quantity, timeRate.unit)

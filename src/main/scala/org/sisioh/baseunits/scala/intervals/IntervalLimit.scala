@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.intervals
+package org.sisioh.baseunits.scala.intervals
 
 /**限界値を表すトレイト。
  *
@@ -58,10 +58,10 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
  */
 object LimitValue {
 
-  /**`LimitValue`を[[jp.tricreo.baseunits.scala.intervals.Limit]]の限界値に変換する。
+  /**`LimitValue`を[[org.sisioh.baseunits.scala.intervals.Limit]]の限界値に変換する。
    *
-   * @param limitValue [[jp.tricreo.baseunits.scala.intervals.LimitValue]]
-   * @return [[jp.tricreo.baseunits.scala.intervals.Limit]]
+   * @param limitValue [[org.sisioh.baseunits.scala.intervals.LimitValue]]
+   * @return [[org.sisioh.baseunits.scala.intervals.Limit]]
    * @throws IllegalArgumentException limitValueがLimitless[T]の場合
    */
   implicit def toValue[T <% Ordered[T]](limitValue: LimitValue[T]) = limitValue match {
@@ -69,10 +69,10 @@ object LimitValue {
     case _: Limitless[T] => throw new IllegalArgumentException("implicit conversion from Limitless[T] can't do.")
   }
 
-  /**値を[[jp.tricreo.baseunits.scala.intervals.LimitValue]]に変換する。
+  /**値を[[org.sisioh.baseunits.scala.intervals.LimitValue]]に変換する。
    *
    * @param value 値
-   * @return [[jp.tricreo.baseunits.scala.intervals.Limit]]
+   * @return [[org.sisioh.baseunits.scala.intervals.Limit]]
    */
   implicit def toLimitValue[T <% Ordered[T]](value: T) = value match {
     case null => Limitless[T]
@@ -131,7 +131,7 @@ case class Limitless[T <% Ordered[T]]() extends LimitValue[T] {
  * @tparam T 限界の型
  * @param isClosed 限界が閉じている場合 `true`
  * @param isLower 下側限界を表す場合は `true`、上側限界を表す場合は `false`
- * @param value 限界値 [[jp.tricreo.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す。
+ * @param value 限界値 [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す。
  */
 class IntervalLimit[T <% Ordered[T]]
 (val isClosed: Boolean,
@@ -242,7 +242,7 @@ object IntervalLimit {
   /**抽出子メソッド。
    *
    * @tparam T 限界値の型
-   * @param intervalLimit [[jp.tricreo.baseunits.scala.intervals.IntervalLimit]]
+   * @param intervalLimit [[org.sisioh.baseunits.scala.intervals.IntervalLimit]]
    * @return Option[(Boolean, Boolean, T)]
    */
   def unapply[T <% Ordered[T]](intervalLimit: IntervalLimit[T]): Option[(Boolean, Boolean, LimitValue[T])] =

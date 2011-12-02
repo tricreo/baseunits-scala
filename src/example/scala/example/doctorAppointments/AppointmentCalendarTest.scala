@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -21,10 +21,10 @@ package example.doctorAppointments
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import java.util.TimeZone
-import jp.tricreo.baseunits.scala.time.{CalendarDate, Duration, TimeInterval, TimePoint}
+import org.sisioh.baseunits.scala.time.{CalendarDate, Duration, TimeInterval, TimePoint}
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
-import jp.tricreo.baseunits.scala.intervals.Limit
+import org.sisioh.baseunits.scala.intervals.Limit
 
 class AppointmentCalendarTest extends AssertionsForJUnit {
 

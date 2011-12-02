@@ -1,4 +1,4 @@
-package jp.tricreo.baseunits.scala
+package org.sisioh.baseunits.scala
 
 /**ユーティリティクラス群。
  *

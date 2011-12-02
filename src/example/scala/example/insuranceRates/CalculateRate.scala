@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -22,10 +22,10 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.{Ignore, Test}
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
-import jp.tricreo.baseunits.scala.util.Ratio
-import jp.tricreo.baseunits.scala.money.{Proration, Money}
-import jp.tricreo.baseunits.scala.time.{Duration, CalendarDate}
-import jp.tricreo.baseunits.scala.intervals.{Limit, LinearIntervalMap, Interval, IntervalMap}
+import org.sisioh.baseunits.scala.util.Ratio
+import org.sisioh.baseunits.scala.money.{Proration, Money}
+import org.sisioh.baseunits.scala.time.{Duration, CalendarDate}
+import org.sisioh.baseunits.scala.intervals.{Limit, LinearIntervalMap, Interval, IntervalMap}
 
 class CalculateRate extends AssertionsForJUnit {
   /** 契約日 */

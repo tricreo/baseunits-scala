@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,9 +16,9 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
-import jp.tricreo.baseunits.scala.intervals.Limit
+import org.sisioh.baseunits.scala.intervals.Limit
 
 /**毎月1度だけ仕様を満たす日付仕様。
  *
@@ -67,7 +67,7 @@ abstract class MonthlyDateSpecification extends DateSpecification {
   /**指定した年月においてこの日付仕様を満たす年月日を返す。
    *
    * @param month 年月
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarDate]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    */
   def ofYearMonth(month: CalendarMonth): CalendarDate
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,14 +16,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 import java.util.TimeZone
 
 /**カレンダー上の特定の「年月日時分」を表すクラス。
  *
  * [[java.util.Date]]と異なり、分未満（秒以下）の概念を持っていない。また、
- * [[jp.tricreo.baseunits.scala.time.TimePoint]]と異なり、
+ * [[org.sisioh.baseunits.scala.time.TimePoint]]と異なり、
  * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
  * @author j5ik2o
@@ -37,10 +37,10 @@ class CalendarMinute private[time]
 
 
   /**指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
-   * [[jp.tricreo.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
+   * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
    * @param timeZone タイムゾーン
-   * @return [[jp.tricreo.baseunits.scala.time.TimePoint]]
+   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def asTimePoint(timeZone: TimeZone): TimePoint =
     TimePoint.from(date, time, timeZone)
@@ -131,37 +131,37 @@ object CalendarMinute {
 
   /**インスタンスを生成する。
    *
-   * @param aDate [[jp.tricreo.baseunits.scala.time.CalendarDate]]
-   * @param aTime [[jp.tricreo.baseunits.scala.time.TimeOfDay]]
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   * @param aDate [[org.sisioh.baseunits.scala.time.CalendarDate]]
+   * @param aTime [[org.sisioh.baseunits.scala.time.TimeOfDay]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    */
   def apply(aDate: CalendarDate, aTime: TimeOfDay) = from(aDate, aTime)
 
   /**抽出子メソッド。
    *
-   * @param calendarMinute [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   * @param calendarMinute [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    * @return `Option[(CalendarDate,TimeOfDay)]`
    */
   def unapply(calendarMinute:CalendarMinute) =
     Some(calendarMinute.date, calendarMinute.time)
 
 
-  /**指定した年月日を時分表す、[[jp.tricreo.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
+  /**指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
    *
    * @param aDate 年月日
    * @param aTime 時分
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    */
   def from(aDate: CalendarDate, aTime: TimeOfDay): CalendarMinute = new CalendarMinute(aDate, aTime)
 
-  /**指定した年月日を時分表す、[[jp.tricreo.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
+  /**指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
    * 引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
    * 引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
@@ -169,11 +169,11 @@ object CalendarMinute {
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarMinute =
     new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute))
 
-  /**指定した年月日時分を表す、[[jp.tricreo.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+  /**指定した年月日時分を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param dateTimeString 年月日時分を表す文字列
    * @param pattern 解析パターン文字列
-   * @return [[jp.tricreo.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
   def parse(dateTimeString: String, pattern: String): CalendarMinute = {

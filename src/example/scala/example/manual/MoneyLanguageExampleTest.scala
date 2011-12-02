@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -20,11 +20,11 @@ package example.manual
 
 import org.scalatest.junit.AssertionsForJUnit
 import java.util.Currency
-import jp.tricreo.baseunits.scala.time.Duration
+import org.sisioh.baseunits.scala.time.Duration
 import org.junit.Test
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
-import jp.tricreo.baseunits.scala.money.{Proration, MoneyTimeRate, Money}
+import org.sisioh.baseunits.scala.money.{Proration, MoneyTimeRate, Money}
 
 class MoneyLanguageExampleTest extends AssertionsForJUnit {
 

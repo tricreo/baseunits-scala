@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.time
+package org.sisioh.baseunits.scala.time
 
 /**1時間の中の特定の「分」を表すクラス。
  *
@@ -84,13 +84,13 @@ object MinuteOfHour {
   /**インスタンスを生成する。
    *
    * @param value 分をあらわす正数
-   * @return [[jp.tricreo.baseunits.scala.time.MinuteOfHour]]
+   * @return [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
    */
   def apply(value: Int) = new MinuteOfHour(value)
 
   /**抽出しメソッド。
    *
-   * @param [[jp.tricreo.baseunits.scala.time.MinuteOfHour]]
+   * @param [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
    * @return `Option[Int]`
    */
   def unapply(minuteOfHour:MinuteOfHour) = Some(minuteOfHour.value)

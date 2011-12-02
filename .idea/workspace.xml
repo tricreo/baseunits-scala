@@ -312,7 +312,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -330,7 +330,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -348,7 +348,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -370,7 +370,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -392,7 +392,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -410,7 +410,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -432,7 +432,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -446,7 +446,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -464,7 +464,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jp.tricreo.baseunits.scala" />
+              <option name="myItemId" value="org.sisioh.baseunits.scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -559,7 +559,7 @@
       <recent name="$PROJECT_DIR$/src/main/scala/jp/tricreo/baseunits/scala/intervals" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.jp.tricreo.baseunits.scala in baseunits-scala">
+  <component name="RunManager" selected="JUnit.org.sisioh.baseunits.scala in baseunits-scala">
     <configuration default="false" name="All in baseunits-scala" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="baseunits-scala" />
@@ -583,17 +583,17 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="jp.tricreo.baseunits.scala in baseunits-scala" type="JUnit" factoryName="JUnit" temporary="true">
+    <configuration default="false" name="org.sisioh.baseunits.scala in baseunits-scala" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false">
         <pattern>
-          <option name="PATTERN" value="jp.tricreo.baseunits.scala.*" />
+          <option name="PATTERN" value="org.sisioh.baseunits.scala.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <module name="baseunits-scala" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="jp.tricreo.baseunits.scala" />
+      <option name="PACKAGE_NAME" value="org.sisioh.baseunits.scala" />
       <option name="MAIN_CLASS_NAME" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="package" />
@@ -746,7 +746,7 @@
     </configuration>
     <list size="2">
       <item index="0" class="java.lang.String" itemvalue="JUnit.All in baseunits-scala" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.jp.tricreo.baseunits.scala in baseunits-scala" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.org.sisioh.baseunits.scala in baseunits-scala" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>

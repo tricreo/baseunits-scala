@@ -1,4 +1,4 @@
-package jp.tricreo.baseunits.scala
+package org.sisioh.baseunits.scala
 
 /**区間を表すクラスを中心としたクラス群。
  *

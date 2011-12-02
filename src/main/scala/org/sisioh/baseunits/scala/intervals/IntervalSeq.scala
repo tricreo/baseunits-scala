@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,7 +16,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.intervals
+package org.sisioh.baseunits.scala.intervals
 
 import scala.collection._
 import mutable.{ListBuffer, Builder}
@@ -61,14 +61,14 @@ object UpperLowerOrdering {
    *
    * @param inverseLower
    * @param inverseUpper
-   * @return [[jp.tricreo.baseunits.scala.intervals.UpperLowerOrdering]]
+   * @return [[org.sisioh.baseunits.scala.intervals.UpperLowerOrdering]]
    */
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new UpperLowerOrdering[T](inverseLower, inverseUpper)
 
   /**抽出子メソッド。
    *
-   * @param upperLowerOrdering [[jp.tricreo.baseunits.scala.intervals.UpperLowerOrdering]]
+   * @param upperLowerOrdering [[org.sisioh.baseunits.scala.intervals.UpperLowerOrdering]]
    * @return `Option[(Boolean, Boolean)]`
    */
   def unapply[T <% Ordered[T]](upperLowerOrdering: UpperLowerOrdering[T]) =
@@ -116,14 +116,14 @@ object LowerUpperOrdering {
    *
    * @param inverseLower
    * @param inverseUpper
-   * @return [[jp.tricreo.baseunits.scala.intervals.LowerUpperOrdering]]
+   * @return [[org.sisioh.baseunits.scala.intervals.LowerUpperOrdering]]
    */
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
 
   /**抽出子メソッド。
    *
-   * @param upperLowerOrdering [[jp.tricreo.baseunits.scala.intervals.LowerUpperOrdering]]
+   * @param upperLowerOrdering [[org.sisioh.baseunits.scala.intervals.LowerUpperOrdering]]
    * @return `Option[(Boolean, Boolean)]`
    */
 
@@ -131,12 +131,12 @@ object LowerUpperOrdering {
     Some(lowerUpperOrdering.inverseLower, lowerUpperOrdering.inverseUpper)
 }
 
-/**区間列（複数の [[jp.tricreo.beseunits.scala.intervals.Interval]] の列）を表すクラス。
+/**区間列（複数の [[org.sisioh.beseunits.scala.intervals.Interval]] の列）を表すクラス。
  *
  * @author j5ik2o
- * @tparam T [[jp.tricreo.beseunits.scala.intervals.Interval]]の型
- * @param intervals [[jp.tricreo.beseunits.scala.intervals.Interval]]の列
- * @param ordering [[jp.tricreo.beseunits.scala.intervals.Ordering]]
+ * @tparam T [[org.sisioh.beseunits.scala.intervals.Interval]]の型
+ * @param intervals [[org.sisioh.beseunits.scala.intervals.Interval]]の列
+ * @param ordering [[org.sisioh.beseunits.scala.intervals.Ordering]]
  */
 class IntervalSeq[T <% Ordered[T]]
 (val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
@@ -157,7 +157,7 @@ class IntervalSeq[T <% Ordered[T]]
    *
    * `ordering`は`UpperLowerOrdering[T](true, false)`を利用する。
    *
-   * @param intervals [[jp.tricreo.beseunits.scala.intervals.Interval]]の列
+   * @param intervals [[org.sisioh.beseunits.scala.intervals.Interval]]の列
    */
   def this(intervals: Seq[Interval[T]]) = this (intervals, UpperLowerOrdering[T](true, false))
 
@@ -243,7 +243,7 @@ class IntervalSeq[T <% Ordered[T]]
 
 }
 
-/**[[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]のためのビルダー。
+/**[[org.sisioh.baseunits.scala.intervals.IntervalSeq]]のためのビルダー。
  *
  * @author j5ik2o
  */
@@ -298,7 +298,7 @@ object IntervalSeq {
    *
    * @tparam T 限界値の型
    * @param intervals
-   * @return [[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]
+   * @return [[org.sisioh.baseunits.scala.intervals.IntervalSeq]]
    */
   def apply[T <% Ordered[T]](intervals: From[T]) = new IntervalSeq(intervals)
 
@@ -306,7 +306,7 @@ object IntervalSeq {
    *
    * @tparam T 限界値の型
    * @param intervals
-   * @return [[jp.tricreo.baseunits.scala.intervals.IntervalSeq]]
+   * @return [[org.sisioh.baseunits.scala.intervals.IntervalSeq]]
    */
   def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
 

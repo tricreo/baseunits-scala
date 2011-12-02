@@ -1,4 +1,4 @@
-package jp.tricreo.baseunits.scala.util
+package org.sisioh.baseunits.scala.util
 
 import collection.mutable.ListBuffer
 
@@ -85,7 +85,7 @@ abstract class AbstractEnum[T <: EnumEntry] extends Serializable {
 
   /**抽出子メソッド。
    *
-   * @param enumEntry [[jp.tricreo.baseunits.scala.util.EnumEntry]]
+   * @param enumEntry [[org.sisioh.baseunits.scala.util.EnumEntry]]
    * @return `Option[(enumEntry.ordinal, enumEntry.name)]`
    */
   def unapply(enumEntry: EnumEntry) = Some(enumEntry.ordinal, enumEntry.name)

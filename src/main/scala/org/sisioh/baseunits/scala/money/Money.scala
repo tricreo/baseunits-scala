@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Tricreo Inc and the Others.
+ * Copyright 2011 Sisioh Project and the Others.
  * lastModified : 2011/04/22
  *
  * This file is part of Tricreo.
@@ -16,11 +16,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.tricreo.baseunits.scala.money
+package org.sisioh.baseunits.scala.money
 
 import java.util.{Locale, Currency}
-import jp.tricreo.baseunits.scala.util.Ratio
-import jp.tricreo.baseunits.scala.time.Duration
+import org.sisioh.baseunits.scala.util.Ratio
+import org.sisioh.baseunits.scala.time.Duration
 import math.BigDecimal.RoundingMode
 
 
@@ -51,8 +51,8 @@ class Money
 
   override def hashCode = amount.hashCode + currency.hashCode
 
-  /**Returns a [[jp.tricreo.baseunits.scala.money.Money]] whose amount is
-   * the absolute amount of this [[jp.tricreo.baseunits.scala.money.Money]], and whose scale is this.scale().
+  /**Returns a [[org.sisioh.baseunits.scala.money.Money]] whose amount is
+   * the absolute amount of this [[org.sisioh.baseunits.scala.money.Money]], and whose scale is this.scale().
    *
    * @return 絶対金額
    */
