@@ -30,12 +30,14 @@ resolvers ++= Seq(
 
 scalacOptions += "-deprecation"
 
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+
 publishTo <<= (version) { version: String =>
   if (version.trim.endsWith("SNAPSHOT")) {
-  Some(Resolver.ssh("sisioh-repo-snapshot",
+  Some(Resolver.ssh("sisioh-repos-snapshot",
       "maven.sisioh.org", "/var/www/maven.sisioh.org/snapshot"))
   }else{
-  Some(Resolver.ssh("sisioh-repo-release",
+  Some(Resolver.ssh("sisioh-repos-release",
       "maven.sisioh.org", "/var/www/maven.sisioh.org/release"))
   }
 }
