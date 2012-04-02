@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-core" % "0.9.15",
   "commons-lang" % "commons-lang" % "2.5",
   "commons-io" % "commons-io" % "1.4",
-  "org.sisioh" %% "scala-dddbase-spec" % "0.1"
+  "org.sisioh" %% "scala-dddbase-spec" % "0.0.1"
 )
 
 resolvers ++= Seq(
@@ -34,11 +34,10 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 publishTo <<= (version) { version: String =>
   if (version.trim.endsWith("SNAPSHOT")) {
-  Some(Resolver.ssh("sisioh-repos-snapshot",
-      "maven.sisioh.org", "/var/www/maven.sisioh.org/snapshot"))
+    Some("sisioh-repos-snapshot" at "http://maven.sisioh.org/snapshot")
   }else{
-  Some(Resolver.ssh("sisioh-repos-release",
-      "maven.sisioh.org", "/var/www/maven.sisioh.org/release"))
+    Some("sisioh-repos-release" at "http://maven.sisioh.org/release")
   }
 }
 
+//logLevel := Level.Debug
