@@ -1,0 +1,805 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.sisioh.baseunits.scala.time.TimeInterval</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../../../lib/template.css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a title="Go to companion" href="TimeInterval$.html"><img src="../../../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a name="org" class="extype" href="../../../../package.html">org</a>.<a name="org.sisioh" class="extype" href="../../../package.html">sisioh</a>.<a name="org.sisioh.baseunits" class="extype" href="../../package.html">baseunits</a>.<a name="org.sisioh.baseunits.scala" class="extype" href="../package.html">scala</a>.<a name="org.sisioh.baseunits.scala.time" class="extype" href="package.html">time</a></p>
+        <h1><a title="Go to companion" href="TimeInterval$.html">TimeInterval</a></h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <span class="name">TimeInterval</span>
+        
+        <span class="result"> extends <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>期間（時間の区間）を表すクラス。
+限界の表現には <a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>を利用する。
+</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>], <span name="scala.Serializable" class="extype">Serializable</span>, <span name="java.io.Serializable" class="extype">Serializable</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+        </div></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          <div id="order">
+                <span class="filtertype">Ordering</span>
+                <ol><li class="alpha in"><span>Alphabetic</span></li><li class="inherit out"><span>By inheritance</span></li></ol>
+              </div>
+          <div id="ancestors">
+                <span class="filtertype">Inherited</span>
+                <ol><li class="hideall out"><span>Hide All</span></li>
+                <li class="showall in"><span>Show all</span></li></ol>
+                <ol id="linearization"><li name="org.sisioh.baseunits.scala.time.TimeInterval" class="in"><span>TimeInterval</span></li><li name="org.sisioh.baseunits.scala.intervals.Interval" class="in"><span>Interval</span></li><li name="scala.Serializable" class="in"><span>Serializable</span></li><li name="java.io.Serializable" class="in"><span>Serializable</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+              </div>
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        <div class="members" id="constructors">
+              <h3>Instance Constructors</h3>
+              <ol><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#this" data-isabs="false">
+      <a id="this:TimeInterval"></a>
+      <h4 class="signature">
+      <span class="kind">new</span>
+      <span class="symbol"> 
+        <span class="name">TimeInterval</span>
+        
+        <span class="params">(<span name="startValue">startValue: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>, <span name="startIncluded">startIncluded: <span name="scala.Boolean" class="extype">Boolean</span></span>, <span name="endValue">endValue: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>, <span name="endIncluded">endIncluded: <span name="scala.Boolean" class="extype">Boolean</span></span>)</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">startValue</dt><dd class="cmt"><p>開始時間</p></dd><dt class="param">startIncluded</dt><dd class="cmt"><p>開始時間を含める場合は<code>true</code></p></dd><dt class="param">endValue</dt><dd class="cmt"><p>終了時間</p></dd><dt class="param">endIncluded</dt><dd class="cmt"><p>終了時間を含める場合は<code>false</code>
+</p></dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+        
+        
+
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="scala.AnyRef#!=" data-isabs="false">
+      <a id="!=(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">!=</span>
+        
+        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="scala.Any#!=" data-isabs="false">
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">!=</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef###" data-isabs="false">
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">##</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#==" data-isabs="false">
+      <a id="==(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">==</span>
+        
+        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="scala.Any#==" data-isabs="false">
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">==</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="scala.Any#asInstanceOf" data-isabs="false">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">asInstanceOf</span>
+        <span class="tparams">[<span name="T0">T0</span>]</span>
+        <span class="result">: T0</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">clone</span>
+        
+        <span class="params">()</span><span class="result">: AnyRef</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#complementRelativeTo" data-isabs="false">
+      <a id="complementRelativeTo(Interval[TimePoint]):List[Interval[TimePoint]]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">complementRelativeTo</span>
+        
+        <span class="params">(<span name="other">other: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: List[<a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間の<b>補</b>区間と与えた区間 <code>other</code> の共通部分を返す。</p><div class="fullcomment"><div class="comment cmt"><p>この区間の<b>補</b>区間と与えた区間 <code>other</code> の共通部分を返す。</p><p>この区間と与えた区間に共通部分がない場合は、 <code>other</code> を要素とする要素数1の区間列を返す。
+与えた区間が、この区間を完全に内包する場合は、2つの区間に分かれるため、要素数が2の区間列を返す。
+逆にこの区間が、与えた区間を完全に内包する場合は、要素数0の区間列を返す。
+上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。
+</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>対照となる区間</p></dd><dt>returns</dt><dd class="cmt"><p>補区間と対照区間の共通部分のリスト</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd><dt>See also</dt><dd><span class="cmt"><p><a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
+</p></span></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#covers" data-isabs="false">
+      <a id="covers(Interval[TimePoint]):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">covers</span>
+        
+        <span class="params">(<span name="other">other: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間が、指定した区間 <code>other</code>を完全に内包するかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この区間が、指定した区間 <code>other</code>を完全に内包するかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>区間</p></dd><dt>returns</dt><dd class="cmt"><p>完全に内包する場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#daysIterator" data-isabs="false">
+      <a id="daysIterator:Iterator[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">daysIterator</span>
+        
+        <span class="result">: Iterator[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この期間の開始日時を起点として、前回の日時の<code>1日後</code>の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。</p><div class="fullcomment"><div class="comment cmt"><p>この期間の開始日時を起点として、前回の日時の<code>1日後</code>の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。</p><p>例えば [2009/01/01 13:00, 2009/01/04 05:00) で表される期間に対してこのメソッドを呼び出した場合、
+その戻り値の反復子からは、以下の要素が取得できる。</p><ul><li>2009/01/01 13:00</li><li>2009/01/02 13:00</li><li>2009/01/03 13:00</li></ul><p>この期間が終了日時（上側限界）を持たない場合、 scala.collection.Iterator hasNext()は常に
+<code>true</code>を返すので、無限ループに注意すること。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>日時の反復子</p></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#emptyOfSameType" data-isabs="false">
+      <a id="emptyOfSameType:Interval[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">emptyOfSameType</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間と同じ限界値を持つ、新しい開区間を生成する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この区間と同じ限界値を持つ、新しい開区間を生成する。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>新しい開区間
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#end" data-isabs="false">
+      <a id="end:LimitValue[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">end</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この期間の終了日時を取得する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この期間の終了日時を取得する。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>この期間の終了日時. 上側限界がない場合は <code>Limitless[CalendarDate]</code>
+</p></dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">eq</span>
+        
+        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#equals" data-isabs="false">
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">equals</span>
+        
+        <span class="params">(<span name="obj">obj: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間と、与えた区間 <code>other</code>の同一性を検証する。</p><div class="fullcomment"><div class="comment cmt"><p>この区間と、与えた区間 <code>other</code>の同一性を検証する。</p><p>両者が共に空の区間であった場合は<code>true</code>、どちらか一方のみが空の区間であった場合は<code>false</code>を返す。
+両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は<code>true</code>を返す。
+また、どちらか一方のみが単一要素区間であった場合は<code>false</code>を返す。</p><p><code>other</code>が<code>Interval</code>以外であった場合は、必ず<code>false</code>を返す。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>同一である場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a> → AnyRef → Any</dd></dl></div>
+    </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">finalize</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#gap" data-isabs="false">
+      <a id="gap(Interval[TimePoint]):Interval[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">gap</span>
+        
+        <span class="params">(<span name="other">other: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間と与えた区間 <code>other</code> の間にある区間を取得する。</p><div class="fullcomment"><div class="comment cmt"><p>この区間と与えた区間 <code>other</code> の間にある区間を取得する。</p><p>例えば、[3, 5) と [10, 20) の gap は、[5, 19) である。
+2つの区間が共通部分を持つ場合は、空の区間を返す。
+</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>比較対象の区間</p></dd><dt>returns</dt><dd class="cmt"><p>ギャップ区間
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
+      <a id="getClass():java.lang.Class[_]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">getClass</span>
+        
+        <span class="params">()</span><span class="result">: java.lang.Class[_]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#hasLowerLimit" data-isabs="false">
+      <a id="hasLowerLimit:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">hasLowerLimit</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">下側限界があるかどうかを取得する。</p><div class="fullcomment"><div class="comment cmt"><p>下側限界があるかどうかを取得する。</p><p>Warning: This method should generally be used for display
+purposes and interactions with closely coupled classes.
+Look for (or add) other methods to do computations.</p><p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+このクラスに新しいメソッドを追加することを検討すること。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>下側限界がある場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#hasUpperLimit" data-isabs="false">
+      <a id="hasUpperLimit:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">hasUpperLimit</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">上側限界があるかどうかを取得する。</p><div class="fullcomment"><div class="comment cmt"><p>上側限界があるかどうかを取得する。</p><p>Warning: This method should generally be used for display
+purposes and interactions with closely coupled classes.
+Look for (or add) other methods to do computations.</p><p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+このクラスに新しいメソッドを追加することを検討すること。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>上側限界がある場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#hashCode" data-isabs="false">
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">hashCode</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a> → AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#includes" data-isabs="false">
+      <a id="includes(LimitValue[TimePoint]):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">includes</span>
+        
+        <span class="params">(<span name="value">value: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">指定した値 <code>value</code> が、この区間に含まれるかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>指定した値 <code>value</code> が、この区間に含まれるかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt class="param">value</dt><dd class="cmt"><p>値</p></dd><dt>returns</dt><dd class="cmt"><p>含まれる場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#includesLowerLimit" data-isabs="false">
+      <a id="includesLowerLimit:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">includesLowerLimit</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">下側限界が閉じているかどうかを取得する。</p><div class="fullcomment"><div class="comment cmt"><p>下側限界が閉じているかどうかを取得する。</p><p>Warning: This method should generally be used for display
+purposes and interactions with closely coupled classes.
+Look for (or add) other methods to do computations.</p><p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+このクラスに新しいメソッドを追加することを検討すること。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>下側限界が閉じている場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#includesUpperLimit" data-isabs="false">
+      <a id="includesUpperLimit:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">includesUpperLimit</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">上側限界が閉じているかどうかを取得する。</p><div class="fullcomment"><div class="comment cmt"><p>上側限界が閉じているかどうかを取得する。</p><p>Warning: This method should generally be used for display
+purposes and interactions with closely coupled classes.
+Look for (or add) other methods to do computations.</p><p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+このクラスに新しいメソッドを追加することを検討すること。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>上側限界値が閉じている場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#intersect" data-isabs="false">
+      <a id="intersect(TimeInterval):TimeInterval"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">intersect</span>
+        
+        <span class="params">(<span name="interval">interval: <a name="org.sisioh.baseunits.scala.time.TimeInterval" class="extype" href="">TimeInterval</a></span>)</span><span class="result">: <a name="org.sisioh.baseunits.scala.time.TimeInterval" class="extype" href="">TimeInterval</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この期間と与えた期間 <code>interval</code> の積集合（共通部分）を返す。</p><div class="fullcomment"><div class="comment cmt"><p>この期間と与えた期間 <code>interval</code> の積集合（共通部分）を返す。</p><p>共通部分が存在しない場合は、空の区間を返す。
+</p></div><dl class="paramcmts block"><dt class="param">interval</dt><dd class="cmt"><p>比較対象の期間</p></dd><dt>returns</dt><dd class="cmt"><p>積集合（共通部分）
+</p></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#intersect" data-isabs="false">
+      <a id="intersect(Interval[TimePoint]):Interval[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">intersect</span>
+        
+        <span class="params">(<span name="other">other: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間と与えた区間 <code>other</code> の積集合（共通部分）を返す。</p><div class="fullcomment"><div class="comment cmt"><p>この区間と与えた区間 <code>other</code> の積集合（共通部分）を返す。</p><p>共通部分が存在しない場合は、空の区間を返す。
+</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>比較対象の区間</p></dd><dt>returns</dt><dd class="cmt"><p>積集合（共通部分）
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#intersects" data-isabs="false">
+      <a id="intersects(Interval[TimePoint]):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">intersects</span>
+        
+        <span class="params">(<span name="other">other: <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間と、与えた区間<code>other</code>の間に共通部分が存在するかどうか検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この区間と、与えた区間<code>other</code>の間に共通部分が存在するかどうか検証する。
+</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>対象区間</p></dd><dt>returns</dt><dd class="cmt"><p>共通部分が存在する場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#isAbove" data-isabs="false">
+      <a id="isAbove(LimitValue[TimePoint]):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isAbove</span>
+        
+        <span class="params">(<span name="value">value: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">指定した値 <code>value</code> が、この区間の下側限界を超過していないかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>指定した値 <code>value</code> が、この区間の下側限界を超過していないかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt class="param">value</dt><dd class="cmt"><p>値</p></dd><dt>returns</dt><dd class="cmt"><p>超過していない場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#isAfter" data-isabs="false">
+      <a id="isAfter(LimitValue[TimePoint]):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isAfter</span>
+        
+        <span class="params">(<span name="point">point: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">指定した日時が、この期間の開始日時以前でないかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>指定した日時が、この期間の開始日時以前でないかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt class="param">point</dt><dd class="cmt"><p>日時</p></dd><dt>returns</dt><dd class="cmt"><p>開始日時以前でない場合は<code>true</code>、そうでない場合は<code>false</code></p></dd></dl><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p>Interval#isAbove(Comparable)
+</p></span></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#isBefore" data-isabs="false">
+      <a id="isBefore(LimitValue[TimePoint]):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isBefore</span>
+        
+        <span class="params">(<span name="point">point: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt class="param">point</dt><dd class="cmt"><p>日時</p></dd><dt>returns</dt><dd class="cmt"><p>終了日時以後でない場合は<code>true</code>、そうでない場合は<code>false</code></p></dd></dl><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p>Interval#isBelow(Comparable)
+</p></span></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#isBelow" data-isabs="false">
+      <a id="isBelow(LimitValue[TimePoint]):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isBelow</span>
+        
+        <span class="params">(<span name="value">value: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">指定した値 <code>value</code> が、この区間の上側限界を超過していないかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>指定した値 <code>value</code> が、この区間の上側限界を超過していないかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt class="param">value</dt><dd class="cmt"><p>値</p></dd><dt>returns</dt><dd class="cmt"><p>超過していない場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#isClosed" data-isabs="false">
+      <a id="isClosed:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isClosed</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間が閉区間であるかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この区間が閉区間であるかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>閉区間である場合は<code>true</code>、そうでない場合（半開区間を含む）は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#isEmpty" data-isabs="false">
+      <a id="isEmpty:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isEmpty</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間が空であるかどうかを検証する。</p><div class="fullcomment"><div class="comment cmt"><p>この区間が空であるかどうかを検証する。</p><p>区間が空であるとは、上側限界値と下側限界値が同値であり、かつ、開区間であることを示す。
+例えば <code>3 &lt; x &lt; 3</code>のような状態である。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>空である場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isInstanceOf</span>
+        <span class="tparams">[<span name="T0">T0</span>]</span>
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#isOpen" data-isabs="false">
+      <a id="isOpen:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isOpen</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間が開区間であるかどうかを検証する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この区間が開区間であるかどうかを検証する。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>開区間である場合は<code>true</code>、そうでない場合（半開区間を含む）は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#isSingleElement" data-isabs="false">
+      <a id="isSingleElement:Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">isSingleElement</span>
+        
+        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この区間が単一要素区間であるかどうかを検証する。
+単一要素区間は、上側下側の両限界を持ち、さらにそれらの限界値が同値であり、かつ、開区間ではないことを示す。
+例えば <code>3 &lt;= x &lt; 3</code>, <code>3 &lt; x &lt;= 3</code>, <code>3 &lt;= x &lt;= 3</code>のような状態である。
+</p><div class="fullcomment"><div class="comment cmt"><p>この区間が単一要素区間であるかどうかを検証する。
+単一要素区間は、上側下側の両限界を持ち、さらにそれらの限界値が同値であり、かつ、開区間ではないことを示す。
+例えば <code>3 &lt;= x &lt; 3</code>, <code>3 &lt; x &lt;= 3</code>, <code>3 &lt;= x &lt;= 3</code>のような状態である。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>単一要素区間である場合は<code>true</code>、そうでない場合は<code>false</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#length" data-isabs="false">
+      <a id="length:Duration"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">length</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.time.Duration" class="extype" href="Duration.html">Duration</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この期間の長さを取得する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この期間の長さを取得する。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>長さ.</p></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#lowerLimit" data-isabs="false">
+      <a id="lowerLimit:LimitValue[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">lowerLimit</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">下側限界値を取得する。</p><div class="fullcomment"><div class="comment cmt"><p>下側限界値を取得する。</p><p>Warning: This method should generally be used for display
+purposes and interactions with closely coupled classes.
+Look for (or add) other methods to do computations.</p><p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+このクラスに新しいメソッドを追加することを検討すること。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>下側限界値. 限界がない場合は、<a name="org.sisioh.baseunits.scala.intervals.Limitless" class="extype" href="../intervals/Limitless.html">Limitless</a>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#lowerLimitObject" data-isabs="false">
+      <a id="lowerLimitObject:IntervalLimit[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">val</span>
+      <span class="symbol"> 
+        <span class="name">lowerLimitObject</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.intervals.IntervalLimit" class="extype" href="../intervals/IntervalLimit.html">IntervalLimit</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">ne</span>
+        
+        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#newOfSameType" data-isabs="false">
+      <a id="newOfSameType(LimitValue[TimePoint],Boolean,LimitValue[TimePoint],Boolean):TimeInterval"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">newOfSameType</span>
+        
+        <span class="params">(<span name="start">start: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>, <span name="isStartClosed">isStartClosed: <span name="scala.Boolean" class="extype">Boolean</span></span>, <span name="end">end: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>, <span name="isEndClosed">isEndClosed: <span name="scala.Boolean" class="extype">Boolean</span></span>)</span><span class="result">: <a name="org.sisioh.baseunits.scala.time.TimeInterval" class="extype" href="">TimeInterval</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この期間と同じ型を持つ、新しい期間を返す。
+</p><div class="fullcomment"><div class="comment cmt"><p>この期間と同じ型を持つ、新しい期間を返す。
+</p></div><dl class="paramcmts block"><dt class="param">start</dt><dd class="cmt"><p>下側限界値. 限界値がない場合は、<code>Limitless[TimePoint]</code></p></dd><dt class="param">isStartClosed</dt><dd class="cmt"><p>下限値を期間に含む（閉じた下側限界）場合は<code>true</code>を指定する</p></dd><dt class="param">end</dt><dd class="cmt"><p>上側限界値. 限界値がない場合は、<code>Limitless[TimePoint]</code></p></dd><dt class="param">isEndClosed</dt><dd class="cmt"><p>上限値を期間に含む（閉じた上側限界）場合は<code>true</code>を指定する</p></dd><dt>returns</dt><dd class="cmt"><p>新しい期間
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.time.TimeInterval" class="extype" href="">TimeInterval</a> → <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#notify" data-isabs="false">
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">notify</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#notifyAll" data-isabs="false">
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">notifyAll</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#start" data-isabs="false">
+      <a id="start:LimitValue[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">start</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この期間の開始日時を取得する。
+</p><div class="fullcomment"><div class="comment cmt"><p>この期間の開始日時を取得する。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>この期間の開始日時. 下側限界がない場合は <code>Limitless[T]</code>
+</p></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.time.TimeInterval#subintervalIterator" data-isabs="false">
+      <a id="subintervalIterator(Duration):Iterator[TimeInterval]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">subintervalIterator</span>
+        
+        <span class="params">(<span name="subintervalLength">subintervalLength: <a name="org.sisioh.baseunits.scala.time.Duration" class="extype" href="Duration.html">Duration</a></span>)</span><span class="result">: Iterator[<a name="org.sisioh.baseunits.scala.time.TimeInterval" class="extype" href="">TimeInterval</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間
+<a name="org.sisioh.baseunits.scala.time.TimeInterval" class="extype" href="">TimeInterval</a> を
+この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。</p><div class="fullcomment"><div class="comment cmt"><p>この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間
+<a name="org.sisioh.baseunits.scala.time.TimeInterval" class="extype" href="">TimeInterval</a> を
+この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。</p><p>例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
+2日間の <code>subintervalLength</code> を与えた場合、
+その戻り値の反復子からは、以下の要素が取得できる。</p><ul><li>[2009/01/01 02:00, 2009/01/03 02:00)</li><li>[2009/01/03 02:00, 2009/01/05 02:00)</li><li>[2009/01/05 02:00, 2009/01/07 02:00)</li><li>[2009/01/07 02:00, 2009/01/09 02:00)</li></ul><p>この期間が終了日時（上側限界）を持たない場合、 scala.collection.Iterator hasNext()は常に
+<code>true</code>を返すので、無限ループに注意すること。
+</p></div><dl class="paramcmts block"><dt class="param">subintervalLength</dt><dd class="cmt"><p>反復子が返す期間の長さ</p></dd><dt>returns</dt><dd class="cmt"><p>期間の反復子</p></dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
+      <a id="synchronized[T0](⇒ T0):T0"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">synchronized</span>
+        <span class="tparams">[<span name="T0">T0</span>]</span>
+        <span class="params">(<span name="arg0">arg0: ⇒ T0</span>)</span><span class="result">: T0</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#toString" data-isabs="false">
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">toString</span>
+        
+        <span class="params">()</span><span class="result">: <span name="java.lang.String" class="extype">String</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">区間の文字列表現を取得する。</p><div class="fullcomment"><div class="comment cmt"><p>区間の文字列表現を取得する。</p><p>空の区間である場合は &quot;&#123;&#125;&quot;, 単一要素区間である場合は &quot;&#123;x&#125;&quot;を返す。
+また、例えば 3〜5 の開区間である場合は &quot;(3, 5)&quot;、閉区間である場合は &quot;[3, 5]&quot;、
+半開区間であれば &quot;[3, 5)&quot; または &quot;(3, 5]&quot; の様に、開いた限界を &quot;()&quot;、
+閉じた限界を &quot;[]&quot; で表現する。
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a> → AnyRef → Any</dd><dt>See also</dt><dd><span class="cmt"><p>java.lang.Object#toString()
+</p></span></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#upperLimit" data-isabs="false">
+      <a id="upperLimit:LimitValue[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">upperLimit</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.intervals.LimitValue" class="extype" href="../intervals/LimitValue.html">LimitValue</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">上側限界値を取得する。</p><div class="fullcomment"><div class="comment cmt"><p>上側限界値を取得する。</p><p>Warning: This method should generally be used for display
+purposes and interactions with closely coupled classes.
+Look for (or add) other methods to do computations.</p><p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+このクラスに新しいメソッドを追加することを検討すること。
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>上側限界値. 限界がない場合は、<a name="org.sisioh.baseunits.scala.intervals.Limitless" class="extype" href="../intervals/Limitless.html">Limitless</a>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.intervals.Interval#upperLimitObject" data-isabs="false">
+      <a id="upperLimitObject:IntervalLimit[TimePoint]"></a>
+      <h4 class="signature">
+      <span class="kind">val</span>
+      <span class="symbol"> 
+        <span class="name">upperLimitObject</span>
+        
+        <span class="result">: <a name="org.sisioh.baseunits.scala.intervals.IntervalLimit" class="extype" href="../intervals/IntervalLimit.html">IntervalLimit</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a></dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">wait</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">wait</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="scala.Long" class="extype">Long</span></span>, <span name="arg1">arg1: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">wait</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div name="org.sisioh.baseunits.scala.intervals.Interval" class="parent">
+              <h3>Inherited from <a name="org.sisioh.baseunits.scala.intervals.Interval" class="extype" href="../intervals/Interval.html">Interval</a>[<a name="org.sisioh.baseunits.scala.time.TimePoint" class="extype" href="TimePoint.html">TimePoint</a>]</h3>
+            </div><div name="scala.Serializable" class="parent">
+              <h3>Inherited from <span name="scala.Serializable" class="extype">Serializable</span></h3>
+            </div><div name="java.io.Serializable" class="parent">
+              <h3>Inherited from <span name="java.io.Serializable" class="extype">Serializable</span></h3>
+            </div><div name="scala.AnyRef" class="parent">
+              <h3>Inherited from AnyRef</h3>
+            </div><div name="scala.Any" class="parent">
+              <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>
+            </div>
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    </body>
+      </html>

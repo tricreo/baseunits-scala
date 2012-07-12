@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.sisioh.baseunits.scala.money</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../../../lib/template.css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../../../lib/package_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../../../package.html">org</a>.<a name="org.sisioh" class="extype" href="../../../package.html">sisioh</a>.<a name="org.sisioh.baseunits" class="extype" href="../../package.html">baseunits</a>.<a name="org.sisioh.baseunits.scala" class="extype" href="../package.html">scala</a></p>
+        <h1>money</h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <span class="name">money</span>
+        
+        
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>金額を表すクラスを中心としたクラス群。
+</p></div></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          
+          
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        
+
+        <div class="types members" id="types">
+              <h3>Type Members</h3>
+              <ol><li visbl="pub" name="org.sisioh.baseunits.scala.money.Allotment" data-isabs="false">
+      <a id="Allotment:Allotment[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="Allotment.html"><span class="name">Allotment</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">何かに対するお金の割り当てをあらわす。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.FanTally" data-isabs="false">
+      <a id="FanTally:FanTally[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="FanTally.html"><span class="name">FanTally</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends Iterable[MoneyFan[T]]</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><a name="org.sisioh.baseunits.scala.money.MoneyFan" class="extype" href="MoneyFan.html">MoneyFan</a>の集合。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.Money" data-isabs="false">
+      <a id="Money:Money"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="Money.html"><span class="name">Money</span></a>
+        
+        <span class="result"> extends Ordered[Money] with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">金額を表すクラス。</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.MoneyFan" data-isabs="false">
+      <a id="MoneyFan:MoneyFan[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="MoneyFan.html"><span class="name">MoneyFan</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends Iterable[Allotment[T]]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">割り当ての集合。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.MoneyTimeRate" data-isabs="false">
+      <a id="MoneyTimeRate:MoneyTimeRate"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="MoneyTimeRate.html"><span class="name">MoneyTimeRate</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">単位時間あたりの金額（時間量に対する金額の割合）をあらわすクラス。</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.Tally" data-isabs="false">
+      <a id="Tally:Tally"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="Tally.html"><span class="name">Tally</span></a>
+        
+        <span class="result"> extends Iterable[Money]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">同じ通貨単位の金額の集合をあらわすクラス。
+</p>
+    </li></ol>
+            </div>
+        
+        
+
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="org.sisioh.baseunits.scala.money.Allotment" data-isabs="false">
+      <a id="Allotment:Allotment"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Allotment$.html"><span class="name">Allotment</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><code>Allotment</code>コンパニオンオブジェクト。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.FanTally" data-isabs="false">
+      <a id="FanTally:FanTally"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="FanTally$.html"><span class="name">FanTally</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><code>FanTally</code>コンパニオンオブジェクト。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.Money" data-isabs="false">
+      <a id="Money:Money"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Money$.html"><span class="name">Money</span></a>
+        
+        <span class="result"> extends Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><code>Money</code>コンパニオンオブジェクト。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.MoneyFan" data-isabs="false">
+      <a id="MoneyFan:MoneyFan"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="MoneyFan$.html"><span class="name">MoneyFan</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><code>MoneyFan</code>コンパニオンオブジェクト。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.MoneyTimeRate" data-isabs="false">
+      <a id="MoneyTimeRate:MoneyTimeRate"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="MoneyTimeRate$.html"><span class="name">MoneyTimeRate</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><code>MoneyTimeRate</code>コンパニオンオブジェクト。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.Proration" data-isabs="false">
+      <a id="Proration:Proration"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Proration$.html"><span class="name">Proration</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">比例配分の為のユーティリティ。
+</p>
+    </li><li visbl="pub" name="org.sisioh.baseunits.scala.money.Tally" data-isabs="false">
+      <a id="Tally:Tally"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Tally$.html"><span class="name">Tally</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><code>Tally</code>コンパニオンオブジェクト。
+</p>
+    </li></ol>
+            </div>
+
+        
+
+        
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    </body>
+      </html>
