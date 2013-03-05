@@ -8,13 +8,15 @@ object BaseUnitsBuild extends Build {
     settings = Defaults.defaultSettings ++ Seq(
       organization := "org.sisioh",
       version := "0.0.1",
-      scalaVersion := "2.9.1",
-      crossScalaVersions := Seq("2.9.1",  "2.10.0"),
+      scalaVersion := "2.9.2",
+      crossScalaVersions := Seq("2.9.1", "2.9.2", "2.10.0"),
       sbtVersion := "0.12.2",
       libraryDependencies ++= Seq(
         "junit" % "junit" % "4.8.1" % "test",
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalaz" %% "scalaz-core" % "6.0.4",
+        "org.scalatest" %% "scalatest" % "1.6.1" % "test",
+        "commons-io" % "commons-io" % "2.4",
         "org.sisioh" %% "scala-dddbase-spec" % "0.0.1"
       ),
       scalacOptions ++= Seq("-unchecked", "-deprecation"),
