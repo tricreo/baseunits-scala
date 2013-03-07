@@ -122,7 +122,6 @@ class CalendarInterval protected
 
       var _next = start
 
-
       override def hasNext = {
         end match {
           case _: Limitless[CalendarDate] => true

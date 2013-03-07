@@ -15,7 +15,7 @@ object BaseUnitsBuild extends Build {
         "junit" % "junit" % "4.8.1" % "test",
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalaz" %% "scalaz-core" % "6.0.4",
-        "org.scalatest" %% "scalatest" % "1.6.1" % "test",
+        "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "commons-io" % "commons-io" % "2.4",
         "org.sisioh" %% "scala-dddbase-spec" % "0.0.1"
       ),
