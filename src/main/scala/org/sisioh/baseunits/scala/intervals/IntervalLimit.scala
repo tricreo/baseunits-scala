@@ -148,7 +148,7 @@ class IntervalLimit[T <% Ordered[T]]
    * @return 無限限界である場合は`true`、そうでない場合は`false`
    */
   def infinity = value match {
-    case _: Limitless[T] => true
+    case _: Limitless[_] => true
     case _ => false
   }
 
@@ -236,7 +236,7 @@ object IntervalLimit {
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    */
   def apply[T <% Ordered[T]](isClosed: Boolean, isLower: Boolean, value: LimitValue[T]) =
-    new IntervalLimit[T](if (value.isInstanceOf[Limitless[T]]) false else isClosed, isLower, value)
+    new IntervalLimit[T](if (value.isInstanceOf[Limitless[_]]) false else isClosed, isLower, value)
 
 
   /**抽出子メソッド。
