@@ -18,7 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.sisioh.baseunits.scala.util.{AbstractEnum, EnumEntry}
+import org.sisioh.scala.toolbox._
+
 
 /**`TimeUnit`に変数するためのファクター。
  *
@@ -35,7 +36,7 @@ private[time] final class TimeUnitConversionFactor
  *
  * @author j5ik2o
  */
-private[time] object TimeUnitConversionFactor extends AbstractEnum[TimeUnitConversionFactor] {
+private[time] object TimeUnitConversionFactor extends Enum[TimeUnitConversionFactor] {
   val identical = new TimeUnitConversionFactor("identical", 1)
   val millisecondsPerSecond = new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
   val millisecondsPerMinute = new TimeUnitConversionFactor("millisecondsPerMinute", 60 * millisecondsPerSecond.value)

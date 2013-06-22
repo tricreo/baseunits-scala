@@ -19,7 +19,7 @@
 package org.sisioh.baseunits.scala.time
 
 import java.util.Calendar
-import org.sisioh.baseunits.scala.util.{AbstractEnum, EnumEntry}
+import org.sisioh.scala.toolbox._
 
 /**1週間の中の特定の「曜日」を表す列挙型。
  *
@@ -47,7 +47,7 @@ final class DayOfWeek private[time]
  *
  * @author j5i2ko
  */
-object DayOfWeek extends AbstractEnum[DayOfWeek] {
+object DayOfWeek extends Enum[DayOfWeek] {
 
   val Sunday = new DayOfWeek(Calendar.SUNDAY, "SUNDAY")
   val Monday = new DayOfWeek(Calendar.MONDAY, "MONDAY")
