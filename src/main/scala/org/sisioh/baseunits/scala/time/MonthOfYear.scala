@@ -19,11 +19,10 @@
 package org.sisioh.baseunits.scala.time
 
 import java.util.{GregorianCalendar, Calendar}
-import org.sisioh.baseunits.scala.util.{AbstractEnum, EnumEntry}
+import org.sisioh.scala.toolbox._
 
 /**1年の中の特定の「月」を表す列挙型。
  *
- * @param value 1 based: January = 1, February = 2, ...
  * @param lastDayOfThisMonth その月の最終日
  * @param calendarValue [[java.util.Calendar]]に定義する月をあらわす定数値
  */
@@ -91,7 +90,7 @@ sealed class MonthOfYear
  *
  * @author j5ik2o
  */
-object MonthOfYear extends AbstractEnum[MonthOfYear] {
+object MonthOfYear extends Enum[MonthOfYear] {
 
   /**January */
   val Jan = new MonthOfYear(DayOfMonth(31), Calendar.JANUARY)

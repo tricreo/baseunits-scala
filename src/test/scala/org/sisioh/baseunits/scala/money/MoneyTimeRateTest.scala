@@ -74,7 +74,7 @@ class MoneyTimeRateTest extends AssertionsForJUnit {
       fail("ArtithmeticException should have been thrown. This case requires rounding.")
     } catch {
       case _:ArithmeticException => // success
-      case _ => fail
+      case _: Throwable => fail
     }
   }
 

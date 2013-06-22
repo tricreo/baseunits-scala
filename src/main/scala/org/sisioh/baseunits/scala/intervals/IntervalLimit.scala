@@ -18,6 +18,8 @@
  */
 package org.sisioh.baseunits.scala.intervals
 
+import scala.reflect.ClassTag
+
 /**限界値を表すトレイト。
  *
  * @author j5ik2o
@@ -69,12 +71,13 @@ object LimitValue {
     case _: Limitless[T] => throw new IllegalArgumentException("implicit conversion from Limitless[T] can't do.")
   }
 
-  /**値を[[org.sisioh.baseunits.scala.intervals.LimitValue]]に変換する。
+  /**
+   * 値を[[org.sisioh.baseunits.scala.intervals.LimitValue]]に変換する。
    *
    * @param value 値
    * @return [[org.sisioh.baseunits.scala.intervals.Limit]]
    */
-  implicit def toLimitValue[T <% Ordered[T]](value: T) = value match {
+  def toLimitValue[T <% Ordered[T]](value: T)= value match {
     case null => Limitless[T]
     case value: T => Limit(value)
   }
@@ -184,7 +187,7 @@ class IntervalLimit[T <% Ordered[T]]
    * 上側限界同士の比較である場合は閉じている方を「大きい」と判断する。
    * 限界値が同一で、上側限界と下側限界の比較の場合は、開閉にかかわらず下側を「小さい」と判断する。
    *
-   * @param other 比較対象
+   * @param obj 比較対象
    * @return 同値であった場合は `0`、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
    */
   def compare(obj: IntervalLimit[T]): Int = {

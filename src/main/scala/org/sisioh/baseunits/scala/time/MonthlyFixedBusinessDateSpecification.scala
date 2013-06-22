@@ -18,7 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.sisioh.baseunits.scala.util.{AbstractEnum, EnumEntry}
+import org.sisioh.scala.toolbox._
+
 
 sealed trait Shifter extends EnumEntry {
   def shift(date: CalendarDate, cal: BusinessCalendar): CalendarDate
@@ -28,7 +29,7 @@ sealed trait Shifter extends EnumEntry {
  *
  * @author j5ik2o
  */
-object Shifter extends AbstractEnum[Shifter] {
+object Shifter extends Enum[Shifter] {
 
   case object Next extends Shifter {
     def shift(date: CalendarDate, cal: BusinessCalendar) =

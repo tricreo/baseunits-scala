@@ -27,7 +27,7 @@ import org.sisioh.baseunits.scala.intervals.Limit
  */
 class DurationTest extends AssertionsForJUnit {
   /**
-   * [[Duration]]のインスタンスがシリアライズできるかどうか検証する。
+   * [[org.sisioh.baseunits.scala.time.Duration]]のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -37,14 +37,14 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#addedTo(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#addedTo(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test02_AddMillisecondsToPoint {
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0)
-    val dec22At1 = TimePoint.atGMT(2003, 12, 22, 01, 0, 0, 0)
+    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
+    val dec22At1 = TimePoint.atGMT(2003, 12, 22, 1, 0, 0, 0)
     val twoDays = Duration.days(2)
     assert(twoDays.addedTo(dec20At1) == dec22At1)
 
@@ -53,27 +53,27 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#addedTo(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#addedTo(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test03_AddMonthsToPoint {
-    val oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0)
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0)
+    val oct20At1 = TimePoint.atGMT(2003, 10, 20, 1, 0, 0, 0)
+    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
     val twoMonths = Duration.months(2)
     assert(twoMonths.addedTo(oct20At1) == dec20At1)
   }
 
   /**
-   * [[Duration#subtractedFrom(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#subtractedFrom(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test04_SubtractMillisecondsFromPoint {
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0)
-    val dec18At1 = TimePoint.atGMT(2003, 12, 18, 01, 0, 0, 0)
+    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
+    val dec18At1 = TimePoint.atGMT(2003, 12, 18, 1, 0, 0, 0)
     val twoDays = Duration.days(2)
     assert(twoDays.subtractedFrom(dec20At1) == dec18At1)
 
@@ -82,24 +82,24 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#subtractedFrom(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#subtractedFrom(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test05_SubtractMonthsFromPoint {
-    val oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0)
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0)
+    val oct20At1 = TimePoint.atGMT(2003, 10, 20, 1, 0, 0, 0)
+    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
     val twoMonths = Duration.months(2)
     assert(twoMonths.subtractedFrom(dec20At1) == oct20At1)
 
-    val dec20At1_2001 = TimePoint.atGMT(2001, 12, 20, 01, 0, 0, 0)
+    val dec20At1_2001 = TimePoint.atGMT(2001, 12, 20, 1, 0, 0, 0)
     val twoYears = Duration.years(2)
     assert(twoYears.subtractedFrom(dec20At1) == dec20At1_2001)
   }
 
   /**
-   * [[Duration#subtractedFrom(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#subtractedFrom(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -145,7 +145,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#inBaseUnits]]のテスト。（内部API）
+   * [[org.sisioh.baseunits.scala.time.Duration#inBaseUnits]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -156,7 +156,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#equals(Object)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#equals(Object)]]のテスト。
    *
    * 単位が違っていても、baseUnit換算できちんと比較できること。
    * baseUnitに互換性がなければ、必ず{@code false}となること。
@@ -176,7 +176,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#plus(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#plus(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -195,7 +195,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#minus(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#minus(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -214,7 +214,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#dividedBy(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#dividedBy(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -225,7 +225,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#toNormalizedString]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#toNormalizedString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -243,7 +243,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#toNormalizedString]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#toNormalizedString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -258,7 +258,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#toString]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#toString]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -274,7 +274,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#compareTo(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#compareTo(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -326,20 +326,20 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#startingFrom(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#startingFrom(TimePoint)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test17_StartingFromTimePoint {
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0)
-    val dec20At3 = TimePoint.atGMT(2003, 12, 20, 03, 0, 0, 0)
+    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
+    val dec20At3 = TimePoint.atGMT(2003, 12, 20, 3, 0, 0, 0)
     val dec20_1_3 = dec20At1.until(Limit(dec20At3))
     assert(Duration.hours(2).startingFromTimePoint(Limit(dec20At1)) == dec20_1_3)
   }
 
   /**
-   * [[Duration#startingFrom(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#startingFrom(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -352,7 +352,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#normalizedUnit]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#normalizedUnit]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -365,7 +365,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#addedTo(CalendarMonth)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration#addedTo(CalendarMonth)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

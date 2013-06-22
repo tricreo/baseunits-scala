@@ -23,8 +23,8 @@ import java.util.TimeZone
 import org.junit.Test
 import org.sisioh.baseunits.scala.intervals.{Limitless, Limit}
 
-/**`CalendarInterval`のテストクラス。
- */
+/** `CalendarInterval`のテストクラス。
+  */
 class CalendarIntervalTest extends AssertionsForJUnit {
 
   val may1 = CalendarDate.from(2004, 5, 1)
@@ -55,25 +55,15 @@ class CalendarIntervalTest extends AssertionsForJUnit {
    */
   //@Test
   //def test01_Serialization {
-    //SerializationTester.assertCanBeSerialized(may)
+  //SerializationTester.assertCanBeSerialized(may)
   //}
 
-  /**
-   * [[CalendarInterval#asTimeInterval(TimeZone)]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test02_TranslationToTimeInterval {
     val day = may20.asTimeInterval(ct)
     assert(day.start == TimePoint.atMidnight(2004, 5, 20, ct), "May20Ct")
   }
 
-  /**
-   * [[CalendarInterval#equals(Interval)]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test03_Equals {
     assert(may == CalendarInterval.inclusive(Limit(may1), Limit(may31)))
@@ -81,11 +71,6 @@ class CalendarIntervalTest extends AssertionsForJUnit {
     assert(may != CalendarInterval.inclusive(Limit(may1), Limit(may20)))
   }
 
-  /**
-   * [[CalendarInterval#includes(CalendarDate)]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test04_Includes {
     assert(may.includes(Limit(apr15)) == false, "apr15")
@@ -95,11 +80,6 @@ class CalendarIntervalTest extends AssertionsForJUnit {
     assert(may.covers(may) == true, "may")
   }
 
-  /**
-   * [[CalendarInterval#daysIterator]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test05_DaysIterator {
     val iterator = CalendarInterval.inclusive(Limit(may1), Limit(may3)).daysIterator;
@@ -115,7 +95,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _ => fail
+      case _: Throwable => fail
     }
 
     try {
@@ -123,15 +103,10 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalStateException => // success
-      case _ => fail
+      case _: Throwable => fail
     }
   }
 
-  /**
-   * [[CalendarInterval#subintervalIterator(Duration)]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test06_SubintervalIterator {
     val may1_3 = CalendarInterval.inclusive(Limit(may1), Limit(may3))
@@ -154,7 +129,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail("CalendarInterval should not accept subinterval length that is not a multiple of days.")
     } catch {
       case e: IllegalArgumentException => // success
-      case _ => fail
+      case _: Throwable => fail
     }
 
     iterator = may1_3.subintervalIterator(Duration.months(1))
@@ -164,7 +139,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _ => fail
+      case _: Throwable => fail
     }
 
     val apr15_jun1 = CalendarInterval.inclusive(Limit(apr15), Limit(jun1))
@@ -178,15 +153,10 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalStateException => // success
-      case _ => fail
+      case _: Throwable => fail
     }
   }
 
-  /**
-   * [[CalendarInterval#length]] [[CalendarInterval#lengthInMonths]] のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test07_Length {
     assert(may1.through(may3).length == Duration.days(3))
@@ -197,11 +167,6 @@ class CalendarIntervalTest extends AssertionsForJUnit {
     assert(apr15.through(may14).lengthInMonths == (Duration.months(1)))
   }
 
-  /**
-   * [[CalendarInterval#complementRelativeTo(Interval)]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test08_Complements {
     val may1Onward = CalendarInterval.inclusive(Limit(may1), Limitless[CalendarDate])
@@ -215,11 +180,6 @@ class CalendarIntervalTest extends AssertionsForJUnit {
     assert(complement.end == may1)
   }
 
-  /**
-   * [[CalendarInterval#everFrom(CalendarDate)]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test10_EverFromToString {
     val x = CalendarDate.from(2007, 6, 5)
@@ -227,13 +187,6 @@ class CalendarIntervalTest extends AssertionsForJUnit {
     assert(i.toString == "[Limit(2007-06-05), Infinity)")
   }
 
-  /**
-   * [[CalendarInterval]]のインスタンス生成テスト。
-   *
-   * [ 1792849 ] ConcreteCalendarInterval allows misordered limits
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test11_BackwardCalendarIvalIntersection {
     try {
@@ -241,15 +194,10 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _ => fail
+      case _: Throwable => fail
     }
   }
 
-  /**
-   * [[CalendarInterval#startingFrom(CalendarDate, Duration)]]のテスト。
-   *
-   * @throws Exception 例外が発生した場合
-   */
   @Test
   def test12_StartingFrom {
     val d1 = CalendarInterval.startingFrom(Limit(may1), Duration.days(2))

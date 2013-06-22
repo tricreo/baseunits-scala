@@ -20,7 +20,7 @@ package org.sisioh.baseunits.scala.time
 
 import java.util.Calendar
 import java.lang.String
-import org.sisioh.baseunits.scala.util.{EnumEntry, AbstractEnum}
+import org.sisioh.scala.toolbox._
 
 /**時間の単位を表す列挙型。
  *
@@ -115,7 +115,7 @@ final class TimeUnit private[time]
  *
  * @author j5ik2o
  */
-object TimeUnit extends AbstractEnum[TimeUnit] {
+object TimeUnit extends Enum[TimeUnit] {
 
   private[time] final class Type(override val ordinal: Int,override val name: String) extends EnumEntry {
     override def equals(obj: Any): Boolean = obj match {
@@ -126,7 +126,7 @@ object TimeUnit extends AbstractEnum[TimeUnit] {
     override def hashCode: Int = ordinal.hashCode + name.hashCode
   }
 
-  private[time] object Type extends AbstractEnum[Type]{
+  private[time] object Type extends Enum[Type]{
 
     val millisecond = new Type(1, "millisecond")
     val second = new Type(2, "second")

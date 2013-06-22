@@ -230,90 +230,90 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test07_NextBusinessDayOverWeekend {
-    val tuesday = CalendarDate.from(2006, 06, 15)
+    val tuesday = CalendarDate.from(2006, 6, 15)
     val friday = tuesday.nextDay
     val saturday = friday.nextDay
-    val monday = CalendarDate.from(2006, 06, 19)
+    val monday = CalendarDate.from(2006, 6, 19)
     assert(cal.nextBusinessDay(tuesday) == friday)
     assert(cal.nextBusinessDay(friday) == monday)
     assert(cal.nextBusinessDay(saturday) == monday)
   }
 
   /**
-   * [[BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test08_NextBusinessDayOverWeekday {
-    val monday = CalendarDate.from(2006, 06, 19)
-    val tuesday = CalendarDate.from(2006, 06, 20)
+    val monday = CalendarDate.from(2006, 6, 19)
+    val tuesday = CalendarDate.from(2006, 6, 20)
     val actual = cal.nextBusinessDay(monday)
     assert(actual == tuesday)
   }
 
   /**
-   * [[BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test09_PlusBusinessDayZero {
-    val monday = CalendarDate.from(2006, 06, 19)
+    val monday = CalendarDate.from(2006, 6, 19)
     assert(cal.plusBusinessDays(monday, 0) == monday)
   }
 
   /**
-   * [[BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test10_PlusNonBusinessDayZero {
-    val saturday = CalendarDate.from(2006, 06, 17)
-    val monday = CalendarDate.from(2006, 06, 19)
+    val saturday = CalendarDate.from(2006, 6, 17)
+    val monday = CalendarDate.from(2006, 6, 19)
     assert(cal.plusBusinessDays(saturday, 0) == monday)
 
   }
 
   /**
-   * [[BusinessCalendar#minusBusinessDays(CalendarDate, int)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#minusBusinessDays(CalendarDate, int)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test11_MinusNonBusinessDayZero {
-    val saturday = CalendarDate.from(2006, 06, 17)
-    val friday = CalendarDate.from(2006, 06, 16)
+    val saturday = CalendarDate.from(2006, 6, 17)
+    val friday = CalendarDate.from(2006, 6, 16)
     val actual = cal.minusBusinessDays(saturday, 0)
     assert(actual == friday)
   }
 
   /**
-   * [[BusinessCalendar#businessDaysOnly(Iterator)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#businessDaysOnly(Iterator)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test12_BusinessDayReverseIterator {
-    val friday = CalendarDate.from(2006, 06, 16)
-    val nextTuesday = CalendarDate.from(2006, 06, 20)
+    val friday = CalendarDate.from(2006, 6, 16)
+    val nextTuesday = CalendarDate.from(2006, 6, 20)
     val interval = CalendarInterval.inclusive(Limit(friday), Limit(nextTuesday))
     val it = cal.businessDaysOnly(interval.daysInReverseIterator)
-    assert(it.hasNext == true)
+    assert(it.hasNext)
     assert(it.next == nextTuesday)
-    assert(it.hasNext == true)
-    val nextMonday = CalendarDate.from(2006, 06, 19)
+    assert(it.hasNext)
+    val nextMonday = CalendarDate.from(2006, 6, 19)
     assert(it.next == nextMonday)
-    assert(it.hasNext == true)
+    assert(it.hasNext)
     assert(it.next == friday)
-    assert(it.hasNext == false)
+    assert(it.hasNext)
   }
 
   /**
