@@ -7,7 +7,7 @@ object BaseUnitsBuild extends Build {
     base = file("."),
     settings = Defaults.defaultSettings ++ Seq(
       organization := "org.sisioh",
-      version := "0.1.0",
+      version := "0.1.1",
       scalaVersion := "2.10.1",
       libraryDependencies ++= Seq(
         "junit" % "junit" % "4.8.1" % "test",
