@@ -11,5 +11,6 @@ Money in Java.
 Unfortunately, according to Domain Language, Inc., Time & Money
 Library is no longer active.
 
-
 Scala version of this library
+
+[![Build Status](https://travis-ci.org/sisioh/baseunits-scala.png?branch=develop)](https://travis-ci.org/sisioh/baseunits-scala)
