@@ -7,24 +7,22 @@ object BaseUnitsBuild extends Build {
     base = file("."),
     settings = Defaults.defaultSettings ++ Seq(
       organization := "org.sisioh",
-      version := "0.1.1",
-      scalaVersion := "2.10.1",
-      libraryDependencies ++= Seq(
-        "junit" % "junit" % "4.8.1" % "test",
-        "org.mockito" % "mockito-core" % "1.9.5" % "test",
-        "org.scalatest" %% "scalatest" % "1.9.1" % "test",
-        "commons-io" % "commons-io" % "2.4",
-        "org.sisioh" %% "scala-dddbase-spec" % "0.1.7",
-        "org.sisioh" %% "scala-toolbox" % "0.0.6"
-      ),
+      version := "0.1.2",
+      scalaVersion := "2.10.2",
       scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
       resolvers ++= Seq(
         "Twitter Repository" at "http://maven.twttr.com/",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
         "Sisioh Maven Relase Repository" at "http://sisioh.github.com/scala-dddbase/repos/release/",
-        "Sisioh Maven Snapshot Repository" at "http://sisioh.github.com/scala-dddbase/repos/snapshot/",
-        "Sisioh Scala Toolbox Release Repository" at "http://sisioh.github.io/scala-toolbox/repos/release/",
-        "Sisioh Scala Toolbox Release Repository" at "http://sisioh.github.io/scala-toolbox/repos/snapshot/"
+        "Sisioh Maven Snapshot Repository" at "http://sisioh.github.com/scala-dddbase/repos/snapshot/"
+      ),
+      libraryDependencies ++= Seq(
+        "junit" % "junit" % "4.8.1" % "test",
+        "org.mockito" % "mockito-core" % "1.9.5" % "test",
+        "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+        "commons-io" % "commons-io" % "2.4",
+        "org.sisioh" %% "scala-dddbase-spec" % "0.1.12",
+        "org.sisioh" %% "scala-toolbox" % "0.0.6"
       ),
       publishTo <<= (version) { version: String =>
         if (version.trim.endsWith("SNAPSHOT")) {
