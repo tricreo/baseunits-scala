@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.intervals
 
+import scala.language.implicitConversions
 import scala.reflect.ClassTag
 
 /**限界値を表すトレイト。
