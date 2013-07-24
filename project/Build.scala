@@ -7,7 +7,7 @@ object BaseUnitsBuild extends Build {
     base = file("."),
     settings = Defaults.defaultSettings ++ Seq(
       organization := "org.sisioh",
-      version := "0.1.5",
+      version := "0.1.6",
       scalaVersion := "2.10.2",
       scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
       resolvers ++= Seq(
@@ -21,7 +21,7 @@ object BaseUnitsBuild extends Build {
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "commons-io" % "commons-io" % "2.4",
-        "org.sisioh" % "scala-dddbase-spec_2.10" % "0.1.18",
+        "org.sisioh" % "scala-dddbase-spec_2.10" % "0.1.20",
         "org.sisioh" %% "scala-toolbox" % "0.0.6"
       ),
       publishMavenStyle := true,
