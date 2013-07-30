@@ -13,7 +13,7 @@ object BaseUnitsBuild extends Build {
       resolvers ++= Seq(
         "Twitter Repository" at "http://maven.twttr.com/",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-	"sonatype" at "https://oss.sonatype.org/content/repositories/snapshots/"
+	      "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
       ),
       libraryDependencies ++= Seq(
         "junit" % "junit" % "4.8.1" % "test",
