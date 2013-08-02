@@ -7,31 +7,56 @@ object BaseUnitsBuild extends Build {
     base = file("."),
     settings = Defaults.defaultSettings ++ Seq(
       organization := "org.sisioh",
-      version := "0.1.6",
+      version := "0.1.7-SNAPSHOT",
       scalaVersion := "2.10.2",
       scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
       resolvers ++= Seq(
         "Twitter Repository" at "http://maven.twttr.com/",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-        "Sisioh Maven Relase Repository" at "http://sisioh.github.com/scala-dddbase/repos/release/",
-        "Sisioh Maven Snapshot Repository" at "http://sisioh.github.com/scala-dddbase/repos/snapshot/"
+        "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
       ),
       libraryDependencies ++= Seq(
         "junit" % "junit" % "4.8.1" % "test",
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "commons-io" % "commons-io" % "2.4",
-        "org.sisioh" % "scala-dddbase-spec_2.10" % "0.1.20",
-        "org.sisioh" %% "scala-toolbox" % "0.0.6"
+        "org.sisioh" %% "scala-dddbase-spec" % "0.1.21",
+        "org.sisioh" %% "scala-toolbox" % "0.0.7"
       ),
       publishMavenStyle := true,
-      publishTo <<= (version) { version: String =>
-        if (version.trim.endsWith("SNAPSHOT")) {
-          Some(Resolver.file("snaphost", new File("./repos/snapshot")))
-        }else{
-          Some(Resolver.file("release", new File("./repos/release")))
-        }
-      }
+      publishArtifact in Test := false,
+      pomIncludeRepository := {
+        _ => false
+      },
+      publishTo <<= version {
+        (v: String) =>
+          val nexus = "https://oss.sonatype.org/"
+          if (v.trim.endsWith("SNAPSHOT"))
+            Some("snapshots" at nexus + "content/repositories/snapshots")
+          else
+            Some("releases" at nexus + "service/local/staging/deploy/maven2")
+      },
+      pomExtra := (
+        <url>https://github.com/sisioh/sisioh-dddbase</url>
+          <licenses>
+            <license>
+              <name>Apache License Version 2.0</name>
+              <url>http://www.apache.org/licenses/</url>
+              <distribution>repo</distribution>
+            </license>
+          </licenses>
+          <scm>
+            <url>git@github.com:sisioh/sisioh-dddbase.git</url>
+            <connection>scm:git:git@github.com:sisioh/sisioh-dddbase.git</connection>
+          </scm>
+          <developers>
+            <developer>
+              <id>j5ik2o</id>
+              <name>Junichi Kato</name>
+              <url>http://j5ik2o.me</url>
+            </developer>
+          </developers>
+        )
     )
   )
 
