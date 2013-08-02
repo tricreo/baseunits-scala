@@ -13,15 +13,15 @@ object BaseUnitsBuild extends Build {
       resolvers ++= Seq(
         "Twitter Repository" at "http://maven.twttr.com/",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-	      "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
+        "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
       ),
       libraryDependencies ++= Seq(
         "junit" % "junit" % "4.8.1" % "test",
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "commons-io" % "commons-io" % "2.4",
-        "org.sisioh" %% "scala-dddbase-spec" % "0.1.21-SNAPSHOT",
-        "org.sisioh" %% "scala-toolbox" % "0.0.7-SNAPSHOT"
+        "org.sisioh" %% "scala-dddbase-spec" % "0.1.21",
+        "org.sisioh" %% "scala-toolbox" % "0.0.7"
       ),
       publishMavenStyle := true,
       publishArtifact in Test := false,
