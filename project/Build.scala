@@ -13,6 +13,7 @@ object BaseUnitsBuild extends Build {
       resolvers ++= Seq(
         "Twitter Repository" at "http://maven.twttr.com/",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
+        "Sonatype Release Repository" at "https://oss.sonatype.org/content/repositories/releases/",
         "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
       ),
       libraryDependencies ++= Seq(
@@ -20,7 +21,7 @@ object BaseUnitsBuild extends Build {
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "commons-io" % "commons-io" % "2.4",
-        "org.sisioh" %% "scala-dddbase-spec" % "0.1.21",
+        "org.sisioh" %% "scala-dddbase-spec" % "0.1.22",
         "org.sisioh" %% "scala-toolbox" % "0.0.7"
       ),
       publishMavenStyle := true,
@@ -46,8 +47,8 @@ object BaseUnitsBuild extends Build {
             </license>
           </licenses>
           <scm>
-            <url>git@github.com:sisioh/sisioh-dddbase.git</url>
-            <connection>scm:git:git@github.com:sisioh/sisioh-dddbase.git</connection>
+            <url>git@github.com:sisioh/baseunits-scala.git</url>
+            <connection>scm:git:git@github.com:sisioh/baseunits-scala.git</connection>
           </scm>
           <developers>
             <developer>
