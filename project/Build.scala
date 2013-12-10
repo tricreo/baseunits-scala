@@ -21,7 +21,7 @@ object BaseUnitsBuild extends Build {
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "commons-io" % "commons-io" % "2.4",
-        "org.sisioh" %% "scala-dddbase-spec" % "[0.1.24,)",
+        "org.sisioh" %% "scala-dddbase-spec" % "0.1.25",
         "org.sisioh" %% "scala-toolbox" % "0.0.7"
       ),
       publishMavenStyle := true,
