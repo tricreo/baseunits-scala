@@ -18,25 +18,23 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.sisioh.scala.toolbox._
 
-
-/**`TimeUnit`に変数するためのファクター。
- *
- * @author j5ik2o
- * @param _name 名前
- * @param value 値
- */
+/** `TimeUnit`に変数するためのファクター。
+  *
+  * @author j5ik2o
+  * @param _name 名前
+  * @param value 値
+  */
 private[time] final class TimeUnitConversionFactor
-( _name: String, val value: Int) extends EnumEntry {
-  override val name = _name
+(_name: String, val value: Int) {
+  val name = _name
 }
 
-/**`TimeUnitConversionFactor`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
-private[time] object TimeUnitConversionFactor extends Enum[TimeUnitConversionFactor] {
+/** `TimeUnitConversionFactor`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
+private[time] object TimeUnitConversionFactor {
   val identical = new TimeUnitConversionFactor("identical", 1)
   val millisecondsPerSecond = new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
   val millisecondsPerMinute = new TimeUnitConversionFactor("millisecondsPerMinute", 60 * millisecondsPerSecond.value)
@@ -46,7 +44,7 @@ private[time] object TimeUnitConversionFactor extends Enum[TimeUnitConversionFac
   val monthsPerQuarter = new TimeUnitConversionFactor("monthsPerQuarter", 3)
   val monthsPerYear = new TimeUnitConversionFactor("monthsPerYear", 12)
 
-  identical % millisecondsPerSecond % millisecondsPerMinute % millisecondsPerHour %
-    millisecondsPerDay % millisecondsPerWeek % monthsPerQuarter % monthsPerYear
+//  identical % millisecondsPerSecond % millisecondsPerMinute % millisecondsPerHour %
+  //    millisecondsPerDay % millisecondsPerWeek % monthsPerQuarter % monthsPerYear
 
 }

@@ -18,18 +18,16 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.sisioh.scala.toolbox._
 
-
-sealed trait Shifter extends EnumEntry {
+sealed trait Shifter {
   def shift(date: CalendarDate, cal: BusinessCalendar): CalendarDate
 }
 
-/**コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
-object Shifter extends Enum[Shifter] {
+/** コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
+object Shifter {
 
   case object Next extends Shifter {
     def shift(date: CalendarDate, cal: BusinessCalendar) =
@@ -41,13 +39,11 @@ object Shifter extends Enum[Shifter] {
       cal.nearestPrevBusinessDay(date)
   }
 
-  Prev % Next
-
 }
 
 
-/**指定日が非営業日の場合のシフト戦略。
- */
+/** 指定日が非営業日の場合のシフト戦略。
+  */
 class MonthlyFixedBusinessDateSpecification
 (val day: DayOfMonth,
  val shifter: Shifter,

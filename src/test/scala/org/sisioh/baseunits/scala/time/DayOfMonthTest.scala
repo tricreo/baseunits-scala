@@ -38,10 +38,10 @@ class DayOfMonthTest extends AssertionsForJUnit {
 
     try {
       DayOfMonth(0)
-      fail
+      fail()
     } catch {
       case e: IllegalArgumentException => // success
-      case _ => fail
+      case _ => fail()
     }
     try {
       DayOfMonth(-1)
