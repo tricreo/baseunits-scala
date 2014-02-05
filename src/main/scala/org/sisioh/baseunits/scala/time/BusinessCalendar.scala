@@ -19,7 +19,7 @@
 package org.sisioh.baseunits.scala.time
 
 import org.sisioh.baseunits.scala.intervals.Limit
-import org.sisioh.dddbase.spec.Specification
+import org.sisioh.baseunits.scala.util.Specification
 
 /**
  * 営業日カレンダー。

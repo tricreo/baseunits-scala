@@ -18,8 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.sisioh.dddbase.spec.Specification
-
+import org.sisioh.baseunits.scala.util.Specification
 
 /**日付の仕様を表現するオブジェクト。
  *
