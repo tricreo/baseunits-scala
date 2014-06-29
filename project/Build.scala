@@ -7,7 +7,7 @@ object BaseUnitsBuild extends Build {
     base = file("."),
     settings = Defaults.defaultSettings ++ Seq(
       organization := "org.sisioh",
-      version := "0.1.12",
+      version := "0.1.13-SNAPSHOT",
       scalaVersion := "2.10.3",
       scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
       resolvers ++= Seq(
