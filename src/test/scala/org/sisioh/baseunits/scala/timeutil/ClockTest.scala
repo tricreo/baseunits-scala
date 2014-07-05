@@ -20,10 +20,11 @@ package org.sisioh.baseunits.scala.timeutil
 
 import org.scalatest.junit.AssertionsForJUnit
 import java.util.TimeZone
-import org.junit.{Test, After}
-import org.sisioh.baseunits.scala.time.{CalendarDate, TimeSource, TimePoint}
+import org.junit.{ Test, After }
+import org.sisioh.baseunits.scala.time.{ CalendarDate, TimeSource, TimePoint }
 
-/**`Clock`のテストクラス。
+/**
+ * `Clock`のテストクラス。
  * @author j5ik2o
  */
 class ClockTest extends AssertionsForJUnit {
@@ -41,8 +42,8 @@ class ClockTest extends AssertionsForJUnit {
     override def now = dec1_5am_gmt
   }
 
-
-  /**テストの情報を破棄する。
+  /**
+   * テストの情報を破棄する。
    * @throws Exception 例外が発生した場合
    */
   @After
@@ -50,7 +51,8 @@ class ClockTest extends AssertionsForJUnit {
     Clock.reset
   }
 
-  /**[[Clock#now()]]のテスト。
+  /**
+   * [[Clock#now()]]のテスト。
    * @throws Exception 例外が発生した場合
    */
   @Test
@@ -59,7 +61,8 @@ class ClockTest extends AssertionsForJUnit {
     assert(Clock.now == dec1_5am_gmt)
   }
 
-  /**[[Clock#now()]]で例外が発生しないこと。
+  /**
+   * [[Clock#now()]]で例外が発生しないこと。
    * [ 1466694 ] Clock.now() should use default TimeSource
    * @throws Exception 例外が発生した場合
    */
@@ -68,7 +71,8 @@ class ClockTest extends AssertionsForJUnit {
     Clock.now
   }
 
-  /**[[Clock#setDefaultTimeZone(TimeZone)]]のテスト。
+  /**
+   * [[Clock#setDefaultTimeZone(TimeZone)]]のテスト。
    * @throws Exception 例外が発生した場合
    */
   @Test
@@ -84,7 +88,8 @@ class ClockTest extends AssertionsForJUnit {
     assert(Clock.now == dec1_5am_gmt)
   }
 
-  /**[[Clock#today()]]のテスト。
+  /**
+   * [[Clock#today()]]のテスト。
    * @throws Exception 例外が発生した場合
    */
   @Test
@@ -95,7 +100,7 @@ class ClockTest extends AssertionsForJUnit {
       fail("Clock cannot answer today() without a timezone.")
     } catch {
       case _: RuntimeException => // Correctly threw exception
-      case _ => fail
+      case _                   => fail
     }
   }
 }

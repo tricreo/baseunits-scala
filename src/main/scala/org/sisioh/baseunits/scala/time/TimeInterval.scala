@@ -18,9 +18,10 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.sisioh.baseunits.scala.intervals.{Limit, LimitValue, Interval}
+import org.sisioh.baseunits.scala.intervals.{ Limit, LimitValue, Interval }
 
-/**期間（時間の区間）を表すクラス。
+/**
+ * 期間（時間の区間）を表すクラス。
  * 限界の表現には [[org.sisioh.baseunits.scala.time.TimePoint]]を利用する。
  *
  * @author j5ik2o
@@ -29,14 +30,14 @@ import org.sisioh.baseunits.scala.intervals.{Limit, LimitValue, Interval}
  * @param endValue 終了時間
  * @param endIncluded 終了時間を含める場合は`false`
  */
-class TimeInterval
-(startValue: LimitValue[TimePoint], startIncluded: Boolean,
- endValue: LimitValue[TimePoint], endIncluded: Boolean)
-  extends Interval[TimePoint](startValue, startIncluded, endValue, endIncluded) {
+class TimeInterval(startValue: LimitValue[TimePoint], startIncluded: Boolean,
+                   endValue: LimitValue[TimePoint], endIncluded: Boolean)
+    extends Interval[TimePoint](startValue, startIncluded, endValue, endIncluded) {
 
   import org.sisioh.baseunits.scala.intervals.Limit
 
-  /**この期間の開始日時を起点として、前回の日時の`1日後`の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
+  /**
+   * この期間の開始日時を起点として、前回の日時の`1日後`の日時をこの期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
    * 例えば [2009/01/01 13:00, 2009/01/04 05:00) で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
@@ -80,13 +81,15 @@ class TimeInterval
     }
   }
 
-  /**この期間の終了日時を取得する。
+  /**
+   * この期間の終了日時を取得する。
    *
    * @return この期間の終了日時. 上側限界がない場合は `Limitless[CalendarDate]`
    */
   def end = upperLimit
 
-  /**この期間と与えた期間 `interval` の積集合（共通部分）を返す。
+  /**
+   * この期間と与えた期間 `interval` の積集合（共通部分）を返す。
    *
    * 共通部分が存在しない場合は、空の区間を返す。
    *
@@ -95,8 +98,8 @@ class TimeInterval
    */
   def intersect(interval: TimeInterval) = super.intersect(interval).asInstanceOf[TimeInterval]
 
-
-  /**指定した日時が、この期間の開始日時以前でないかどうかを検証する。
+  /**
+   * 指定した日時が、この期間の開始日時以前でないかどうかを検証する。
    *
    * @param point 日時
    * @return 開始日時以前でない場合は`true`、そうでない場合は`false`
@@ -104,7 +107,8 @@ class TimeInterval
    */
   def isAfter(point: LimitValue[TimePoint]) = isAbove(point)
 
-  /**指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
+  /**
+   * 指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
    *
    * @param point 日時
    * @return 終了日時以後でない場合は`true`、そうでない場合は`false`
@@ -112,7 +116,8 @@ class TimeInterval
    */
   def isBefore(point: LimitValue[TimePoint]) = isBelow(point)
 
-  /**この期間の長さを取得する。
+  /**
+   * この期間の長さを取得する。
    *
    * @return 長さ.
    * @throws IllegalStateException この期間が開始日時（下側限界）または終了日時（下側限界）を持たない場合
@@ -125,7 +130,8 @@ class TimeInterval
     Duration.milliseconds(difference)
   }
 
-  /**この期間と同じ型を持つ、新しい期間を返す。
+  /**
+   * この期間と同じ型を持つ、新しい期間を返す。
    *
    * @param start 下側限界値. 限界値がない場合は、`Limitless[TimePoint]`
    * @param isStartClosed 下限値を期間に含む（閉じた下側限界）場合は`true`を指定する
@@ -139,14 +145,15 @@ class TimeInterval
                              isEndClosed: Boolean) =
     TimeInterval(start, isStartClosed, end, isEndClosed)
 
-  /**この期間の開始日時を取得する。
+  /**
+   * この期間の開始日時を取得する。
    *
    * @return この期間の開始日時. 下側限界がない場合は `Limitless[T]`
    */
   def start = lowerLimit
 
-
-  /**この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間
+  /**
+   * この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間
    * [[org.sisioh.baseunits.scala.time.TimeInterval]] を
    * この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
    *
@@ -191,15 +198,17 @@ class TimeInterval
   }
 }
 
-/**コンパニオンオブジェクト。
+/**
+ * コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object TimeInterval {
 
-  import org.sisioh.baseunits.scala.intervals.{Limitless, LimitValue}
+  import org.sisioh.baseunits.scala.intervals.{ Limitless, LimitValue }
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param startValue 開始時間
    * @param startClosed 開始時間を含める場合は`true`
@@ -213,7 +222,8 @@ object TimeInterval {
             endClosed: Boolean): TimeInterval =
     new TimeInterval(start, startClosed, end, endClosed)
 
-  /**開始日時と終了日時より、閉期間を返す。
+  /**
+   * 開始日時と終了日時より、閉期間を返す。
    *
    * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
@@ -223,7 +233,8 @@ object TimeInterval {
   def closed(start: LimitValue[TimePoint], end: LimitValue[TimePoint]): TimeInterval =
     over(start, true, end, true)
 
-  /**開始日時より、下側限界のみを持つ期間を返す。
+  /**
+   * 開始日時より、下側限界のみを持つ期間を返す。
    *
    * 開始日時は期間に含む（閉じている）区間である。
    *
@@ -233,7 +244,8 @@ object TimeInterval {
   def everFrom(start: LimitValue[TimePoint]): TimeInterval =
     over(start, Limitless[TimePoint])
 
-  /**終了日時より、上側限界のみを持つ期間を返す。
+  /**
+   * 終了日時より、上側限界のみを持つ期間を返す。
    *
    * 終了日時は期間に含まない（開いている）区間である。
    *
@@ -243,7 +255,8 @@ object TimeInterval {
   def everPreceding(end: LimitValue[TimePoint]): TimeInterval =
     over(Limitless[TimePoint], end)
 
-  /**開始日時と終了日時より、開期間を返す。
+  /**
+   * 開始日時と終了日時より、開期間を返す。
    *
    * @param start 開始日時（下側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
    * @param end 終了日時（上側限界値）. `Limitless[TimePoint]`の場合は、限界がないことを表す
@@ -253,7 +266,8 @@ object TimeInterval {
   def open(start: LimitValue[TimePoint], end: LimitValue[TimePoint]): TimeInterval =
     over(start, false, end, false)
 
-  /**開始日時と終了日時より、期間を返す。
+  /**
+   * 開始日時と終了日時より、期間を返す。
    *
    * 主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。
    *
@@ -267,7 +281,8 @@ object TimeInterval {
   def over(start: LimitValue[TimePoint], startClosed: Boolean, end: LimitValue[TimePoint], endClosed: Boolean): TimeInterval =
     apply(start, startClosed, end, endClosed)
 
-  /**開始日時と終了日時より、期間を返す。
+  /**
+   * 開始日時と終了日時より、期間を返す。
    *
    * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。
    *
@@ -277,10 +292,11 @@ object TimeInterval {
    * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
    */
   def over(start: LimitValue[TimePoint], end: LimitValue[TimePoint]): TimeInterval =
-  // Uses the common default for time intervals, [start, end).
+    // Uses the common default for time intervals, [start, end).
     over(start, true, end, false)
 
-  /**終了日時と期間の長さより、期間を返す。
+  /**
+   * 終了日時と期間の長さより、期間を返す。
    *
    * @param end 終了日時（上側限界値）.
    * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は`true`を指定する
@@ -293,7 +309,8 @@ object TimeInterval {
     over(Limit(start), startClosed, end, endClosed)
   }
 
-  /**終了日時と期間の長さより、期間を返す。
+  /**
+   * 終了日時と期間の長さより、期間を返す。
    *
    * @param end 終了日時（上側限界値）.
    * @param length 期間の長さ
@@ -304,7 +321,8 @@ object TimeInterval {
     preceding(end, true, length, false)
   }
 
-  /**開始日時と期間の長さより、期間を返す。
+  /**
+   * 開始日時と期間の長さより、期間を返す。
    *
    * @param start 開始日時（下側限界値）
    * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は`true`を指定する
@@ -317,7 +335,8 @@ object TimeInterval {
     over(start, startClosed, Limit(end), endClosed)
   }
 
-  /**開始日時と期間の長さより、期間を返す。
+  /**
+   * 開始日時と期間の長さより、期間を返す。
    *
    * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。
    *

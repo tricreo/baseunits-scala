@@ -21,11 +21,13 @@ package org.sisioh.baseunits.scala.util
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**`Ratio`のテストクラス。
+/**
+ * `Ratio`のテストクラス。
  */
 class RatioTest extends AssertionsForJUnit {
 
-  /**`BigDecimal`で構成する`Ratio`の挙動テスト。
+  /**
+   * `BigDecimal`で構成する`Ratio`の挙動テスト。
    *
    * <ul>
    *   <li>`3/2`であらわす割合について、小数点第1位までで丸めなかった場合は1.5である。</li>
@@ -66,18 +68,19 @@ class RatioTest extends AssertionsForJUnit {
       fail()
     } catch {
       case e: ArithmeticException => // success
-      case _ => fail()
+      case _                      => fail()
     }
     try {
       Ratio(10, 0)
       fail()
     } catch {
       case e: ArithmeticException => // success
-      case _ => fail()
+      case _                      => fail()
     }
   }
 
-  /**`Long`で構成する`Ratio`の挙動テスト。
+  /**
+   * `Long`で構成する`Ratio`の挙動テスト。
    *
    * `9001/3000`であらわす割合（3.00033…）について、小数点第6位までで切り上げた場合は3.000334である。
    *
@@ -90,7 +93,8 @@ class RatioTest extends AssertionsForJUnit {
     assert(result == BigDecimal("3.000334"))
   }
 
-  /**`Ratio(BigDecimal)`のテスト。
+  /**
+   * `Ratio(BigDecimal)`のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -102,7 +106,8 @@ class RatioTest extends AssertionsForJUnit {
     assert(ratio.decimalValue(5, BigDecimal.RoundingMode.UNNECESSARY) == BigDecimal("3.14159"))
   }
 
-  /**`Ratio#equals(Any)``のテスト。
+  /**
+   * `Ratio#equals(Any)``のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -128,7 +133,8 @@ class RatioTest extends AssertionsForJUnit {
     assert(Ratio(100, 200).reduce == Ratio(10, 20).reduce)
   }
 
-  /**`Ratio#times(BigDecimal)`のテスト。
+  /**
+   * `Ratio#times(BigDecimal)`のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -139,7 +145,8 @@ class RatioTest extends AssertionsForJUnit {
     assert(product == Ratio(BigDecimal("9901.1"), BigDecimal(3000)))
   }
 
-  /**`Ratio#times(Ratio)`のテスト。
+  /**
+   * `Ratio#times(Ratio)`のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -151,7 +158,8 @@ class RatioTest extends AssertionsForJUnit {
     assert(r1.times(r2) == expectedProduct)
   }
 
-  /**`Ratio#toString`のテスト。
+  /**
+   * `Ratio#toString`のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

@@ -18,7 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
-/**現在時刻の取得に失敗したことをあらわす例外。
+/**
+ * 現在時刻の取得に失敗したことをあらわす例外。
  *
  * @author j5ik2o
  */

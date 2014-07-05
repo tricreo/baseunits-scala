@@ -20,8 +20,8 @@ package org.sisioh.baseunits.scala.util
 
 import annotation.tailrec
 
-
-/**[[org.sisioh.baseunits.scala.util.Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
+/**
+ * [[org.sisioh.baseunits.scala.util.Ratio]]は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
  *
  * このクラスの利点は、比率の計算を遅延評価できることにある。
  *
@@ -38,15 +38,15 @@ import annotation.tailrec
  * @param numerator 分子をあらわす数
  * @param denominator 分母をあらわす数
  */
-class Ratio
-(private val numerator: BigDecimal,
- private val denominator: BigDecimal) {
+class Ratio(private val numerator: BigDecimal,
+            private val denominator: BigDecimal) {
 
   if (denominator == BigDecimal(0)) {
     throw new ArithmeticException("denominator is zero")
   }
 
-  /**このオブジェクトの`denominator`フィールド（分母をあらわす数）を返す。
+  /**
+   * このオブジェクトの`denominator`フィールド（分母をあらわす数）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -54,8 +54,8 @@ class Ratio
    */
   def breachEncapsulationOfDenominator = denominator
 
-
-  /**このオブジェクトの`numerator`フィールド（分子をあらわす数）を返す。
+  /**
+   * このオブジェクトの`numerator`フィールド（分子をあらわす数）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -63,8 +63,8 @@ class Ratio
    */
   def breachEncapsulationOfNumerator = numerator
 
-
-  /**比率を[[scala.math.BigDecimal]]型で取得する。
+  /**
+   * 比率を[[scala.math.BigDecimal]]型で取得する。
    *
    * @param scale 小数点以下の有効数字
    * @param roundingMode 丸めモード
@@ -74,7 +74,8 @@ class Ratio
     BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode.id))
   }
 
-  /**このオブジェクトと、与えたオブジェクトの同一性を検証する。
+  /**
+   * このオブジェクトと、与えたオブジェクトの同一性を検証する。
    *
    * 与えたオブジェクト[[org.sisioh.baseunits.scala.util.Ratio]]型や
    * そのサブクラスではない場合、`false`を返す。
@@ -89,7 +90,7 @@ class Ratio
    */
   override def equals(obj: Any): Boolean = obj match {
     case that: Ratio => this.denominator == that.denominator && this.numerator == that.numerator
-    case _ => false
+    case _           => false
   }
 
   @tailrec
@@ -97,7 +98,8 @@ class Ratio
     if (denominator == 0) numerator
     else gcd(denominator, numerator % denominator)
 
-  /**通分した[[org.sisioh.baseunits.scala.util.Ratio]]を返す。
+  /**
+   * 通分した[[org.sisioh.baseunits.scala.util.Ratio]]を返す。
    *
    * @return 通分した[[org.sisioh.baseunits.scala.util.Ratio]]
    */
@@ -108,7 +110,8 @@ class Ratio
 
   override def hashCode = denominator.## + numerator.##
 
-  /**この比率と `multiplier` の積からなる比率。
+  /**
+   * この比率と `multiplier` の積からなる比率。
    *
    * 計算結果は、分母は変化せず、分子は分子と `multiplyer` の積からなる比率となる。
    *
@@ -118,8 +121,8 @@ class Ratio
   def times(multiplier: BigDecimal): Ratio =
     Ratio(numerator * multiplier, denominator)
 
-
-  /**この比率と `multiplier` の積からなる比率。
+  /**
+   * この比率と `multiplier` の積からなる比率。
    *
    * 計算結果は、分子同士・分母同士の積からなる比率となる。
    *
@@ -129,7 +132,8 @@ class Ratio
   def times(multiplier: Ratio): Ratio =
     Ratio(numerator * multiplier.numerator, denominator * multiplier.denominator)
 
-  /**この比率の文字列表現を取得する。
+  /**
+   * この比率の文字列表現を取得する。
    *
    * "分子/分母"という表記となる。
    *
@@ -141,7 +145,8 @@ class Ratio
 
 object Ratio {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param fractional 分数
    * @return 与えた分数であらわされる比率
@@ -149,7 +154,8 @@ object Ratio {
   def apply(fractional: BigDecimal): Ratio =
     new Ratio(fractional, BigDecimal(1))
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param numerator 分子
    * @param denominator 分母
@@ -159,7 +165,8 @@ object Ratio {
   def apply(numerator: BigDecimal, denominator: BigDecimal): Ratio =
     new Ratio(numerator, denominator)
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param numerator 分子
    * @param denominator 分母

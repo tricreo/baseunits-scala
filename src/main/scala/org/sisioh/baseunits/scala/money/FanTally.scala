@@ -18,27 +18,29 @@
  */
 package org.sisioh.baseunits.scala.money
 
-/**[[org.sisioh.baseunits.scala.money.MoneyFan]]の集合。
+/**
+ * [[org.sisioh.baseunits.scala.money.MoneyFan]]の集合。
  *
  * @author j5ik2o
  * @tparam T 割り当ての対象
  * @param fans [[org.sisioh.baseunits.scala.money.MapFan]]の[[scala.Iterable]]
  */
-class FanTally[T]
-(private[money] val fans: Iterable[MoneyFan[T]])
-  extends Iterable[MoneyFan[T]] {
+class FanTally[T](private[money] val fans: Iterable[MoneyFan[T]])
+    extends Iterable[MoneyFan[T]] {
 
   import collection.Iterator
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param fans [[org.sisioh.baseunits.scala.money.MapFan]]
    */
-  def this(fan: MoneyFan[T]) = this (Iterable.fill(1)(fan))
+  def this(fan: MoneyFan[T]) = this(Iterable.fill(1)(fan))
 
   def iterator: Iterator[MoneyFan[T]] = fans.iterator
 
-  /**要素の[[org.sisioh.baseunits.scala.money.MoneyFan]]を全てマージしたものを返す。
+  /**
+   * 要素の[[org.sisioh.baseunits.scala.money.MoneyFan]]を全てマージしたものを返す。
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def net: MoneyFan[T] =
@@ -46,27 +48,31 @@ class FanTally[T]
 
   override def toString = fans.toString
 
-  /**要素の[[org.sisioh.baseunits.scala.money.MoneyFan]]が含む[[org.sisioh.baseunits.scala.money.Allotment]]の合計額を返す。
+  /**
+   * 要素の[[org.sisioh.baseunits.scala.money.MoneyFan]]が含む[[org.sisioh.baseunits.scala.money.Allotment]]の合計額を返す。
    * @return 合計額
    */
   def total: Money = net.total
 
 }
 
-/**`FanTally`コンパニオンオブジェクト。
+/**
+ * `FanTally`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object FanTally {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param fans [[org.sisioh.baseunits.scala.money.MoneyFan]]の`Iterable`
    * @return [[org.sisioh.baseunits.scala.money.FanTally]]
    */
   def apply[T](fans: Iterable[MoneyFan[T]]) = new FanTally[T](fans)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param fanTally [[org.sisioh.baseunits.scala.money.FanTally]]
    * @return `Option[Iterable[MoneyFan[T]]]`

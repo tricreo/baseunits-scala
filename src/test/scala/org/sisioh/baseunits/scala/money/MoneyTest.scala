@@ -19,12 +19,13 @@
 package org.sisioh.baseunits.scala.money
 
 import org.scalatest.junit.AssertionsForJUnit
-import org.junit.{Test, Before}
-import java.util.{Locale, Currency}
+import org.junit.{ Test, Before }
+import java.util.{ Locale, Currency }
 import org.sisioh.baseunits.scala.util.Ratio
 import collection.mutable.ListBuffer
 
-/**`Money`のテストクラス。
+/**
+ * `Money`のテストクラス。
  */
 class MoneyTest extends AssertionsForJUnit {
   val USD = Currency.getInstance("USD")
@@ -51,8 +52,8 @@ class MoneyTest extends AssertionsForJUnit {
 
   var y100minus: Money = _
 
-
-  /**テストを初期化する。
+  /**
+   * テストを初期化する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -69,7 +70,8 @@ class MoneyTest extends AssertionsForJUnit {
     y100minus = Money.adjustBy(BigDecimal("-100"), JPY)
   }
 
-  /**{@link Money}のインスタンスがシリアライズできるかどうか検証する。
+  /**
+   * {@link Money}のインスタンスがシリアライズできるかどうか検証する。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -78,7 +80,8 @@ class MoneyTest extends AssertionsForJUnit {
     //SerializationTester.assertCanBeSerialized(d15)
   }
 
-  /**{@link Money(double, Currency)}のテスト。
+  /**
+   * {@link Money(double, Currency)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -90,7 +93,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(Money.adjustBy(100, JPY) == y100)
   }
 
-  /**円単位 {@link Money} のテスト。
+  /**
+   * 円単位 {@link Money} のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -103,7 +107,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(y50.times(1.6) == y80, "mult")
   }
 
-  /**{@link Money#Money(BigDecimal, Currency)}のテスト。
+  /**
+   * {@link Money#Money(BigDecimal, Currency)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -120,7 +125,8 @@ class MoneyTest extends AssertionsForJUnit {
     }
   }
 
-  /**{@link Money#dividedBy(double)}のテスト。
+  /**
+   * {@link Money#dividedBy(double)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -132,7 +138,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(y50.dividedBy(5) == Money.yens(10))
   }
 
-  /**{@link Money#times(double)}のテスト。
+  /**
+   * {@link Money#times(double)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -143,7 +150,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d100.times(0.7) == Money.dollars(BigDecimal("70")))
   }
 
-  /**{@link Money#times(double, RoundingMode)}のテスト。
+  /**
+   * {@link Money#times(double, RoundingMode)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -153,7 +161,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d100.times(0.66666667, BigDecimal.RoundingMode.DOWN) == Money.dollars(66.66))
   }
 
-  /**{@link Money#times(BigDecimal, RoundingMode)}のテスト。
+  /**
+   * {@link Money#times(BigDecimal, RoundingMode)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -164,7 +173,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d100.negated.times(BigDecimal("0.666666"), BigDecimal.RoundingMode.DOWN) == Money.dollars(-66.66))
   }
 
-  /**{@link Money#minimumIncrement()}のテスト。（内部API）
+  /**
+   * {@link Money#minimumIncrement()}のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -174,7 +184,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(y50.minimumIncrement == Money(1, JPY))
   }
 
-  /**{@link Money#plus(Money)}のテスト。
+  /**
+   * {@link Money#plus(Money)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -188,7 +199,8 @@ class MoneyTest extends AssertionsForJUnit {
     }
   }
 
-  /**{@link Money#dividedBy(Money)}のテスト。
+  /**
+   * {@link Money#dividedBy(Money)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -214,7 +226,8 @@ class MoneyTest extends AssertionsForJUnit {
     }
   }
 
-  /**{@link Money#equals(Object)}のテスト。
+  /**
+   * {@link Money#equals(Object)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -225,7 +238,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d2_51a.equals(d2_51b) == false)
   }
 
-  /**{@link Money#compareTo(Money)}のテスト。
+  /**
+   * {@link Money#compareTo(Money)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -268,7 +282,8 @@ class MoneyTest extends AssertionsForJUnit {
     }
   }
 
-  /**{@link Money#isGreaterThan(Money)}, {@link Money#isLessThan(Money)}のテスト。
+  /**
+   * {@link Money#isGreaterThan(Money)}, {@link Money#isLessThan(Money)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -286,7 +301,8 @@ class MoneyTest extends AssertionsForJUnit {
     }
   }
 
-  /**{@link Money#equals(Object)}のテスト。
+  /**
+   * {@link Money#equals(Object)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -295,7 +311,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d2_51.equals(e2_51) == false)
   }
 
-  /**{@link Money#equals(Object)}のテスト。
+  /**
+   * {@link Money#equals(Object)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -307,7 +324,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d2_51.equals(2.51) == false)
   }
 
-  /**{@link Money#equals(Object)}のテスト。
+  /**
+   * {@link Money#equals(Object)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -316,7 +334,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d2_51.equals(null) == false)
   }
 
-  /**{@link Money#hashCode()}のテスト。
+  /**
+   * {@link Money#hashCode()}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -327,7 +346,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d2_51.hashCode != d15.hashCode)
   }
 
-  /**{@link Money#negated()}のテスト。
+  /**
+   * {@link Money#negated()}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -337,7 +357,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(e2_51.negated.negated == e2_51)
   }
 
-  /**{@link Money#isPositive()}, {@link Money#isNegative()}, {@link Money#isZero()}のテスト。
+  /**
+   * {@link Money#isPositive()}, {@link Money#isNegative()}, {@link Money#isZero()}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -353,7 +374,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(d15.isZero == false)
   }
 
-  /**{@link Money#toString(Locale)}のテスト。
+  /**
+   * {@link Money#toString(Locale)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -373,7 +395,8 @@ class MoneyTest extends AssertionsForJUnit {
     }
   }
 
-  /**{@link Money}インスタンス生成時の丸めテスト。
+  /**
+   * {@link Money}インスタンス生成時の丸めテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -383,7 +406,8 @@ class MoneyTest extends AssertionsForJUnit {
     assert(dRounded == Money.dollars(1.24))
   }
 
-  /**{@link Money#minus(Money)}のテスト。
+  /**
+   * {@link Money#minus(Money)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

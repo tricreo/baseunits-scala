@@ -18,22 +18,23 @@
  */
 package org.sisioh.baseunits.scala.time
 
-/**1ヶ月間の中の特定の「日」を表すクラス。
+/**
+ * 1ヶ月間の中の特定の「日」を表すクラス。
  *
  * タイムゾーンの概念はない。
  *
  * @author j5ik2o
  * @param value 日をあらわす正数（1〜31）
  */
-class DayOfMonth
-(private[time] val value: Int)
-  extends Ordered[DayOfMonth] with Serializable {
+class DayOfMonth(private[time] val value: Int)
+    extends Ordered[DayOfMonth] with Serializable {
 
   require(value >= DayOfMonth.Min && value <= DayOfMonth.Max,
     "Illegal value for day of month: " + value
       + ", please use a value between 1 and 31")
 
-  /**このオブジェクトの`value`フィールド（日をあらわす正数）を返す。
+  /**
+   * このオブジェクトの`value`フィールド（日をあらわす正数）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -47,10 +48,11 @@ class DayOfMonth
 
   override def equals(obj: Any): Boolean = obj match {
     case that: DayOfMonth => (value compare that.value) == 0
-    case _ => false
+    case _                => false
   }
 
-  /**指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+  /**
+   * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
    *
    * お互いが同一日時である場合は `false` を返す。
    *
@@ -61,7 +63,8 @@ class DayOfMonth
     isBefore(other) == false && equals(other) == false
   }
 
-  /**この日を、指定した年月に適用可能かどうか調べる。
+  /**
+   * この日を、指定した年月に適用可能かどうか調べる。
    *
    * 例えば、31日は6月に適用不可能であるが、7月には適用可能である。
    * また、29日は閏年の2月に適用可能であるが、平年の2月には適用不可能である。
@@ -72,7 +75,8 @@ class DayOfMonth
   def isApplyable(month: CalendarMonth) =
     month.getLastDayOfMonth.isBefore(this) == false
 
-  /**この日を、指定した年月に適用可能かどうか調べる。
+  /**
+   * この日を、指定した年月に適用可能かどうか調べる。
    *
    * 例えば、31日は6月に適用不可能であるが、7月には適用可能である。
    * また、29日は閏年の2月に適用可能であるが、平年の2月には適用不可能である。
@@ -84,7 +88,8 @@ class DayOfMonth
   def isApplyable(year: Int, month: MonthOfYear) =
     month.getLastDayOfThisMonth(year).isBefore(this) == false;
 
-  /**指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+  /**
+   * 指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
    *
    * お互いが同一日時である場合は `false` を返す。
    *
@@ -93,7 +98,8 @@ class DayOfMonth
    */
   def isBefore(other: DayOfMonth): Boolean = value < other.value
 
-  /**指定した年月のこの日を返す。
+  /**
+   * 指定した年月のこの日を返す。
    *
    * @param month 年月
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
@@ -107,7 +113,8 @@ class DayOfMonth
 
 }
 
-/**`DayOfMonth`コンパニオンオブジェクト。
+/**
+ * `DayOfMonth`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
@@ -115,14 +122,16 @@ object DayOfMonth {
   val Min = 1
   val Max = 31
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param value 日をあらわす正数（1〜31）
    * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
   def apply(value: Int) = new DayOfMonth(value)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param dayOfMonth [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    * @return `Option[Int]`

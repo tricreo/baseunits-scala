@@ -20,9 +20,10 @@ package org.sisioh.baseunits.scala.time
 
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
-import java.util.{Calendar, TimeZone}
+import java.util.{ Calendar, TimeZone }
 
-/**`CalendarDate`のテストクラス。
+/**
+ * `CalendarDate`のテストクラス。
  */
 class CalendarDateTest extends AssertionsForJUnit {
   val feb17 = CalendarDate.from(2003, 2, 17)
@@ -36,7 +37,6 @@ class CalendarDateTest extends AssertionsForJUnit {
   val gmt = TimeZone.getTimeZone("Universal")
 
   val ct = TimeZone.getTimeZone("America/Chicago")
-
 
   /**
    * [[CalendarDate]]のインスタンスがシリアライズできるかどうか検証する。

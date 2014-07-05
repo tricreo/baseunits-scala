@@ -18,13 +18,13 @@
  */
 package org.sisioh.baseunits.scala.money
 
-import java.util.{Locale, Currency}
+import java.util.{ Locale, Currency }
 import org.sisioh.baseunits.scala.util.Ratio
 import org.sisioh.baseunits.scala.time.Duration
 import math.BigDecimal.RoundingMode
 
-
-/**金額を表すクラス。
+/**
+ * 金額を表すクラス。
  *
  * ある一定の「量」と「通貨単位」から成るクラスである。
  *
@@ -32,9 +32,8 @@ import math.BigDecimal.RoundingMode
  * @param amount 量 [[scala.math.BigDecimal]]
  * @param currency 通貨単位 [[java.util.Currency]]
  */
-class Money
-(val amount: BigDecimal, val currency: Currency)
-  extends Ordered[Money] with Serializable {
+class Money(val amount: BigDecimal, val currency: Currency)
+    extends Ordered[Money] with Serializable {
 
   if (amount.scale != currency.getDefaultFractionDigits) {
     throw new IllegalArgumentException("Scale of amount does not match currency")
@@ -46,19 +45,21 @@ class Money
     //    case n: Int => amount == n
     //    case f: Float => amount == f
     //    case d: Double => amount == d
-    case _ => false
+    case _           => false
   }
 
   override def hashCode = amount.hashCode + currency.hashCode
 
-  /**Returns a [[org.sisioh.baseunits.scala.money.Money]] whose amount is
+  /**
+   * Returns a [[org.sisioh.baseunits.scala.money.Money]] whose amount is
    * the absolute amount of this [[org.sisioh.baseunits.scala.money.Money]], and whose scale is this.scale().
    *
    * @return 絶対金額
    */
   def abs = Money(amount.abs, currency)
 
-  /**金額同士の比較を行う。
+  /**
+   * 金額同士の比較を行う。
    *
    * 相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は [[java.lang.ClassCastException]] を
    * スローするが、どちらか片方の量が`0`である場合は例外をスローしない。
@@ -89,7 +90,8 @@ class Money
     minus(other)
   }
 
-  /**この金額に対して、指定した`ratio`の割合の金額を返す。
+  /**
+   * この金額に対して、指定した`ratio`の割合の金額を返す。
    *
    * @param ratio 割合
    * @param scale スケール
@@ -101,7 +103,8 @@ class Money
     Money.adjustBy(newAmount, currency)
   }
 
-  /**この金額に対して、指定した`ratio`の割合の金額を返す。
+  /**
+   * この金額に対して、指定した`ratio`の割合の金額を返す。
    *
    * @param ratio 割合
    * @param roundingMode 丸めモード
@@ -110,7 +113,8 @@ class Money
   def applying(ratio: Ratio, roundingMode: BigDecimal.RoundingMode.Value): Money =
     applying(ratio, currency.getDefaultFractionDigits, roundingMode)
 
-  /**このオブジェクトの`amount`フィールド（量）を返す。
+  /**
+   * このオブジェクトの`amount`フィールド（量）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -125,7 +129,8 @@ class Money
    */
   def breachEncapsulationOfAmount = amount
 
-  /**このオブジェクトの`currency`フィールド（通貨単位）を返す。
+  /**
+   * このオブジェクトの`currency`フィールド（通貨単位）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -133,7 +138,8 @@ class Money
    */
   def breachEncapsulationOfCurrency = currency
 
-  /**この金額を、`divisor`個に均等に分割した場合の金額を返す。
+  /**
+   * この金額を、`divisor`個に均等に分割した場合の金額を返す。
    *
    * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
@@ -144,7 +150,8 @@ class Money
     dividedBy(divisor, Money.DEFAULT_ROUNDING_MODE)
   }
 
-  /**この金額を、`divisor`個に均等に分割した場合の金額を返す。
+  /**
+   * この金額を、`divisor`個に均等に分割した場合の金額を返す。
    *
    * @param divisor 除数
    * @param roundingMode 丸めモード
@@ -155,7 +162,8 @@ class Money
     Money(BigDecimal(newAmount), currency)
   }
 
-  /**この金額を、`divisor`個に均等に分割した場合の金額を返す。
+  /**
+   * この金額を、`divisor`個に均等に分割した場合の金額を返す。
    *
    * @param divisor 除数
    * @param roundingMode 丸めモード
@@ -165,7 +173,8 @@ class Money
     dividedBy(BigDecimal(divisor), roundingMode)
   }
 
-  /**この金額の、`divisor`に対する割合を返す。
+  /**
+   * この金額の、`divisor`に対する割合を返す。
    *
    * @param divisor 除数
    * @return 割合
@@ -177,7 +186,8 @@ class Money
     Ratio(amount, divisor.amount)
   }
 
-  /**このインスタンがあらわす金額が、`other`よりも大きいかどうか調べる。
+  /**
+   * このインスタンがあらわす金額が、`other`よりも大きいかどうか調べる。
    *
    * 等価の場合は`false`とする。
    *
@@ -188,7 +198,8 @@ class Money
   def isGreaterThan(other: Money) =
     this > other
 
-  /**このインスタンがあらわす金額が、`other`よりも小さいかどうか調べる。
+  /**
+   * このインスタンがあらわす金額が、`other`よりも小さいかどうか調べる。
    *
    * 等価の場合は`false`とする。
    *
@@ -199,7 +210,8 @@ class Money
   def isLessThan(other: Money) =
     this < other
 
-  /**このインスタンがあらわす金額が、負の金額かどうか調べる。
+  /**
+   * このインスタンがあらわす金額が、負の金額かどうか調べる。
    *
    * ゼロの場合は`false`とする。
    *
@@ -208,7 +220,8 @@ class Money
   def isNegative =
     amount < BigDecimal(0)
 
-  /**このインスタンがあらわす金額が、正の金額かどうか調べる。
+  /**
+   * このインスタンがあらわす金額が、正の金額かどうか調べる。
    *
    * ゼロの場合は`false`とする。
    *
@@ -217,7 +230,8 @@ class Money
   def isPositive =
     amount > BigDecimal(0)
 
-  /**このインスタンがあらわす金額が、ゼロかどうか調べる。
+  /**
+   * このインスタンがあらわす金額が、ゼロかどうか調べる。
    *
    * @return ゼロである場合は`true`、そうでない場合は`false`
    */
@@ -225,7 +239,8 @@ class Money
     equals(Money.adjustBy(0.0, currency))
   }
 
-  /**この金額から`other`を差し引いた金額を返す。
+  /**
+   * この金額から`other`を差し引いた金額を返す。
    *
    * @param other 金額
    * @return 差し引き金額
@@ -235,15 +250,16 @@ class Money
     plus(other.negated)
   }
 
-  /**Returns a `Money` whose amount is (-amount), and whose scale is this.scale().
+  /**
+   * Returns a `Money` whose amount is (-amount), and whose scale is this.scale().
    *
    * @return 金額
    */
   def negated =
     Money(BigDecimal(amount.bigDecimal.negate), currency)
 
-
-  /**指定した時間量に対する、この金額の割合を返す。
+  /**
+   * 指定した時間量に対する、この金額の割合を返す。
    *
    * @param duration 時間量
    * @return 割合
@@ -251,7 +267,8 @@ class Money
   def per(duration: Duration): MoneyTimeRate =
     new MoneyTimeRate(this, duration)
 
-  /**この金額に`other`を足した金額を返す。
+  /**
+   * この金額に`other`を足した金額を返す。
    *
    * @param other 金額
    * @return 足した金額
@@ -262,7 +279,8 @@ class Money
     Money.adjustBy(amount + other.amount, currency)
   }
 
-  /**この金額に`factor`を掛けた金額を返す。
+  /**
+   * この金額に`factor`を掛けた金額を返す。
    *
    * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
@@ -280,7 +298,8 @@ class Money
     times(factor, Money.DEFAULT_ROUNDING_MODE)
   }
 
-  /**この金額に`factor`を掛けた金額を返す。
+  /**
+   * この金額に`factor`を掛けた金額を返す。
    *
    * TODO: BigDecimal.multiply() scale is sum of scales of two multiplied
    * numbers. So what is scale of times?
@@ -293,7 +312,8 @@ class Money
     Money.adjustBy(amount * factor, currency, roundingMode)
   }
 
-  /**この金額に`amount`を掛けた金額を返す。
+  /**
+   * この金額に`amount`を掛けた金額を返す。
    *
    * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
@@ -303,7 +323,8 @@ class Money
   def times(amount: Double): Money =
     times(BigDecimal(amount))
 
-  /**この金額に`amount`を掛けた金額を返す。
+  /**
+   * この金額に`amount`を掛けた金額を返す。
    *
    * @param amount 係数
    * @param roundingMode 丸めモード
@@ -313,7 +334,8 @@ class Money
     times(BigDecimal(amount), roundingMode)
   }
 
-  /**この金額に`amount`を掛けた金額を返す。
+  /**
+   * この金額に`amount`を掛けた金額を返す。
    *
    * 丸めモードは `RoundingMode#HALF_EVEN` を適用する。
    *
@@ -327,7 +349,8 @@ class Money
     currency.getSymbol + " " + amount
   }
 
-  /**指定したロケールにおける、単位つきの金額表現の文字列を返す。
+  /**
+   * 指定したロケールにおける、単位つきの金額表現の文字列を返す。
    *
    * @param localeOption ロケールの`Option`。`None`の場合は `Locale#getDefault()` を利用する。
    * @return 金額の文字列表現
@@ -336,7 +359,7 @@ class Money
     def createStrng(_locale: Locale) = currency.getSymbol(_locale) + " " + amount
     localeOption match {
       case Some(locale) => createStrng(locale)
-      case None => createStrng(Locale.getDefault)
+      case None         => createStrng(Locale.getDefault)
     }
   }
 
@@ -351,14 +374,16 @@ class Money
   private[money] def hasSameCurrencyAs(arg: Money) =
     currency.equals(arg.currency) || arg.amount.equals(BigDecimal(0)) || amount.equals(BigDecimal(0))
 
-  /**この金額に、最小の単位金額を足した金額、つまりこの金額よりも1ステップ分大きな金額を返す。
+  /**
+   * この金額に、最小の単位金額を足した金額、つまりこの金額よりも1ステップ分大きな金額を返す。
    *
    * @return この金額よりも1ステップ分大きな金額
    */
   private[money] def incremented =
     plus(minimumIncrement)
 
-  /**最小の単位金額を返す。
+  /**
+   * 最小の単位金額を返す。
    *
    * 例えば、日本円は1円であり、US$は1セント（つまり0.01ドル）である。
    *
@@ -389,7 +414,8 @@ class Money
 
 }
 
-/**`Money`コンパニオンオブジェクト。
+/**
+ * `Money`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
@@ -409,8 +435,8 @@ object Money {
 
   def unappy(money: Money) = Some(money.amount, money.currency)
 
-
-  /**`amount`で表す量のドルを表すインスタンスを返す。
+  /**
+   * `amount`で表す量のドルを表すインスタンスを返す。
    *
    * This creation method is safe to use. It will adjust scale, but will not
    * round off the amount.
@@ -420,7 +446,8 @@ object Money {
    */
   def dollars(amount: BigDecimal) = adjustBy(amount, USD)
 
-  /**`amount`で表す量のドルを表すインスタンスを返す。
+  /**
+   * `amount`で表す量のドルを表すインスタンスを返す。
    *
    * WARNING: Because of the indefinite precision of double, this method must
    * round off the value.
@@ -430,21 +457,24 @@ object Money {
    */
   def dollars(amount: Double) = adjustBy(amount, USD)
 
-  /**This creation method is safe to use. It will adjust scale, but will not
+  /**
+   * This creation method is safe to use. It will adjust scale, but will not
    * round off the amount.
    * @param amount 量
    * @return `amount`で表す量のユーロを表すインスタンス
    */
   def euros(amount: BigDecimal) = adjustBy(amount, EUR)
 
-  /**WARNING: Because of the indefinite precision of double, this method must
+  /**
+   * WARNING: Because of the indefinite precision of double, this method must
    * round off the value.
    * @param amount 量
    * @return `amount`で表す量のユーロを表すインスタンス
    */
   def euros(amount: Double) = adjustBy(amount, EUR)
 
-  /**[[scala.Iterable]]に含む全ての金額の合計金額を返す。
+  /**
+   * [[scala.Iterable]]に含む全ての金額の合計金額を返す。
    *
    * 合計金額の通貨単位は、 `monies`の要素の（共通した）通貨単位となるが、
    * `Collection`が空の場合は、現在のデフォルトロケールにおける通貨単位で、量が0のインスタンスを返す。
@@ -462,7 +492,8 @@ object Money {
     }
   }
 
-  /**This creation method is safe to use. It will adjust scale, but will not
+  /**
+   * This creation method is safe to use. It will adjust scale, but will not
    * round off the amount.
    *
    * @param amount 量
@@ -473,7 +504,8 @@ object Money {
     adjustBy(amount, currency, BigDecimal.RoundingMode.UNNECESSARY)
   }
 
-  /**For convenience, an amount can be rounded to create a Money.
+  /**
+   * For convenience, an amount can be rounded to create a Money.
    *
    * @param rawAmount 量
    * @param currency 通貨単位
@@ -485,7 +517,8 @@ object Money {
     new Money(amount, currency)
   }
 
-  /**WARNING: Because of the indefinite precision of double, this method must
+  /**
+   * WARNING: Because of the indefinite precision of double, this method must
    * round off the value.
    *
    * @param dblAmount 量
@@ -495,7 +528,8 @@ object Money {
   def adjustBy(dblAmount: Double, currency: Currency): Money =
     adjustBy(dblAmount, currency, DEFAULT_ROUNDING_MODE)
 
-  /**Because of the indefinite precision of double, this method must round off
+  /**
+   * Because of the indefinite precision of double, this method must round off
    * the value. This method gives the client control of the rounding mode.
    *
    * @param dblAmount 量
@@ -508,7 +542,8 @@ object Money {
     adjustBy(rawAmount, currency, roundingMode)
   }
 
-  /**This creation method is safe to use. It will adjust scale, but will not
+  /**
+   * This creation method is safe to use. It will adjust scale, but will not
    * round off the amount.
    *
    * @param amount 量
@@ -516,7 +551,8 @@ object Money {
    */
   def yens(amount: BigDecimal) = adjustBy(amount, JPY)
 
-  /**WARNING: Because of the indefinite precision of double, this method must
+  /**
+   * WARNING: Because of the indefinite precision of double, this method must
    * round off the value.
    *
    * @param amount 量
@@ -524,12 +560,12 @@ object Money {
    */
   def yens(amount: Double): Money = adjustBy(amount, JPY)
 
-  /**指定した通貨単位を持つ、量が0の金額を返す。
+  /**
+   * 指定した通貨単位を持つ、量が0の金額を返す。
    *
    * @param currency 通貨単位
    * @return 金額
    */
   def zero(currency: Currency) = adjustBy(0.0, currency)
-
 
 }

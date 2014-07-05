@@ -26,9 +26,8 @@ import org.sisioh.baseunits.scala.intervals.Limit
  * @author j5ik2o
  * @param date 年月日
  */
-class FixedDateSpecification private[time]
-(private[time] val date: CalendarDate)
-  extends DateSpecification {
+class FixedDateSpecification private[time] (private[time] val date: CalendarDate)
+    extends DateSpecification {
 
   def iterateOver(interval: CalendarInterval): Iterator[CalendarDate] = {
     if (firstOccurrenceIn(interval) == None) {
@@ -49,7 +48,6 @@ class FixedDateSpecification private[time]
       }
     }
   }
-
 
   override def isSatisfiedBy(date: CalendarDate): Boolean =
     date == this.date

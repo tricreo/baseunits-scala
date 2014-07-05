@@ -20,35 +20,38 @@ package org.sisioh.baseunits.scala.money
 
 import collection.Iterator
 
-/**同じ通貨単位の金額の集合をあらわすクラス。
+/**
+ * 同じ通貨単位の金額の集合をあらわすクラス。
  *
  * @author j5ik2o
  * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の`Iterable`
  */
-class Tally
-(private[money] val monies: Iterable[Money])
-  extends Iterable[Money] {
+class Tally(private[money] val monies: Iterable[Money])
+    extends Iterable[Money] {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の可変引数
    */
-  def this(monies: Money*) = this (monies.toIterable)
+  def this(monies: Money*) = this(monies.toIterable)
 
   private[this] val _currency = currency
 
   monies.find(_.breachEncapsulationOfCurrency != _currency) match {
     case Some(_) => throw new IllegalArgumentException
-    case None => ()
+    case None    => ()
   }
 
-  /**通貨単位を返す。
+  /**
+   * 通貨単位を返す。
    * @return 通貨単位
    */
   def currency =
     iterator.next.breachEncapsulationOfCurrency
 
-  /**合計金額を返す。
+  /**
+   * 合計金額を返す。
    * @return 合計
    */
   def net = Money.sum(monies)
@@ -58,20 +61,23 @@ class Tally
   def iterator: Iterator[Money] = monies.iterator
 }
 
-/**`Tally`コンパニオンオブジェクト。
+/**
+ * `Tally`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object Tally {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の`Iterable`
    * @return [[org.sisioh.baseunits.scala.Tally]]
    */
   def apply(monies: Iterable[Money]) = new Tally(monies)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param tally [[org.sisioh.baseunits.scala.Tally]]
    * @return `Option[Iterable[Money]]`

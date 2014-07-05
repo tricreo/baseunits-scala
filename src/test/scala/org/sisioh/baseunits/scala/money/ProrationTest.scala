@@ -21,7 +21,8 @@ package org.sisioh.baseunits.scala.money
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**`Proration`のテストクラス。
+/**
+ * `Proration`のテストクラス。
  */
 class ProrationTest extends AssertionsForJUnit {
   /**

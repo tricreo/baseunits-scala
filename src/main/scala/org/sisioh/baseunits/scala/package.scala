@@ -1,4 +1,5 @@
-/**時間及び金額にまつわるドメインモデル群を含むクラスライブラリ。
+/**
+ * 時間及び金額にまつわるドメインモデル群を含むクラスライブラリ。
  *
  * [[http://maven.tricreo.jp/site/baseunits/latest/ baseunits]]ライブラリのScala版です。
  *

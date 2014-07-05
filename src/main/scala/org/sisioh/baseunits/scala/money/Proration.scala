@@ -20,14 +20,15 @@ package org.sisioh.baseunits.scala.money
 
 import org.sisioh.baseunits.scala.util.Ratio
 
-
-/**比例配分の為のユーティリティ。
+/**
+ * 比例配分の為のユーティリティ。
  *
  * @author j5ik2o
  */
 object Proration {
 
-  /**指定した金額を`n`等分した金額の配列を返す。
+  /**
+   * 指定した金額を`n`等分した金額の配列を返す。
    *
    * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
    *
@@ -44,7 +45,8 @@ object Proration {
     distributeRemainderOver(lowResults, remainder)
   }
 
-  /**`total`のうち、`portion / whole`の割合の金額を返す。割り切れない場合は切り捨てる。
+  /**
+   * `total`のうち、`portion / whole`の割合の金額を返す。割り切れない場合は切り捨てる。
    *
    * @param total 合計額
    * @param portion 部分量をあらわす値
@@ -55,7 +57,8 @@ object Proration {
   def partOfWhole(total: Money, portion: Long, whole: Long): Money =
     partOfWhole(total, Ratio(portion, whole))
 
-  /**`total`のうち、`ratio`の割合の金額を返す。割り切れない場合は切り捨てる。
+  /**
+   * `total`のうち、`ratio`の割合の金額を返す。割り切れない場合は切り捨てる。
    *
    * @param total 合計額
    * @param ratio 割合
@@ -67,7 +70,8 @@ object Proration {
     total.times(multiplier, BigDecimal.RoundingMode.DOWN)
   }
 
-  /**指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
+  /**
+   * 指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
    *
    * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
    *
@@ -79,10 +83,10 @@ object Proration {
    */
   def proratedOver(total: Money, proportions: Array[BigDecimal]): Array[Money] = {
     val scale = defaultScaleForIntermediateCalculations(total)
-    val simpleResult = ratios(proportions).map{
+    val simpleResult = ratios(proportions).map {
       e =>
-      val multiplier = e.decimalValue(scale, BigDecimal.RoundingMode.DOWN)
-      total.times(multiplier, BigDecimal.RoundingMode.DOWN)
+        val multiplier = e.decimalValue(scale, BigDecimal.RoundingMode.DOWN)
+        total.times(multiplier, BigDecimal.RoundingMode.DOWN)
     }
     val remainder = total.minus(sum(simpleResult))
     distributeRemainderOver(simpleResult, remainder)
@@ -120,7 +124,8 @@ object Proration {
     results
   }
 
-  /**比数の配列を割合の配列に変換する。
+  /**
+   * 比数の配列を割合の配列に変換する。
    *
    * @param proportions 比の配列
    * @return 割合の配列
@@ -130,7 +135,8 @@ object Proration {
     proportions.map(e => Ratio(e, total))
   }
 
-  /**`elements`の要素の和を返す。
+  /**
+   * `elements`の要素の和を返す。
    *
    * @param elements 配列
    * @return 和
@@ -138,7 +144,8 @@ object Proration {
   def sum(elements: Array[BigDecimal]) =
     elements.sum
 
-  /**`elements`の要素の和を返す。
+  /**
+   * `elements`の要素の和を返す。
    *
    * @param elements 配列
    * @return 和
@@ -152,6 +159,5 @@ object Proration {
 
   private def defaultScaleForIntermediateCalculations(total: Money) =
     total.breachEncapsulationOfAmount.precision + 2
-
 
 }

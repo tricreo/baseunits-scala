@@ -22,11 +22,13 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import java.util.Calendar
 
-/**{@link TimeUnit}のテストクラス。
+/**
+ * {@link TimeUnit}のテストクラス。
  * @author j5ik2o
  */
 class TimeUnitTest extends AssertionsForJUnit {
-  /**[[TimeUnit]]のインスタンスがシリアライズできるかどうか検証する。
+  /**
+   * [[TimeUnit]]のインスタンスがシリアライズできるかどうか検証する。
    * @throws Exception 例外が発生した場合
    */
   @Test

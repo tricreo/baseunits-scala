@@ -18,7 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
-/**単位時間あたりの何らかの量（時間に対する割合）を表すクラス。
+/**
+ * 単位時間あたりの何らかの量（時間に対する割合）を表すクラス。
  *
  * 例えば、時給・時速など。
  *
@@ -26,26 +27,28 @@ package org.sisioh.baseunits.scala.time
  * @param quantity 単位時間あたりの量
  * @param unit 単位時間
  */
-class TimeRate
-(val quantity: BigDecimal,
- val unit: Duration) {
+class TimeRate(val quantity: BigDecimal,
+               val unit: Duration) {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param quantity 単位時間あたりの量
    * @param unit 単位時間
    */
-  def this(quantity: String, unit: Duration) = this (BigDecimal(quantity), unit)
+  def this(quantity: String, unit: Duration) = this(BigDecimal(quantity), unit)
 
-  /**このオブジェクトの`quantity`フィールド（単位時間あたりの量）を返す。
+  /**
+   * このオブジェクトの`quantity`フィールド（単位時間あたりの量）を返す。
    *
-   *　CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+   * 　CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 単位時間あたりの量
    */
   def breachEncapsulationOfQuantity = quantity
 
-  /**このオブジェクトの`unit`フィールド（単位時間）を返す。
+  /**
+   * このオブジェクトの`unit`フィールド（単位時間）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -55,12 +58,13 @@ class TimeRate
 
   override def equals(obj: Any) = obj match {
     case that: TimeRate => quantity == that.quantity && unit == that.unit
-    case _ => false
+    case _              => false
   }
 
   override def hashCode = quantity.hashCode + unit.hashCode
 
-  /**指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
+  /**
+   * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
    *
    * レート計算における数字の丸めは行わない。
    * 例えば、3時間に対して時給1000円を適用すると、3000円となる。
@@ -72,8 +76,8 @@ class TimeRate
    */
   def over(duration: Duration): BigDecimal = over(duration, BigDecimal.RoundingMode.UNNECESSARY)
 
-
-  /**指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
+  /**
+   * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
    *
    * @param duration 時間量
    * @param scale スケール
@@ -86,7 +90,8 @@ class TimeRate
   def over(duration: Duration, scale: Int, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal =
     duration.dividedBy(unit).times(quantity).decimalValue(scale, roundingMode)
 
-  /**指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
+  /**
+   * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
    *
    * @param duration 時間量
    * @param roundingMode 丸めモード
@@ -99,7 +104,8 @@ class TimeRate
     over(duration, scale, roundingMode)
   }
 
-  /**スケールを取得する。
+  /**
+   * スケールを取得する。
    *
    * @return スケール
    */
@@ -115,13 +121,15 @@ class TimeRate
 
 }
 
-/**`TimeRate`コンパニオンオブジェクト。
+/**
+ * `TimeRate`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object TimeRate {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param quantity 単位時間あたりの量
    * @param unit 単位時間
@@ -129,7 +137,8 @@ object TimeRate {
    */
   def apply(quantity: BigDecimal, unit: Duration): TimeRate = new TimeRate(quantity, unit)
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param quantity 単位時間あたりの量
    * @param unit 単位時間
@@ -137,7 +146,8 @@ object TimeRate {
    */
   def apply(quantity: String, unit: Duration): TimeRate = new TimeRate(quantity, unit)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param [[org.sisioh.baseunits.scala.time.TimeRate]]
    * @return `Option[(BigDecimal, Duration)]`

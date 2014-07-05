@@ -18,21 +18,22 @@
  */
 package org.sisioh.baseunits.scala.time
 
-/**1日の中の特定の「時」を表すクラス。
+/**
+ * 1日の中の特定の「時」を表すクラス。
  *
  * [[java.util.Date]]と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。
  *
  * @author j5ik2o
  * @param value 時をあらわす正数
  */
-class HourOfDay private
-(private[time] val value: Int)
-  extends Ordered[HourOfDay] with Serializable {
+class HourOfDay private (private[time] val value: Int)
+    extends Ordered[HourOfDay] with Serializable {
 
   require(value >= HourOfDay.MIN && value <= HourOfDay.MAX,
     "Illegal value for 24 hour: %d , please use a value between 0 and 23".format(value))
 
-  /**このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
+  /**
+   * このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -44,12 +45,13 @@ class HourOfDay private
 
   override def equals(obj: Any): Boolean = obj match {
     case that: HourOfDay => this.value == that.value
-    case _ => false
+    case _               => false
   }
 
   override def hashCode: Int = value.hashCode
 
-  /**同日において、このインスタンスが表す時が、引数`another`で表される時よりも未来かどうか調べる。
+  /**
+   * 同日において、このインスタンスが表す時が、引数`another`で表される時よりも未来かどうか調べる。
    *
    * @param another 基準時
    * @return 同日において、このインスタンスが表す時が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
@@ -67,7 +69,8 @@ class HourOfDay private
   override def toString = "%02d".format(value)
 }
 
-/**コンパニオンオブジェクト。
+/**
+ * コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
@@ -77,7 +80,8 @@ object HourOfDay {
 
   val MAX = 23
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param initial 時をあらわす正数
    * @return 時（0〜23）
@@ -96,15 +100,16 @@ object HourOfDay {
   def apply(initial: Int, amPm: String) =
     new HourOfDay(convertTo24hour(initial, amPm))
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param hourOfDay [[org.sisioh.baseunits.scala.time.HourOfDay]]
    * @return `Option[Int]`
    */
   def unapply(hourOfDay: HourOfDay) = Some(hourOfDay.value)
 
-
-  /**午前午後記号付き12時間制の時を24時間制の値に変換する。
+  /**
+   * 午前午後記号付き12時間制の時を24時間制の値に変換する。
    *
    * @param hour 時（0〜11）
    * @param amPm 午前午後を表す文字列

@@ -23,7 +23,8 @@ import org.junit.Test
 import java.math.RoundingMode
 import org.sisioh.baseunits.scala.intervals.Limit
 
-/**`Duration`のテストクラス。
+/**
+ * `Duration`のテストクラス。
  */
 class DurationTest extends AssertionsForJUnit {
   /**
@@ -189,8 +190,8 @@ class DurationTest extends AssertionsForJUnit {
       Duration.days(1).plus(Duration.months(1))
       fail
     } catch {
-      case e:IllegalArgumentException => // success
-      case _ => fail
+      case e: IllegalArgumentException => // success
+      case _                           => fail
     }
   }
 
@@ -208,8 +209,8 @@ class DurationTest extends AssertionsForJUnit {
       Duration.months(2).plus(Duration.days(3))
       fail;
     } catch {
-      case e:IllegalArgumentException => // success
-      case _ => fail
+      case e: IllegalArgumentException => // success
+      case _                           => fail
     }
   }
 
@@ -296,8 +297,8 @@ class DurationTest extends AssertionsForJUnit {
       oneHour.compareTo(twoQuarters)
       fail
     } catch {
-      case e:ClassCastException => // success
-      case _ => fail
+      case e: ClassCastException => // success
+      case _                     => fail
     }
 
     val threeHundredsAndSixtyFiveDays = Duration.days(365)
@@ -306,8 +307,8 @@ class DurationTest extends AssertionsForJUnit {
       threeHundredsAndSixtyFiveDays.compareTo(anYear)
       fail
     } catch {
-      case e:ClassCastException => // success
-      case _ => fail
+      case e: ClassCastException => // success
+      case _                     => fail
     }
 
     // nonconvertable units but zero
@@ -320,8 +321,8 @@ class DurationTest extends AssertionsForJUnit {
       twoHours.compareTo(null)
       fail
     } catch {
-      case e:NullPointerException => // success
-      case _ => fail
+      case e: NullPointerException => // success
+      case _                       => fail
     }
   }
 

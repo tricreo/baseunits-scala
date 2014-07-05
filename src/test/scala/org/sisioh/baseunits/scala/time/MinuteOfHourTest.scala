@@ -21,7 +21,8 @@ package org.sisioh.baseunits.scala.time
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**`MinuteOfHour`のテストクラス。
+/**
+ * `MinuteOfHour`のテストクラス。
  */
 class MinuteOfHourTest extends AssertionsForJUnit {
 
@@ -48,7 +49,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _ => fail
+      case _                           => fail
     }
   }
 
@@ -64,7 +65,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _ => fail
+      case _                           => fail
     }
   }
 
@@ -153,8 +154,8 @@ class MinuteOfHourTest extends AssertionsForJUnit {
     assert(m14.equals(MinuteOfHour(15)) == false)
     assert(m14.equals(null) == false)
     assert(m14.equals(new MinuteOfHour(14)) == (true))
-//    assert(m14.equals(new MinuteOfHour(14) {
-//    }) == (false))
+    //    assert(m14.equals(new MinuteOfHour(14) {
+    //    }) == (false))
   }
 
   /**

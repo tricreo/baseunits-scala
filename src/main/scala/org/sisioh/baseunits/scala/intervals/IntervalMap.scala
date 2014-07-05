@@ -18,24 +18,26 @@
  */
 package org.sisioh.baseunits.scala.intervals
 
-import collection.immutable.{MapLike, Map}
+import collection.immutable.{ MapLike, Map }
 import collection.Iterator
 
-/**区間に対して値をマッピングする抽象クラス。
+/**
+ * 区間に対して値をマッピングする抽象クラス。
  *
  * @author j5ik2o
  * @tparam K キーとなる区間の型
  * @tparam V 値の型
  */
 abstract class IntervalMap[A <% Ordered[A], +B]
-  extends Map[Interval[A], B]
-  with MapLike[Interval[A], B, IntervalMap[A, B]] {
+    extends Map[Interval[A], B]
+    with MapLike[Interval[A], B, IntervalMap[A, B]] {
 
   protected val intervalMap: Map[Interval[A], B]
 
   override def empty: IntervalMap[A, B] = new LinearIntervalMap
 
-  /**Add a key/value pair to this map.
+  /**
+   * Add a key/value pair to this map.
    * @param key the key
    * @param value the value
    * @return A new map with the new binding added to this map
@@ -47,7 +49,8 @@ abstract class IntervalMap[A <% Ordered[A], +B]
 
   def +[B1 >: B](kv: (Interval[A], B1)): IntervalMap[A, B1]
 
-  /**指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に `true` を返す。
+  /**
+   * 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に `true` を返す。
    * @param interval 区間
    * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は`true`、そうでない場合は`false`
    */
@@ -55,15 +58,15 @@ abstract class IntervalMap[A <% Ordered[A], +B]
 
 }
 
-class LinearIntervalMap[A <% Ordered[A], B]
-(protected val intervalMap: Map[Interval[A], B])
-  extends IntervalMap[A, B] {
+class LinearIntervalMap[A <% Ordered[A], B](protected val intervalMap: Map[Interval[A], B])
+    extends IntervalMap[A, B] {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * `intervalMap`は空を利用する。
    */
-  def this() = this (Map.empty[Interval[A], B])
+  def this() = this(Map.empty[Interval[A], B])
 
   override def toString(): String = intervalMap.toString
 
@@ -85,7 +88,8 @@ class LinearIntervalMap[A <% Ordered[A], B]
   private def findKeyIntervalContaining(key: LimitValue[A]): Option[Interval[A]] =
     intervalMap.keys.find(_.includes(key))
 
-  /**この写像が保持するキーとしての区間のうち、指定した区間 `otherInterval`と共通部分を持つ
+  /**
+   * この写像が保持するキーとしての区間のうち、指定した区間 `otherInterval`と共通部分を持つ
    * 区間の列を取得する。
    *
    * 戻り値の列は、区間の自然順にソートされている。
@@ -96,7 +100,7 @@ class LinearIntervalMap[A <% Ordered[A], B]
   private def intersectingKeys(otherInterval: Interval[A]): List[Interval[A]] =
     intervalMap.keys.map {
       case e if e.intersects(otherInterval) => Some(e)
-      case _ => None
+      case _                                => None
     }.flatten.toList
 
   def iterator: Iterator[(Interval[A], B)] = intervalMap.iterator
@@ -112,7 +116,7 @@ class LinearIntervalMap[A <% Ordered[A], B]
   def get(key: LimitValue[A]): Option[B] =
     findKeyIntervalContaining(key) match {
       case Some(key) => intervalMap.get(key)
-      case None => None
+      case None      => None
     }
 
   def -(key: Interval[A]): LinearIntervalMap[A, B] = {
@@ -130,13 +134,15 @@ class LinearIntervalMap[A <% Ordered[A], B]
 
 }
 
-/**`LinearIntervalMap`コンパニオンオブジェクト。
+/**
+ * `LinearIntervalMap`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object LinearIntervalMap {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @tparam A キーの型
    * @tparam B 値の型
@@ -144,7 +150,8 @@ object LinearIntervalMap {
    */
   def apply[A <% Ordered[A], B]: LinearIntervalMap[A, B] = new LinearIntervalMap
 
-  /**ファクトリメソッド。
+  /**
+   * ファクトリメソッド。
    *
    * @tparam A キーの型
    * @tparam B 値の型
@@ -152,7 +159,8 @@ object LinearIntervalMap {
    */
   def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]): LinearIntervalMap[A, B] = new LinearIntervalMap(intervalMap)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @tparam A キーの型
    * @tparam B 値の型
@@ -162,5 +170,4 @@ object LinearIntervalMap {
     Some(linearIntervalMap.intervalMap)
 
 }
-
 

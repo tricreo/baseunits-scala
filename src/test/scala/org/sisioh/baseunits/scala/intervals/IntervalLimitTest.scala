@@ -23,7 +23,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import collection.mutable.ListBuffer
 import util.Random
 
-/**`IntervalLimit`のテストクラス。
+/**
+ * `IntervalLimit`のテストクラス。
  */
 class IntervalLimitTest extends AssertionsForJUnit {
   @Test
@@ -71,7 +72,6 @@ class IntervalLimitTest extends AssertionsForJUnit {
     // 無限同士比較
     assert(lowerInf < upperInf)
     assert(upperInf > lowerInf)
-
 
     // 無限有限比較
     assert(lowerInf < lowerOpen3)
@@ -130,7 +130,6 @@ class IntervalLimitTest extends AssertionsForJUnit {
     assert(lowerOpen3 < upperClose6)
     assert(lowerOpen3 < upperOpen6)
 
-
     assert(upperClose5 > lowerClose2)
     assert(upperClose5 > lowerOpen2)
     assert(upperClose5 > lowerClose3)
@@ -187,12 +186,12 @@ class IntervalLimitTest extends AssertionsForJUnit {
     list += IntervalLimit.upper(false, Limit(5))
 
     val list2 = Random.shuffle(list)
-//    list2.foreach(println)
-//    println("---")
+    //    list2.foreach(println)
+    //    println("---")
     val sortedList = list2.sorted
-//    for(i <- 0 until sortedList.size){
-//      println("%d:%s".format(i, sortedList(i)))
-//    }
+    //    for(i <- 0 until sortedList.size){
+    //      println("%d:%s".format(i, sortedList(i)))
+    //    }
 
     assert(sortedList(0) == IntervalLimit.lower(false, Limitless[Int]))
     assert(sortedList(1) == IntervalLimit.lower(false, Limitless[Int]))

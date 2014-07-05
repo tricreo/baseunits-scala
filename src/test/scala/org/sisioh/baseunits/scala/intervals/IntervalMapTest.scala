@@ -21,10 +21,12 @@ package org.sisioh.baseunits.scala.intervals
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**`IntervalMap`のテストクラス。
+/**
+ * `IntervalMap`のテストクラス。
  */
 class IntervalMapTest extends AssertionsForJUnit {
-  /**[[org.sisioh.baseunits.scala.intervals.IntervalMap]]に対する参照メソッドのテスト。
+  /**
+   * [[org.sisioh.baseunits.scala.intervals.IntervalMap]]に対する参照メソッドのテスト。
    *
    * <ul>
    *   <li>[[IntervalMap#containsKey(Comparable)]]</li>

@@ -18,10 +18,11 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import java.util.{TimeZone, Calendar}
-import org.sisioh.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Interval}
+import java.util.{ TimeZone, Calendar }
+import org.sisioh.baseunits.scala.intervals.{ Limitless, Limit, LimitValue, Interval }
 
-/**期間（日付の区間）を表すクラス。
+/**
+ * 期間（日付の区間）を表すクラス。
  *
  * 限界の表現には [[org.sisioh.baseunits.scala.time.CalendarDate]]を利用する。
  * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
@@ -30,12 +31,12 @@ import org.sisioh.baseunits.scala.intervals.{Limitless, Limit, LimitValue, Inter
  * @param startValue 開始日
  * @param endValue 終了日
  */
-class CalendarInterval protected
-(startValue: LimitValue[CalendarDate],
- endValue: LimitValue[CalendarDate])
-  extends Interval[CalendarDate](startValue, true, endValue, true) with Serializable {
+class CalendarInterval protected (startValue: LimitValue[CalendarDate],
+                                  endValue: LimitValue[CalendarDate])
+    extends Interval[CalendarDate](startValue, true, endValue, true) with Serializable {
 
-  /**この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
+  /**
+   * この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
    *
    * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。
    *
@@ -48,7 +49,8 @@ class CalendarInterval protected
     TimeInterval.over(startPoint, endPoint)
   }
 
-  /**この期間の終了日を起点として、前回の日付の前日をこの期間の開始日を超過しない範囲で順次取得する反復子を取得する。
+  /**
+   * この期間の終了日を起点として、前回の日付の前日をこの期間の開始日を超過しない範囲で順次取得する反復子を取得する。
    *
    * 例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
@@ -79,7 +81,7 @@ class CalendarInterval protected
       override def hasNext = {
         end match {
           case _: Limitless[CalendarDate] => true
-          case Limit(end) => _next.toValue.isBefore(end) == false
+          case Limit(end)                 => _next.toValue.isBefore(end) == false
         }
       }
 
@@ -94,7 +96,8 @@ class CalendarInterval protected
     }
   }
 
-  /**この期間の開始日を起点として、前回の日付の翌日をこの期間の終了日を超過しない範囲で順次取得する反復子を取得する。
+  /**
+   * この期間の開始日を起点として、前回の日付の翌日をこの期間の終了日を超過しない範囲で順次取得する反復子を取得する。
    *
    * 例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
    * その戻り値の反復子からは、以下の要素が取得できる。
@@ -125,7 +128,7 @@ class CalendarInterval protected
       override def hasNext = {
         end match {
           case _: Limitless[CalendarDate] => true
-          case Limit(end) => _next.toValue.isAfter(end) == false
+          case Limit(end)                 => _next.toValue.isAfter(end) == false
         }
       }
 
@@ -140,20 +143,23 @@ class CalendarInterval protected
     }
   }
 
-  /**終了日を取得する。
+  /**
+   * 終了日を取得する。
    *
    * @return 終了日. 開始日がない場合は`Limitless[CalendarDate]`
    */
   def end = upperLimit
 
-  /**この期間の日数としての長さを取得する。
+  /**
+   * この期間の日数としての長さを取得する。
    *
    * @return 期間の長さ
    * @see #length()
    */
   def length = Duration.days(lengthInDaysInt)
 
-  /**この期間が、日数にして何日の長さがあるかを取得する。
+  /**
+   * この期間が、日数にして何日の長さがあるかを取得する。
    *
    * @return 日数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
@@ -166,7 +172,8 @@ class CalendarInterval protected
     (diffMillis / TimeUnitConversionFactor.millisecondsPerDay.value).asInstanceOf[Int]
   }
 
-  /**この期間の月数としての長さを取得する。
+  /**
+   * この期間の月数としての長さを取得する。
    *
    * 開始日と終了日が同月であれば`0`ヶ月となる。
    *
@@ -177,7 +184,8 @@ class CalendarInterval protected
     Duration.months(lengthInMonthsInt)
   }
 
-  /**限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
+  /**
+   * 限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
    *
    * 開始日と終了日が同月であれば`0`となる。
    *
@@ -201,7 +209,8 @@ class CalendarInterval protected
     CalendarInterval.inclusive(includedLower, includedUpper)
   }
 
-  /**開始日を取得する。
+  /**
+   * 開始日を取得する。
    *
    * @return 開始日. 開始日がない場合は`Limitless[CalendarDate]`
    */
@@ -260,13 +269,15 @@ class CalendarInterval protected
   }
 }
 
-/**`CalendarInterval`コンパニオンオブジェクト。
+/**
+ * `CalendarInterval`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object CalendarInterval {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param startValue 開始日
    * @param endValue 終了日
@@ -275,7 +286,8 @@ object CalendarInterval {
   def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]) =
     new CalendarInterval(startValue, endValue)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param [[org.sisioh.baseunits.scala.time.CalendarInterval]]
    * @return `Option[(CalendarInterval)]`
@@ -283,7 +295,8 @@ object CalendarInterval {
   def unapply(calendarInterval: CalendarInterval) =
     Some(calendarInterval.start, calendarInterval.end)
 
-  /**開始日より、下側限界のみを持つ期間を生成する。
+  /**
+   * 開始日より、下側限界のみを持つ期間を生成する。
    *
    * 開始日は期間に含む（閉じている）区間である。
    *
@@ -293,7 +306,8 @@ object CalendarInterval {
   def everFrom(startDate: LimitValue[CalendarDate]): CalendarInterval =
     inclusive(startDate, Limitless[CalendarDate])
 
-  /**終了日より、上側限界のみを持つ期間を生成する。
+  /**
+   * 終了日より、上側限界のみを持つ期間を生成する。
    *
    * 終了日は期間に含む（閉じている）区間である。
    *
@@ -303,8 +317,8 @@ object CalendarInterval {
   def everPreceding(endDate: LimitValue[CalendarDate]): CalendarInterval =
     inclusive(Limitless[CalendarDate], endDate)
 
-
-  /**開始日と終了日より、期間を生成する。
+  /**
+   * 開始日と終了日より、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
@@ -316,7 +330,8 @@ object CalendarInterval {
   def inclusive(start: LimitValue[CalendarDate], end: LimitValue[CalendarDate]): CalendarInterval =
     new CalendarInterval(start, end)
 
-  /**開始日と終了日より、期間を生成する。
+  /**
+   * 開始日と終了日より、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
@@ -336,7 +351,8 @@ object CalendarInterval {
     new CalendarInterval(Limit(startDate), Limit(endDate))
   }
 
-  /**指定した年月の1日からその月末までの、期間を生成する。
+  /**
+   * 指定した年月の1日からその月末までの、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
@@ -349,7 +365,8 @@ object CalendarInterval {
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
   }
 
-  /**指定した年月の1日からその月末までの、期間を生成する。
+  /**
+   * 指定した年月の1日からその月末までの、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
@@ -360,7 +377,8 @@ object CalendarInterval {
   def month(year: Int, _month: Int): CalendarInterval =
     month(year, MonthOfYear(_month))
 
-  /**指定した年月の1日からその月末までの、期間を生成する。
+  /**
+   * 指定した年月の1日からその月末までの、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
@@ -374,7 +392,8 @@ object CalendarInterval {
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
   }
 
-  /**開始日と期間の長さより、期間を生成する。
+  /**
+   * 開始日と期間の長さより、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
@@ -393,7 +412,8 @@ object CalendarInterval {
     }
   }
 
-  /**指定した年の元旦からその年の大晦日までの、期間を生成する。
+  /**
+   * 指定した年の元旦からその年の大晦日までの、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *

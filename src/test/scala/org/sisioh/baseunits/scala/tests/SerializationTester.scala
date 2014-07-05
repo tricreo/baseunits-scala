@@ -22,7 +22,8 @@ import java.io._
 import org.junit.Assert._
 import org.apache.commons.io.IOUtils
 
-/**シリアライズのテストを行う、ヘルパークラス。
+/**
+ * シリアライズのテストを行う、ヘルパークラス。
  */
 object SerializationTester {
 
@@ -52,7 +53,7 @@ object SerializationTester {
         fail("Reconstituted object is expected to be equal to serialized")
       }
     } catch {
-      case e: IOException => fail(e.getMessage)
+      case e: IOException            => fail(e.getMessage)
       case e: ClassNotFoundException => fail(e.getMessage)
     } finally {
       IOUtils.closeQuietly(out)

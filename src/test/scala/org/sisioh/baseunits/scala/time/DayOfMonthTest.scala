@@ -21,7 +21,8 @@ package org.sisioh.baseunits.scala.time
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**`DayOfMonth`のテストクラス。
+/**
+ * `DayOfMonth`のテストクラス。
  */
 class DayOfMonthTest extends AssertionsForJUnit {
   /**
@@ -41,21 +42,21 @@ class DayOfMonthTest extends AssertionsForJUnit {
       fail()
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail()
+      case _: Throwable                => fail()
     }
     try {
       DayOfMonth(-1)
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail
+      case _: Throwable                => fail
     }
     try {
       DayOfMonth(32)
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail
+      case _: Throwable                => fail
     }
   }
 
@@ -74,21 +75,21 @@ class DayOfMonthTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail
+      case _: Throwable                => fail
     }
     try {
       DayOfMonth(-1)
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail
+      case _: Throwable                => fail
     }
     try {
       DayOfMonth(32)
       fail;
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail
+      case _: Throwable                => fail
     }
   }
 

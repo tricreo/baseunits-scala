@@ -18,78 +18,84 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import java.util.{GregorianCalendar, Calendar}
+import java.util.{ GregorianCalendar, Calendar }
 
-
-/** 1年の中の特定の「月」を表す列挙型。
-  *
-  * @param lastDayOfThisMonth その月の最終日
-  * @param calendarValue [[java.util.Calendar]]に定義する月をあらわす定数値
-  */
-sealed class MonthOfYear
-(private[time] val lastDayOfThisMonth: DayOfMonth,
- private[time] val calendarValue: Int) {
+/**
+ * 1年の中の特定の「月」を表す列挙型。
+ *
+ * @param lastDayOfThisMonth その月の最終日
+ * @param calendarValue [[java.util.Calendar]]に定義する月をあらわす定数値
+ */
+sealed class MonthOfYear(private[time] val lastDayOfThisMonth: DayOfMonth,
+                         private[time] val calendarValue: Int) {
 
   private[time] def value = calendarValue
 
-  /** このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
-    *
-    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-    *
-    * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
-    */
+  /**
+   * このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
+   *
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+   *
+   * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
+   */
   def breachEncapsulationOfCalendarValue = calendarValue;
 
-  /** このオブジェクトの`value`フィールド（月をあらわす数 1〜12）を返す。
-    *
-    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-    *
-    * @return 月をあらわす数（1〜12）
-    */
+  /**
+   * このオブジェクトの`value`フィールド（月をあらわす数 1〜12）を返す。
+   *
+   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+   *
+   * @return 月をあらわす数（1〜12）
+   */
   def breachEncapsulationOfValue = value
 
-  /** 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
-    *
-    * お互いが同一日時である場合は `false` を返す。
-    *
-    * @param other 対象日時
-    * @return 過去である場合は`true`、そうでない場合は`false`
-    */
+  /**
+   * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+   *
+   * お互いが同一日時である場合は `false` を返す。
+   *
+   * @param other 対象日時
+   * @return 過去である場合は`true`、そうでない場合は`false`
+   */
   def isAfter(other: MonthOfYear) = isBefore(other) == false && equals(other) == false
 
-  /** 指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
-    *
-    * お互いが同一日時である場合は `false` を返す。
-    *
-    * @param other 対象日
-    * @return 未来である場合は`true`、そうでない場合は`false`
-    */
+  /**
+   * 指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+   *
+   * お互いが同一日時である場合は `false` を返す。
+   *
+   * @param other 対象日
+   * @return 未来である場合は`true`、そうでない場合は`false`
+   */
   def isBefore(other: MonthOfYear) = value < other.value
 
   //	public DayOfYear at(DayOfMonth month) {
   //		// ...
   //	}
 
-  /** 指定した年の、この月を表す年月を返す。
-    *
-    * @param year 年
-    * @return 年月
-    */
+  /**
+   * 指定した年の、この月を表す年月を返す。
+   *
+   * @param year 年
+   * @return 年月
+   */
   def on(year: Int): CalendarMonth = CalendarMonth.from(year, this)
 
-  /** その月の最終日を取得する。
-    *
-    * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
-    * @return 最終日
-    */
+  /**
+   * その月の最終日を取得する。
+   *
+   * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
+   * @return 最終日
+   */
   private[time] def getLastDayOfThisMonth(year: Int) = lastDayOfThisMonth
 
 }
 
-/** `MonthOfYear`コンパニオンオブジェクト。
-  *
-  * @author j5ik2o
-  */
+/**
+ * `MonthOfYear`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object MonthOfYear {
 
   def apply(month: Int): MonthOfYear = {
@@ -138,6 +144,5 @@ object MonthOfYear {
 
   /** December */
   val Dec = new MonthOfYear(DayOfMonth(31), Calendar.DECEMBER)
-
 
 }

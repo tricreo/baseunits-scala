@@ -20,20 +20,23 @@ package org.sisioh.baseunits.scala.time
 
 import org.sisioh.baseunits.scala.util.Specification
 
-/**日付の仕様を表現するオブジェクト。
+/**
+ * 日付の仕様を表現するオブジェクト。
  *
  * @author j5ik2o
  */
 abstract class DateSpecification extends Specification[CalendarDate] {
 
-  /**指定した期間の中で、この日付仕様を満たす最初の年月日を返す。
+  /**
+   * 指定した期間の中で、この日付仕様を満たす最初の年月日を返す。
    *
    * @param interval 期間
    * @return 年月日。但し、仕様を満たす日がなかった場合は`None`
    */
   def firstOccurrenceIn(interval: CalendarInterval): Option[CalendarDate]
 
-  /**与えた日付が、この日付仕様を満たすかどうか検証する。
+  /**
+   * 与えた日付が、この日付仕様を満たすかどうか検証する。
    *
    * @param date 検証対象の日付
    * @return 仕様を満たす場合は`true`、そうでない場合は`false`
@@ -50,7 +53,8 @@ abstract class DateSpecification extends Specification[CalendarDate] {
 
 }
 
-/**`DateSpecification`コンパニオンオブジェクト。
+/**
+ * `DateSpecification`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
@@ -107,7 +111,8 @@ object DateSpecification {
 
     }
 
-  /**毎月第Y◎曜日仕様のインスタンスを生成する。
+  /**
+   * 毎月第Y◎曜日仕様のインスタンスを生成する。
    *
    * @param dayOfWeek 曜日
    * @param n 周回数（1〜5）
@@ -116,7 +121,8 @@ object DateSpecification {
   def nthOccuranceOfWeekdayInEveryMonth(dayOfWeek: DayOfWeek, n: Int): DateSpecification =
     new MonthlyFloatingDateSpecification(dayOfWeek, n)
 
-  /**X月の第Y◎曜日仕様のインスタンスを生成する。
+  /**
+   * X月の第Y◎曜日仕様のインスタンスを生成する。
    *
    * @param month 月を表す正数（1〜12）
    * @param dayOfWeek 曜日

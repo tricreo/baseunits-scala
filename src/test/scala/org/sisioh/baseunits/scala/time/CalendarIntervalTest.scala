@@ -21,10 +21,11 @@ package org.sisioh.baseunits.scala.time
 import org.scalatest.junit.AssertionsForJUnit
 import java.util.TimeZone
 import org.junit.Test
-import org.sisioh.baseunits.scala.intervals.{Limitless, Limit}
+import org.sisioh.baseunits.scala.intervals.{ Limitless, Limit }
 
-/** `CalendarInterval`のテストクラス。
-  */
+/**
+ * `CalendarInterval`のテストクラス。
+ */
 class CalendarIntervalTest extends AssertionsForJUnit {
 
   val may1 = CalendarDate.from(2004, 5, 1)
@@ -46,7 +47,6 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   val may = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 31)
 
   val ct = TimeZone.getTimeZone("America/Chicago")
-
 
   /**
    * [[CalendarInterval]]のインスタンスがシリアライズできるかどうか検証する。
@@ -95,7 +95,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _: Throwable => fail
+      case _: Throwable              => fail
     }
 
     try {
@@ -103,7 +103,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalStateException => // success
-      case _: Throwable => fail
+      case _: Throwable             => fail
     }
   }
 
@@ -129,7 +129,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail("CalendarInterval should not accept subinterval length that is not a multiple of days.")
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail
+      case _: Throwable                => fail
     }
 
     iterator = may1_3.subintervalIterator(Duration.months(1))
@@ -139,7 +139,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _: Throwable => fail
+      case _: Throwable              => fail
     }
 
     val apr15_jun1 = CalendarInterval.inclusive(Limit(apr15), Limit(jun1))
@@ -153,7 +153,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalStateException => // success
-      case _: Throwable => fail
+      case _: Throwable             => fail
     }
   }
 
@@ -194,7 +194,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _: Throwable => fail
+      case _: Throwable                => fail
     }
   }
 

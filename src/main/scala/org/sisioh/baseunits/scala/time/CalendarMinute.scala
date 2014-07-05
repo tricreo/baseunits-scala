@@ -20,7 +20,8 @@ package org.sisioh.baseunits.scala.time
 
 import java.util.TimeZone
 
-/**カレンダー上の特定の「年月日時分」を表すクラス。
+/**
+ * カレンダー上の特定の「年月日時分」を表すクラス。
  *
  * [[java.util.Date]]と異なり、分未満（秒以下）の概念を持っていない。また、
  * [[org.sisioh.baseunits.scala.time.TimePoint]]と異なり、
@@ -30,13 +31,12 @@ import java.util.TimeZone
  * @param date 年月日
  * @param time 時分
  */
-class CalendarMinute private[time]
-(private[time] val date: CalendarDate,
- private[time] val time: TimeOfDay)
-  extends Ordered[CalendarMinute] with Serializable{
+class CalendarMinute private[time] (private[time] val date: CalendarDate,
+                                    private[time] val time: TimeOfDay)
+    extends Ordered[CalendarMinute] with Serializable {
 
-
-  /**指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
+  /**
+   * 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
    * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
    * @param timeZone タイムゾーン
@@ -45,7 +45,8 @@ class CalendarMinute private[time]
   def asTimePoint(timeZone: TimeZone): TimePoint =
     TimePoint.from(date, time, timeZone)
 
-  /**このオブジェクトの`date`フィールド（年月日）を返す。
+  /**
+   * このオブジェクトの`date`フィールド（年月日）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -53,7 +54,8 @@ class CalendarMinute private[time]
    */
   def breachEncapsulationOfDate = date
 
-  /**このオブジェクトの`time`フィールド（時分）を返す。
+  /**
+   * このオブジェクトの`time`フィールド（時分）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -72,12 +74,13 @@ class CalendarMinute private[time]
 
   override def equals(obj: Any): Boolean = obj match {
     case that: CalendarMinute => date == that.date && time == that.time
-    case _ => false
+    case _                    => false
   }
 
   override def hashCode = date.hashCode + time.hashCode
 
-  /**指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
+  /**
+   * 指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
    *
    * お互いが同一日時である場合は `false` を返す。
    *
@@ -88,7 +91,8 @@ class CalendarMinute private[time]
     isBefore(other) == false && equals(other) == false
   }
 
-  /**指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
+  /**
+   * 指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
    *
    * お互いが同一日時である場合は `false` を返す。
    *
@@ -109,7 +113,8 @@ class CalendarMinute private[time]
     date.toString + " at " + time.toString
   }
 
-  /**この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
+  /**
+   * この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
    *
    * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
    * @param zone タイムゾーン
@@ -122,14 +127,15 @@ class CalendarMinute private[time]
 
 }
 
-
-/**コンパニオンオブジェクト。
+/**
+ * コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object CalendarMinute {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param aDate [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @param aTime [[org.sisioh.baseunits.scala.time.TimeOfDay]]
@@ -137,16 +143,17 @@ object CalendarMinute {
    */
   def apply(aDate: CalendarDate, aTime: TimeOfDay) = from(aDate, aTime)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param calendarMinute [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    * @return `Option[(CalendarDate,TimeOfDay)]`
    */
-  def unapply(calendarMinute:CalendarMinute) =
+  def unapply(calendarMinute: CalendarMinute) =
     Some(calendarMinute.date, calendarMinute.time)
 
-
-  /**指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
+  /**
+   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
    *
    * @param aDate 年月日
    * @param aTime 時分
@@ -154,7 +161,8 @@ object CalendarMinute {
    */
   def from(aDate: CalendarDate, aTime: TimeOfDay): CalendarMinute = new CalendarMinute(aDate, aTime)
 
-  /**指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
+  /**
+   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
@@ -169,7 +177,8 @@ object CalendarMinute {
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarMinute =
     new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute))
 
-  /**指定した年月日時分を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+  /**
+   * 指定した年月日時分を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param dateTimeString 年月日時分を表す文字列
    * @param pattern 解析パターン文字列

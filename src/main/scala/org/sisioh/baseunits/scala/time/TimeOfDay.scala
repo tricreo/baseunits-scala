@@ -20,19 +20,19 @@ package org.sisioh.baseunits.scala.time
 
 import java.util.TimeZone
 
-/**1日の中の特定の「時分」を表すクラス。
+/**
+ * 1日の中の特定の「時分」を表すクラス。
  *
  * [[java.util.Date]]と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。
  * @param hour 時
  * @param minute 分
  */
-class TimeOfDay private[time]
-(private[time] val hour: HourOfDay,
- private[time] val minute: MinuteOfHour)
-  extends Ordered[TimeOfDay] with Serializable {
+class TimeOfDay private[time] (private[time] val hour: HourOfDay,
+                               private[time] val minute: MinuteOfHour)
+    extends Ordered[TimeOfDay] with Serializable {
 
-
-  /**指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について
+  /**
+   * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について
    * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
    * @param date 年月日
@@ -44,7 +44,8 @@ class TimeOfDay private[time]
     timeOfDayOnDate.asTimePoint(timeZone)
   }
 
-  /**このオブジェクトの`hour`フィールド（時）を返す。
+  /**
+   * このオブジェクトの`hour`フィールド（時）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -52,15 +53,14 @@ class TimeOfDay private[time]
    */
   def breachEncapsulationOfHour = hour
 
-
-  /**このオブジェクトの`minute`フィールド（分）を返す。
+  /**
+   * このオブジェクトの`minute`フィールド（分）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
    * @return 分
    */
   def breachEncapsulationOfMinute = minute;
-
 
   def compare(other: TimeOfDay): Int = {
     val hourComparance = hour compare other.hour
@@ -70,13 +70,13 @@ class TimeOfDay private[time]
 
   override def equals(obj: Any): Boolean = obj match {
     case that: TimeOfDay => hour == that.hour && minute == that.minute
-    case _ => false
+    case _               => false
   }
 
   override def hashCode = hour.hashCode + minute.hashCode
 
-
-  /**このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
+  /**
+   * このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
    *
    * 等価の場合は`false`を返す。
    *
@@ -87,7 +87,8 @@ class TimeOfDay private[time]
     hour.isAfter(another.hour) || (hour == another.hour && minute.isAfter(another.minute))
   }
 
-  /**このインスタンスがあらわす時分が、指定した時分よりも過去であるかどうか調べる。
+  /**
+   * このインスタンスがあらわす時分が、指定した時分よりも過去であるかどうか調べる。
    *
    * 等価の場合は`false`を返す。
    *
@@ -98,7 +99,8 @@ class TimeOfDay private[time]
     hour.isBefore(another.hour) || (hour == another.hour && minute.isBefore(another.minute))
   }
 
-  /**指定した年月日における、このインスタンスがあらわす時分について
+  /**
+   * 指定した年月日における、このインスタンスがあらわす時分について
    * [[org.sisioh.baseunits.scala.time.CalendarMinute]] 型のインスタンスを返す。
    *
    * @param date 年月日
@@ -112,27 +114,30 @@ class TimeOfDay private[time]
 
 }
 
-/**`TimeOfDay`コンパニオンオブジェクト。
+/**
+ * `TimeOfDay`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object TimeOfDay {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param hour 時
    * @param minute 分
    */
   def apply(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = new TimeOfDay(hour, minute)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param timeOfDay [[org.sisioh.baseunits.scala.time.TimeOfDay]]
    */
   def unapply(timeOfDay: TimeOfDay) = Some(timeOfDay.hour, timeOfDay.minute)
 
-
-  /**指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
+  /**
+   * 指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
    *
    * @param hour 時
    * @param minute 分

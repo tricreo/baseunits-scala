@@ -21,54 +21,59 @@ package org.sisioh.baseunits.scala.time
 import java.util.Calendar
 import java.lang.String
 
-/** 時間の単位を表す列挙型。
-  *
-  * @author j5ik2o
-  */
-final class TimeUnit private[time]
-(_name: String,
- private[time] val valueType: TimeUnit.Type,
- private[time] val valueBaseType: TimeUnit.Type,
- private[time] val factor: TimeUnitConversionFactor) extends Ordered[TimeUnit] {
+/**
+ * 時間の単位を表す列挙型。
+ *
+ * @author j5ik2o
+ */
+final class TimeUnit private[time] (_name: String,
+                                    private[time] val valueType: TimeUnit.Type,
+                                    private[time] val valueBaseType: TimeUnit.Type,
+                                    private[time] val factor: TimeUnitConversionFactor) extends Ordered[TimeUnit] {
 
   val name = _name
 
-  /** この単位で表される値を、指定した単位に変換できるかどうかを検証する。
-    * 例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）日単位に変換できない。
-    *
-    * @param other 変換先単位
-    * @return 変換できる場合は`true`、そうでない場合は`false`
-    */
+  /**
+   * この単位で表される値を、指定した単位に変換できるかどうかを検証する。
+   * 例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）日単位に変換できない。
+   *
+   * @param other 変換先単位
+   * @return 変換できる場合は`true`、そうでない場合は`false`
+   */
   def isConvertibleTo(other: TimeUnit) = valueBaseType == other.valueBaseType
 
-  /** この単位で表される値を、ミリ秒単位に変換できるかどうかを検証する。
-    * 例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）ミリ秒単位に変換できない。
-    *
-    * @return 変換できる場合は`true`、そうでない場合は`false`
-    */
+  /**
+   * この単位で表される値を、ミリ秒単位に変換できるかどうかを検証する。
+   * 例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）ミリ秒単位に変換できない。
+   *
+   * @return 変換できる場合は`true`、そうでない場合は`false`
+   */
   def isConvertibleToMilliseconds = isConvertibleTo(TimeUnit.millisecond)
 
   //  override def toString = valueType.name
 
-  /** この単位の計数の基数とすることができる最小の単位を取得する。
-    * 例えば、分単位はミリ秒単位で計数できるが、四半期単位は（一ヶ月の長さが毎月異なるため）月単位までしか計数できない。
-    *
-    * @return この単位の計数の基数とすることができる最小の単位
-    */
+  /**
+   * この単位の計数の基数とすることができる最小の単位を取得する。
+   * 例えば、分単位はミリ秒単位で計数できるが、四半期単位は（一ヶ月の長さが毎月異なるため）月単位までしか計数できない。
+   *
+   * @return この単位の計数の基数とすることができる最小の単位
+   */
   def baseUnit: TimeUnit =
     if (valueBaseType == TimeUnit.Type.millisecond) TimeUnit.millisecond else TimeUnit.month
 
-  /** この単位から変換可能な全ての単位を含み、大きい単位から降順にソートした配列を取得する。
-    *
-    * @return この単位から変換可能な全ての単位を含み、大きい単位から降順にソートした配列
-    */
+  /**
+   * この単位から変換可能な全ての単位を含み、大きい単位から降順にソートした配列を取得する。
+   *
+   * @return この単位から変換可能な全ての単位を含み、大きい単位から降順にソートした配列
+   */
   def descendingUnits =
     if (isConvertibleToMilliseconds) TimeUnit.DESCENDING_MS_BASED else TimeUnit.DESCENDING_MONTH_BASED
 
-  /** この単位から変換可能な単位のうち、しばしば表示に利用する単位を、大きい単位から降順にソートした配列を取得する。
-    *
-    * @return この単位から変換可能な全ての単位のうち、しばしば表示に利用する単位を、大きい単位から降順にソートした配列
-    */
+  /**
+   * この単位から変換可能な単位のうち、しばしば表示に利用する単位を、大きい単位から降順にソートした配列を取得する。
+   *
+   * @return この単位から変換可能な全ての単位のうち、しばしば表示に利用する単位を、大きい単位から降順にソートした配列
+   */
   def descendingUnitsForDisplay =
     if (isConvertibleToMilliseconds) TimeUnit.DESCENDING_MS_BASED_FOR_DISPLAY else TimeUnit.DESCENDING_MONTH_BASED_FOR_DISPLAY;
 
@@ -82,10 +87,11 @@ final class TimeUnit private[time]
     } else 0
   }
 
-  /** この単位から変換可能な単位のうち、現在の単位より一つ小さい単位を取得する。
-    *
-    * @return この単位から変換可能な単位のうち、現在の単位より一つ小さい単位
-    */
+  /**
+   * この単位から変換可能な単位のうち、現在の単位より一つ小さい単位を取得する。
+   *
+   * @return この単位から変換可能な単位のうち、現在の単位より一つ小さい単位
+   */
   def nextFinerUnit = {
     val descending = descendingUnits
     var index = -1
@@ -110,16 +116,17 @@ final class TimeUnit private[time]
   def compare(that: TimeUnit): Int = valueType.ordinal compare that.valueType.ordinal
 }
 
-/** `TimeUnit`コンパニオンオブジェクト。
-  *
-  * @author j5ik2o
-  */
+/**
+ * `TimeUnit`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object TimeUnit {
 
   private[time] final class Type(val ordinal: Int, val name: String) {
     override def equals(obj: Any): Boolean = obj match {
       case that: Type => ordinal == that.ordinal && name == that.name
-      case _ => false
+      case _          => false
     }
 
     override def hashCode: Int = ordinal.hashCode + name.hashCode

@@ -20,13 +20,15 @@ package org.sisioh.baseunits.scala.money
 
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
-import org.sisioh.baseunits.scala.time.{TimeRate, Duration}
+import org.sisioh.baseunits.scala.time.{ TimeRate, Duration }
 import java.util.Currency
 
-/**`MoneyTimeRate`のテストクラス。
+/**
+ * `MoneyTimeRate`のテストクラス。
  */
 class MoneyTimeRateTest extends AssertionsForJUnit {
-  /**{@link MoneyTimeRate#equals(Object)}のテスト。
+  /**
+   * {@link MoneyTimeRate#equals(Object)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -49,7 +51,8 @@ class MoneyTimeRateTest extends AssertionsForJUnit {
     assert(rate.hashCode != new MoneyTimeRate(Money.yens(11.00), Duration.days(2)).hashCode)
   }
 
-  /**{@link MoneyTimeRate}のインスタンス生成テスト。
+  /**
+   * {@link MoneyTimeRate}のインスタンス生成テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -62,7 +65,8 @@ class MoneyTimeRateTest extends AssertionsForJUnit {
     assert(rate.breachEncapsulationOfCurrency == Currency.getInstance("USD"))
   }
 
-  /**{@link MoneyTimeRate#over(Duration)}のテスト。
+  /**
+   * {@link MoneyTimeRate#over(Duration)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -73,12 +77,13 @@ class MoneyTimeRateTest extends AssertionsForJUnit {
       rate.over(Duration.minutes(1))
       fail("ArtithmeticException should have been thrown. This case requires rounding.")
     } catch {
-      case _:ArithmeticException => // success
-      case _: Throwable => fail
+      case _: ArithmeticException => // success
+      case _: Throwable           => fail
     }
   }
 
-  /**{@link MoneyTimeRate#over(Duration, RoundingMode)}のテスト。
+  /**
+   * {@link MoneyTimeRate#over(Duration, RoundingMode)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -88,7 +93,8 @@ class MoneyTimeRateTest extends AssertionsForJUnit {
     assert(rate.over(Duration.minutes(1), BigDecimal.RoundingMode.DOWN) == Money.euros(BigDecimal("33.33")))
   }
 
-  /**{@link MoneyTimeRate#over(Duration, int, RoundingMode)}のテスト。
+  /**
+   * {@link MoneyTimeRate#over(Duration, int, RoundingMode)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -98,7 +104,8 @@ class MoneyTimeRateTest extends AssertionsForJUnit {
     assert(rate.over(Duration.minutes(1), 2, BigDecimal.RoundingMode.DOWN) == Money.euros(BigDecimal("33.33")))
   }
 
-  /**{@link MoneyTimeRate#toString()}のテスト。
+  /**
+   * {@link MoneyTimeRate#toString()}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

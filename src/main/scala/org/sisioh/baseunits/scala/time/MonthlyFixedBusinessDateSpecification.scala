@@ -18,15 +18,15 @@
  */
 package org.sisioh.baseunits.scala.time
 
-
 sealed trait Shifter {
   def shift(date: CalendarDate, cal: BusinessCalendar): CalendarDate
 }
 
-/** コンパニオンオブジェクト。
-  *
-  * @author j5ik2o
-  */
+/**
+ * コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 object Shifter {
 
   case object Next extends Shifter {
@@ -41,13 +41,12 @@ object Shifter {
 
 }
 
-
-/** 指定日が非営業日の場合のシフト戦略。
-  */
-class MonthlyFixedBusinessDateSpecification
-(val day: DayOfMonth,
- val shifter: Shifter,
- val cal: BusinessCalendar) extends MonthlyDateSpecification {
+/**
+ * 指定日が非営業日の場合のシフト戦略。
+ */
+class MonthlyFixedBusinessDateSpecification(val day: DayOfMonth,
+                                            val shifter: Shifter,
+                                            val cal: BusinessCalendar) extends MonthlyDateSpecification {
 
   def ofYearMonth(month: CalendarMonth) =
     shifter.shift(CalendarDate.from(month.breachEncapsulationOfYear,

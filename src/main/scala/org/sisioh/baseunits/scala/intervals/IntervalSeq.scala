@@ -19,9 +19,10 @@
 package org.sisioh.baseunits.scala.intervals
 
 import scala.collection._
-import mutable.{ListBuffer, Builder}
+import mutable.{ ListBuffer, Builder }
 
-/**区間同士の比較を行うための`Ordering`の実装(上側優先)
+/**
+ * 区間同士の比較を行うための`Ordering`の実装(上側優先)
  *
  * 上側限界による比較を優先し、同じであったら下側限界による比較を採用する。
  *
@@ -29,9 +30,8 @@ import mutable.{ListBuffer, Builder}
  * @param inverseLower 下限が逆順の場合は`true`
  * @param inverseUpper 上限が逆順の場合は`false`
  */
-class UpperLowerOrdering[T <% Ordered[T]]
-(private val inverseLower: Boolean, private val inverseUpper: Boolean)
-  extends Ordering[Interval[T]] {
+class UpperLowerOrdering[T <% Ordered[T]](private val inverseLower: Boolean, private val inverseUpper: Boolean)
+    extends Ordering[Interval[T]] {
 
   private[this] val lowerFactor = if (inverseLower) -1 else 1
   private[this] val upperFactor = if (inverseUpper) -1 else 1
@@ -51,13 +51,15 @@ class UpperLowerOrdering[T <% Ordered[T]]
     }
 }
 
-/**`UpperLowerOrdering`コンパニオンオブジェクト。
+/**
+ * `UpperLowerOrdering`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object UpperLowerOrdering {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param inverseLower
    * @param inverseUpper
@@ -66,7 +68,8 @@ object UpperLowerOrdering {
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new UpperLowerOrdering[T](inverseLower, inverseUpper)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param upperLowerOrdering [[org.sisioh.baseunits.scala.intervals.UpperLowerOrdering]]
    * @return `Option[(Boolean, Boolean)]`
@@ -76,7 +79,8 @@ object UpperLowerOrdering {
 
 }
 
-/**区間同士の比較を行うための`Ordering`の実装(下側優先)
+/**
+ * 区間同士の比較を行うための`Ordering`の実装(下側優先)
  *
  * 下側限界による比較を優先し、同じであったら上側限界による比較を採用する。
  *
@@ -84,9 +88,8 @@ object UpperLowerOrdering {
  * @param inverseLower 下限が逆順の場合は`true`
  * @param inverseUpper 上限が逆順の場合は`false`
  */
-class LowerUpperOrdering[T <% Ordered[T]]
-(private val inverseLower: Boolean, private val inverseUpper: Boolean)
-  extends Ordering[Interval[T]] {
+class LowerUpperOrdering[T <% Ordered[T]](private val inverseLower: Boolean, private val inverseUpper: Boolean)
+    extends Ordering[Interval[T]] {
 
   private[this] val lowerFactor = if (inverseLower) -1 else 1
   private[this] val upperFactor = if (inverseUpper) -1 else 1
@@ -106,13 +109,15 @@ class LowerUpperOrdering[T <% Ordered[T]]
     }
 }
 
-/**`LowerUpperOrdering`コンパニオンオブジェクト。
+/**
+ * `LowerUpperOrdering`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object LowerUpperOrdering {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param inverseLower
    * @param inverseUpper
@@ -121,7 +126,8 @@ object LowerUpperOrdering {
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param upperLowerOrdering [[org.sisioh.baseunits.scala.intervals.LowerUpperOrdering]]
    * @return `Option[(Boolean, Boolean)]`
@@ -131,38 +137,40 @@ object LowerUpperOrdering {
     Some(lowerUpperOrdering.inverseLower, lowerUpperOrdering.inverseUpper)
 }
 
-/**区間列（複数の [[org.sisioh.beseunits.scala.intervals.Interval]] の列）を表すクラス。
+/**
+ * 区間列（複数の [[org.sisioh.beseunits.scala.intervals.Interval]] の列）を表すクラス。
  *
  * @author j5ik2o
  * @tparam T [[org.sisioh.beseunits.scala.intervals.Interval]]の型
  * @param intervals [[org.sisioh.beseunits.scala.intervals.Interval]]の列
  * @param ordering [[org.sisioh.beseunits.scala.intervals.Ordering]]
  */
-class IntervalSeq[T <% Ordered[T]]
-(val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
-  extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
+class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
+    extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
 
   import mutable.Builder
 
   override protected def newBuilder: Builder[Interval[T], IntervalSeq[T]] =
     IntervalSeq.newBuilder[T](ordering)
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * `intervals`は空を利用し、`ordering`は`UpperLowerOrdering[T](true, false)`を利用する。
    */
-  def this() = this (Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
+  def this() = this(Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * `ordering`は`UpperLowerOrdering[T](true, false)`を利用する。
    *
    * @param intervals [[org.sisioh.beseunits.scala.intervals.Interval]]の列
    */
-  def this(intervals: Seq[Interval[T]]) = this (intervals, UpperLowerOrdering[T](true, false))
+  def this(intervals: Seq[Interval[T]]) = this(intervals, UpperLowerOrdering[T](true, false))
 
-
-  /**全ての要素区間を内包する、最小の区間を返す。
+  /**
+   * 全ての要素区間を内包する、最小の区間を返す。
    *
    * @return 全ての要素区間を内包する、最小の区間
    * @throws IllegalStateException 要素が1つもない場合
@@ -179,8 +187,8 @@ class IntervalSeq[T <% Ordered[T]]
     }
   }
 
-
-  /**ソート済みの区間で、隣り合った区間同士に挟まれる区間を区間列として返す。
+  /**
+   * ソート済みの区間で、隣り合った区間同士に挟まれる区間を区間列として返す。
    *
    * 結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。
    *
@@ -208,8 +216,8 @@ class IntervalSeq[T <% Ordered[T]]
     }
   }
 
-
-  /**ソート済みの区間で、隣り合った区間同士が重なっている区間を区間列として返す。
+  /**
+   * ソート済みの区間で、隣り合った区間同士が重なっている区間を区間列として返す。
    *
    * 結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。
    *
@@ -234,7 +242,6 @@ class IntervalSeq[T <% Ordered[T]]
     }
   }
 
-
   def iterator = this.intervals.iterator
 
   def length: Int = this.intervals.length
@@ -243,13 +250,13 @@ class IntervalSeq[T <% Ordered[T]]
 
 }
 
-/**[[org.sisioh.baseunits.scala.intervals.IntervalSeq]]のためのビルダー。
+/**
+ * [[org.sisioh.baseunits.scala.intervals.IntervalSeq]]のためのビルダー。
  *
  * @author j5ik2o
  */
-class IntervalSeqBuilder[T <% Ordered[T]]
-(val ord: Option[Ordering[Interval[T]]] = None)
-  extends Builder[Interval[T], IntervalSeq[T]] {
+class IntervalSeqBuilder[T <% Ordered[T]](val ord: Option[Ordering[Interval[T]]] = None)
+    extends Builder[Interval[T], IntervalSeq[T]] {
 
   val builder = new ListBuffer[Interval[T]]
 
@@ -263,12 +270,13 @@ class IntervalSeqBuilder[T <% Ordered[T]]
   def result: IntervalSeq[T] =
     ord match {
       case Some(ord) => IntervalSeq(builder.sorted(ord).result)
-      case None => IntervalSeq(builder.result)
+      case None      => IntervalSeq(builder.result)
     }
 
 }
 
-/**`IntervalSeq`コンパニオンオブジェクト
+/**
+ * `IntervalSeq`コンパニオンオブジェクト
  *
  * @author j5ik2o
  */
@@ -286,7 +294,7 @@ object IntervalSeq {
       def apply(from: From[T]) = {
         from match {
           case intervalSeq: IntervalSeq[T] => new IntervalSeqBuilder[T](Some(intervalSeq.ordering))
-          case _ => throw new Error
+          case _                           => throw new Error
         }
       }
 
@@ -294,7 +302,8 @@ object IntervalSeq {
 
     }
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @tparam T 限界値の型
    * @param intervals
@@ -302,7 +311,8 @@ object IntervalSeq {
    */
   def apply[T <% Ordered[T]](intervals: From[T]) = new IntervalSeq(intervals)
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @tparam T 限界値の型
    * @param intervals
@@ -310,7 +320,8 @@ object IntervalSeq {
    */
   def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @tparam T 限界値の型
    * @param intervals
@@ -319,7 +330,8 @@ object IntervalSeq {
   def unapply[T <% Ordered[T]](intervalSeq: IntervalSeq[T]) =
     Some(intervalSeq.intervals, intervalSeq.ordering)
 
-  /**ビルダーを生成するメソッド。
+  /**
+   * ビルダーを生成するメソッド。
    *
    * @tparam T 限界値の型
    * @return ビルダー

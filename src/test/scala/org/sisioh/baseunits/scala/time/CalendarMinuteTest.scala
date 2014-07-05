@@ -22,7 +22,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import java.util.TimeZone
 import org.junit.Test
 
-/**`CalendarMinute`のテストクラス。
+/**
+ * `CalendarMinute`のテストクラス。
  */
 class CalendarMinuteTest extends AssertionsForJUnit {
   val feb17_1_23 = CalendarMinute.from(2003, 2, 17, 1, 23)
@@ -34,7 +35,6 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   val mar13_3_45 = CalendarMinute.from(2003, 3, 13, 3, 45)
 
   val ct = TimeZone.getTimeZone("America/Chicago")
-
 
   /**
    * [[CalendarMinute]]のインスタンスがシリアライズできるかどうか検証する。
@@ -129,11 +129,11 @@ class CalendarMinuteTest extends AssertionsForJUnit {
     assert(feb17_1_23.equals(null) == false)
     assert(new CalendarMinute(CalendarDate.from(2003, 2, 17),
       TimeOfDay.from(1, 23)).equals(feb17_1_23) == true)
-//    assert(new CalendarMinute(CalendarDate.from(2003, 2, 17),
-//      TimeOfDay.from(1, 23)) {
-//
-//      private static final long serialVersionUID = 8307944665463538049L;
-//    }.equals(feb17_1_23) == false)
+    //    assert(new CalendarMinute(CalendarDate.from(2003, 2, 17),
+    //      TimeOfDay.from(1, 23)) {
+    //
+    //      private static final long serialVersionUID = 8307944665463538049L;
+    //    }.equals(feb17_1_23) == false)
 
     assert(feb17_1_23.hashCode == feb17_1_23.hashCode)
     assert(feb17_1_23.hashCode != feb17_3_45.hashCode)

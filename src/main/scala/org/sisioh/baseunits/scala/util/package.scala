@@ -1,6 +1,7 @@
 package org.sisioh.baseunits.scala
 
-/**ユーティリティクラス群。
+/**
+ * ユーティリティクラス群。
  *
  * @author j5ik2o
  */

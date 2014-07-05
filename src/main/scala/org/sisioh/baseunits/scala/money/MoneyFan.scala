@@ -21,31 +21,34 @@ package org.sisioh.baseunits.scala.money
 import collection.Iterator
 import collection.mutable.ListBuffer
 
-/**割り当ての集合。
+/**
+ * 割り当ての集合。
  *
  * @author j5ik2o
  * @tparam T 割り当て対象
  * @param allotments 割り当ての要素（複数）
  */
-class MoneyFan[T]
-(private val allotments: Set[Allotment[T]])
-  extends Iterable[Allotment[T]] {
+class MoneyFan[T](private val allotments: Set[Allotment[T]])
+    extends Iterable[Allotment[T]] {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * `allotments`は空のインスタンスが利用される。
    */
-  def this() = this (Set.empty[Allotment[T]])
+  def this() = this(Set.empty[Allotment[T]])
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param allotment 割り当ての要素（単一)
    */
-  def this(allotment: Allotment[T]) = this (Set(allotment))
+  def this(allotment: Allotment[T]) = this(Set(allotment))
 
   def iterator: Iterator[Allotment[T]] = allotments.iterator
 
-  /**`MoneyFan`が保持する `Allotment`のうち、割り当て対象が `anEntity`であるものを返す。
+  /**
+   * `MoneyFan`が保持する `Allotment`のうち、割り当て対象が `anEntity`であるものを返す。
    *
    * @param anEntity 割り当て対象
    * @return `Allotment`。見つからなかった場合は`None`
@@ -57,11 +60,11 @@ class MoneyFan[T]
 
   override def equals(obj: Any): Boolean = obj match {
     case that: MoneyFan[T] => allotments == that.allotments
-    case _ => false
+    case _                 => false
   }
 
-
-  /**この[[org.sisioh.baseunits.scala.money.MoneyFan]]から`subtracted`を引いた差を返す。
+  /**
+   * この[[org.sisioh.baseunits.scala.money.MoneyFan]]から`subtracted`を引いた差を返す。
    *
    * @param subtracted [[org.sisioh.baseunits.scala.money.MoneyFan]]
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
@@ -70,8 +73,8 @@ class MoneyFan[T]
 
   def -(subtracted: MoneyFan[T]) = minus(subtracted)
 
-
-  /**この [[org.sisioh.baseunits.scala.money.MoneyFan]]の [[org.sisioh.baseunits.scala.money.Allotment]]を\
+  /**
+   * この [[org.sisioh.baseunits.scala.money.MoneyFan]]の [[org.sisioh.baseunits.scala.money.Allotment]]を\
    * `Allotment.negated`した [[scala.collection.Set]]で構成される
    * 新しい [[org.sisioh.baseunits.scala.money.MoneyFan]]を返す。
    *
@@ -84,7 +87,8 @@ class MoneyFan[T]
 
   def unary_- = negated
 
-  /**この[[org.sisioh.baseunits.scala.money.MoneyFan]]に`added`を足した和を返す。
+  /**
+   * この[[org.sisioh.baseunits.scala.money.MoneyFan]]に`added`を足した和を返す。
    *
    * 同じ割り当て対象に対する割当額は、マージする。また、割当額が0の [[org.sisioh.baseunits.scala.money.Allotment]] は取り除く。
    *
@@ -115,7 +119,8 @@ class MoneyFan[T]
 
   override def toString = allotments.toString
 
-  /**全ての割り当ての合計額を返す。
+  /**
+   * 全ての割り当ての合計額を返す。
    *
    * @return 合計額
    */
@@ -129,7 +134,8 @@ class MoneyFan[T]
     new Tally(moneies)
   }
 
-  /**このインスタンスが保持する [[org.sisioh.baseunits.scala.money.Allotment]] のうち、割り当て金額が`0`であるものを取り除いた
+  /**
+   * このインスタンスが保持する [[org.sisioh.baseunits.scala.money.Allotment]] のうち、割り当て金額が`0`であるものを取り除いた
    * 新しい [[org.sisioh.baseunits.scala.money.MoneyFan]]を返す。
    *
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
@@ -140,33 +146,38 @@ class MoneyFan[T]
   }
 }
 
-/**`MoneyFan`コンパニオンオブジェクト。
+/**
+ * `MoneyFan`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object MoneyFan {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param allotments 割り当ての要素（複数）
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def apply[T](allotments: Set[Allotment[T]]): MoneyFan[T] = new MoneyFan[T](allotments)
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param allotment 割り当ての要素（単一）
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def apply[T](allotment: Allotment[T]): MoneyFan[T] = new MoneyFan[T](allotment)
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   def apply[T]: MoneyFan[T] = new MoneyFan[T]
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param [[org.sisioh.baseunits.scala.money.MoneyFan]]
    * @return `Option[Set[Allotment[T]]]`

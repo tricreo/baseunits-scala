@@ -26,8 +26,8 @@ package org.sisioh.baseunits.scala.time
  * @param day 日
  */
 class AnnualFixedDateSpecification private[time] (private[time] val month: MonthOfYear,
-  private[time] val day: DayOfMonth)
-  extends AnnualDateSpecification {
+                                                  private[time] val day: DayOfMonth)
+    extends AnnualDateSpecification {
 
   override def isSatisfiedBy(date: CalendarDate) = {
     day == date.breachEncapsulationOfDay &&

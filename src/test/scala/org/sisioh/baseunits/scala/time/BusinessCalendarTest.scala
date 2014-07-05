@@ -19,11 +19,12 @@
 package org.sisioh.baseunits.scala.time
 
 import org.scalatest.junit.AssertionsForJUnit
-import org.junit.{Test, Before, After}
+import org.junit.{ Test, Before, After }
 import java.text.ParseException
 import org.sisioh.baseunits.scala.intervals.Limit
 
-/**`BusinessCalendar`のテストクラス。
+/**
+ * `BusinessCalendar`のテストクラス。
  */
 class BusinessCalendarTest extends AssertionsForJUnit {
 
@@ -65,9 +66,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
     calendar
   }
 
-
   var cal: BusinessCalendar = _
-
 
   /**
    * テストを初期化する。
@@ -344,7 +343,6 @@ class BusinessCalendarTest extends AssertionsForJUnit {
       "2010-11-29 2010-11-30 "))
   }
 
-
   /**
    * dates are taken from: http://www.opm.gov/fedhol/index.htm note: when a
    * holiday falls on a non-workday -- Saturday or Sunday -- the holiday usually
@@ -396,7 +394,6 @@ class BusinessCalendarTest extends AssertionsForJUnit {
       "2006/11/23", /* Thanksgiving Day */
       "2006/12/25" /* Christmas Day, December 25 */
     )
-
 
     def defaultHolidays: Set[CalendarDate] = {
       val dates = collection.mutable.Set[CalendarDate]()

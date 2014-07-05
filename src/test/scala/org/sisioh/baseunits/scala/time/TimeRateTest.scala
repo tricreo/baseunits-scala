@@ -22,10 +22,12 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import java.math.RoundingMode
 
-/**[[TimeRate]]のテストクラス。
+/**
+ * [[TimeRate]]のテストクラス。
  */
 class TimeRateTest extends AssertionsForJUnit {
-  /**[[TimeRate]]のインスタンス生成テスト。
+  /**
+   * [[TimeRate]]のインスタンス生成テスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -39,7 +41,8 @@ class TimeRateTest extends AssertionsForJUnit {
     assert(rate.breachEncapsulationOfUnit == Duration.minutes(1))
   }
 
-  /**[[TimeRate#over(Duration)]]のテスト。
+  /**
+   * [[TimeRate#over(Duration)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -51,11 +54,12 @@ class TimeRateTest extends AssertionsForJUnit {
       fail("ArtithmeticException should have been thrown. This case requires rounding.")
     } catch {
       case _: ArithmeticException => // success
-      case _ => fail
+      case _                      => fail
     }
   }
 
-  /**[[TimeRate#over(Duration, RoundingMode)]]のテスト。
+  /**
+   * [[TimeRate#over(Duration, RoundingMode)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -65,7 +69,8 @@ class TimeRateTest extends AssertionsForJUnit {
     assert(rate.over(Duration.minutes(1), BigDecimal.RoundingMode.DOWN) == BigDecimal("33.33"))
   }
 
-  /**[[TimeRate#over(Duration, int, RoundingMode)]]のテスト。
+  /**
+   * [[TimeRate#over(Duration, int, RoundingMode)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -75,7 +80,8 @@ class TimeRateTest extends AssertionsForJUnit {
     assert(rate.over(Duration.minutes(1), 3, BigDecimal.RoundingMode.DOWN) == BigDecimal("33.333"))
   }
 
-  /**[[TimeRate#equals(Object)]]のテスト。
+  /**
+   * [[TimeRate#equals(Object)]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -93,7 +99,8 @@ class TimeRateTest extends AssertionsForJUnit {
     assert(rate.equals(TimeRate(11.01, Duration.days(2))) == false)
   }
 
-  /**[[TimeRate#toString()]]のテスト。
+  /**
+   * [[TimeRate#toString()]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

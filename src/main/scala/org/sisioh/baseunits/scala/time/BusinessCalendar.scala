@@ -253,7 +253,7 @@ class BusinessCalendar {
    * @return 営業日
    */
   private def nextNumberOfBusinessDays(numberOfDays: Int,
-    calendarDays: Iterator[CalendarDate]) = {
+                                       calendarDays: Iterator[CalendarDate]) = {
     val businessDays = businessDaysOnly(calendarDays)
     var result: Option[CalendarDate] = None
     for (i <- 0 to numberOfDays) {

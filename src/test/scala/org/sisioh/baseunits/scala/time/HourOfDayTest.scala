@@ -21,7 +21,8 @@ package org.sisioh.baseunits.scala.time
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**`HourOfDay`のテストクラス。
+/**
+ * `HourOfDay`のテストクラス。
  */
 class HourOfDayTest extends AssertionsForJUnit {
   /**
@@ -56,8 +57,8 @@ class HourOfDayTest extends AssertionsForJUnit {
       HourOfDay(-1)
       fail
     } catch {
-      case e:IllegalArgumentException => // success
-      case _ => fail
+      case e: IllegalArgumentException => // success
+      case _                           => fail
     }
   }
 
@@ -72,8 +73,8 @@ class HourOfDayTest extends AssertionsForJUnit {
       HourOfDay(24)
       fail;
     } catch {
-      case e:IllegalArgumentException => // success
-      case _ => fail
+      case e: IllegalArgumentException => // success
+      case _                           => fail
     }
   }
 
@@ -88,8 +89,8 @@ class HourOfDayTest extends AssertionsForJUnit {
       HourOfDay(-1, "PM")
       fail
     } catch {
-      case e:IllegalArgumentException => // success
-      case _ => fail
+      case e: IllegalArgumentException => // success
+      case _                           => fail
     }
   }
 
@@ -104,8 +105,8 @@ class HourOfDayTest extends AssertionsForJUnit {
       HourOfDay(13, "AM")
       fail
     } catch {
-      case e:IllegalArgumentException => // success
-      case _ => fail
+      case e: IllegalArgumentException => // success
+      case _                           => fail
     }
   }
 
@@ -120,8 +121,8 @@ class HourOfDayTest extends AssertionsForJUnit {
       HourOfDay(5, "FD")
       fail
     } catch {
-      case e:IllegalArgumentException => // success
-      case _ => fail
+      case e: IllegalArgumentException => // success
+      case _                           => fail
     }
   }
 

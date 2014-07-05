@@ -21,10 +21,12 @@ package org.sisioh.baseunits.scala.money
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
-/**`Allotment`のテストクラス。
+/**
+ * `Allotment`のテストクラス。
  */
 class AllotmentTest extends AssertionsForJUnit {
-  /**等価性検証。
+  /**
+   * 等価性検証。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -37,7 +39,8 @@ class AllotmentTest extends AssertionsForJUnit {
     assert(abc123dollars != Allotment("ABC", Money.dollars(1.24)))
   }
 
-  /**正負転換検証。
+  /**
+   * 正負転換検証。
    *
    * @throws Exception 例外が発生した場合
    */

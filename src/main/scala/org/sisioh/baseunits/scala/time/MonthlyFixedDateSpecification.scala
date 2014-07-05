@@ -18,14 +18,14 @@
  */
 package org.sisioh.baseunits.scala.time
 
-/**毎月?日を表す日付仕様。
+/**
+ * 毎月?日を表す日付仕様。
  *
  * @author j5ik2o
  * @param day [[org.sisioh.baseunits.scala.time.DayOfMonth]]
  */
-class MonthlyFixedDateSpecification private[time]
-(private[time] val day: DayOfMonth)
-  extends MonthlyDateSpecification {
+class MonthlyFixedDateSpecification private[time] (private[time] val day: DayOfMonth)
+    extends MonthlyDateSpecification {
 
   override def isSatisfiedBy(date: CalendarDate) =
     day == date.breachEncapsulationOfDay

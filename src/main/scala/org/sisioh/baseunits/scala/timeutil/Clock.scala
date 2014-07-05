@@ -19,9 +19,10 @@
 package org.sisioh.baseunits.scala.timeutil
 
 import java.util.TimeZone
-import org.sisioh.baseunits.scala.time.{CalendarDate, TimeSource}
+import org.sisioh.baseunits.scala.time.{ CalendarDate, TimeSource }
 
-/**時計を表すクラス。
+/**
+ * 時計を表すクラス。
  * このクラスはステートを持つstaticなユーティリティクラスである。
  *
  * @author j5ik2o
@@ -33,7 +34,8 @@ object Clock {
   /**日付の算出に使用する [[java.util.TimeZone]] */
   private[this] var _defaultTimeZoneOption: Option[TimeZone] = None
 
-  /**この時計が日付の算出に使用する [[java.util.TimeZone]] を取得する。
+  /**
+   * この時計が日付の算出に使用する [[java.util.TimeZone]] を取得する。
    *
    * @return 日付の算出に使用する [[java.util.TimeZone]]
    */
@@ -46,13 +48,15 @@ object Clock {
     _defaultTimeZoneOption = Some(value)
   }
 
-  /**現在時刻を取得する。
+  /**
+   * 現在時刻を取得する。
    *
    * @return 現在時刻
    */
   def now = timeSource.now
 
-  /**このクラスが保持するステートをリセットする。
+  /**
+   * このクラスが保持するステートをリセットする。
    *
    * このクラスは、[[java.util.TimeZone]]
    * と[[org.sisioh.baseunits.scala.time.TimeSource]] を保持している。
@@ -62,14 +66,15 @@ object Clock {
     _timeSourceOption = None
   }
 
-  /**[[org.sisioh.baseunits.scala.timeutil.SystemClock]]を取得する。
+  /**
+   * [[org.sisioh.baseunits.scala.timeutil.SystemClock]]を取得する。
    *
    * デフォルトでは [[org.sisioh.baseunits.scala.timeutil.SystemClock]] を使用する。
    *
    * @return [[org.sisioh.baseunits.scala.time.TimeSource]]
    */
   def timeSource: TimeSource = _timeSourceOption match {
-    case None => { _timeSourceOption = Some(SystemClock); _timeSourceOption.get }
+    case None             => { _timeSourceOption = Some(SystemClock); _timeSourceOption.get }
     case Some(timeSource) => timeSource
   }
 
@@ -77,7 +82,8 @@ object Clock {
     _timeSourceOption = Some(value)
   }
 
-  /**今日の日付を所得する。
+  /**
+   * 今日の日付を所得する。
    *
    * 日付は、あらかじめ設定済みの [[org.sisioh.baseunits.scala.time.TimeZone]] に基づき計算する。
    * `TimeZone`を未設定の状態でこのメソッドを呼び出してはならない。

@@ -27,9 +27,9 @@ package org.sisioh.baseunits.scala.time
  * @param occurrence 周回数（1〜5）
  */
 class AnnualFloatingDateSpecification private[time] (private[time] val month: Int,
-  private[time] val dayOfWeek: DayOfWeek,
-  private[time] val occurrence: Int)
-  extends AnnualDateSpecification {
+                                                     private[time] val dayOfWeek: DayOfWeek,
+                                                     private[time] val occurrence: Int)
+    extends AnnualDateSpecification {
 
   require(1 <= month && month <= 12)
   require(1 <= occurrence && occurrence <= 5)

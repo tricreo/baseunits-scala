@@ -19,10 +19,11 @@
 package org.sisioh.baseunits.scala.time
 
 import java.text.SimpleDateFormat
-import java.util.{Date => JDate, Calendar, TimeZone}
-import org.sisioh.baseunits.scala.intervals.{LimitValue, Limit}
+import java.util.{ Date => JDate, Calendar, TimeZone }
+import org.sisioh.baseunits.scala.intervals.{ LimitValue, Limit }
 
-/**ミリ秒精度で、ある時間の一点をあらわすクラス。
+/**
+ * ミリ秒精度で、ある時間の一点をあらわすクラス。
  *
  * タイムゾーンを持っている。
  *
@@ -30,17 +31,18 @@ import org.sisioh.baseunits.scala.intervals.{LimitValue, Limit}
  * @param millisecondsFromEpoc エポックからの経過ミリ秒
  */
 
-class TimePoint private[time]
-(private[time] val millisecondsFromEpoc: Long)
-  extends Ordered[TimePoint] with Serializable {
+class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
+    extends Ordered[TimePoint] with Serializable {
 
-  /**このオブジェクトが表現する瞬間をGMTとして扱い、[[java.util.Calendar]]型として取得する。
+  /**
+   * このオブジェクトが表現する瞬間をGMTとして扱い、[[java.util.Calendar]]型として取得する。
    *
    * @return [[java.util.Calendar]]
    */
   def asJavaCalendar: Calendar = asJavaCalendar(TimePoint.GMT)
 
-  /**このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、[[java.util.Calendar]]型として取得する。
+  /**
+   * このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、[[java.util.Calendar]]型として取得する。
    *
    * @param zone タイムゾーン
    * @return [[java.util.Calendar]]
@@ -51,13 +53,15 @@ class TimePoint private[time]
     result
   }
 
-  /**このオブジェクトが表現する瞬間を、[[java.util.Date]]型として取得する。
+  /**
+   * このオブジェクトが表現する瞬間を、[[java.util.Date]]型として取得する。
    *
    * @return [[java.util.Date]]
    */
   def asJavaUtilDate = new JDate(millisecondsFromEpoc)
 
-  /**この瞬間を「時分」として返す。
+  /**
+   * この瞬間を「時分」として返す。
    *
    * @param zone タイムゾーン
    * @return 時分
@@ -67,7 +71,8 @@ class TimePoint private[time]
     TimeOfDay.from(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE))
   }
 
-  /**このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す
+  /**
+   * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す
    * [[org.sisioh.baseunits.scala.time.TimePoint]]を取得する。
    *
    * @param zone タイムゾーン
@@ -75,8 +80,8 @@ class TimePoint private[time]
    */
   def backToMidnight(zone: TimeZone) = calendarDate(zone).asTimeInterval(zone).start
 
-
-  /**このオブジェクトの`millisecondsFromEpoc`フィールド（エポックからの経過ミリ秒）を返す。
+  /**
+   * このオブジェクトの`millisecondsFromEpoc`フィールド（エポックからの経過ミリ秒）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -84,14 +89,16 @@ class TimePoint private[time]
    */
   def breachEncapsulationOfMillisecondsFromEpoc = millisecondsFromEpoc
 
-  /**このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
+  /**
+   * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
    *
    * @param zone タイムゾーン
    * @return 日付
    */
   def calendarDate(zone: TimeZone) = CalendarDate.from(this, zone)
 
-  /**瞬間同士の比較を行う。
+  /**
+   * 瞬間同士の比較を行う。
    *
    * 相対的に過去である方を「小さい」と判断する。
    *
@@ -103,7 +110,8 @@ class TimePoint private[time]
     else if (isAfter(otherPoint)) 1
     else 0
 
-  /**このオブジェクトと、与えたオブジェクト `other`の同一性を検証する。
+  /**
+   * このオブジェクトと、与えたオブジェクト `other`の同一性を検証する。
    *
    * 与えたオブジェクトが[[org.sisioh.baseunits.scala.time.TimePoint]]型であった場合、
    * 同じ日時を指している場合は`true`、そうでない場合は`false`を返す。
@@ -112,20 +120,21 @@ class TimePoint private[time]
    */
   override def equals(obj: Any): Boolean = obj match {
     case that: TimePoint => millisecondsFromEpoc == that.millisecondsFromEpoc
-    case _ => false
+    case _               => false
   }
 
   override def hashCode = (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)).asInstanceOf[Int]
 
-
-  /**このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
+  /**
+   * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
    *
    * @param interval 基準期間
    * @return 期間の終了後に位置する場合は`true`、そうでない場合は`false`
    */
   def isAfter(interval: TimeInterval) = interval.isBefore(Limit(this))
 
-  /**指定した瞬間 `other` が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
+  /**
+   * 指定した瞬間 `other` が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
    *
    * 同一日時である場合は `false` を返す。
    *
@@ -134,15 +143,16 @@ class TimePoint private[time]
    */
   def isAfter(other: TimePoint) = millisecondsFromEpoc > other.millisecondsFromEpoc
 
-
-  /**このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
+  /**
+   * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
    *
    * @param interval 基準期間
    * @return 期間の開始前に位置する場合は`true`、そうでない場合は`false`
    */
   def isBefore(interval: TimeInterval) = interval.isAfter(Limit(this))
 
-  /**指定した瞬間 `other` が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
+  /**
+   * 指定した瞬間 `other` が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
    *
    * 同一日時である場合は `false` を返す。
    *
@@ -151,7 +161,8 @@ class TimePoint private[time]
    */
   def isBefore(other: TimePoint) = millisecondsFromEpoc < other.millisecondsFromEpoc
 
-  /**指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間`other`の年月日が等価であるかを調べる。
+  /**
+   * 指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間`other`の年月日が等価であるかを調べる。
    *
    * @param other 対象瞬間
    * @param zone タイムゾーン
@@ -159,7 +170,8 @@ class TimePoint private[time]
    */
   def isSameDayAs(other: TimePoint, zone: TimeZone) = calendarDate(zone) == other.calendarDate(zone)
 
-  /**この日時の、指定した時間の長さ分過去の日時を取得する。
+  /**
+   * この日時の、指定した時間の長さ分過去の日時を取得する。
    *
    * @param duration 時間の長さ
    * @return 過去の日時
@@ -177,7 +189,6 @@ class TimePoint private[time]
    */
   def nextDay = this.+(Duration.days(1))
 
-
   /**
    * この日時から、指定した時間の長さ分未来の日時を取得する。
    *
@@ -186,14 +197,12 @@ class TimePoint private[time]
    */
   def +(duration: Duration) = duration.addedTo(this)
 
-
   /**
    * この瞬間の文字列表現を取得する。
    *
    * @see java.lang.Object#toString()
    */
   override def toString = asJavaUtilDate.toString
-
 
   /**
    * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
@@ -218,10 +227,10 @@ class TimePoint private[time]
    */
   def until(end: LimitValue[TimePoint]) = TimeInterval.over(Limit(this), end)
 
-
 }
 
-/**`TimePoint`コンパニオンオブジェクト。
+/**
+ * `TimePoint`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
@@ -229,21 +238,24 @@ object TimePoint {
 
   val GMT = TimeZone.getTimeZone("Universal")
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param milliseconds エポックからの経過ミリ秒
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def apply(milliseconds: Long): TimePoint = from(milliseconds)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param [[org.sisioh.baseunits.scala.time.TimePoint]]
    * @return `Option[(Long)]`
    */
   def unapply(timePoint: TimePoint) = Some(timePoint.millisecondsFromEpoc)
 
-  /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
    * @param yearMonth 年月
    * @param date 日
@@ -261,7 +273,8 @@ object TimePoint {
       date.value, hour, minute, second, millisecond, zone)
   }
 
-  /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -285,7 +298,8 @@ object TimePoint {
     from(calendar.getTime.getTime)
   }
 
-  /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -300,7 +314,8 @@ object TimePoint {
     at(year, month, date, hour, minute, second, 0, zone)
   }
 
-  /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -313,7 +328,8 @@ object TimePoint {
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, zone: TimeZone): TimePoint =
     at(year, month, date, hour, minute, 0, 0, zone)
 
-  /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月
@@ -329,7 +345,8 @@ object TimePoint {
          millisecond: Int, zone: TimeZone): TimePoint =
     at(year, month.value, date.value, hour, minute, second, millisecond, zone)
 
-  /**世界標準時における、指定した日時を表すインスタンスを取得する。
+  /**
+   * 世界標準時における、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -348,7 +365,8 @@ object TimePoint {
     at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, GMT)
   }
 
-  /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -367,7 +385,8 @@ object TimePoint {
              millisecond: Int, zone: TimeZone): TimePoint =
     at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, zone)
 
-  /**世界標準時における、指定した日時を表すインスタンスを取得する。
+  /**
+   * 世界標準時における、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -379,7 +398,8 @@ object TimePoint {
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int): TimePoint =
     atGMT(year, month, date, hour, minute, 0, 0)
 
-  /**世界標準時における、指定した日時を表すインスタンスを取得する。
+  /**
+   * 世界標準時における、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -392,7 +412,8 @@ object TimePoint {
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int): TimePoint =
     atGMT(year, month, date, hour, minute, second, 0)
 
-  /**世界標準時における、指定した日時を表すインスタンスを取得する。
+  /**
+   * 世界標準時における、指定した日時を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -406,7 +427,8 @@ object TimePoint {
   def atGMT(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int): TimePoint =
     at(year, month, date, hour, minute, second, millisecond, GMT)
 
-  /**指定したタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
    *
    * @param calendarDate 日付
    * @param zone タイムゾーン
@@ -416,7 +438,8 @@ object TimePoint {
     at(calendarDate.asCalendarMonth,
       calendarDate.breachEncapsulationOfDay, 0, 0, 0, 0, zone)
 
-  /**指定したタイムゾーンにおける、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -427,7 +450,8 @@ object TimePoint {
   def atMidnight(year: Int, month: Int, date: Int, zone: TimeZone): TimePoint =
     at(year, month, date, 0, 0, 0, 0, zone)
 
-  /**世界標準時における、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
+  /**
+   * 世界標準時における、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
    *
    * @param year 年
    * @param month 月（1〜12）
@@ -437,7 +461,8 @@ object TimePoint {
   def atMidnightGMT(year: Int, month: Int, date: Int): TimePoint =
     atMidnight(year, month, date, GMT)
 
-  /**[[java.util.Calendar]]を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
+  /**
+   * [[java.util.Calendar]]を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
    *
    * @param calendar 元となる日時情報を表す [[java.util.Calendar]]インスタンス
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
@@ -445,7 +470,8 @@ object TimePoint {
   def from(calendar: Calendar): TimePoint =
     from(calendar.getTime)
 
-  /**指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+  /**
+   * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
    * @param date 日付
    * @param time 時間
@@ -457,7 +483,8 @@ object TimePoint {
       time.breachEncapsulationOfHour.value, time.breachEncapsulationOfMinute.value,
       0, 0, zone)
 
-  /**[[java.utilDate]]を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
+  /**
+   * [[java.utilDate]]を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
    *
    * @param javaDate 元となる日時情報を表す [[java.util.Date]]インスタンス
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
@@ -465,7 +492,8 @@ object TimePoint {
   def from(javaDate: JDate): TimePoint =
     from(javaDate.getTime)
 
-  /**エポックからの経過ミリ秒を [[org.sisioh.baseunits.scala.time.TimePoint]] に変換する。
+  /**
+   * エポックからの経過ミリ秒を [[org.sisioh.baseunits.scala.time.TimePoint]] に変換する。
    *
    * @param milliseconds エポックからの経過ミリ秒
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
@@ -477,7 +505,8 @@ object TimePoint {
     result
   }
 
-  /**日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す
+  /**
+   * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す
    * [[org.sisioh.baseunits.scala.time.TimePoint]]を返す。
    *
    * @param dateTimeString 日時を表す文字列
@@ -493,7 +522,8 @@ object TimePoint {
     from(date)
   }
 
-  /**日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す
+  /**
+   * 日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す
    * [[org.sisioh.baseunits.scala.time.TimePoint]]を返す。
    *
    * @param dateString 日時を表す文字列

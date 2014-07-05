@@ -18,17 +18,18 @@
  */
 package org.sisioh.baseunits.scala.money
 
-/**何かに対するお金の割り当てをあらわす。
+/**
+ * 何かに対するお金の割り当てをあらわす。
  *
  * @tparam T 割り当て対象
  * @param entity 割り当て対象
  * @param amount 金額
  */
-class Allotment[T]
-(private[money] val entity: T,
- private[money] val amount: Money) {
+class Allotment[T](private[money] val entity: T,
+                   private[money] val amount: Money) {
 
-  /**このオブジェクトの`amount`フィールド（金額）を返す。
+  /**
+   * このオブジェクトの`amount`フィールド（金額）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -36,7 +37,8 @@ class Allotment[T]
    */
   def breachEncapsulationOfAmount = amount
 
-  /**このオブジェクトの`entity`フィールド（割り当て対象）を返す。
+  /**
+   * このオブジェクトの`entity`フィールド（割り当て対象）を返す。
    *
    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
    *
@@ -46,12 +48,13 @@ class Allotment[T]
 
   override def equals(obj: Any) = obj match {
     case that: Allotment[T] => entity == that.entity && amount == that.amount
-    case _ => false
+    case _                  => false
   }
 
   override def hashCode = entity.## + amount.##
 
-  /**割り当て量の正負を反転させた新しい割り当てを返す。
+  /**
+   * 割り当て量の正負を反転させた新しい割り当てを返す。
    *
    * @return 割り当て
    */
@@ -64,13 +67,15 @@ class Allotment[T]
 
 }
 
-/**`Allotment`コンパニオンオブジェクト。
+/**
+ * `Allotment`コンパニオンオブジェクト。
  *
  * @author j5ik2o
  */
 object Allotment {
 
-  /**インスタンスを生成する。
+  /**
+   * インスタンスを生成する。
    *
    * @param entity 割り当て対象
    * @param amount [[org.sisioh.baseunits.scala.money.Money]]
@@ -78,7 +83,8 @@ object Allotment {
    */
   def apply[T](entity: T, amount: Money) = new Allotment[T](entity, amount)
 
-  /**抽出子メソッド。
+  /**
+   * 抽出子メソッド。
    *
    * @param allotment [[org.sisioh.baseunits.scala.money.Allotment]]
    * @return `Option[(T, Money)]`

@@ -18,22 +18,22 @@
  */
 package org.sisioh.baseunits.scala.time
 
-
-/** `TimeUnit`に変数するためのファクター。
-  *
-  * @author j5ik2o
-  * @param _name 名前
-  * @param value 値
-  */
-private[time] final class TimeUnitConversionFactor
-(_name: String, val value: Int) {
+/**
+ * `TimeUnit`に変数するためのファクター。
+ *
+ * @author j5ik2o
+ * @param _name 名前
+ * @param value 値
+ */
+private[time] final class TimeUnitConversionFactor(_name: String, val value: Int) {
   val name = _name
 }
 
-/** `TimeUnitConversionFactor`コンパニオンオブジェクト。
-  *
-  * @author j5ik2o
-  */
+/**
+ * `TimeUnitConversionFactor`コンパニオンオブジェクト。
+ *
+ * @author j5ik2o
+ */
 private[time] object TimeUnitConversionFactor {
   val identical = new TimeUnitConversionFactor("identical", 1)
   val millisecondsPerSecond = new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
@@ -44,7 +44,7 @@ private[time] object TimeUnitConversionFactor {
   val monthsPerQuarter = new TimeUnitConversionFactor("monthsPerQuarter", 3)
   val monthsPerYear = new TimeUnitConversionFactor("monthsPerYear", 12)
 
-//  identical % millisecondsPerSecond % millisecondsPerMinute % millisecondsPerHour %
+  //  identical % millisecondsPerSecond % millisecondsPerMinute % millisecondsPerHour %
   //    millisecondsPerDay % millisecondsPerWeek % monthsPerQuarter % monthsPerYear
 
 }

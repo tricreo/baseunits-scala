@@ -24,7 +24,7 @@ package org.sisioh.baseunits.scala.util
  */
 class AndSpecification[T](private[util] val spec1: Specification[T],
                           private[util] val spec2: Specification[T])
-  extends Specification[T] {
+    extends Specification[T] {
 
   override def isSatisfiedBy(t: T) =
     spec1.isSatisfiedBy(t) && spec2.isSatisfiedBy(t);

@@ -22,8 +22,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import java.util.TimeZone
 import org.junit.Test
 
-
-/**`TimeOfDay`のテストクラス。
+/**
+ * `TimeOfDay`のテストクラス。
  */
 class TimeOfDayTest extends AssertionsForJUnit {
 
@@ -42,7 +42,6 @@ class TimeOfDayTest extends AssertionsForJUnit {
   val twoMinutesBeforeMidnight = TimeOfDay.from(23, 58)
 
   val tenMinutesBeforeMidnight = TimeOfDay.from(23, 50)
-
 
   /**
    * [[TimeOfDay#on(CalendarDate)]]のテスト。
@@ -94,8 +93,8 @@ class TimeOfDayTest extends AssertionsForJUnit {
     assert(morning.equals(null) == (false))
     assert(tenMinutesBeforeMidnight.equals(twoMinutesBeforeMidnight) == false)
     assert(noon.equals(new TimeOfDay(HourOfDay(12), MinuteOfHour(0))) == true)
-//    assert(noon.equals(new TimeOfDay(HourOfDay(12), MinuteOfHour(0)) {
-//    }) == false)
+    //    assert(noon.equals(new TimeOfDay(HourOfDay(12), MinuteOfHour(0)) {
+    //    }) == false)
   }
 
   /**

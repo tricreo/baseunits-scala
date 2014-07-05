@@ -22,7 +22,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import collection.mutable.ListBuffer
 
-/**`MoneyFan`のテストクラス。
+/**
+ * `MoneyFan`のテストクラス。
  */
 class MoneyFanTest extends AssertionsForJUnit {
   /**
@@ -100,7 +101,8 @@ class MoneyFanTest extends AssertionsForJUnit {
 
   }
 
-  /**{@link MoneyFan#equals(Object)}のテスト。
+  /**
+   * {@link MoneyFan#equals(Object)}のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

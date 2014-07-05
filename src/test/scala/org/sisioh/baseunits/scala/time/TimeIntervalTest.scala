@@ -23,7 +23,8 @@ import org.junit.Test
 import org.sisioh.baseunits.scala.intervals.Limit
 import org.sisioh.baseunits.scala.tests.SerializationTester
 
-/**`TimeInterval`のテストクラス。
+/**
+ * `TimeInterval`のテストクラス。
  */
 class TimeIntervalTest extends AssertionsForJUnit {
 
@@ -36,7 +37,6 @@ class TimeIntervalTest extends AssertionsForJUnit {
   val dec22_2003 = TimePoint.atMidnightGMT(2003, 12, 22)
 
   val dec23_2003 = TimePoint.atMidnightGMT(2003, 12, 23)
-
 
   /**
    * [[TimeInterval]]のインスタンスがシリアライズできるかどうか検証する。
@@ -283,7 +283,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _ => fail
+      case _                         => fail
     }
 
     val interval2 = TimeInterval.everPreceding(Limit(end))
@@ -292,7 +292,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail;
     } catch {
       case e: IllegalStateException => // success
-      case _ => fail
+      case _                        => fail
     }
 
     val interval3 = TimeInterval.everFrom(Limit(start))
@@ -326,7 +326,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail;
     } catch {
       case e: NoSuchElementException => // success
-      case _ => fail()
+      case _                         => fail()
     }
 
     iterator = interval.subintervalIterator(Duration.weeks(1))
@@ -355,7 +355,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _ => fail
+      case _                         => fail
     }
   }
 

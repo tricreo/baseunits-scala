@@ -23,7 +23,8 @@ import org.scalatest.junit.AssertionsForJUnit
 import collection.mutable.ListBuffer
 import util.Random
 
-/**`Inteval`のテストクラス。
+/**
+ * `Inteval`のテストクラス。
  */
 class IntevalTest extends AssertionsForJUnit {
 
@@ -54,7 +55,6 @@ class IntevalTest extends AssertionsForJUnit {
   val empty = Interval.open(Limit(BigDecimal(1)), Limit(BigDecimal(1)))
 
   val all = Interval.closed(Limitless[BigDecimal], Limitless[BigDecimal])
-
 
   def newIntegerIntervalList = {
     val list = ListBuffer.empty[Interval[Int]]
@@ -306,7 +306,6 @@ class IntevalTest extends AssertionsForJUnit {
     assert(range.includes(Limit(5.5001D)) == false)
   }
 
-
   /**
    * [[Interval#andMore(Comparable)]]のテスト。
    *
@@ -321,7 +320,6 @@ class IntevalTest extends AssertionsForJUnit {
     assert(range.includes(Limit(Double.PositiveInfinity)) == true)
     assert(range.includes(Limit(5.5001D)) == true)
   }
-
 
   /**
    * [[Interval#newOfSameType(Comparable, boolean, Comparable, boolean)]]のテスト。
@@ -491,7 +489,6 @@ class IntevalTest extends AssertionsForJUnit {
     assert(all.intersects(o10_12c) == true)
   }
 
-
   /**
    * [[Interval#intersect(Interval)]]のテスト。
    *
@@ -513,7 +510,6 @@ class IntevalTest extends AssertionsForJUnit {
     assert(c1_10c.intersect(o10_12c) == empty)
     assert(o10_12c.intersect(c1_10c) == empty)
   }
-
 
   /**
    * [[Interval#greaterOfLowerLimits(Interval)]]のテスト。（内部API）
@@ -566,247 +562,246 @@ class IntevalTest extends AssertionsForJUnit {
   }
 
   /**
-	 * [[Interval#gap(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test16_Gap {
-		val c1_3c = Interval.closed(Limit(1), Limit(3))
-		val c5_7c = Interval.closed(Limit(5), Limit(7))
-		val o3_5o = Interval.open(Limit(3), Limit(5))
-		val c2_3o = Interval.over(Limit(2), true, Limit(3), false)
-		
-		assert(c1_3c.gap(c5_7c)==o3_5o)
-		assert(c1_3c.gap(o3_5o).isEmpty==true)
-		assert(c1_3c.gap(c2_3o).isEmpty==true)
-		assert(c2_3o.gap(o3_5o).isSingleElement==true)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test17_RelativeComplementDisjoint {
-		val c1_3c = Interval.closed(Limit(1), Limit(3))
-		val c5_7c = Interval.closed(Limit(5), Limit(7))
-		val complement = c1_3c.complementRelativeTo(c5_7c)
-		assert(complement.size == 1)
-		assert(complement(0) == c5_7c)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test18_RelativeComplementDisjointAdjacentOpen {
-		val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
-		val c3_7c = Interval.closed(Limit(3), Limit(7))
-		val complement = c1_3o.complementRelativeTo(c3_7c)
-		assert(complement.size == 1)
-		assert(complement(0)==c3_7c)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test19_RelativeComplementOverlapLeft {
-		val c1_5c = Interval.closed(Limit(1), Limit(5))
-		val c3_7c = Interval.closed(Limit(3), Limit(7))
-		val complement = c3_7c.complementRelativeTo(c1_5c)
-		val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
-		assert(complement.size==1)
-		assert(complement(0)==c1_3o)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test20_RelativeComplementOverlapRight {
-		val c1_5c = Interval.closed(Limit(1), Limit(5))
-		val c3_7c = Interval.closed(Limit(3), Limit(7))
-		val complement = c1_5c.complementRelativeTo(c3_7c)
-		val o5_7c = Interval.over(Limit(5), false, Limit(7), true)
-		assert(complement.size==1)
-		assert(complement(0)==o5_7c)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test21_RelativeComplementAdjacentClosed {
-		val c1_3c = Interval.closed(Limit(1), Limit(3))
-		val c5_7c = Interval.closed(Limit(5), Limit(7))
-		val complement = c1_3c.complementRelativeTo(c5_7c)
-		assert(complement.size==1)
-		assert(complement(0)==c5_7c)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test22_RelativeComplementEnclosing {
-		val c3_5c = Interval.closed(Limit(3), Limit(5))
-		val c1_7c = Interval.closed(Limit(1), Limit(7))
-		val complement = c1_7c.complementRelativeTo(c3_5c)
-		assert(complement.size==0)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test23_RelativeComplementEqual {
-		val c1_7c = Interval.closed(Limit(1), Limit(7))
-		val complement = c1_7c.complementRelativeTo(c1_7c)
-		assert(complement.size==0)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test24_RelativeComplementEnclosed {
-		val c3_5c = Interval.closed(Limit(3), Limit(5))
-		val c1_7c = Interval.closed(Limit(1), Limit(7))
-		val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
-		val o5_7c = Interval.over(Limit(5), false, Limit(7), true)
-		val complement = c3_5c.complementRelativeTo(c1_7c)
-		assert(complement.size==2)
-		assert(complement(0)==c1_3o)
-		assert(complement(1)==o5_7c)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test25_RelativeComplementEnclosedEndPoint {
-		val o3_5o = Interval.open(Limit(3), Limit(5))
-		val c3_5c = Interval.closed(Limit(3), Limit(5))
-		val complement = o3_5o.complementRelativeTo(c3_5c)
-		assert(complement.size == 2)
-		assert(complement(0).includes(Limit(3))==true)
-	}
-	
-	/**
-	 * [[Interval#isSingleElement()]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test26_IsSingleElement {
-		assert(o1_1c.isSingleElement==true)
-		assert(c1_1c.isSingleElement==true)
-		assert(c1_1o.isSingleElement==true)
-		assert(c1_10c.isSingleElement==false)
-		assert(o1_1o.isSingleElement==false)
-	}
-	
-	/**
-	 * [[Interval#equals(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test27_EqualsForOnePointIntervals {
-		assert(c1_1o == o1_1c)
-		assert(c1_1c == o1_1c)
-		assert(c1_1c == c1_1o)
-		assert(o1_1c != o1_1o)
-	}
-	
-	/**
-	 * [[Interval#emptyOfSameType()]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test28_EqualsForEmptyIntervals {
-		assert(c4_6c.emptyOfSameType==c1_10c.emptyOfSameType)
-	}
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test29_RelativeComplementEnclosedOpen {
-		val o3_5o = Interval.open(Limit(3), Limit(5))
-		val c1_7c = Interval.closed(Limit(1), Limit(7))
-		val c1_3c = Interval.closed(Limit(1), Limit(3))
-		val c5_7c = Interval.closed(Limit(5), Limit(7))
-		val complement = o3_5o.complementRelativeTo(c1_7c)
-		assert(complement.size==2)
-		assert(complement(0)==c1_3c)
-		assert(complement(1)==c5_7c)
-	}
-	
-	/**
-	 * [[Interval#toString()]]のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test30_ToString {
-		assert(c1_10c.toString == "[Limit(1), Limit(10)]")
-		assert(o10_12c.toString == "(Limit(10), Limit(12)]")
-		assert(empty.toString == "{}")
-		assert(Interval.closed(Limit(10), Limit(10)).toString=="{Limit(10)}")
-	}
+   * [[Interval#gap(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test16_Gap {
+    val c1_3c = Interval.closed(Limit(1), Limit(3))
+    val c5_7c = Interval.closed(Limit(5), Limit(7))
+    val o3_5o = Interval.open(Limit(3), Limit(5))
+    val c2_3o = Interval.over(Limit(2), true, Limit(3), false)
 
-	
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 *
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test31_RelativeComplementOverlapRightOpen {
-		val c3_7o = Interval.over(Limit(3), true, Limit(6), false)
-		val c1_5o = Interval.over(Limit(1), true, Limit(5), false)
-		val complement = c3_7o.complementRelativeTo(c1_5o)
-		val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
-		assert(complement.size == 1)
-		assert(complement(0)==c1_3o)
-	}
+    assert(c1_3c.gap(c5_7c) == o3_5o)
+    assert(c1_3c.gap(o3_5o).isEmpty == true)
+    assert(c1_3c.gap(c2_3o).isEmpty == true)
+    assert(c2_3o.gap(o3_5o).isSingleElement == true)
+  }
 
-	/**
-	 * [[Interval#complementRelativeTo(Interval)]]のテスト。
-	 *
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	def test32_RelativeComplementOverlapLeftOpen {
-		val o1_5c = Interval.over(Limit(1), false, Limit(5), true)
-		val o3_7c = Interval.over(Limit(2), false, Limit(7), true)
-		val complement = o1_5c.complementRelativeTo(o3_7c)
-		val o5_7c = Interval.over(Limit(5), false, Limit(7), true)
-		assert(complement.size==1)
-		assert(complement(0)==o5_7c)
-	}
-  
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test17_RelativeComplementDisjoint {
+    val c1_3c = Interval.closed(Limit(1), Limit(3))
+    val c5_7c = Interval.closed(Limit(5), Limit(7))
+    val complement = c1_3c.complementRelativeTo(c5_7c)
+    assert(complement.size == 1)
+    assert(complement(0) == c5_7c)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test18_RelativeComplementDisjointAdjacentOpen {
+    val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
+    val c3_7c = Interval.closed(Limit(3), Limit(7))
+    val complement = c1_3o.complementRelativeTo(c3_7c)
+    assert(complement.size == 1)
+    assert(complement(0) == c3_7c)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test19_RelativeComplementOverlapLeft {
+    val c1_5c = Interval.closed(Limit(1), Limit(5))
+    val c3_7c = Interval.closed(Limit(3), Limit(7))
+    val complement = c3_7c.complementRelativeTo(c1_5c)
+    val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
+    assert(complement.size == 1)
+    assert(complement(0) == c1_3o)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test20_RelativeComplementOverlapRight {
+    val c1_5c = Interval.closed(Limit(1), Limit(5))
+    val c3_7c = Interval.closed(Limit(3), Limit(7))
+    val complement = c1_5c.complementRelativeTo(c3_7c)
+    val o5_7c = Interval.over(Limit(5), false, Limit(7), true)
+    assert(complement.size == 1)
+    assert(complement(0) == o5_7c)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test21_RelativeComplementAdjacentClosed {
+    val c1_3c = Interval.closed(Limit(1), Limit(3))
+    val c5_7c = Interval.closed(Limit(5), Limit(7))
+    val complement = c1_3c.complementRelativeTo(c5_7c)
+    assert(complement.size == 1)
+    assert(complement(0) == c5_7c)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test22_RelativeComplementEnclosing {
+    val c3_5c = Interval.closed(Limit(3), Limit(5))
+    val c1_7c = Interval.closed(Limit(1), Limit(7))
+    val complement = c1_7c.complementRelativeTo(c3_5c)
+    assert(complement.size == 0)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test23_RelativeComplementEqual {
+    val c1_7c = Interval.closed(Limit(1), Limit(7))
+    val complement = c1_7c.complementRelativeTo(c1_7c)
+    assert(complement.size == 0)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test24_RelativeComplementEnclosed {
+    val c3_5c = Interval.closed(Limit(3), Limit(5))
+    val c1_7c = Interval.closed(Limit(1), Limit(7))
+    val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
+    val o5_7c = Interval.over(Limit(5), false, Limit(7), true)
+    val complement = c3_5c.complementRelativeTo(c1_7c)
+    assert(complement.size == 2)
+    assert(complement(0) == c1_3o)
+    assert(complement(1) == o5_7c)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test25_RelativeComplementEnclosedEndPoint {
+    val o3_5o = Interval.open(Limit(3), Limit(5))
+    val c3_5c = Interval.closed(Limit(3), Limit(5))
+    val complement = o3_5o.complementRelativeTo(c3_5c)
+    assert(complement.size == 2)
+    assert(complement(0).includes(Limit(3)) == true)
+  }
+
+  /**
+   * [[Interval#isSingleElement()]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test26_IsSingleElement {
+    assert(o1_1c.isSingleElement == true)
+    assert(c1_1c.isSingleElement == true)
+    assert(c1_1o.isSingleElement == true)
+    assert(c1_10c.isSingleElement == false)
+    assert(o1_1o.isSingleElement == false)
+  }
+
+  /**
+   * [[Interval#equals(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test27_EqualsForOnePointIntervals {
+    assert(c1_1o == o1_1c)
+    assert(c1_1c == o1_1c)
+    assert(c1_1c == c1_1o)
+    assert(o1_1c != o1_1o)
+  }
+
+  /**
+   * [[Interval#emptyOfSameType()]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test28_EqualsForEmptyIntervals {
+    assert(c4_6c.emptyOfSameType == c1_10c.emptyOfSameType)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test29_RelativeComplementEnclosedOpen {
+    val o3_5o = Interval.open(Limit(3), Limit(5))
+    val c1_7c = Interval.closed(Limit(1), Limit(7))
+    val c1_3c = Interval.closed(Limit(1), Limit(3))
+    val c5_7c = Interval.closed(Limit(5), Limit(7))
+    val complement = o3_5o.complementRelativeTo(c1_7c)
+    assert(complement.size == 2)
+    assert(complement(0) == c1_3c)
+    assert(complement(1) == c5_7c)
+  }
+
+  /**
+   * [[Interval#toString()]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test30_ToString {
+    assert(c1_10c.toString == "[Limit(1), Limit(10)]")
+    assert(o10_12c.toString == "(Limit(10), Limit(12)]")
+    assert(empty.toString == "{}")
+    assert(Interval.closed(Limit(10), Limit(10)).toString == "{Limit(10)}")
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test31_RelativeComplementOverlapRightOpen {
+    val c3_7o = Interval.over(Limit(3), true, Limit(6), false)
+    val c1_5o = Interval.over(Limit(1), true, Limit(5), false)
+    val complement = c3_7o.complementRelativeTo(c1_5o)
+    val c1_3o = Interval.over(Limit(1), true, Limit(3), false)
+    assert(complement.size == 1)
+    assert(complement(0) == c1_3o)
+  }
+
+  /**
+   * [[Interval#complementRelativeTo(Interval)]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test32_RelativeComplementOverlapLeftOpen {
+    val o1_5c = Interval.over(Limit(1), false, Limit(5), true)
+    val o3_7c = Interval.over(Limit(2), false, Limit(7), true)
+    val complement = o1_5c.complementRelativeTo(o3_7c)
+    val o5_7c = Interval.over(Limit(5), false, Limit(7), true)
+    assert(complement.size == 1)
+    assert(complement(0) == o5_7c)
+  }
+
 }
