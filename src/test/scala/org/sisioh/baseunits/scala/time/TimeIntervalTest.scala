@@ -283,7 +283,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _                         => fail
+      case _: Throwable              => fail
     }
 
     val interval2 = TimeInterval.everPreceding(Limit(end))
@@ -292,7 +292,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail;
     } catch {
       case e: IllegalStateException => // success
-      case _                        => fail
+      case _: Throwable             => fail
     }
 
     val interval3 = TimeInterval.everFrom(Limit(start))
@@ -326,7 +326,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail;
     } catch {
       case e: NoSuchElementException => // success
-      case _                         => fail()
+      case _: Throwable              => fail()
     }
 
     iterator = interval.subintervalIterator(Duration.weeks(1))
@@ -355,7 +355,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NoSuchElementException => // success
-      case _                         => fail
+      case _: Throwable              => fail
     }
   }
 

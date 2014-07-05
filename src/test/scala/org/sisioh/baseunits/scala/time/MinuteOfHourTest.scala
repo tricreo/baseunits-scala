@@ -49,7 +49,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 
@@ -65,7 +65,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 

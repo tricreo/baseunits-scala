@@ -100,7 +100,7 @@ class ClockTest extends AssertionsForJUnit {
       fail("Clock cannot answer today() without a timezone.")
     } catch {
       case _: RuntimeException => // Correctly threw exception
-      case _                   => fail
+      case _: Throwable        => fail
     }
   }
 }

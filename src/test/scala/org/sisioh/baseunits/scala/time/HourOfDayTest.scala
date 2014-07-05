@@ -58,7 +58,7 @@ class HourOfDayTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 
@@ -74,7 +74,7 @@ class HourOfDayTest extends AssertionsForJUnit {
       fail;
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 
@@ -90,7 +90,7 @@ class HourOfDayTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 
@@ -106,7 +106,7 @@ class HourOfDayTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 
@@ -122,7 +122,7 @@ class HourOfDayTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 

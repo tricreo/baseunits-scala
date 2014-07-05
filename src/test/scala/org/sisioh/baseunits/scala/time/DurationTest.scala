@@ -18,9 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
-import java.math.RoundingMode
+import org.scalatest.junit.AssertionsForJUnit
 import org.sisioh.baseunits.scala.intervals.Limit
 
 /**
@@ -38,7 +37,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#addedTo(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# a d d e d T o ( T i m e P o i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -54,7 +53,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#addedTo(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# a d d e d T o ( T i m e P o i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -67,7 +66,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#subtractedFrom(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# s u b t r a c t e d F r o m ( T i m e P o i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -83,7 +82,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#subtractedFrom(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# s u b t r a c t e d F r o m ( T i m e P o i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -100,7 +99,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#subtractedFrom(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# s u b t r a c t e d F r o m ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -121,7 +120,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[Duration#addedTo(CalendarDate)]]のテスト。
+   * [[Duration# a d d e d T o ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -146,7 +145,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#inBaseUnits]]のテスト。（内部API）
+   * [[org.sisioh.baseunits.scala.time.Duration# i n B a s e U n i t s]]のテスト。（内部API）
    *
    * @throws Exception 例外が発生した場合
    */
@@ -157,7 +156,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#equals(Object)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# e q u a l s ( O b j e c t )]]のテスト。
    *
    * 単位が違っていても、baseUnit換算できちんと比較できること。
    * baseUnitに互換性がなければ、必ず{@code false}となること。
@@ -177,7 +176,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#plus(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# p l u s ( D u r a t i o n )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -191,12 +190,12 @@ class DurationTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#minus(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# m i n u s ( D u r a t i o n )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -207,15 +206,15 @@ class DurationTest extends AssertionsForJUnit {
 
     try {
       Duration.months(2).plus(Duration.days(3))
-      fail;
+      fail
     } catch {
       case e: IllegalArgumentException => // success
-      case _                           => fail
+      case _: Throwable                => fail
     }
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#dividedBy(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# d i v i d e d B y ( D u r a t i o n )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -226,7 +225,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#toNormalizedString]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# t o N o r m a l i z e d S t r i n g]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -244,7 +243,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#toNormalizedString]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# t o N o r m a l i z e d S t r i n g]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -259,7 +258,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#toString]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# t o S t r i n g]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -275,7 +274,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#compareTo(Duration)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# c o m p a r e T o ( D u r a t i o n )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -298,7 +297,7 @@ class DurationTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: ClassCastException => // success
-      case _                     => fail
+      case _: Throwable          => fail
     }
 
     val threeHundredsAndSixtyFiveDays = Duration.days(365)
@@ -308,7 +307,7 @@ class DurationTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: ClassCastException => // success
-      case _                     => fail
+      case _: Throwable          => fail
     }
 
     // nonconvertable units but zero
@@ -322,12 +321,12 @@ class DurationTest extends AssertionsForJUnit {
       fail
     } catch {
       case e: NullPointerException => // success
-      case _                       => fail
+      case _: Throwable            => fail
     }
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#startingFrom(TimePoint)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# s t a r t i n g F r o m ( T i m e P o i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -340,7 +339,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#startingFrom(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# s t a r t i n g F r o m ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -353,7 +352,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#normalizedUnit]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# n o r m a l i z e d U n i t]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -366,7 +365,7 @@ class DurationTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.Duration#addedTo(CalendarMonth)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.Duration# a d d e d T o ( C a l e n d a r M o n t h )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */

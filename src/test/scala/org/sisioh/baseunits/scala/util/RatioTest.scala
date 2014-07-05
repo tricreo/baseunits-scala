@@ -18,8 +18,8 @@
  */
 package org.sisioh.baseunits.scala.util
 
-import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
+import org.scalatest.junit.AssertionsForJUnit
 
 /**
  * `Ratio`のテストクラス。
@@ -30,12 +30,12 @@ class RatioTest extends AssertionsForJUnit {
    * `BigDecimal`で構成する`Ratio`の挙動テスト。
    *
    * <ul>
-   *   <li>`3/2`であらわす割合について、小数点第1位までで丸めなかった場合は1.5である。</li>
-   *   <li>`10/3`であらわす割合について、小数点第3位までで切り捨てた場合は3.333である。</li>
-   *   <li>`10/3`であらわす割合について、小数点第3位までで切り上げた場合は3.334である。</li>
-   *   <li>`9.001/3`であらわす割合（3.00033…）について、小数点第6位までで切り上げた場合は3.000334である。</li>
-   *   <li>`9.001/3`であらわす割合（3.00033…）について、小数点第7位までで切り上げた場合は3.0003334である。</li>
-   *   <li>`9.001/3`であらわす割合（3.00033…）について、小数点第7位までで四捨五入した場合は3.0003333である。</li>
+   * <li>`3/2`であらわす割合について、小数点第1位までで丸めなかった場合は1.5である。</li>
+   * <li>`10/3`であらわす割合について、小数点第3位までで切り捨てた場合は3.333である。</li>
+   * <li>`10/3`であらわす割合について、小数点第3位までで切り上げた場合は3.334である。</li>
+   * <li>`9.001/3`であらわす割合（3.00033…）について、小数点第6位までで切り上げた場合は3.000334である。</li>
+   * <li>`9.001/3`であらわす割合（3.00033…）について、小数点第7位までで切り上げた場合は3.0003334である。</li>
+   * <li>`9.001/3`であらわす割合（3.00033…）について、小数点第7位までで四捨五入した場合は3.0003333である。</li>
    * </ul>
    *
    * @throws Exception 例外が発生した場合
@@ -68,14 +68,14 @@ class RatioTest extends AssertionsForJUnit {
       fail()
     } catch {
       case e: ArithmeticException => // success
-      case _                      => fail()
+      case _: Throwable           => fail()
     }
     try {
       Ratio(10, 0)
       fail()
     } catch {
       case e: ArithmeticException => // success
-      case _                      => fail()
+      case _: Throwable           => fail()
     }
   }
 
@@ -87,7 +87,7 @@ class RatioTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test02_LongRatio {
+  def test02_LongRatio() {
     val rManyDigits = Ratio(9001L, 3000L)
     val result = rManyDigits.decimalValue(6, BigDecimal.RoundingMode.UP)
     assert(result == BigDecimal("3.000334"))
@@ -99,7 +99,7 @@ class RatioTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test03_FractionalRatio {
+  def test03_FractionalRatio() {
     val ratio = Ratio(BigDecimal("3.14159"))
     assert(ratio.breachEncapsulationOfDenominator == BigDecimal(1))
     assert(ratio.breachEncapsulationOfNumerator == BigDecimal("3.14159"))
@@ -107,7 +107,7 @@ class RatioTest extends AssertionsForJUnit {
   }
 
   /**
-   * `Ratio#equals(Any)``のテスト。
+   * `Ratio#equals(Any)`のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -139,7 +139,7 @@ class RatioTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test05_MultiplyNumerator {
+  def test05_MultiplyNumerator() {
     val rManyDigits = Ratio(9001, 3000)
     val product = rManyDigits.times(BigDecimal("1.1"))
     assert(product == Ratio(BigDecimal("9901.1"), BigDecimal(3000)))
@@ -151,7 +151,7 @@ class RatioTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test06_MultiplyByRatio {
+  def test06_MultiplyByRatio() {
     val r1 = Ratio(9001, 3000)
     val r2 = Ratio(3, 2)
     val expectedProduct = Ratio(27003, 6000)
@@ -164,7 +164,7 @@ class RatioTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test07_toString {
+  def test07_toString() {
     assert(Ratio(100, 200).toString == "100/200")
     assert(Ratio(10, 20).toString == "10/20")
   }
