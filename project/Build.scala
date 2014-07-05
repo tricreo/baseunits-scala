@@ -1,11 +1,15 @@
+import com.typesafe.sbt.SbtScalariform._
+import com.typesafe.sbt.SbtSite._
+import sbt.Keys._
 import sbt._
-import Keys._
+
+import scalariform.formatter.preferences._
 
 object BaseUnitsBuild extends Build {
 
   lazy val root = Project(id = "baseunits-scala",
     base = file("."),
-    settings = Defaults.defaultSettings ++ Seq(
+    settings = scalariformSettings ++ org.scalastyle.sbt.ScalastylePlugin.Settings ++ ScctPlugin.instrumentSettings ++ site.settings ++ site.includeScaladoc() ++ Seq(
       organization := "org.sisioh",
       version := "0.1.13-SNAPSHOT",
       scalaVersion := "2.11.1",
@@ -23,6 +27,14 @@ object BaseUnitsBuild extends Build {
         "org.scalatest" %% "scalatest" % "2.1.6" % "test",
         "commons-io" % "commons-io" % "2.4"
       ),
+      ScalariformKeys.preferences :=
+        ScalariformKeys.preferences.value
+          .setPreference(AlignParameters, true)
+          .setPreference(AlignSingleLineCaseStatements, true)
+          .setPreference(DoubleIndentClassDeclaration, true)
+          .setPreference(PreserveDanglingCloseParenthesis, true)
+          .setPreference(MultilineScaladocCommentsStartOnFirstLine, false)
+      ,
       publishMavenStyle := true,
       publishArtifact in Test := false,
       pomIncludeRepository := {
