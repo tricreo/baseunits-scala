@@ -115,7 +115,7 @@ object MoneyTimeRate {
    *
    * @param rate 単位時間あたりの数量
    * @param currency 通貨単位
-   * @return [[org.sisioh.baseunits.scala.money.MoneyTimeRate]]
+   * @return [[MoneyTimeRate]]
    */
   def apply(rate: TimeRate, currency: Currency): MoneyTimeRate = new MoneyTimeRate(rate, currency)
 
@@ -130,7 +130,7 @@ object MoneyTimeRate {
   /**
    * 抽出子メソッド。
    *
-   * @param [[org.sisioh.baseunits.scala.money.MoneyTimeRate]]
+   * @param moneyTimeRate [[MoneyTimeRate]]
    * @return `Option[(TimeRate, Currency)]`
    */
   def unapply(moneyTimeRate: MoneyTimeRate) = Some(moneyTimeRate.rate, moneyTimeRate.currency)

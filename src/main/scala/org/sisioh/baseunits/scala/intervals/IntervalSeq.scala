@@ -19,7 +19,7 @@
 package org.sisioh.baseunits.scala.intervals
 
 import scala.collection._
-import mutable.{ ListBuffer, Builder }
+import collection.mutable.{ ListBuffer, Builder }
 
 /**
  * 区間同士の比較を行うための`Ordering`の実装(上側優先)
@@ -63,7 +63,7 @@ object UpperLowerOrdering {
    *
    * @param inverseLower
    * @param inverseUpper
-   * @return [[org.sisioh.baseunits.scala.intervals.UpperLowerOrdering]]
+   * @return [[UpperLowerOrdering]]
    */
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new UpperLowerOrdering[T](inverseLower, inverseUpper)
@@ -71,7 +71,7 @@ object UpperLowerOrdering {
   /**
    * 抽出子メソッド。
    *
-   * @param upperLowerOrdering [[org.sisioh.baseunits.scala.intervals.UpperLowerOrdering]]
+   * @param upperLowerOrdering [[UpperLowerOrdering]]
    * @return `Option[(Boolean, Boolean)]`
    */
   def unapply[T <% Ordered[T]](upperLowerOrdering: UpperLowerOrdering[T]) =
@@ -121,7 +121,7 @@ object LowerUpperOrdering {
    *
    * @param inverseLower
    * @param inverseUpper
-   * @return [[org.sisioh.baseunits.scala.intervals.LowerUpperOrdering]]
+   * @return [[LowerUpperOrdering]]
    */
   def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
@@ -129,7 +129,7 @@ object LowerUpperOrdering {
   /**
    * 抽出子メソッド。
    *
-   * @param upperLowerOrdering [[org.sisioh.baseunits.scala.intervals.LowerUpperOrdering]]
+   * @param lowerUpperOrdering [[LowerUpperOrdering]]
    * @return `Option[(Boolean, Boolean)]`
    */
 
@@ -138,19 +138,19 @@ object LowerUpperOrdering {
 }
 
 /**
- * 区間列（複数の [[org.sisioh.beseunits.scala.intervals.Interval]] の列）を表すクラス。
+ * 区間列（複数の [[Interval]] の列）を表すクラス。
  *
  * @author j5ik2o
- * @tparam T [[org.sisioh.beseunits.scala.intervals.Interval]]の型
- * @param intervals [[org.sisioh.beseunits.scala.intervals.Interval]]の列
- * @param ordering [[org.sisioh.beseunits.scala.intervals.Ordering]]
+ * @tparam T [[Interval]]の型
+ * @param intervals [[Interval]]の列
+ * @param ordering [[Ordering]]
  */
 class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
     extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
 
-  import mutable.Builder
+  import collection.mutable.Builder
 
-  override protected def newBuilder: Builder[Interval[T], IntervalSeq[T]] =
+  override protected def newBuilder: mutable.Builder[Interval[T], IntervalSeq[T]] =
     IntervalSeq.newBuilder[T](ordering)
 
   /**
@@ -165,7 +165,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
    *
    * `ordering`は`UpperLowerOrdering[T](true, false)`を利用する。
    *
-   * @param intervals [[org.sisioh.beseunits.scala.intervals.Interval]]の列
+   * @param intervals [[Interval]]の列
    */
   def this(intervals: Seq[Interval[T]]) = this(intervals, UpperLowerOrdering[T](true, false))
 
@@ -182,7 +182,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
       case firstInterval :: _ => {
         val lower = intervals.map(_.lowerLimitObject).min
         val upper = intervals.map(_.upperLimitObject).max
-        firstInterval.newOfSameType(lower.value, lower.isClosed, upper.value, upper.isClosed)
+        firstInterval.newOfSameType(lower.value, lower.closed, upper.value, upper.closed)
       }
     }
   }
@@ -282,7 +282,7 @@ class IntervalSeqBuilder[T <% Ordered[T]](val ord: Option[Ordering[Interval[T]]]
  */
 object IntervalSeq {
 
-  import generic.CanBuildFrom
+  import collection.generic.CanBuildFrom
 
   type From[T] = Seq[Interval[T]]
   type Elem[T] = Interval[T]
@@ -307,7 +307,7 @@ object IntervalSeq {
    *
    * @tparam T 限界値の型
    * @param intervals
-   * @return [[org.sisioh.baseunits.scala.intervals.IntervalSeq]]
+   * @return [[IntervalSeq]]
    */
   def apply[T <% Ordered[T]](intervals: From[T]) = new IntervalSeq(intervals)
 
@@ -315,8 +315,7 @@ object IntervalSeq {
    * インスタンスを生成する。
    *
    * @tparam T 限界値の型
-   * @param intervals
-   * @return [[org.sisioh.baseunits.scala.intervals.IntervalSeq]]
+   * @return [[IntervalSeq]]
    */
   def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
 
@@ -324,8 +323,7 @@ object IntervalSeq {
    * 抽出子メソッド。
    *
    * @tparam T 限界値の型
-   * @param intervals
-   * @return Some(intervals: Seq[Interval[T]], ordering: Ordering[Interval[T]])
+   * @return 構成要素
    */
   def unapply[T <% Ordered[T]](intervalSeq: IntervalSeq[T]) =
     Some(intervalSeq.intervals, intervalSeq.ordering)
@@ -336,6 +334,6 @@ object IntervalSeq {
    * @tparam T 限界値の型
    * @return ビルダー
    */
-  def newBuilder[T <% Ordered[T]](ordering: Ordering[Interval[T]]): Builder[Elem[T], To[T]] = new IntervalSeqBuilder[T](Some(ordering))
+  def newBuilder[T <% Ordered[T]](ordering: Ordering[Interval[T]]): mutable.Builder[Elem[T], To[T]] = new IntervalSeqBuilder[T](Some(ordering))
 
 }

@@ -179,7 +179,7 @@ object MoneyFan {
   /**
    * 抽出子メソッド。
    *
-   * @param [[org.sisioh.baseunits.scala.money.MoneyFan]]
+   * @param moneyFan [[MoneyFan]]
    * @return `Option[Set[Allotment[T]]]`
    */
   def unapply[T](moneyFan: MoneyFan[T]) = Some(moneyFan.allotments)

@@ -25,8 +25,8 @@ import collection.Iterator
  * 区間に対して値をマッピングする抽象クラス。
  *
  * @author j5ik2o
- * @tparam K キーとなる区間の型
- * @tparam V 値の型
+ * @tparam A キーとなる区間の型
+ * @tparam B 値の型
  */
 abstract class IntervalMap[A <% Ordered[A], +B]
     extends Map[Interval[A], B]

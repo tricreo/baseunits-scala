@@ -226,7 +226,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 下側限界が閉じている場合は`true`、そうでない場合は`false`
    */
-  def includesLowerLimit = lowerLimitObject.isClosed
+  def includesLowerLimit = lowerLimitObject.closed
 
   /**
    * 上側限界が閉じているかどうかを取得する。
@@ -242,7 +242,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 上側限界値が閉じている場合は`true`、そうでない場合は`false`
    */
-  def includesUpperLimit = upperLimitObject.isClosed
+  def includesUpperLimit = upperLimitObject.closed
 
   /**
    * この区間と与えた区間 `other` の積集合（共通部分）を返す。
@@ -483,7 +483,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
   //  }
 
   private def checkLowerIsLessThanOrEqualUpper(lower: IntervalLimit[T], upper: IntervalLimit[T]) {
-    if ((lower.isLower && upper.isUpper && lower.compareTo(upper) <= 0) == false) {
+    if ((lower.lower && upper.isUpper && lower.compareTo(upper) <= 0) == false) {
       throw new IllegalArgumentException(lower + " is not before or equal to " + upper)
     }
   }
@@ -602,7 +602,7 @@ object Interval {
    * 下側限界値は区間に含む（閉じている）区間である。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def andMore[T <% Ordered[T]](lower: LimitValue[T]) = closed(lower, Limitless[T])
@@ -611,8 +611,8 @@ object Interval {
    * 閉区間を生成する。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
-   * @param isUpper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 閉区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -625,7 +625,7 @@ object Interval {
    * 下側限界値は区間に含まない（開いている）区間である。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def moreThan[T <% Ordered[T]](lower: LimitValue[T]) = open(lower, Limitless[T])
@@ -637,8 +637,8 @@ object Interval {
    * 開区間を生成する。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
-   * @param isUpper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 開区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
@@ -649,9 +649,9 @@ object Interval {
    * 主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。
    *
    * @tparam T 限界値の型
-   * @param isLower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param lowerIncluded 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
-   * @param isUpper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param upperIncluded 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
@@ -674,7 +674,7 @@ object Interval {
    * 上側限界値は区間に含まない（開いている）区間である。
    *
    * @tparam T 限界値の型
-   * @param isUpper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def under[T <% Ordered[T]](upper: LimitValue[T]) = open(Limitless[T], upper)
@@ -685,7 +685,7 @@ object Interval {
    * 上側限界値は区間に含む（閉じている）区間である。
    *
    * @tparam T 限界値の型
-   * @param isUpper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
   def upTo[T <% Ordered[T]](upper: LimitValue[T]) = closed(Limitless[T], upper)
