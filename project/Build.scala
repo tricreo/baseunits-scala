@@ -11,7 +11,7 @@ object BaseUnitsBuild extends Build {
     base = file("."),
     settings = scalariformSettings ++ org.scalastyle.sbt.ScalastylePlugin.Settings ++ ScctPlugin.instrumentSettings ++ site.settings ++ site.includeScaladoc() ++ Seq(
       organization := "org.sisioh",
-      version := "0.1.13-SNAPSHOT",
+      version := "0.1.14-SNAPSHOT",
       scalaVersion := "2.11.1",
       crossScalaVersions := Seq("2.10.4", "2.11.1"),
       scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
