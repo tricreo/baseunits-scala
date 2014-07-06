@@ -35,16 +35,14 @@ private[time] final class TimeUnitConversionFactor(_name: String, val value: Int
  * @author j5ik2o
  */
 private[time] object TimeUnitConversionFactor {
-  val identical = new TimeUnitConversionFactor("identical", 1)
-  val millisecondsPerSecond = new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
-  val millisecondsPerMinute = new TimeUnitConversionFactor("millisecondsPerMinute", 60 * millisecondsPerSecond.value)
-  val millisecondsPerHour = new TimeUnitConversionFactor("millisecondsPerHour", 60 * millisecondsPerMinute.value)
-  val millisecondsPerDay = new TimeUnitConversionFactor("millisecondsPerDay", 24 * millisecondsPerHour.value)
-  val millisecondsPerWeek = new TimeUnitConversionFactor("millisecondsPerWeek", 7 * millisecondsPerDay.value)
-  val monthsPerQuarter = new TimeUnitConversionFactor("monthsPerQuarter", 3)
-  val monthsPerYear = new TimeUnitConversionFactor("monthsPerYear", 12)
 
-  //  identical % millisecondsPerSecond % millisecondsPerMinute % millisecondsPerHour %
-  //    millisecondsPerDay % millisecondsPerWeek % monthsPerQuarter % monthsPerYear
+  val Identical = new TimeUnitConversionFactor("identical", 1)
+  val MillisecondsPerSecond = new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
+  val MillisecondsPerMinute = new TimeUnitConversionFactor("millisecondsPerMinute", 60 * MillisecondsPerSecond.value)
+  val MillisecondsPerHour = new TimeUnitConversionFactor("millisecondsPerHour", 60 * MillisecondsPerMinute.value)
+  val MillisecondsPerDay = new TimeUnitConversionFactor("millisecondsPerDay", 24 * MillisecondsPerHour.value)
+  val MillisecondsPerWeek = new TimeUnitConversionFactor("millisecondsPerWeek", 7 * MillisecondsPerDay.value)
+  val MonthsPerQuarter = new TimeUnitConversionFactor("monthsPerQuarter", 3)
+  val MonthsPerYear = new TimeUnitConversionFactor("monthsPerYear", 12)
 
 }

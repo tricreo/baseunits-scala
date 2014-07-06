@@ -77,7 +77,7 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
     case _                    => false
   }
 
-  override def hashCode = date.hashCode + time.hashCode
+  override def hashCode = 31 * (date.hashCode + time.hashCode)
 
   /**
    * 指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。

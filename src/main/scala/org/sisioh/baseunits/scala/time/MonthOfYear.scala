@@ -38,7 +38,7 @@ sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: Da
    *
    * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
    */
-  def breachEncapsulationOfCalendarValue = calendarValue
+  val breachEncapsulationOfCalendarValue = calendarValue
 
   /**
    * このオブジェクトの`value`フィールド（月をあらわす数 1〜12）を返す。
@@ -47,7 +47,7 @@ sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: Da
    *
    * @return 月をあらわす数（1〜12）
    */
-  def breachEncapsulationOfValue = value + 1
+  val breachEncapsulationOfValue = value + 1
 
   /**
    * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。

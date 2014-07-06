@@ -126,7 +126,7 @@ class TimeInterval private[time] (startValue: LimitValue[TimePoint], startInclud
    * @return 長さ.
    * @throws IllegalStateException この期間が開始日時（下側限界）または終了日時（下側限界）を持たない場合
    */
-  def length = {
+  lazy val length: Duration = {
     if (hasLowerLimit == false || hasUpperLimit == false) {
       throw new IllegalStateException
     }

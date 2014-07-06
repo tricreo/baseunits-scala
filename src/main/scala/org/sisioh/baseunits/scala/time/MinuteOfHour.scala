@@ -41,14 +41,14 @@ class MinuteOfHour private[time] (private[time] val value: Int)
    */
   def breachEncapsulationOfValue = value
 
-  def compare(other: MinuteOfHour): Int = value - other.value
+  override def compare(other: MinuteOfHour): Int = value - other.value
 
   override def equals(obj: Any): Boolean = obj match {
     case that: MinuteOfHour => value == that.value
     case _                  => false
   }
 
-  override def hashCode = value.hashCode
+  override def hashCode = 31 * value.hashCode
 
   /**
    * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも未来かどうか調べる。
@@ -58,7 +58,7 @@ class MinuteOfHour private[time] (private[time] val value: Int)
    * @param another 基準分
    * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(another: MinuteOfHour) = value > another.value;
+  def isAfter(another: MinuteOfHour) = value > another.value
 
   /**
    * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも過去かどうか調べる。
@@ -96,7 +96,7 @@ object MinuteOfHour {
   /**
    * 抽出しメソッド。
    *
-   * @param [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
+   * @param minuteOfHour [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
    * @return `Option[Int]`
    */
   def unapply(minuteOfHour: MinuteOfHour) = Some(minuteOfHour.value)

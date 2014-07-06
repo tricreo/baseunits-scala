@@ -44,7 +44,7 @@ class DayOfMonth private[time] (private[time] val value: Int)
 
   def compare(that: DayOfMonth): Int = value - that.value
 
-  override def hashCode: Int = value.hashCode
+  override def hashCode: Int = 31 * value.hashCode
 
   override def equals(obj: Any): Boolean = obj match {
     case that: DayOfMonth => (value compare that.value) == 0

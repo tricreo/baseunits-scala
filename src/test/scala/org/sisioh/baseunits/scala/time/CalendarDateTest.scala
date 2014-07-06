@@ -44,7 +44,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test01_Serialization {
+  def test01_Serialization() {
     //SerializationTester.assertCanBeSerialized(feb17)
   }
 
@@ -54,13 +54,13 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test02_Comparison {
-    assert(feb17.isBefore(mar13) == (true))
-    assert(mar13.isBefore(feb17) == (false))
-    assert(feb17.isBefore(feb17) == (false))
-    assert(feb17.isAfter(mar13) == (false))
-    assert(mar13.isAfter(feb17) == (true))
-    assert(feb17.isAfter(feb17) == (false))
+  def test02_Comparison() {
+    assert(feb17.isBefore(mar13) == true)
+    assert(mar13.isBefore(feb17) == false)
+    assert(feb17.isBefore(feb17) == false)
+    assert(feb17.isAfter(mar13) == false)
+    assert(mar13.isAfter(feb17) == true)
+    assert(feb17.isAfter(feb17) == false)
   }
 
   /**
@@ -69,7 +69,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test03_StartAsTimePoint {
+  def test03_StartAsTimePoint() {
     val feb17StartAsCt = feb17.startAsTimePoint(ct)
     val feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct)
     assert(feb17StartAsCt == feb17Hour0Ct)
@@ -81,7 +81,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test04_AsTimeInterval {
+  def test04_AsTimeInterval() {
     val feb17AsCt = feb17.asTimeInterval(ct)
     val feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct)
     val feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, ct)
@@ -95,10 +95,10 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test05_FormattedString {
-    assert(feb17.toString("M/d/yyyy") == ("2/17/2003"))
+  def test05_FormattedString() {
+    assert(feb17.toString("M/d/yyyy") == "2/17/2003")
     //Now a nonsense pattern, to make sure it isn't succeeding by accident.
-    assert(feb17.toString("#d-yy/MM yyyy") == ("#17-03/02 2003"))
+    assert(feb17.toString("#d-yy/MM yyyy") == "#17-03/02 2003")
   }
 
   /**
@@ -107,7 +107,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test06_FromFormattedString {
+  def test06_FromFormattedString() {
     assert(CalendarDate.parse("2/17/2003", "M/d/yyyy") == (feb17))
     //Now a nonsense pattern, to make sure it isn't succeeding by accident.
     assert(CalendarDate.parse("#17-03/02 2003", "#d-yy/MM yyyy") == (feb17))
@@ -119,7 +119,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test07_FromTimePoint {
+  def test07_FromTimePoint() {
     val feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, gmt)
     val mapped = CalendarDate.from(feb18Hour0Ct)
     assert(mapped == CalendarDate.from(2003, 2, 18))
@@ -131,7 +131,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test08_Equals {
+  def test08_Equals() {
     assert(feb17.equals(feb17) == (true))
     assert(feb17.equals(mar13) == (false))
   }
@@ -142,7 +142,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test09_DayOfWeek {
+  def test09_DayOfWeek() {
     var date = CalendarDate.from(2004, 11, 6)
     assert(date.dayOfWeek == (DayOfWeek.Saturday))
     date = CalendarDate.from(2007, 1, 1)
@@ -155,7 +155,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test10_NextDay {
+  def test10_NextDay() {
     val feb28_2004 = CalendarDate.from(2004, 2, 28)
     assert(feb28_2004.nextDay == (CalendarDate.from(2004, 2, 29)))
     assert(feb28_2004.nextDay.nextDay == (CalendarDate.from(2004, 3, 1)))
@@ -167,10 +167,10 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test11_PreviousDay {
+  def test11_PreviousDay() {
     val mar1_2004 = CalendarDate.from(2004, 3, 1)
-    assert(mar1_2004.previousDay == (CalendarDate.from(2004, 2, 29)))
-    assert(mar1_2004.previousDay.previousDay == (CalendarDate.from(2004, 2, 28)))
+    assert(mar1_2004.previousDay == CalendarDate.from(2004, 2, 29))
+    assert(mar1_2004.previousDay.previousDay == CalendarDate.from(2004, 2, 28))
   }
 
   /**
@@ -179,22 +179,22 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test12_Month {
+  def test12_Month() {
     val nov6_2004 = CalendarDate.from(2004, 11, 6)
     val nov2004 = CalendarInterval.inclusive(2004, 11, 1, 2004, 11, 30)
-    assert(nov6_2004.asMonthInterval == (nov2004))
+    assert(nov6_2004.asMonthInterval == nov2004)
 
     val dec6_2004 = CalendarDate.from(2004, 12, 6)
     val dec2004 = CalendarInterval.inclusive(2004, 12, 1, 2004, 12, 31)
-    assert(dec6_2004.asMonthInterval == (dec2004))
+    assert(dec6_2004.asMonthInterval == dec2004)
 
     val feb9_2004 = CalendarDate.from(2004, 2, 9)
     val feb2004 = CalendarInterval.inclusive(2004, 2, 1, 2004, 2, 29)
-    assert(feb9_2004.asMonthInterval == (feb2004))
+    assert(feb9_2004.asMonthInterval == feb2004)
 
     val feb9_2003 = CalendarDate.from(2003, 2, 9)
     val feb2003 = CalendarInterval.inclusive(2003, 2, 1, 2003, 2, 28)
-    assert(feb9_2003.asMonthInterval == (feb2003))
+    assert(feb9_2003.asMonthInterval == feb2003)
 
   }
 
@@ -204,9 +204,9 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test13_ToString {
+  def test13_ToString() {
     val date = CalendarDate.from(2004, 5, 28)
-    assert(date.toString() == ("2004-05-28"))
+    assert(date.toString() == "2004/05/28")
   }
 
   /**
@@ -215,7 +215,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test14_ConversionToJavaUtil {
+  def test14_ConversionToJavaUtil() {
     val expected = Calendar.getInstance(gmt)
     expected.set(Calendar.YEAR, 1969)
     expected.set(Calendar.MONTH, Calendar.JULY)
@@ -240,7 +240,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test15_DaysAdd {
+  def test15_DaysAdd() {
     assert(may1.plusDays(19) == may20)
   }
 }

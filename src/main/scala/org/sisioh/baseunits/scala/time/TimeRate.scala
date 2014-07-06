@@ -27,8 +27,8 @@ package org.sisioh.baseunits.scala.time
  * @param quantity 単位時間あたりの量
  * @param unit 単位時間
  */
-class TimeRate(val quantity: BigDecimal,
-               val unit: Duration) {
+class TimeRate(private[time] val quantity: BigDecimal,
+               private[time] val unit: Duration) {
 
   /**
    * インスタンスを生成する。
@@ -45,7 +45,7 @@ class TimeRate(val quantity: BigDecimal,
    *
    * @return 単位時間あたりの量
    */
-  def breachEncapsulationOfQuantity = quantity
+  val breachEncapsulationOfQuantity = quantity
 
   /**
    * このオブジェクトの`unit`フィールド（単位時間）を返す。
@@ -54,14 +54,14 @@ class TimeRate(val quantity: BigDecimal,
    *
    * @return 単位時間
    */
-  def breachEncapsulationOfUnit = unit
+  val breachEncapsulationOfUnit = unit
 
   override def equals(obj: Any) = obj match {
     case that: TimeRate => quantity == that.quantity && unit == that.unit
     case _              => false
   }
 
-  override def hashCode = quantity.hashCode + unit.hashCode
+  override def hashCode = 31 * (quantity.hashCode + unit.hashCode)
 
   /**
    * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。

@@ -46,7 +46,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param other 比較対象
    * @return `java.util.Comparable#compareTo`に準じる
    */
-  def compare(other: CalendarDate): Int = {
+  override def compare(other: CalendarDate): Int = {
     if (isBefore(other)) {
       -1
     } else if (isAfter(other)) {
@@ -59,14 +59,14 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    *
    * @return このインスタンスが表現する日を含む年月を表す期間
    */
-  def asCalendarMonth = yearMonth
+  def asCalendarMonth: CalendarMonth = yearMonth
 
   /**
    * このインスタンスが表現する日を含む年月を表す期間を取得する。
    *
    * @return このインスタンスが表現する日を含む年月を表す期間
    */
-  def asMonthInterval =
+  def asMonthInterval: CalendarInterval =
     CalendarInterval.month(yearMonth)
 
   /**
@@ -77,7 +77,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param timeZone タイムゾーン
    * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
    */
-  def asTimeInterval(timeZone: TimeZone) =
+  def asTimeInterval(timeZone: TimeZone): TimeInterval =
     TimeInterval.startingFrom(Limit(startAsTimePoint(timeZone)), true, Duration.days(1), false, timeZone)
 
   /**
@@ -85,7 +85,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    *
    * @return このインスタンスが表現する日を含む年を表す期間
    */
-  def asYearInterval =
+  lazy val asYearInterval: CalendarInterval =
     CalendarInterval.year(yearMonth.breachEncapsulationOfYear, timeZone)
 
   /**
@@ -94,7 +94,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param timeOfDay 時
    * @return 日時
    */
-  def at(timeOfDay: TimeOfDay) =
+  def at(timeOfDay: TimeOfDay): CalendarMinute =
     CalendarMinute.from(this, timeOfDay)
 
   /**
@@ -104,7 +104,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    *
    * @return 日
    */
-  def breachEncapsulationOfDay = day
+  val breachEncapsulationOfDay = day
 
   /**
    * このオブジェクトの`yearMonth`フィールド（年月）を返す。
@@ -113,14 +113,14 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    *
    * @return 年月
    */
-  def breachEncapsulationOfYearMonth = yearMonth
+  val breachEncapsulationOfYearMonth = yearMonth
 
   /**
    * この日付の曜日を返す。
    *
    * @return 曜日
    */
-  def dayOfWeek = {
+  def dayOfWeek: DayOfWeek = {
     val calendar = asJavaCalendarOnMidnight(timeZone)
     DayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))
   }
@@ -130,7 +130,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
     case _                  => false
   }
 
-  override def hashCode = day.hashCode + yearMonth.hashCode
+  override def hashCode = 31 * (day.hashCode + yearMonth.hashCode)
 
   /**
    * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
@@ -140,7 +140,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(other: CalendarDate) =
+  def isAfter(other: CalendarDate): Boolean =
     isBefore(other) == false && equals(other) == false
 
   /**
@@ -151,7 +151,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param other 対象日時
    * @return 未来である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(other: CalendarDate) =
+  def isBefore(other: CalendarDate): Boolean =
     if (yearMonth.isBefore(other.yearMonth)) {
       true
     } else if (yearMonth.isAfter(other.yearMonth)) {
@@ -163,7 +163,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    *
    * @return 翌日
    */
-  def nextDay = plusDays(1)
+  lazy val nextDay: CalendarDate = plusDays(1)
 
   /**
    * このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
@@ -173,7 +173,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param length 時間の長さ
    * @return 未来の日付
    */
-  def plus(length: Duration) = length.addedTo(this, timeZone)
+  def plus(length: Duration): CalendarDate = length.addedTo(this, timeZone)
 
   /**
    * このインスタンスが表現する日の `increment` 日後を返す。
@@ -183,7 +183,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param increment 加える日数
    * @return 計算結果
    */
-  def plusDays(increment: Int) = {
+  def plusDays(increment: Int): CalendarDate = {
     val calendar = asJavaCalendarOnMidnight(timeZone)
     calendar.add(Calendar.DATE, increment)
     val year = calendar.get(Calendar.YEAR)
@@ -200,7 +200,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param increment 加える月数
    * @return 計算結果
    */
-  def plusMonths(increment: Int) = {
+  def plusMonths(increment: Int): CalendarDate = {
     val calendar = asJavaCalendarOnMidnight(timeZone)
     calendar.add(Calendar.MONTH, increment)
     val year = calendar.get(Calendar.YEAR)
@@ -214,7 +214,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    *
    * @return 前日
    */
-  def previousDay = plusDays(-1)
+  lazy val previousDay: CalendarDate = plusDays(-1)
 
   /**
    * このインスタンスが表現する日付の午前0時を、日時として取得する。
@@ -222,7 +222,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param timeZone タイムゾーン
    * @return このインスタンスが表現する日の午前0時を表現する日時
    */
-  def startAsTimePoint(timeZone: TimeZone = TimeZones.Default) = TimePoint.atMidnight(this, timeZone)
+  def startAsTimePoint(timeZone: TimeZone = TimeZones.Default): TimePoint = TimePoint.atMidnight(this, timeZone)
 
   /**
    * このインスタンスが表現する日付を開始日とし、指定した日付 `otherDate` を終了日とする期間を取得する。
@@ -230,7 +230,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param otherDate 終了日
    * @return 期間
    */
-  def through(otherDate: CalendarDate) =
+  def through(otherDate: CalendarDate): CalendarInterval =
     CalendarInterval.inclusive(Limit(this), Limit(otherDate))
 
   /**
@@ -240,7 +240,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    *
    * @see java.lang.Object#toString()
    */
-  override def toString =
+  override def toString: String =
     toString("yyyy/MM/dd")
 
   //default for console
@@ -251,13 +251,13 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
    * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
    * @return 整形済み時間文字列
    */
-  def toString(pattern: String) = {
+  def toString(pattern: String): String = {
     // Any timezone works, as long as the same one is used throughout.
     val point = startAsTimePoint(timeZone)
     point.toString(pattern, timeZone)
   }
 
-  private[time] def asJavaCalendarOnMidnight: Calendar =
+  private[time] lazy val asJavaCalendarOnMidnight: Calendar =
     asJavaCalendarOnMidnight(timeZone)
 
   private[time] def asJavaCalendarOnMidnight(timeZone: TimeZone): Calendar = {
@@ -271,6 +271,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
     calendar.set(Calendar.MILLISECOND, 0)
     calendar
   }
+
 }
 
 /**

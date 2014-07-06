@@ -237,14 +237,6 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
     }
 
   /**
-   * Should be overriden for each particular organization.
-   *
-   * @return 営業日の[[scala.collection.Set]]
-   */
-  //  protected def defaultHolidaySpecs =
-  //    DateSpecification.never
-
-  /**
    * `0`の先頭から数えて`0`営業日目の日付を返す。
    *
    * @param numberOfDays 営業日数. `0`の場合、イテレータの先頭

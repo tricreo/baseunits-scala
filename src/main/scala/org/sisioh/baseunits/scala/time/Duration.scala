@@ -60,11 +60,11 @@ class Duration private[time] (val quantity: Long,
    */
   def addedTo(day: CalendarDate, timeZone: TimeZone): CalendarDate = {
     //		only valid for days and larger units
-    if (unit.compareTo(TimeUnit.day) < 0) {
+    if (unit.compareTo(TimeUnit.Day) < 0) {
       day
     } else {
       val calendar = day.asJavaCalendarOnMidnight(timeZone)
-      if (unit == TimeUnit.day) {
+      if (unit == TimeUnit.Day) {
         calendar.add(Calendar.DATE, quantity.asInstanceOf[Int])
       } else {
         addAmountToCalendar(inBaseUnits, calendar)
@@ -83,11 +83,11 @@ class Duration private[time] (val quantity: Long,
    */
   def addedTo(month: CalendarMonth) = {
     //		only valid for days and larger units
-    if (unit.compareTo(TimeUnit.month) < 0) {
+    if (unit.compareTo(TimeUnit.Month) < 0) {
       month
     } else {
       val calendar = month.asJavaCalendarOnMidnight
-      if (unit == TimeUnit.month) {
+      if (unit == TimeUnit.Month) {
         calendar.add(Calendar.MONTH, quantity.asInstanceOf[Int])
       } else {
         addAmountToCalendar(inBaseUnits, calendar)
@@ -113,7 +113,7 @@ class Duration private[time] (val quantity: Long,
    *
    * @return 量
    */
-  def breachEncapsulationOfQuantity = quantity
+  val breachEncapsulationOfQuantity = quantity
 
   /**
    * このオブジェクトの`unit`フィールド（単位）を返す。
@@ -122,7 +122,7 @@ class Duration private[time] (val quantity: Long,
    *
    * @return 単位
    */
-  def breachEncapsulationOfUnit = unit
+  val breachEncapsulationOfUnit = unit
 
   /**
    * 時間量同士の比較を行う。
@@ -136,7 +136,7 @@ class Duration private[time] (val quantity: Long,
    * @return `java.util.Comparable` compareTo(Object)に準じる
    * @throws ClassCastException 引数`other`の単位を、このオブジェクトの単位に変換できない場合
    */
-  def compare(other: Duration): Int = {
+  override def compare(other: Duration): Int = {
     if (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) {
       throw new ClassCastException(other.toString() + " is not convertible to: " + toString())
     }
@@ -164,9 +164,8 @@ class Duration private[time] (val quantity: Long,
     case _              => false
   }
 
-  override def hashCode: Int = {
-    (inBaseUnits ^ (inBaseUnits >>> 32)).asInstanceOf[Int] + unit.valueBaseType.hashCode
-  }
+  override def hashCode: Int =
+    31 * ((inBaseUnits ^ (inBaseUnits >>> 32)).asInstanceOf[Int] + unit.valueBaseType.hashCode)
 
   /**
    * このオブジェクトが表現する時間量と、引数 `other` に与えた時間量の差を返す。
@@ -190,7 +189,7 @@ class Duration private[time] (val quantity: Long,
    *
    * @return 時間単位
    */
-  def normalizedUnit: TimeUnit = {
+  lazy val normalizedUnit: TimeUnit = {
     val units = unit.descendingUnits
     val baseAmount = inBaseUnits
     units.find(e => (baseAmount % e.getFactor) == 0).get
@@ -252,11 +251,11 @@ class Duration private[time] (val quantity: Long,
    */
   def subtractedFrom(day: CalendarDate): CalendarDate = {
     //		only valid for days and larger units
-    if (unit.compareTo(TimeUnit.day) < 0) {
+    if (unit.compareTo(TimeUnit.Day) < 0) {
       day
     } else {
       val calendar = day.asJavaCalendarOnMidnight
-      if (unit.equals(TimeUnit.day)) {
+      if (unit.equals(TimeUnit.Day)) {
         calendar.add(Calendar.DATE, -1 * quantity.asInstanceOf[Int])
       } else {
         subtractAmountFromCalendar(inBaseUnits, calendar)
@@ -280,7 +279,7 @@ class Duration private[time] (val quantity: Long,
    *
    * @return 時間量の文字列表現
    */
-  def toNormalizedString: String = toNormalizedString(unit.descendingUnits)
+  lazy val toNormalizedString: String = toNormalizedString(unit.descendingUnits)
 
   /**
    * この時間量の文字列表現を返す。
@@ -309,7 +308,7 @@ class Duration private[time] (val quantity: Long,
     }
   }
 
-  def inBaseUnits =
+  lazy val inBaseUnits =
     quantity * unit.getFactor
 
   def subtractAmountFromCalendar(amount: Long, calendar: Calendar) =
@@ -331,7 +330,7 @@ class Duration private[time] (val quantity: Long,
   private def isConvertibleTo(other: Duration) =
     unit.isConvertibleTo(other.unit)
 
-  private def toNormalizedString(units: List[TimeUnit]): String = {
+  private def toNormalizedString(units: Seq[TimeUnit]): String = {
     val buffer = new StringBuffer
     var remainder = inBaseUnits
     var first = true
@@ -368,7 +367,7 @@ object Duration {
    * @return 時間量
    */
   def days(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.day)
+    Duration(howMany, TimeUnit.Day)
 
   /**
    * 長さが `days`日 + `hours`時間 + `minute`分 + `seconds`秒
@@ -406,7 +405,7 @@ object Duration {
    * @return 時間量
    */
   def hours(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.hour)
+    Duration(howMany, TimeUnit.Hour)
 
   /**
    * 長さが `howMany` ミリ秒の時間量を取得する。
@@ -415,7 +414,7 @@ object Duration {
    * @return 時間量
    */
   def milliseconds(howMany: Long): Duration =
-    Duration(howMany, TimeUnit.millisecond)
+    Duration(howMany, TimeUnit.Millisecond)
 
   /**
    * 長さが `howMany` 分の時間量を取得する。
@@ -424,7 +423,7 @@ object Duration {
    * @return 時間量
    */
   def minutes(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.minute)
+    Duration(howMany, TimeUnit.Minute)
 
   /**
    * 長さが `howMany` ヶ月の時間量を取得する。
@@ -433,7 +432,7 @@ object Duration {
    * @return 時間量
    */
   def months(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.month)
+    Duration(howMany, TimeUnit.Month)
 
   /**
    * 長さが `howMany` 四半期の時間量を取得する。
@@ -442,7 +441,7 @@ object Duration {
    * @return 時間量
    */
   def quarters(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.quarter)
+    Duration(howMany, TimeUnit.Quarter)
 
   /**
    * 長さが `howMany` ミリの時間量を取得する。
@@ -451,7 +450,7 @@ object Duration {
    * @return 時間量
    */
   def seconds(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.second)
+    Duration(howMany, TimeUnit.Second)
 
   /**
    * 長さが `howMany` 週間の時間量を取得する。
@@ -460,7 +459,7 @@ object Duration {
    * @return 時間量
    */
   def weeks(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.week)
+    Duration(howMany, TimeUnit.Week)
 
   /**
    * 長さが `howMany` 年の時間量を取得する。
@@ -469,11 +468,12 @@ object Duration {
    * @return 時間量
    */
   def years(howMany: Int): Duration =
-    Duration(howMany, TimeUnit.year)
+    Duration(howMany, TimeUnit.Year)
 
   private[time] def apply(howMany: Long, unit: TimeUnit): Duration =
     new Duration(howMany, unit)
 
   private[time] def unapply(duration: Duration) =
     Some(duration.quantity, duration.unit)
+
 }

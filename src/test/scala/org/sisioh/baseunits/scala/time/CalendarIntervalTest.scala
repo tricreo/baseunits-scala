@@ -184,7 +184,7 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   def test10_EverFromToString {
     val x = CalendarDate.from(2007, 6, 5)
     val i = CalendarInterval.everFrom(Limit(x))
-    assert(i.toString == "[Limit(2007-06-05), Infinity)")
+    assert(i.toString == "[Limit(2007/06/05), Infinity)")
   }
 
   @Test
@@ -202,10 +202,10 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   def test12_StartingFrom {
     val d1 = CalendarInterval.startingFrom(Limit(may1), Duration.days(2))
     val expected1 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 2)
-    assert(d1 == (expected1))
+    assert(d1 == expected1)
 
     val d2 = CalendarInterval.startingFrom(Limit(may1), Duration.minutes(2))
     val expected2 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 1)
-    assert(d2 == (expected2))
+    assert(d2 == expected2)
   }
 }

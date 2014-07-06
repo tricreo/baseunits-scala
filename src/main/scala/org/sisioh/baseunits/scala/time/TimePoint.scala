@@ -51,7 +51,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    *
    * @return [[java.util.Date]]
    */
-  def asJavaUtilDate = new JDate(millisecondsFromEpoc)
+  lazy val asJavaUtilDate = new JDate(millisecondsFromEpoc)
 
   /**
    * この瞬間を「時分」として返す。
@@ -80,7 +80,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    *
    * @return エポックからの経過ミリ秒
    */
-  def breachEncapsulationOfMillisecondsFromEpoc = millisecondsFromEpoc
+  val breachEncapsulationOfMillisecondsFromEpoc = millisecondsFromEpoc
 
   /**
    * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
@@ -98,7 +98,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param otherPoint 比較対象
    * @return `java.util.Comparable` compareTo(Object)に準じる
    */
-  def compare(otherPoint: TimePoint): Int =
+  override def compare(otherPoint: TimePoint): Int =
     if (isBefore(otherPoint)) -1
     else if (isAfter(otherPoint)) 1
     else 0
@@ -116,7 +116,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
     case _               => false
   }
 
-  override def hashCode = (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)).asInstanceOf[Int]
+  override def hashCode = 31 * (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)).asInstanceOf[Int]
 
   /**
    * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
@@ -124,7 +124,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param interval 基準期間
    * @return 期間の終了後に位置する場合は`true`、そうでない場合は`false`
    */
-  def isAfter(interval: TimeInterval) = interval.isBefore(Limit(this))
+  def isAfter(interval: TimeInterval): Boolean = interval.isBefore(Limit(this))
 
   /**
    * 指定した瞬間 `other` が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
@@ -134,7 +134,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param other 対象日時
    * @return 未来である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(other: TimePoint) = millisecondsFromEpoc > other.millisecondsFromEpoc
+  def isAfter(other: TimePoint): Boolean = millisecondsFromEpoc > other.millisecondsFromEpoc
 
   /**
    * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
@@ -142,7 +142,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param interval 基準期間
    * @return 期間の開始前に位置する場合は`true`、そうでない場合は`false`
    */
-  def isBefore(interval: TimeInterval) = interval.isAfter(Limit(this))
+  def isBefore(interval: TimeInterval): Boolean = interval.isAfter(Limit(this))
 
   /**
    * 指定した瞬間 `other` が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
@@ -152,7 +152,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(other: TimePoint) = millisecondsFromEpoc < other.millisecondsFromEpoc
+  def isBefore(other: TimePoint): Boolean = millisecondsFromEpoc < other.millisecondsFromEpoc
 
   /**
    * 指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間`other`の年月日が等価であるかを調べる。
@@ -161,7 +161,8 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param timeZone タイムゾーン
    * @return 等価である場合は`true`、そうでない場合は`false`
    */
-  def isSameDayAs(other: TimePoint, timeZone: TimeZone = TimeZones.Default) = calendarDate(timeZone) == other.calendarDate(timeZone)
+  def isSameDayAs(other: TimePoint, timeZone: TimeZone = TimeZones.Default): Boolean =
+    calendarDate(timeZone) == other.calendarDate(timeZone)
 
   /**
    * この日時の、指定した時間の長さ分過去の日時を取得する。
@@ -169,7 +170,8 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param duration 時間の長さ
    * @return 過去の日時
    */
-  def minus(duration: Duration, timeZone: TimeZone = TimeZones.Default) = duration.subtractedFrom(this, timeZone)
+  def minus(duration: Duration, timeZone: TimeZone = TimeZones.Default): TimePoint =
+    duration.subtractedFrom(this, timeZone)
 
   def -(duration: Duration)(implicit timeZone: TimeZone) = minus(duration, timeZone)
 

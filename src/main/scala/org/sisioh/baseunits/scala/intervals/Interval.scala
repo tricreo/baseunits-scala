@@ -134,7 +134,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * `other`が`Interval`以外であった場合は、必ず`false`を返す。
    *
-   * @param other 比較対象の区間
+   * @param obj 比較対象の区間
    * @return 同一である場合は`true`、そうでない場合は`false`
    */
   override def equals(obj: Any) = obj match {
@@ -363,9 +363,9 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
   /**
    * この区間と同じ型`T`を持つ、新しい区間を生成する。
    *
-   * @param isLower 下側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
+   * @param lower 下側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
    * @param lowerClosed 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
-   * @param isUpper 上側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
+   * @param upper 上側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
    * @param upperClosed 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 新しい区間
    */

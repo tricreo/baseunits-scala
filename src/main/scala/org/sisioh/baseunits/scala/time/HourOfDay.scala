@@ -39,16 +39,16 @@ class HourOfDay private (private[time] val value: Int)
    *
    * @return 時をあらわす正数（0〜23）
    */
-  def breachEncapsulationOfValue = value
+  val breachEncapsulationOfValue = value
 
-  def compare(that: HourOfDay): Int = value - that.value
+  override def compare(that: HourOfDay): Int = value - that.value
 
   override def equals(obj: Any): Boolean = obj match {
     case that: HourOfDay => this.value == that.value
     case _               => false
   }
 
-  override def hashCode: Int = value.hashCode
+  override def hashCode: Int = 31 * value.hashCode
 
   /**
    * 同日において、このインスタンスが表す時が、引数`another`で表される時よりも未来かどうか調べる。
@@ -56,7 +56,7 @@ class HourOfDay private (private[time] val value: Int)
    * @param another 基準時
    * @return 同日において、このインスタンスが表す時が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(another: HourOfDay) = value > another.value;
+  def isAfter(another: HourOfDay) = value > another.value
 
   /**
    * 同日において、このインスタンスが表す時が、引数`another`で表される時よりも過去かどうか調べる。
@@ -64,7 +64,7 @@ class HourOfDay private (private[time] val value: Int)
    * @param another 基準時
    * @return 同日において、このインスタンスが表す時が、引数`another`で表される時よりも過去である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(another: HourOfDay) = value < another.value;
+  def isBefore(another: HourOfDay) = value < another.value
 
   override def toString = "%02d".format(value)
 }

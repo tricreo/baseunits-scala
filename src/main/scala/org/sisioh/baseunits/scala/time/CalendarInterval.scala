@@ -69,7 +69,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 日付の反復子
    * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
    */
-  def daysInReverseIterator = {
+  lazy val daysInReverseIterator = {
     if (hasUpperLimit == false) {
       throw new IllegalStateException
     }
@@ -116,7 +116,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 日付の反復子
    * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
    */
-  def daysIterator: Iterator[CalendarDate] = {
+  lazy val daysIterator: Iterator[CalendarDate] = {
     if (hasLowerLimit == false) {
       throw new IllegalStateException
     }
@@ -149,7 +149,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    *
    * @return 終了日. 開始日がない場合は`Limitless[CalendarDate]`
    */
-  def end = upperLimit
+  val end = upperLimit
 
   /**
    * この期間の日数としての長さを取得する。
@@ -157,9 +157,8 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 期間の長さ
    * @see #length()
    */
-  def length = {
+  lazy val length =
     Duration.days(lengthInDaysInt)
-  }
 
   /**
    * この期間が、日数にして何日の長さがあるかを取得する。
@@ -167,12 +166,12 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 日数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
    */
-  def lengthInDaysInt = {
+  lazy val lengthInDaysInt = {
     require(hasLowerLimit && hasUpperLimit)
     val calStart = start.toValue.asJavaCalendarOnMidnight
     val calEnd = end.toValue.plusDays(1).asJavaCalendarOnMidnight
     val diffMillis = calEnd.getTimeInMillis - calStart.getTimeInMillis
-    (diffMillis / TimeUnitConversionFactor.millisecondsPerDay.value).asInstanceOf[Int]
+    (diffMillis / TimeUnitConversionFactor.MillisecondsPerDay.value).asInstanceOf[Int]
   }
 
   /**
@@ -183,9 +182,8 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 期間の長さ
    * @see #lengthInMonthsInt()
    */
-  def lengthInMonths = {
+  lazy val lengthInMonths =
     Duration.months(lengthInMonthsInt)
-  }
 
   /**
    * 限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
@@ -195,7 +193,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 月数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
    */
-  def lengthInMonthsInt = {
+  lazy val lengthInMonthsInt = {
     require(hasLowerLimit && hasUpperLimit)
     val calStart = start.toValue.asJavaCalendarOnMidnight
     val calEnd = end.toValue.plusDays(1).asJavaCalendarOnMidnight
@@ -216,7 +214,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    *
    * @return 開始日. 開始日がない場合は`Limitless[CalendarDate]`
    */
-  def start = lowerLimit
+  val start = lowerLimit
 
   /**
    * この期間の開始日を起点として、指定した時間の長さを持ち前回の終了日の翌日を開始日とする期間
@@ -247,7 +245,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
     if (hasLowerLimit == false) {
       throw new IllegalStateException
     }
-    require(TimeUnit.day.compareTo(subintervalLength.normalizedUnit) <= 0,
+    require(TimeUnit.Day.compareTo(subintervalLength.normalizedUnit) <= 0,
       "CalendarIntervals must be a whole number of days or months.")
 
     val segmentLength = subintervalLength
@@ -269,6 +267,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
       }
     }
   }
+
 }
 
 /**
@@ -408,7 +407,7 @@ object CalendarInterval {
    */
   def startingFrom(start: LimitValue[CalendarDate], length: Duration): CalendarInterval = {
     // Uses the common default for calendar intervals, [start, end].
-    if (length.unit.compareTo(TimeUnit.day) < 0) {
+    if (length.unit.compareTo(TimeUnit.Day) < 0) {
       CalendarInterval.inclusive(start, start)
     } else {
       CalendarInterval.inclusive(start, Limit(start.toValue.plus(length).plusDays(-1)))
@@ -428,4 +427,5 @@ object CalendarInterval {
     val endDate = CalendarDate.from(year + 1, 1, 1, timeZone).plusDays(-1)
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
   }
+
 }

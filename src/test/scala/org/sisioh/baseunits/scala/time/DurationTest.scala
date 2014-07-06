@@ -361,10 +361,10 @@ object DurationTest extends Assertions {
    */
   @Test
   def test19_NormalizedUnit {
-    assert(Duration.seconds(30).normalizedUnit == TimeUnit.second)
-    assert(Duration.seconds(120).normalizedUnit == TimeUnit.minute)
-    assert(Duration.hours(24).normalizedUnit == TimeUnit.day)
-    assert(Duration.hours(25).normalizedUnit == TimeUnit.hour)
+    assert(Duration.seconds(30).normalizedUnit == TimeUnit.Second)
+    assert(Duration.seconds(120).normalizedUnit == TimeUnit.Minute)
+    assert(Duration.hours(24).normalizedUnit == TimeUnit.Day)
+    assert(Duration.hours(25).normalizedUnit == TimeUnit.Hour)
   }
 
   /**

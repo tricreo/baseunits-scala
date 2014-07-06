@@ -38,7 +38,7 @@ final class DayOfWeek private[time] (private[time] val value: Int,
    *
    * @return [[java.util.Calendar]]に定義する曜日をあらわす定数値（`SUNDAY`〜`SATURDAY`）
    */
-  def breachEncapsulationOfValue = value
+  val breachEncapsulationOfValue = value
 
   val name = _name
 }

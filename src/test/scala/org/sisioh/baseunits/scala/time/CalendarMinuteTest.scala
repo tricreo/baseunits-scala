@@ -161,6 +161,6 @@ class CalendarMinuteTest extends AssertionsForJUnit {
   @Test
   def test13_ToString {
     val date = CalendarMinute.from(2004, 5, 28, 23, 21)
-    assert(date.toString == "2004-05-28 at 23:21")
+    assert(date.toString == "2004/05/28 at 23:21")
   }
 }

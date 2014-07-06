@@ -43,7 +43,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
-  def asCalendarInterval =
+  lazy val asCalendarInterval =
     CalendarInterval.month(year, month, timeZone)
 
   /**
@@ -63,7 +63,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
-  def asYearInterval =
+  lazy val asYearInterval =
     CalendarInterval.year(year, timeZone)
 
   /**
@@ -83,7 +83,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return 月
    */
-  def breachEncapsulationOfMonth = month
+  val breachEncapsulationOfMonth = month
 
   /**
    * このオブジェクトの`year`フィールド（西暦年をあらわす数）を返す。
@@ -92,7 +92,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return 西暦年をあらわす数
    */
-  def breachEncapsulationOfYear = year
+  val breachEncapsulationOfYear = year
 
   /**
    * 年月日同士の比較を行う。
@@ -102,7 +102,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    * @param other 比較対象
    * @return `java.util.Comparable` compareTo(Object)に準じる
    */
-  def compare(other: CalendarMonth): Int =
+  override def compare(other: CalendarMonth): Int =
     if (isBefore(other)) {
       -1
     } else if (isAfter(other)) {
@@ -119,7 +119,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
-  def getLastDay =
+  lazy val getLastDay =
     CalendarDate.from(year, month, getLastDayOfMonth, timeZone)
 
   /**
@@ -127,10 +127,10 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
-  def getLastDayOfMonth =
+  lazy val getLastDayOfMonth =
     month.getLastDayOfThisMonth(year)
 
-  override def hashCode: Int = month.hashCode + year.hashCode
+  override def hashCode: Int = 31 * (month.hashCode + year.hashCode)
 
   /**
    * 指定した日 `other`が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
@@ -163,7 +163,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return 翌月
    */
-  def nextMonth = plusMonths(1)
+  lazy val nextMonth = plusMonths(1)
 
   /**
    * このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
@@ -197,7 +197,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    *
    * @return 前月
    */
-  def previousDay = plusMonths(-1)
+  lazy val previousDay = plusMonths(-1)
 
   /**
    * この日付の文字列表現を取得する。
@@ -222,7 +222,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
     point.toString(pattern, timeZone)
   }
 
-  def asJavaCalendarOnMidnight: Calendar =
+  lazy val asJavaCalendarOnMidnight: Calendar =
     asJavaCalendarOnMidnight(timeZone)
 
   def asJavaCalendarOnMidnight(timeZone: TimeZone): Calendar = {
@@ -236,6 +236,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
     calendar.set(Calendar.MILLISECOND, 0)
     calendar
   }
+
 }
 
 /**

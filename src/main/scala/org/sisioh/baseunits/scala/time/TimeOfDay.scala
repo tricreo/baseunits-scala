@@ -73,7 +73,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
     case _               => false
   }
 
-  override def hashCode = hour.hashCode + minute.hashCode
+  override def hashCode = 31 * (hour.hashCode + minute.hashCode)
 
   /**
    * このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。

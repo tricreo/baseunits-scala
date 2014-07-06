@@ -101,7 +101,7 @@ object DateSpecification {
    *
    * @return 日付仕様
    */
-  def never: DateSpecification =
+  lazy val never: DateSpecification =
     new DateSpecification {
 
       override def firstOccurrenceIn(interval: CalendarInterval): Option[CalendarDate] =
