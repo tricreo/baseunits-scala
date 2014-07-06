@@ -299,7 +299,7 @@ class Duration private[time] (val quantity: Long,
     }
   }
 
-  private[time] def addAmountToTimePoint(amount: Long, point: TimePoint, timeZone: TimeZone = TimeZones.Default): TimePoint = {
+  private[time] def addAmountToTimePoint(amount: Long, point: TimePoint, timeZone: TimeZone): TimePoint = {
     if (unit.isConvertibleToMilliseconds) {
       TimePoint.from(amount + point.millisecondsFromEpoc)
     } else {
