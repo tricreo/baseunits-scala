@@ -52,7 +52,7 @@ class Ratio(private val numerator: BigDecimal,
    *
    * @return 分母をあらわず数
    */
-  def breachEncapsulationOfDenominator = denominator
+  val breachEncapsulationOfDenominator = denominator
 
   /**
    * このオブジェクトの`numerator`フィールド（分子をあらわす数）を返す。
@@ -61,7 +61,7 @@ class Ratio(private val numerator: BigDecimal,
    *
    * @return 分子をあらわす数
    */
-  def breachEncapsulationOfNumerator = numerator
+  val breachEncapsulationOfNumerator = numerator
 
   /**
    * 比率を[[scala.math.BigDecimal]]型で取得する。
@@ -103,12 +103,12 @@ class Ratio(private val numerator: BigDecimal,
    *
    * @return 通分した[[org.sisioh.baseunits.scala.util.Ratio]]
    */
-  def reduce = {
+  lazy val reduce = {
     val gcd = this.gcd(numerator, denominator)
     new Ratio(numerator / gcd, denominator / gcd)
   }
 
-  override def hashCode = denominator.## + numerator.##
+  override def hashCode = 31 * (denominator.hashCode + numerator.hashCode)
 
   /**
    * この比率と `multiplier` の積からなる比率。

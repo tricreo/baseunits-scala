@@ -56,7 +56,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
   def allotment(anEntity: T): Option[Allotment[T]] =
     allotments.find(_.entity == anEntity)
 
-  override def hashCode: Int = allotments.hashCode
+  override def hashCode: Int = 31 * allotments.hashCode
 
   override def equals(obj: Any): Boolean = obj match {
     case that: MoneyFan[T] => allotments == that.allotments
@@ -80,7 +80,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
    *
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
-  def negated = {
+  lazy val negated = {
     val negatedAllotments = allotments.map(_.negated).toSet
     new MoneyFan[T](negatedAllotments)
   }
@@ -124,13 +124,14 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
    *
    * @return 合計額
    */
-  def total = asTally.net
+  lazy val total = asTally.net
 
   private def asTally = {
     val moneies = ListBuffer.empty[Money]
     for (allotment <- allotments) {
-      moneies += (allotment.amount)
+      moneies += allotment.amount
     }
+
     new Tally(moneies)
   }
 
@@ -140,7 +141,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
    *
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
-  private def withoutZeros = {
+  private lazy val withoutZeros = {
     val nonZeroAllotments = allotments.filter(_.breachEncapsulationOfAmount.isZero == false).toSet
     new MoneyFan[T](nonZeroAllotments)
   }

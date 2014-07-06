@@ -43,7 +43,7 @@ class FanTally[T](private[money] val fans: Iterable[MoneyFan[T]])
    * 要素の[[MoneyFan]]を全てマージしたものを返す。
    * @return [[MoneyFan]]
    */
-  def net: MoneyFan[T] =
+  lazy val net: MoneyFan[T] =
     fans.foldLeft(new MoneyFan[T])(_ plus _)
 
   override def toString() = fans.toString()
@@ -52,7 +52,7 @@ class FanTally[T](private[money] val fans: Iterable[MoneyFan[T]])
    * 要素の[[MoneyFan]]が含む[[Allotment]]の合計額を返す。
    * @return 合計額
    */
-  def total: Money = net.total
+  lazy val total: Money = net.total
 
 }
 

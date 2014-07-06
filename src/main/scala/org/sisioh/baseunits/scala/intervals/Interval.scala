@@ -164,7 +164,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
       newOfSameType(lesserOfUpperLimits(other), lesserOfUpperIncludedInUnion(other) == false,
         greaterOfLowerLimits(other), greaterOfLowerIncludedInUnion(other) == false)
 
-  override def hashCode = lowerLimit.hashCode ^ upperLimit.hashCode
+  override def hashCode = 31 * (lowerLimit.hashCode ^ upperLimit.hashCode)
 
   /**
    * 下側限界があるかどうかを取得する。

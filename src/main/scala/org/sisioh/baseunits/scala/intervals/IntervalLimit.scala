@@ -182,7 +182,7 @@ class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
     case _                      => false
   }
 
-  override def hashCode = closed.hashCode + value.hashCode + lower.hashCode
+  override def hashCode = 31 * (closed.hashCode + value.hashCode + lower.hashCode)
 
   /**
    * 限界同士の比較を行う。

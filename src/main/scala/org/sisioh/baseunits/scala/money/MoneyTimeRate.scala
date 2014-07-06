@@ -50,7 +50,7 @@ class MoneyTimeRate(private val rate: TimeRate,
    *
    * @return 通貨単位
    */
-  def breachEncapsulationOfCurrency = currency
+  val breachEncapsulationOfCurrency = currency
 
   /**
    * このオブジェクトの`rate`フィールド（単位時間当たりの数量）を返す。
@@ -59,14 +59,14 @@ class MoneyTimeRate(private val rate: TimeRate,
    *
    * @return 単位時間あたりの数量
    */
-  def breachEncapsulationOfRate = rate
+  val breachEncapsulationOfRate = rate
 
   override def equals(obj: Any): Boolean = obj match {
     case that: MoneyTimeRate => currency == that.currency && rate == that.rate
     case _                   => false
   }
 
-  override def hashCode = currency.hashCode + rate.hashCode
+  override def hashCode = 31 * (currency.hashCode + rate.hashCode)
 
   /**
    * 時間量に対してこの割合を適用した場合の金額を返す。
@@ -133,6 +133,6 @@ object MoneyTimeRate {
    * @param moneyTimeRate [[MoneyTimeRate]]
    * @return `Option[(TimeRate, Currency)]`
    */
-  def unapply(moneyTimeRate: MoneyTimeRate) = Some(moneyTimeRate.rate, moneyTimeRate.currency)
+  def unapply(moneyTimeRate: MoneyTimeRate): Option[(TimeRate, Currency)] = Some(moneyTimeRate.rate, moneyTimeRate.currency)
 
 }

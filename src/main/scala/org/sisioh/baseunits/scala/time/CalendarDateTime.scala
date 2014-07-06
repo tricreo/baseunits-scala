@@ -88,9 +88,8 @@ class CalendarDateTime private[time] (private[time] val date: CalendarDate,
    * @param other 対象年月日時分
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(other: CalendarDateTime): Boolean = {
+  def isAfter(other: CalendarDateTime): Boolean =
     isBefore(other) == false && equals(other) == false
-  }
 
   /**
    * 指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
@@ -110,9 +109,8 @@ class CalendarDateTime private[time] (private[time] val date: CalendarDate,
     }
   }
 
-  override def toString = {
+  override def toString =
     date.toString + " at " + time.toString
-  }
 
   /**
    * この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
@@ -150,7 +148,7 @@ object CalendarDateTime {
    * @param calendarDateTime [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    * @return `Option[(CalendarDate,TimeOfDay)]`
    */
-  def unapply(calendarDateTime: CalendarDateTime) =
+  def unapply(calendarDateTime: CalendarDateTime): Option[(CalendarDate, TimeOfDay)] =
     Some(calendarDateTime.date, calendarDateTime.time)
 
   /**

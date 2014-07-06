@@ -18,13 +18,15 @@
  */
 package org.sisioh.baseunits.scala.money
 
+import java.util.Currency
+
 import collection.Iterator
 
 /**
  * 同じ通貨単位の金額の集合をあらわすクラス。
  *
  * @author j5ik2o
- * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の`Iterable`
+ * @param monies [[Money]]の`Iterable`
  */
 class Tally(private[money] val monies: Iterable[Money])
     extends Iterable[Money] {
@@ -32,33 +34,31 @@ class Tally(private[money] val monies: Iterable[Money])
   /**
    * インスタンスを生成する。
    *
-   * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の可変引数
+   * @param monies [[Money]]の可変引数
    */
   def this(monies: Money*) = this(monies.toIterable)
 
   private[this] val _currency = currency
 
-  monies.find(_.breachEncapsulationOfCurrency != _currency) match {
-    case Some(_) => throw new IllegalArgumentException
-    case None    => ()
-  }
+  require(monies.exists(_.breachEncapsulationOfCurrency == _currency))
 
   /**
    * 通貨単位を返す。
    * @return 通貨単位
    */
-  def currency =
-    iterator.next.breachEncapsulationOfCurrency
+  lazy val currency: Currency =
+    monies.head.breachEncapsulationOfCurrency
 
   /**
    * 合計金額を返す。
    * @return 合計
    */
-  def net = Money.sum(monies)
+  lazy val net: Money = Money.sum(monies)
 
-  override def toString = monies.toString
+  override def toString() = monies.toString()
 
   def iterator: Iterator[Money] = monies.iterator
+
 }
 
 /**
@@ -71,17 +71,17 @@ object Tally {
   /**
    * インスタンスを生成する。
    *
-   * @param monies [[org.sisioh.baseunits.scala.moneyMoney]]の`Iterable`
-   * @return [[org.sisioh.baseunits.scala.Tally]]
+   * @param monies [[Money]]の`Iterable`
+   * @return [[Tally]]
    */
-  def apply(monies: Iterable[Money]) = new Tally(monies)
+  def apply(monies: Iterable[Money]): Tally = new Tally(monies)
 
   /**
    * 抽出子メソッド。
    *
-   * @param tally [[org.sisioh.baseunits.scala.Tally]]
+   * @param tally [[Tally]]
    * @return `Option[Iterable[Money]]`
    */
-  def unapply(tally: Tally) = Some(tally.monies)
+  def unapply(tally: Tally): Option[Iterable[Money]] = Some(tally.monies)
 
 }

@@ -73,7 +73,7 @@ class DayOfMonth private[time] (private[time] val value: Int)
    * @return 適用可能な場合は`true`、そうでない場合は`false`
    */
   def isApplyable(month: CalendarYearMonth) =
-    month.getLastDayOfMonth.isBefore(this) == false
+    month.lastDayOfMonth.isBefore(this) == false
 
   /**
    * この日を、指定した年月に適用可能かどうか調べる。

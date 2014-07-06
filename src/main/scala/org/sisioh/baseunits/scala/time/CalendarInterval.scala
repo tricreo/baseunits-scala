@@ -73,8 +73,10 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
     if (hasUpperLimit == false) {
       throw new IllegalStateException
     }
+
     val start = upperLimit
     val end = lowerLimit
+
     new Iterator[CalendarDate] {
 
       var _next = start
@@ -120,8 +122,10 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
     if (hasLowerLimit == false) {
       throw new IllegalStateException
     }
+
     val start = lowerLimit
     val end = upperLimit
+
     new Iterator[CalendarDate] {
 
       var _next = start

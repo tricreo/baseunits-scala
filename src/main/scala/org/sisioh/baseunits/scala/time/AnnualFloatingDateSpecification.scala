@@ -47,4 +47,5 @@ class AnnualFloatingDateSpecification private[time] (private[time] val month: In
     val date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek
     CalendarDate.from(year, month, date, timeZone)
   }
+
 }

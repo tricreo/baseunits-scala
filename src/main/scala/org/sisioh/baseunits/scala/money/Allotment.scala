@@ -51,7 +51,7 @@ class Allotment[T](private[money] val entity: T,
     case _                  => false
   }
 
-  override def hashCode = entity.## + amount.##
+  override def hashCode = 31 * (entity.hashCode + amount.hashCode)
 
   /**
    * 割り当て量の正負を反転させた新しい割り当てを返す。
