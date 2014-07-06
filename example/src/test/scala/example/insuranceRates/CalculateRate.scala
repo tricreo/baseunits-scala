@@ -21,10 +21,10 @@ package example.insuranceRates
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
 import org.junit.Test
-import org.scalatest.{ShouldMatchers, Assertions}
-import org.sisioh.baseunits.scala.intervals.{Interval, IntervalMap, Limit, LinearIntervalMap}
-import org.sisioh.baseunits.scala.money.{Money, Proration}
-import org.sisioh.baseunits.scala.time.{CalendarDate, Duration}
+import org.scalatest.{ ShouldMatchers, Assertions }
+import org.sisioh.baseunits.scala.intervals.{ Interval, IntervalMap, Limit, LinearIntervalMap }
+import org.sisioh.baseunits.scala.money.{ Money, Proration }
+import org.sisioh.baseunits.scala.time.{ CalendarDate, Duration }
 import org.sisioh.baseunits.scala.util.Ratio
 
 class CalculateRate extends Assertions with ShouldMatchers {
@@ -32,10 +32,10 @@ class CalculateRate extends Assertions with ShouldMatchers {
   /** 契約日 */
   val policyEffectiveDate = CalendarDate.from(2004, 11, 7)
 
-  /** Example.
-    */
-  @Test
-  //@Ignore
+  /**
+   * Example.
+   */
+  @Test //@Ignore
   def testLookUpMoreComplicated {
     //		BusinessCalendar paymentCalendar = new BusinessCalendar()
     //		CalendarInterval paymentQuarter = paymentCalendar.currentQuarter()
@@ -59,7 +59,7 @@ class CalculateRate extends Assertions with ShouldMatchers {
     val birthdate = CalendarDate.from(1963, 4, 6)
     val ageOnEffectiveDate = birthdate.through(policyEffectiveDate).lengthInMonths
     val monthlyPremium = insuranceSchedule.get(Limit(ageOnEffectiveDate)).get
-    monthlyPremium should be === Money.dollars(150.00)
+    monthlyPremium shouldEqual Money.dollars(150.00)
   }
 
   /**
@@ -79,12 +79,12 @@ class CalculateRate extends Assertions with ShouldMatchers {
 
     // 切り捨てで日割り適用
     var firstPayment = monthlyPremium.applying(partOfPayment, BigDecimal.RoundingMode.DOWN)
-    firstPayment should be === Money.dollars(120.00)
+    firstPayment shouldEqual Money.dollars(120.00)
 
     // Alternative, equivalent calculation
     partOfPayment = remainderOfMonth.length.dividedBy(entireMonth.length)
     firstPayment = Proration.partOfWhole(monthlyPremium, partOfPayment)
-    firstPayment should be === Money.dollars(120.00)
+    firstPayment shouldEqual Money.dollars(120.00)
   }
 
   /**
@@ -94,7 +94,7 @@ class CalculateRate extends Assertions with ShouldMatchers {
   def testQuarterlyPremiumPayment() {
     val premium = Money.dollars(150.00).per(Duration.months(1))
     val quarterlyPayment = premium.over(Duration.quarters(1))
-    quarterlyPayment should be === Money.dollars(450.00)
+    quarterlyPayment shouldEqual Money.dollars(450.00)
   }
 
   private def insuranceSchedule: IntervalMap[Duration, Money] = {

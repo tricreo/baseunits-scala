@@ -20,4 +20,4 @@ package example.doctorAppointments
 
 import org.sisioh.baseunits.scala.time.TimeInterval
 
-case class Appointment(timeInterval:TimeInterval)
+case class Appointment(timeInterval: TimeInterval)

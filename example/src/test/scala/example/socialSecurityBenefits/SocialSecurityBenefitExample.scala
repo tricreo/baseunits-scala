@@ -19,11 +19,11 @@
 package example.socialSecurityBenefits
 
 import org.junit.Assert._
-import org.junit.{Ignore, Test}
+import org.junit.{ Ignore, Test }
 import org.scalatest.Assertions
 import org.sisioh.baseunits.scala.intervals.Limit
 import org.sisioh.baseunits.scala.money.Money
-import org.sisioh.baseunits.scala.time.{CalendarDate, CalendarInterval}
+import org.sisioh.baseunits.scala.time.{ CalendarDate, CalendarInterval }
 import org.sisioh.baseunits.scala.util.Ratio
 
 class SocialSecurityBenefitExample extends Assertions {
@@ -38,14 +38,15 @@ class SocialSecurityBenefitExample extends Assertions {
    * The examples are 25 years old, but the regulations are current.
    */
 
-  /** Example: (Simplified exerpt from
-    * http://www.ssa.gov/OP_Home/cfr20/404/404-0439.htm) Worker is entitled to
-    * an old-age insurance benefit of $200 payable for October, which is
-    * apportioned as follows after rounding each share down to the nearest
-    * dollar. See regulation �404.304(f).
-    *
-    * Fraction Benefit Worker 2/3 $133 Spouse 1/3 66 Total 199
-    */
+  /**
+   * Example: (Simplified exerpt from
+   * http://www.ssa.gov/OP_Home/cfr20/404/404-0439.htm) Worker is entitled to
+   * an old-age insurance benefit of $200 payable for October, which is
+   * apportioned as follows after rounding each share down to the nearest
+   * dollar. See regulation �404.304(f).
+   *
+   * Fraction Benefit Worker 2/3 $133 Spouse 1/3 66 Total 199
+   */
   @Test
   def testArbitraryRoundingRuleInDeductionsFromFamilyBenefits {
     val benefit = Money.dollars(200)
