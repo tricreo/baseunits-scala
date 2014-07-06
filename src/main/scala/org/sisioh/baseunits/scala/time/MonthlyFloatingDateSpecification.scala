@@ -34,7 +34,7 @@ class MonthlyFloatingDateSpecification private[time] (private[time] val dayOfWee
   override def isSatisfiedBy(date: CalendarDate) =
     ofYearMonth(date.asCalendarMonth) == date
 
-  override def ofYearMonth(month: CalendarMonth) = {
+  override def ofYearMonth(month: CalendarYearMonth) = {
     val firstOfMonth = CalendarDate.from(month, DayOfMonth(1), month.timeZone)
     val dayOfWeekOffset = dayOfWeek.value - firstOfMonth.dayOfWeek.value
     val dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (if (dayOfWeekOffset < 0) 8 else 1)

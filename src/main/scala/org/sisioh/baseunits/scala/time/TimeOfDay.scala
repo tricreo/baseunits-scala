@@ -51,7 +51,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    *
    * @return 時
    */
-  def breachEncapsulationOfHour = hour
+  val breachEncapsulationOfHour = hour
 
   /**
    * このオブジェクトの`minute`フィールド（分）を返す。
@@ -60,9 +60,9 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    *
    * @return 分
    */
-  def breachEncapsulationOfMinute = minute;
+  val breachEncapsulationOfMinute = minute
 
-  def compare(other: TimeOfDay): Int = {
+  override def compare(other: TimeOfDay): Int = {
     val hourComparance = hour compare other.hour
     if (hourComparance != 0) hourComparance
     else minute compare other.minute
@@ -101,13 +101,13 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
 
   /**
    * 指定した年月日における、このインスタンスがあらわす時分について
-   * [[org.sisioh.baseunits.scala.time.CalendarMinute]] 型のインスタンスを返す。
+   * [[org.sisioh.baseunits.scala.time.CalendarDateTime]] 型のインスタンスを返す。
    *
    * @param date 年月日
-   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    */
   def on(date: CalendarDate) =
-    CalendarMinute.from(date, this)
+    CalendarDateTime.from(date, this)
 
   override def toString =
     hour.toString + ":" + minute.toString

@@ -79,7 +79,7 @@ sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: Da
    * @param year 年
    * @return 年月
    */
-  def on(year: Int, timeZone: TimeZone = TimeZones.Default): CalendarMonth = CalendarMonth.from(year, this, timeZone)
+  def on(year: Int, timeZone: TimeZone = TimeZones.Default): CalendarYearMonth = CalendarYearMonth.from(year, this, timeZone)
 
   /**
    * その月の最終日を取得する。

@@ -72,7 +72,7 @@ class DayOfMonth private[time] (private[time] val value: Int)
    * @param month 年月
    * @return 適用可能な場合は`true`、そうでない場合は`false`
    */
-  def isApplyable(month: CalendarMonth) =
+  def isApplyable(month: CalendarYearMonth) =
     month.getLastDayOfMonth.isBefore(this) == false
 
   /**
@@ -105,7 +105,7 @@ class DayOfMonth private[time] (private[time] val value: Int)
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`の月にこの日が存在しない場合
    */
-  def on(month: CalendarMonth): CalendarDate =
+  def on(month: CalendarYearMonth): CalendarDate =
     CalendarDate.from(month, this, month.timeZone)
 
   override def toString = String.valueOf(value)

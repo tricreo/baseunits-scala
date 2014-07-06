@@ -56,7 +56,7 @@ class HourOfDay private (private[time] val value: Int)
    * @param another 基準時
    * @return 同日において、このインスタンスが表す時が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(another: HourOfDay) = value > another.value
+  def isAfter(another: HourOfDay): Boolean = value > another.value
 
   /**
    * 同日において、このインスタンスが表す時が、引数`another`で表される時よりも過去かどうか調べる。
@@ -64,7 +64,7 @@ class HourOfDay private (private[time] val value: Int)
    * @param another 基準時
    * @return 同日において、このインスタンスが表す時が、引数`another`で表される時よりも過去である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(another: HourOfDay) = value < another.value
+  def isBefore(another: HourOfDay): Boolean = value < another.value
 
   override def toString = "%02d".format(value)
 }
@@ -87,7 +87,7 @@ object HourOfDay {
    * @return 時（0〜23）
    * @throws IllegalArgumentException 引数の値が0〜23の範囲ではない場合
    */
-  def apply(initial: Int) = new HourOfDay(initial)
+  def apply(initial: Int): HourOfDay = new HourOfDay(initial)
 
   /**
    * インスタンスを生成する。
@@ -97,7 +97,7 @@ object HourOfDay {
    * @return 時（0〜11）
    * @throws IllegalArgumentException 引数`initial`の値が0〜11の範囲ではない場合もしくは、引数`amPm`の値が `"AM"` または `"PM"` ではない場合
    */
-  def apply(initial: Int, amPm: String) =
+  def apply(initial: Int, amPm: String): HourOfDay =
     new HourOfDay(convertTo24hour(initial, amPm))
 
   /**
@@ -106,7 +106,7 @@ object HourOfDay {
    * @param hourOfDay [[org.sisioh.baseunits.scala.time.HourOfDay]]
    * @return `Option[Int]`
    */
-  def unapply(hourOfDay: HourOfDay) = Some(hourOfDay.value)
+  def unapply(hourOfDay: HourOfDay): Option[Int] = Some(hourOfDay.value)
 
   /**
    * 午前午後記号付き12時間制の時を24時間制の値に変換する。
@@ -126,7 +126,7 @@ object HourOfDay {
     var translatedAmPm = if ("AM".equalsIgnoreCase(amPm)) 0 else 12
     val delta = if (hour == 12) 12 else 0
     translatedAmPm -= delta
-    return hour + translatedAmPm;
+    hour + translatedAmPm
   }
 
 }

@@ -44,7 +44,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @param timeZone タイムゾーン
    * @return 時間の期間
    */
-  def asTimeInterval(timeZone: TimeZone = TimeZones.Default) = {
+  def asTimeInterval(timeZone: TimeZone = TimeZones.Default): TimeInterval = {
     val startPoint = lowerLimit.toValue.asTimeInterval(timeZone).start
     val endPoint = upperLimit.toValue.asTimeInterval(timeZone).end
     TimeInterval.over(startPoint, endPoint, timeZone)
@@ -69,7 +69,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 日付の反復子
    * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
    */
-  lazy val daysInReverseIterator = {
+  lazy val daysInReverseIterator: Iterator[CalendarDate] = {
     if (hasUpperLimit == false) {
       throw new IllegalStateException
     }
@@ -157,7 +157,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 期間の長さ
    * @see #length()
    */
-  lazy val length =
+  lazy val length: Duration =
     Duration.days(lengthInDaysInt)
 
   /**
@@ -166,7 +166,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 日数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
    */
-  lazy val lengthInDaysInt = {
+  lazy val lengthInDaysInt: Int = {
     require(hasLowerLimit && hasUpperLimit)
     val calStart = start.toValue.asJavaCalendarOnMidnight
     val calEnd = end.toValue.plusDays(1).asJavaCalendarOnMidnight
@@ -182,7 +182,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 期間の長さ
    * @see #lengthInMonthsInt()
    */
-  lazy val lengthInMonths =
+  lazy val lengthInMonths: Duration =
     Duration.months(lengthInMonthsInt)
 
   /**
@@ -193,7 +193,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @return 月数
    * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
    */
-  lazy val lengthInMonthsInt = {
+  lazy val lengthInMonthsInt: Int = {
     require(hasLowerLimit && hasUpperLimit)
     val calStart = start.toValue.asJavaCalendarOnMidnight
     val calEnd = end.toValue.plusDays(1).asJavaCalendarOnMidnight
@@ -360,7 +360,7 @@ object CalendarInterval {
    * @param month 開始日の年月
    * @return 期間
    */
-  def month(month: CalendarMonth): CalendarInterval = {
+  def month(month: CalendarYearMonth): CalendarInterval = {
     val startDate = CalendarDate.from(month, DayOfMonth(1), month.timeZone)
     val endMonth = startDate.plusMonths(1)
     val endDate = endMonth.plusDays(-1)

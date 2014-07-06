@@ -50,7 +50,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
    */
   @Test
   def test01_OnStartOfDay {
-    val feb17AtStartOfDay = CalendarMinute.from(2006, 2, 17, 0, 0)
+    val feb17AtStartOfDay = CalendarDateTime.from(2006, 2, 17, 0, 0)
     assert(midnight.on(feb17) == feb17AtStartOfDay)
   }
 
@@ -61,7 +61,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
    */
   @Test
   def test02_OnMiddleOfDay {
-    val feb17AtMiddleOfDay = CalendarMinute.from(2006, 2, 17, 12, 0)
+    val feb17AtMiddleOfDay = CalendarDateTime.from(2006, 2, 17, 12, 0)
     assert(noon.on(feb17) == feb17AtMiddleOfDay)
   }
 
@@ -72,7 +72,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
    */
   @Test
   def test03_OnEndOfDay {
-    val feb17AtEndOfDay = CalendarMinute.from(2006, 2, 17, 23, 58)
+    val feb17AtEndOfDay = CalendarDateTime.from(2006, 2, 17, 23, 58)
     assert(twoMinutesBeforeMidnight.on(feb17) == (feb17AtEndOfDay))
   }
 

@@ -43,7 +43,7 @@ class RecurringAppointmentScenario extends AssertionsForJUnit {
     val scheduledMeetingTime = TimeOfDay.from(10, 0)
     val dayOfMeeting = CalendarDate.from(2006, 4, 19)
     val meetingTimeThisDay = scheduledMeetingTime.on(dayOfMeeting)
-    val sameMeetingTimeThisDay = dayOfMeeting.at(scheduledMeetingTime)
+    val sameMeetingTimeThisDay = dayOfMeeting.atCalendarDateTime(scheduledMeetingTime)
     assertThat(sameMeetingTimeThisDay, is(meetingTimeThisDay))
 
     val meetingTimePoint = meetingTimeThisDay.asTimePoint(HonoluluTime)

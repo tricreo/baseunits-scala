@@ -71,5 +71,5 @@ abstract class MonthlyDateSpecification extends DateSpecification {
    * @param month 年月
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    */
-  def ofYearMonth(month: CalendarMonth): CalendarDate
+  def ofYearMonth(month: CalendarYearMonth): CalendarDate
 }

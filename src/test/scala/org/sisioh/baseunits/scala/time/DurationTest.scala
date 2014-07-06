@@ -374,8 +374,8 @@ object DurationTest extends Assertions {
    */
   @Test
   def test2o_AddToCalendarMonth {
-    val oct2003 = CalendarMonth.from(2003, 10)
-    val dec2003 = CalendarMonth.from(2003, 12)
+    val oct2003 = CalendarYearMonth.from(2003, 10)
+    val dec2003 = CalendarYearMonth.from(2003, 12)
 
     val twoMonths = Duration.months(2)
     assert(twoMonths.addedTo(oct2003) == dec2003)
@@ -383,13 +383,13 @@ object DurationTest extends Assertions {
     val sixtyoneDays = Duration.days(61)
     assert(sixtyoneDays.addedTo(oct2003) == oct2003)
 
-    val dec2001 = CalendarMonth.from(2001, 12)
+    val dec2001 = CalendarYearMonth.from(2001, 12)
     val twoYears = Duration.years(2)
     assert(twoYears.addedTo(dec2001) == dec2003)
 
     // 単位が日未満の時は日付を変えない。
     val threeHours = Duration.days(30)
-    assert(threeHours.addedTo(CalendarMonth.from(2010, 11)) == CalendarMonth.from(2010, 11))
+    assert(threeHours.addedTo(CalendarYearMonth.from(2010, 11)) == CalendarYearMonth.from(2010, 11))
   }
 
   @Test

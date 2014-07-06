@@ -19,83 +19,59 @@
 package org.sisioh.baseunits.scala.timeutil
 
 import java.util.TimeZone
-import org.sisioh.baseunits.scala.time.{ CalendarDate, TimeSource }
+
+import org.sisioh.baseunits.scala.time._
 
 /**
  * 時計を表すクラス。
- * このクラスはステートを持つstaticなユーティリティクラスである。
  *
  * @author j5ik2o
  */
-object Clock {
-
-  private[this] var _timeSourceOption: Option[TimeSource] = None
-
-  /**日付の算出に使用する [[java.util.TimeZone]] */
-  private[this] var _defaultTimeZoneOption: Option[TimeZone] = None
-
-  /**
-   * この時計が日付の算出に使用する [[java.util.TimeZone]] を取得する。
-   *
-   * @return 日付の算出に使用する [[java.util.TimeZone]]
-   */
-  def defaultTimeZone: TimeZone = {
-    // There is no reasonable automatic default.
-    _defaultTimeZoneOption.get
-  }
-
-  def defaultTimeZone_=(value: TimeZone) {
-    _defaultTimeZoneOption = Some(value)
-  }
+case class Clock(timeSource: TimeSource = SystemClock, timeZone: TimeZone = TimeZones.Default) {
 
   /**
    * 現在時刻を取得する。
    *
    * @return 現在時刻
    */
-  def now = timeSource.now
-
-  /**
-   * このクラスが保持するステートをリセットする。
-   *
-   * このクラスは、[[java.util.TimeZone]]
-   * と[[org.sisioh.baseunits.scala.time.TimeSource]] を保持している。
-   */
-  def reset() {
-    _defaultTimeZoneOption = None
-    _timeSourceOption = None
-  }
-
-  /**
-   * [[org.sisioh.baseunits.scala.timeutil.SystemClock]]を取得する。
-   *
-   * デフォルトでは [[org.sisioh.baseunits.scala.timeutil.SystemClock]] を使用する。
-   *
-   * @return [[org.sisioh.baseunits.scala.time.TimeSource]]
-   */
-  def timeSource: TimeSource = _timeSourceOption match {
-    case None             => { _timeSourceOption = Some(SystemClock); _timeSourceOption.get }
-    case Some(timeSource) => timeSource
-  }
-
-  def timeSource_=(value: TimeSource) {
-    _timeSourceOption = Some(value)
-  }
+  def now: TimePoint = timeSource.now
 
   /**
    * 今日の日付を所得する。
    *
-   * 日付は、あらかじめ設定済みの TimeZone に基づき計算する。
-   * `TimeZone`を未設定の状態でこのメソッドを呼び出してはならない。
-   *
    * @return 今日の日付
-   * @throws IllegalStateException TimeZoneが未設定の場合
    */
-  def today: CalendarDate = {
-    if (_defaultTimeZoneOption == None) {
-      throw new IllegalStateException("CalendarDate cannot be computed without setting a default TimeZone.")
-    }
-    now.calendarDate(defaultTimeZone)
-  }
+  def todayAsDate: CalendarDate = now.asCalendarDate(timeZone)
+
+  /**
+   * 今日の日時を所得する。
+   *
+   * @return 今日の日時
+   */
+  def todayAsDateTime: CalendarDateTime = now.asCalendarDateTime(timeZone)
+
+  /**
+   * 今日の曜日を取得する。
+   *
+   * @return 今日の曜日
+   */
+  def dayOfWeek: DayOfWeek = todayAsDate.dayOfWeek
+
+  /**
+   * 今月を所得する。
+   *
+   * @return 今月
+   */
+  def month: CalendarYearMonth =
+    todayAsDate.asCalendarMonth
+
+  /**
+   * 今年を取得する。
+   *
+   * @return 今年
+   */
+  def year: Int = month.breachEncapsulationOfYear
 
 }
+
+object Clock extends Clock(SystemClock, TimeZones.Default)

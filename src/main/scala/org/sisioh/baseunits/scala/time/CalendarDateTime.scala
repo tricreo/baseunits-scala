@@ -31,9 +31,9 @@ import java.util.TimeZone
  * @param date 年月日
  * @param time 時分
  */
-class CalendarMinute private[time] (private[time] val date: CalendarDate,
-                                    private[time] val time: TimeOfDay)
-    extends Ordered[CalendarMinute] with Serializable {
+class CalendarDateTime private[time] (private[time] val date: CalendarDate,
+                                      private[time] val time: TimeOfDay)
+    extends Ordered[CalendarDateTime] with Serializable {
 
   /**
    * 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
@@ -52,7 +52,7 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
    *
    * @return 年月日
    */
-  def breachEncapsulationOfDate = date
+  val breachEncapsulationOfDate = date
 
   /**
    * このオブジェクトの`time`フィールド（時分）を返す。
@@ -61,9 +61,9 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
    *
    * @return 時分
    */
-  def breachEncapsulationOfTime = time
+  val breachEncapsulationOfTime = time
 
-  def compare(other: CalendarMinute): Int = {
+  override def compare(other: CalendarDateTime): Int = {
     val dateComparance = date.compareTo(other.date)
     if (dateComparance != 0) {
       dateComparance
@@ -73,8 +73,9 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
   }
 
   override def equals(obj: Any): Boolean = obj match {
-    case that: CalendarMinute => date == that.date && time == that.time
-    case _                    => false
+    case that: CalendarDateTime => date == that.date && time == that.time
+    case that: CalendarDate     => date == that
+    case _                      => false
   }
 
   override def hashCode = 31 * (date.hashCode + time.hashCode)
@@ -87,7 +88,7 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
    * @param other 対象年月日時分
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(other: CalendarMinute): Boolean = {
+  def isAfter(other: CalendarDateTime): Boolean = {
     isBefore(other) == false && equals(other) == false
   }
 
@@ -99,7 +100,7 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
    * @param other 対象年月日時分
    * @return 未来である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(other: CalendarMinute) = {
+  def isBefore(other: CalendarDateTime): Boolean = {
     if (date.isBefore(other.date)) {
       true
     } else if (date.isAfter(other.date)) {
@@ -120,7 +121,7 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
    * @param timeZone タイムゾーン
    * @return 整形済み時間文字列
    */
-  def toString(pattern: String, timeZone: TimeZone = TimeZones.Default) = {
+  def toString(pattern: String, timeZone: TimeZone = TimeZones.Default): String = {
     val point = asTimePoint(timeZone)
     point.toString(pattern, timeZone)
   }
@@ -132,65 +133,79 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
  *
  * @author j5ik2o
  */
-object CalendarMinute {
+object CalendarDateTime {
 
   /**
    * インスタンスを生成する。
    *
    * @param aDate [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @param aTime [[org.sisioh.baseunits.scala.time.TimeOfDay]]
-   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    */
-  def apply(aDate: CalendarDate, aTime: TimeOfDay) = from(aDate, aTime)
+  def apply(aDate: CalendarDate, aTime: TimeOfDay): CalendarDateTime = from(aDate, aTime)
 
   /**
    * 抽出子メソッド。
    *
-   * @param calendarMinute [[org.sisioh.baseunits.scala.time.CalendarMinute]]
+   * @param calendarDateTime [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    * @return `Option[(CalendarDate,TimeOfDay)]`
    */
-  def unapply(calendarMinute: CalendarMinute) =
-    Some(calendarMinute.date, calendarMinute.time)
+  def unapply(calendarDateTime: CalendarDateTime) =
+    Some(calendarDateTime.date, calendarDateTime.time)
 
   /**
-   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
+   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
    *
    * @param aDate 年月日
    * @param aTime 時分
-   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    */
-  def from(aDate: CalendarDate, aTime: TimeOfDay): CalendarMinute = new CalendarMinute(aDate, aTime)
+  def from(aDate: CalendarDate, aTime: TimeOfDay): CalendarDateTime = new CalendarDateTime(aDate, aTime)
 
   /**
-   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarMinute]]のインスタンスを生成する。
+   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
    *
    * @param year 西暦年をあらわす数
    * @param month 月をあらわす正数（1〜12）
    * @param day 日をあらわす正数（1〜31）
    * @param hour 時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
-   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
-   * 引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
-   * 引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
+   *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
+   *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
-  def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarMinute =
+  def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarDateTime =
     from(year, month, day, hour, minute, TimeZones.Default)
 
-  def from(year: Int, month: Int, day: Int, hour: Int, minute: Int, timeZone: TimeZone): CalendarMinute =
-    new CalendarMinute(CalendarDate.from(year, month, day, timeZone), TimeOfDay.from(hour, minute))
+  /**
+   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
+   *
+   * @param year 西暦年をあらわす数
+   * @param month 月をあらわす正数（1〜12）
+   * @param day 日をあらわす正数（1〜31）
+   * @param hour 時をあらわす正数（0〜23）
+   * @param minute 分をあらわす正数（0〜59）
+   * @param timeZone タイムゾーン
+   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
+   *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
+   *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
+   */
+  def from(year: Int, month: Int, day: Int, hour: Int, minute: Int, timeZone: TimeZone): CalendarDateTime =
+    new CalendarDateTime(CalendarDate.from(year, month, day, timeZone), TimeOfDay.from(hour, minute))
 
   /**
-   * 指定した年月日時分を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
+   * 指定した年月日時分を表す、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param dateTimeString 年月日時分を表す文字列
    * @param pattern 解析パターン文字列
-   * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
+   * @return [[CalendarDateTime]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): CalendarMinute = {
+  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): CalendarDateTime = {
     //Any timezone works, as long as the same one is used throughout.
     val point = TimePoint.parse(dateTimeString, pattern, timeZone)
-    CalendarMinute.from(point.calendarDate(timeZone), point.asTimeOfDay(timeZone))
+    CalendarDateTime.from(point.asCalendarDate(timeZone), point.asTimeOfDay(timeZone))
   }
 }

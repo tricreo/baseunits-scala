@@ -55,9 +55,8 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    *
    * @param specs 休日として取り扱う「日付仕様」
    */
-  def addHolidaySpec(specs: Specification[CalendarDate]): BusinessCalendar = {
+  def addHolidaySpec(specs: Specification[CalendarDate]): BusinessCalendar =
     copy(holidaySpecs = holidaySpecs.or(specs))
-  }
 
   /**
    * [[org.sisioh.baseunits.scala.time.CalendarDate]]の反復子を受け取り、その反復子が返す[[org.sisioh.baseunits.scala.time.CalendarDate]]のうち、
@@ -244,13 +243,12 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @return 営業日
    */
   private def nextNumberOfBusinessDays(numberOfDays: Int,
-                                       calendarDays: Iterator[CalendarDate]) = {
+                                       calendarDays: Iterator[CalendarDate]): CalendarDate = {
+    require(numberOfDays >= 0)
     val businessDays = businessDaysOnly(calendarDays)
-    var result: Option[CalendarDate] = None
-    for (i <- 0 to numberOfDays) {
-      result = Some(businessDays.next())
-    }
-    result.get
+    (0 to numberOfDays).foldLeft[Option[CalendarDate]](None) { (_, _) =>
+      Some(businessDays.next())
+    }.get
   }
 
   /*

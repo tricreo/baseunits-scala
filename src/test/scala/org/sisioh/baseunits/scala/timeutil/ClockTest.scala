@@ -48,7 +48,6 @@ class ClockTest extends AssertionsForJUnit {
    */
   @After
   def tearDown {
-    Clock.reset
   }
 
   /**
@@ -57,8 +56,8 @@ class ClockTest extends AssertionsForJUnit {
    */
   @Test
   def test01_Now {
-    Clock.timeSource = dummySourceDec1_5h
-    assert(Clock.now == dec1_5am_gmt)
+    val clock = Clock(dummySourceDec1_5h)
+    assert(clock.now == dec1_5am_gmt)
   }
 
   /**
@@ -77,30 +76,14 @@ class ClockTest extends AssertionsForJUnit {
    */
   @Test
   def test03_Today {
-    Clock.timeSource = dummySourceDec1_5h
+    val clock = Clock(dummySourceDec1_5h, gmt)
 
-    Clock.defaultTimeZone = gmt
-    assert(Clock.today == CalendarDate.from(2004, 12, 1, gmt))
-    assert(Clock.now == dec1_5am_gmt)
+    assert(clock.todayAsDate == CalendarDate.from(2004, 12, 1, gmt))
+    assert(clock.now == dec1_5am_gmt)
 
-    Clock.defaultTimeZone = pt
-    assert(Clock.today == CalendarDate.from(2004, 11, 30, pt))
-    assert(Clock.now == dec1_5am_gmt)
+    val clock2 = clock.copy(timeZone = pt)
+    assert(clock2.todayAsDate == CalendarDate.from(2004, 11, 30, pt))
+    assert(clock2.now == dec1_5am_gmt)
   }
 
-  /**
-   * [[Clock#today()]]のテスト。
-   * @throws Exception 例外が発生した場合
-   */
-  @Test
-  def test04_TodayWithoutTimeZone {
-    Clock.timeSource = dummySourceDec1_5h
-    try {
-      Clock.today
-      fail("Clock cannot answer today() without a timezone.")
-    } catch {
-      case _: RuntimeException => // Correctly threw exception
-      case _: Throwable        => fail
-    }
-  }
 }

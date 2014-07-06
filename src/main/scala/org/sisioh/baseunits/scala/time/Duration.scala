@@ -81,7 +81,7 @@ class Duration private[time] (val quantity: Long,
    * @param month 元となる年月
    * @return このオブジェクトが表現する長さの時間が経過した未来の年月
    */
-  def addedTo(month: CalendarMonth) = {
+  def addedTo(month: CalendarYearMonth) = {
     //		only valid for days and larger units
     if (unit.compareTo(TimeUnit.Month) < 0) {
       month
@@ -92,7 +92,7 @@ class Duration private[time] (val quantity: Long,
       } else {
         addAmountToCalendar(inBaseUnits, calendar)
       }
-      CalendarMonth.from(calendar)
+      CalendarYearMonth.from(calendar)
     }
   }
 

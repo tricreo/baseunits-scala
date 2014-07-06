@@ -71,7 +71,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param timeZone タイムゾーン
    * @return 午前0時（深夜）の瞬間を表す [[TimePoint]]
    */
-  def backToMidnight(timeZone: TimeZone = TimeZones.Default): LimitValue[TimePoint] = calendarDate(timeZone).asTimeInterval(timeZone).start
+  def backToMidnight(timeZone: TimeZone = TimeZones.Default): LimitValue[TimePoint] = asCalendarDate(timeZone).asTimeInterval(timeZone).start
 
   /**
    * このオブジェクトの`millisecondsFromEpoc`フィールド（エポックからの経過ミリ秒）を返す。
@@ -88,7 +88,11 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param timeZone タイムゾーン
    * @return 日付
    */
-  def calendarDate(timeZone: TimeZone = TimeZones.Default) = CalendarDate.from(this, timeZone)
+  def asCalendarDate(timeZone: TimeZone = TimeZones.Default): CalendarDate =
+    CalendarDate.from(this, timeZone)
+
+  def asCalendarDateTime(timeZone: TimeZone = TimeZones.Default): CalendarDateTime =
+    CalendarDateTime.from(asCalendarDate(timeZone), asTimeOfDay(timeZone))
 
   /**
    * 瞬間同士の比較を行う。
@@ -162,7 +166,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @return 等価である場合は`true`、そうでない場合は`false`
    */
   def isSameDayAs(other: TimePoint, timeZone: TimeZone = TimeZones.Default): Boolean =
-    calendarDate(timeZone) == other.calendarDate(timeZone)
+    asCalendarDate(timeZone) == other.asCalendarDate(timeZone)
 
   /**
    * この日時の、指定した時間の長さ分過去の日時を取得する。
@@ -259,7 +263,7 @@ object TimePoint {
    * @param millisecond ミリ秒
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
-  def at(yearMonth: CalendarMonth, date: DayOfMonth, hour: Int,
+  def at(yearMonth: CalendarYearMonth, date: DayOfMonth, hour: Int,
          minute: Int, second: Int, millisecond: Int): TimePoint =
     at(yearMonth, date, hour, minute, second, millisecond, TimeZones.Default)
 
@@ -275,7 +279,7 @@ object TimePoint {
    * @param timeZone タイムゾーン
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
-  def at(yearMonth: CalendarMonth, date: DayOfMonth, hour: Int,
+  def at(yearMonth: CalendarYearMonth, date: DayOfMonth, hour: Int,
          minute: Int, second: Int, millisecond: Int, timeZone: TimeZone): TimePoint = {
     at(yearMonth.breachEncapsulationOfYear,
       yearMonth.breachEncapsulationOfMonth.value + 1,
