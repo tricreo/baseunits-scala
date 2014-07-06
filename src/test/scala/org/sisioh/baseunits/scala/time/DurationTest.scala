@@ -18,14 +18,17 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.util.TimeZone
+
 import org.junit.Test
-import org.scalatest.junit.AssertionsForJUnit
+import org.scalatest.Assertions
 import org.sisioh.baseunits.scala.intervals.Limit
 
 /**
  * `Duration`のテストクラス。
  */
-class DurationTest extends AssertionsForJUnit {
+@Test
+object DurationTest extends Assertions {
   /**
    * [[org.sisioh.baseunits.scala.time.Duration]]のインスタンスがシリアライズできるかどうか検証する。
    *
@@ -43,8 +46,8 @@ class DurationTest extends AssertionsForJUnit {
    */
   @Test
   def test02_AddMillisecondsToPoint {
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
-    val dec22At1 = TimePoint.atGMT(2003, 12, 22, 1, 0, 0, 0)
+    val dec20At1 = TimePoint.at(2003, 12, 20, 1, 0, 0, 0)
+    val dec22At1 = TimePoint.at(2003, 12, 22, 1, 0, 0, 0)
     val twoDays = Duration.days(2)
     assert(twoDays.addedTo(dec20At1) == dec22At1)
 
@@ -59,8 +62,8 @@ class DurationTest extends AssertionsForJUnit {
    */
   @Test
   def test03_AddMonthsToPoint {
-    val oct20At1 = TimePoint.atGMT(2003, 10, 20, 1, 0, 0, 0)
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
+    val oct20At1 = TimePoint.at(2003, 10, 20, 1, 0, 0, 0)
+    val dec20At1 = TimePoint.at(2003, 12, 20, 1, 0, 0, 0)
     val twoMonths = Duration.months(2)
     assert(twoMonths.addedTo(oct20At1) == dec20At1)
   }
@@ -72,8 +75,8 @@ class DurationTest extends AssertionsForJUnit {
    */
   @Test
   def test04_SubtractMillisecondsFromPoint {
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
-    val dec18At1 = TimePoint.atGMT(2003, 12, 18, 1, 0, 0, 0)
+    val dec20At1 = TimePoint.at(2003, 12, 20, 1, 0, 0, 0)
+    val dec18At1 = TimePoint.at(2003, 12, 18, 1, 0, 0, 0)
     val twoDays = Duration.days(2)
     assert(twoDays.subtractedFrom(dec20At1) == dec18At1)
 
@@ -88,12 +91,12 @@ class DurationTest extends AssertionsForJUnit {
    */
   @Test
   def test05_SubtractMonthsFromPoint {
-    val oct20At1 = TimePoint.atGMT(2003, 10, 20, 1, 0, 0, 0)
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
+    val oct20At1 = TimePoint.at(2003, 10, 20, 1, 0, 0, 0)
+    val dec20At1 = TimePoint.at(2003, 12, 20, 1, 0, 0, 0)
     val twoMonths = Duration.months(2)
     assert(twoMonths.subtractedFrom(dec20At1) == oct20At1)
 
-    val dec20At1_2001 = TimePoint.atGMT(2001, 12, 20, 1, 0, 0, 0)
+    val dec20At1_2001 = TimePoint.at(2001, 12, 20, 1, 0, 0, 0)
     val twoYears = Duration.years(2)
     assert(twoYears.subtractedFrom(dec20At1) == dec20At1_2001)
   }
@@ -332,8 +335,8 @@ class DurationTest extends AssertionsForJUnit {
    */
   @Test
   def test17_StartingFromTimePoint {
-    val dec20At1 = TimePoint.atGMT(2003, 12, 20, 1, 0, 0, 0)
-    val dec20At3 = TimePoint.atGMT(2003, 12, 20, 3, 0, 0, 0)
+    val dec20At1 = TimePoint.at(2003, 12, 20, 1, 0, 0, 0)
+    val dec20At3 = TimePoint.at(2003, 12, 20, 3, 0, 0, 0)
     val dec20_1_3 = dec20At1.until(Limit(dec20At3))
     assert(Duration.hours(2).startingFromTimePoint(Limit(dec20At1)) == dec20_1_3)
   }
@@ -387,5 +390,21 @@ class DurationTest extends AssertionsForJUnit {
     // 単位が日未満の時は日付を変えない。
     val threeHours = Duration.days(30)
     assert(threeHours.addedTo(CalendarMonth.from(2010, 11)) == CalendarMonth.from(2010, 11))
+  }
+
+  @Test
+  def testSucceedToMinus {
+    val GMT = TimeZone.getTimeZone("Universal")
+    val tp1 = TimePoint.at(2014, 7, 1, 0, 0, GMT)
+    val tp2 = TimePoint.at(2014, 6, 1, 0, 0, GMT)
+    assert(tp1.minus(Duration.months(1), GMT) == tp2)
+  }
+
+  @Test
+  def testFailToMinus {
+    val JST = TimeZone.getTimeZone("JST")
+    val tp1 = TimePoint.at(2014, 7, 1, 0, 0, JST)
+    val tp2 = TimePoint.at(2014, 6, 1, 0, 0, JST)
+    assert(tp1.minus(Duration.months(1), JST) == tp2)
   }
 }

@@ -19,7 +19,7 @@
 package org.sisioh.baseunits.scala.time
 
 import org.scalatest.FunSuite
-import java.util.{ Calendar, Date => JDate }
+import java.util.{ Date => JDate, TimeZone, Calendar }
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 
@@ -30,6 +30,7 @@ class TimePointTest extends AssertionsForJUnit {
 
   @Test
   def test {
+    val GMT = TimeZone.getTimeZone("Universal")
     val tp = TimePoint.from(0L)
     assert(tp == TimePoint.from(0L))
 
@@ -41,8 +42,8 @@ class TimePointTest extends AssertionsForJUnit {
     val tp3 = TimePoint.from(calendar)
     assert(tp3 == TimePoint.from(calendar))
 
-    val tp4 = TimePoint.at(2010, 1, 1, 1, 1, TimePoint.GMT)
-    assert(tp4 == TimePoint.at(2010, 1, 1, 1, 1, TimePoint.GMT))
+    val tp4 = TimePoint.at(2010, 1, 1, 1, 1, GMT)
+    assert(tp4 == TimePoint.at(2010, 1, 1, 1, 1, GMT))
   }
 
 }

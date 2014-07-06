@@ -18,6 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.util.TimeZone
+
 import org.sisioh.baseunits.scala.util.Specification
 
 /**
@@ -79,7 +81,7 @@ object DateSpecification {
    * @throws IllegalArgumentException 引数`day`が1〜31の範囲ではない場合
    * @return 日付仕様
    */
-  def fixed(day: Int) =
+  def fixed(day: Int): DateSpecification =
     new MonthlyFixedDateSpecification(DayOfMonth(day))
 
   /**
@@ -88,18 +90,18 @@ object DateSpecification {
    * @param month 月を表す正数（1〜12）
    * @param day 日を表す正数（1〜31）
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
-   * 引数`day`が1〜31の範囲ではない場合
+   *                                  引数`day`が1〜31の範囲ではない場合
    * @return 日付仕様
    */
-  def fixed(month: Int, day: Int) =
-    new AnnualFixedDateSpecification(MonthOfYear(month), DayOfMonth(day))
+  def fixed(month: Int, day: Int, timeZone: TimeZone = TimeZones.Default): DateSpecification =
+    new AnnualFixedDateSpecification(MonthOfYear(month), DayOfMonth(day), timeZone)
 
   /**
    * どの日付にもマッチしない日付仕様を返す。
    *
    * @return 日付仕様
    */
-  def never =
+  def never: DateSpecification =
     new DateSpecification {
 
       override def firstOccurrenceIn(interval: CalendarInterval): Option[CalendarDate] =
@@ -129,7 +131,7 @@ object DateSpecification {
    * @param n 周回数（1〜5）
    * @return 日付仕様
    */
-  def nthOccuranceOfWeekdayInMonth(month: Int, dayOfWeek: DayOfWeek, n: Int): DateSpecification =
-    new AnnualFloatingDateSpecification(month, dayOfWeek, n)
+  def nthOccuranceOfWeekdayInMonth(month: Int, dayOfWeek: DayOfWeek, n: Int, timeZone: TimeZone = TimeZones.Default): DateSpecification =
+    new AnnualFloatingDateSpecification(month, dayOfWeek, n, timeZone)
 
 }

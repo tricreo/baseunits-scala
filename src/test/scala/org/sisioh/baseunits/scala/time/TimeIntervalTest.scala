@@ -28,15 +28,15 @@ import org.sisioh.baseunits.scala.tests.SerializationTester
  */
 class TimeIntervalTest extends AssertionsForJUnit {
 
-  val dec19_2003 = TimePoint.atMidnightGMT(2003, 12, 19)
+  val dec19_2003 = TimePoint.atMidnight(2003, 12, 19)
 
-  val dec20_2003 = TimePoint.atMidnightGMT(2003, 12, 20)
+  val dec20_2003 = TimePoint.atMidnight(2003, 12, 20)
 
-  val dec21_2003 = TimePoint.atMidnightGMT(2003, 12, 21)
+  val dec21_2003 = TimePoint.atMidnight(2003, 12, 21)
 
-  val dec22_2003 = TimePoint.atMidnightGMT(2003, 12, 22)
+  val dec22_2003 = TimePoint.atMidnight(2003, 12, 22)
 
-  val dec23_2003 = TimePoint.atMidnightGMT(2003, 12, 23)
+  val dec23_2003 = TimePoint.atMidnight(2003, 12, 23)
 
   /**
    * [[TimeInterval]]のインスタンスがシリアライズできるかどうか検証する。
@@ -225,8 +225,8 @@ class TimeIntervalTest extends AssertionsForJUnit {
   @Test
   def test13_EverFrom {
     val afterDec20 = TimeInterval.everFrom(Limit(dec20_2003))
-    assert(afterDec20.includes(Limit(TimePoint.atMidnightGMT(2062, 3, 5))) == true)
-    assert(afterDec20.includes(Limit(TimePoint.atMidnightGMT(1776, 7, 4))) == false)
+    assert(afterDec20.includes(Limit(TimePoint.atMidnight(2062, 3, 5))) == true)
+    assert(afterDec20.includes(Limit(TimePoint.atMidnight(1776, 7, 4))) == false)
     assert(afterDec20.includes(Limit(dec20_2003)) == true)
   }
 
@@ -238,8 +238,8 @@ class TimeIntervalTest extends AssertionsForJUnit {
   @Test
   def test14_EverUntil {
     val afterDec20 = TimeInterval.everPreceding(Limit(dec20_2003))
-    assert(afterDec20.includes(Limit(TimePoint.atMidnightGMT(2062, 3, 5))) == false)
-    assert(afterDec20.includes(Limit(TimePoint.atMidnightGMT(1776, 7, 4))) == true)
+    assert(afterDec20.includes(Limit(TimePoint.atMidnight(2062, 3, 5))) == false)
+    assert(afterDec20.includes(Limit(TimePoint.atMidnight(1776, 7, 4))) == true)
     assert(afterDec20.includes(Limit(dec20_2003)) == false)
   }
 
@@ -253,8 +253,8 @@ class TimeIntervalTest extends AssertionsForJUnit {
     var interval = TimeInterval.open(Limit(dec20_2003), Limit(dec22_2003))
     assert(interval.length == Duration.days(2))
 
-    val first = TimePoint.atGMT(2004, 1, 1, 1, 1, 1, 1)
-    val second = TimePoint.atGMT(2004, 1, 6, 5, 4, 3, 2)
+    val first = TimePoint.at(2004, 1, 1, 1, 1, 1, 1)
+    val second = TimePoint.at(2004, 1, 6, 5, 4, 3, 2)
     interval = TimeInterval.closed(Limit(first), Limit(second))
     val expectedLength = Duration.daysHoursMinutesSecondsMilliseconds(5, 4, 3, 2, 1)
     assert(interval.length == (expectedLength))
@@ -267,16 +267,16 @@ class TimeIntervalTest extends AssertionsForJUnit {
    */
   @Test
   def test16_DaysIterator {
-    val start = TimePoint.atGMT(2004, 2, 5, 10, 0)
-    val end = TimePoint.atGMT(2004, 2, 8, 2, 0)
+    val start = TimePoint.at(2004, 2, 5, 10, 0)
+    val end = TimePoint.at(2004, 2, 8, 2, 0)
     val interval = TimeInterval.over(Limit(start), Limit(end))
-    val it = interval.daysIterator;
+    val it = interval.daysIterator
     assert(it.hasNext == true)
     assert(it.next == (start))
     assert(it.hasNext == true)
-    assert(it.next == (TimePoint.atGMT(2004, 2, 6, 10, 0)))
+    assert(it.next == (TimePoint.at(2004, 2, 6, 10, 0)))
     assert(it.hasNext == true)
-    assert(it.next == (TimePoint.atGMT(2004, 2, 7, 10, 0)))
+    assert(it.next == (TimePoint.at(2004, 2, 7, 10, 0)))
     assert(it.hasNext == false)
     try {
       it.next
@@ -288,7 +288,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
 
     val interval2 = TimeInterval.everPreceding(Limit(end))
     try {
-      interval2.daysIterator;
+      interval2.daysIterator
       fail;
     } catch {
       case e: IllegalStateException => // success
@@ -309,10 +309,10 @@ class TimeIntervalTest extends AssertionsForJUnit {
    */
   @Test
   def test17_SubintervalIterator {
-    val d4_h10 = TimePoint.atGMT(2004, 2, 4, 10, 0)
-    val d6_h10 = TimePoint.atGMT(2004, 2, 6, 10, 0)
-    val d8_h10 = TimePoint.atGMT(2004, 2, 8, 10, 0)
-    val d9_h2 = TimePoint.atGMT(2004, 2, 9, 2, 0)
+    val d4_h10 = TimePoint.at(2004, 2, 4, 10, 0)
+    val d6_h10 = TimePoint.at(2004, 2, 6, 10, 0)
+    val d8_h10 = TimePoint.at(2004, 2, 8, 10, 0)
+    val d9_h2 = TimePoint.at(2004, 2, 9, 2, 0)
 
     val interval = TimeInterval.over(Limit(d4_h10), Limit(d9_h2))
     var iterator = interval.subintervalIterator(Duration.days(2))
@@ -333,10 +333,10 @@ class TimeIntervalTest extends AssertionsForJUnit {
     assert(iterator.hasNext == false)
 
     val h2 = d9_h2;
-    val h3_m30 = TimePoint.atGMT(2004, 2, 9, 3, 30)
-    val h5 = TimePoint.atGMT(2004, 2, 9, 5, 0)
-    val h6_m30 = TimePoint.atGMT(2004, 2, 9, 6, 30)
-    val h8 = TimePoint.atGMT(2004, 2, 9, 8, 0)
+    val h3_m30 = TimePoint.at(2004, 2, 9, 3, 30)
+    val h5 = TimePoint.at(2004, 2, 9, 5, 0)
+    val h6_m30 = TimePoint.at(2004, 2, 9, 6, 30)
+    val h8 = TimePoint.at(2004, 2, 9, 8, 0)
 
     val interval2 = TimeInterval.over(Limit(h2), Limit(h8))
     iterator = interval2.subintervalIterator(Duration.minutes(90))

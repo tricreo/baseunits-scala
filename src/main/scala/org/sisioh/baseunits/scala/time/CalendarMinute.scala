@@ -42,7 +42,7 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
    * @param timeZone タイムゾーン
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
-  def asTimePoint(timeZone: TimeZone): TimePoint =
+  def asTimePoint(timeZone: TimeZone = TimeZones.Default): TimePoint =
     TimePoint.from(date, time, timeZone)
 
   /**
@@ -117,12 +117,12 @@ class CalendarMinute private[time] (private[time] val date: CalendarDate,
    * この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
    *
    * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
-   * @param zone タイムゾーン
+   * @param timeZone タイムゾーン
    * @return 整形済み時間文字列
    */
-  def toString(pattern: String, zone: TimeZone) = {
-    val point = asTimePoint(zone)
-    point.toString(pattern, zone)
+  def toString(pattern: String, timeZone: TimeZone = TimeZones.Default) = {
+    val point = asTimePoint(timeZone)
+    point.toString(pattern, timeZone)
   }
 
 }
@@ -175,7 +175,10 @@ object CalendarMinute {
    * 引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarMinute =
-    new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute))
+    from(year, month, day, hour, minute, TimeZones.Default)
+
+  def from(year: Int, month: Int, day: Int, hour: Int, minute: Int, timeZone: TimeZone): CalendarMinute =
+    new CalendarMinute(CalendarDate.from(year, month, day, timeZone), TimeOfDay.from(hour, minute))
 
   /**
    * 指定した年月日時分を表す、[[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
@@ -185,10 +188,9 @@ object CalendarMinute {
    * @return [[org.sisioh.baseunits.scala.time.CalendarMinute]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateTimeString: String, pattern: String): CalendarMinute = {
-    val arbitraryZone = TimeZone.getTimeZone("Universal")
+  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): CalendarMinute = {
     //Any timezone works, as long as the same one is used throughout.
-    val point = TimePoint.parse(dateTimeString, pattern, arbitraryZone)
-    CalendarMinute.from(point.calendarDate(arbitraryZone), point.asTimeOfDay(arbitraryZone))
+    val point = TimePoint.parse(dateTimeString, pattern, timeZone)
+    CalendarMinute.from(point.calendarDate(timeZone), point.asTimeOfDay(timeZone))
   }
 }

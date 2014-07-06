@@ -26,7 +26,7 @@ package org.sisioh.baseunits.scala.time
  * @author j5ik2o
  * @param value 日をあらわす正数（1〜31）
  */
-class DayOfMonth(private[time] val value: Int)
+class DayOfMonth private[time] (private[time] val value: Int)
     extends Ordered[DayOfMonth] with Serializable {
 
   require(value >= DayOfMonth.Min && value <= DayOfMonth.Max,
@@ -105,9 +105,8 @@ class DayOfMonth(private[time] val value: Int)
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`の月にこの日が存在しない場合
    */
-  def on(month: CalendarMonth): CalendarDate = {
-    CalendarDate.from(month, this)
-  }
+  def on(month: CalendarMonth): CalendarDate =
+    CalendarDate.from(month, this, month.timeZone)
 
   override def toString = String.valueOf(value)
 

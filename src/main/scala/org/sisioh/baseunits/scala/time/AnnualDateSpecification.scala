@@ -42,9 +42,9 @@ abstract class AnnualDateSpecification extends DateSpecification {
   override def iterateOver(interval: CalendarInterval) = {
     new Iterator[CalendarDate] {
 
-      var _next = firstOccurrenceIn(interval)
+      private var _next = firstOccurrenceIn(interval)
 
-      var year = _next map {
+      private var year = _next map {
         o => o.asCalendarMonth.breachEncapsulationOfYear
       } getOrElse (-1)
 

@@ -18,7 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import java.util.{ GregorianCalendar, Calendar }
+import java.util.{ Calendar, GregorianCalendar, TimeZone }
 
 /**
  * 1年の中の特定の「月」を表す列挙型。
@@ -26,8 +26,8 @@ import java.util.{ GregorianCalendar, Calendar }
  * @param lastDayOfThisMonth その月の最終日
  * @param calendarValue [[java.util.Calendar]]に定義する月をあらわす定数値
  */
-sealed class MonthOfYear(private[time] val lastDayOfThisMonth: DayOfMonth,
-                         private[time] val calendarValue: Int) {
+sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: DayOfMonth,
+                                        private[time] val calendarValue: Int) {
 
   private[time] def value = calendarValue
 
@@ -38,7 +38,7 @@ sealed class MonthOfYear(private[time] val lastDayOfThisMonth: DayOfMonth,
    *
    * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
    */
-  def breachEncapsulationOfCalendarValue = calendarValue;
+  def breachEncapsulationOfCalendarValue = calendarValue
 
   /**
    * このオブジェクトの`value`フィールド（月をあらわす数 1〜12）を返す。
@@ -47,7 +47,7 @@ sealed class MonthOfYear(private[time] val lastDayOfThisMonth: DayOfMonth,
    *
    * @return 月をあらわす数（1〜12）
    */
-  def breachEncapsulationOfValue = value
+  def breachEncapsulationOfValue = value + 1
 
   /**
    * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
@@ -79,7 +79,7 @@ sealed class MonthOfYear(private[time] val lastDayOfThisMonth: DayOfMonth,
    * @param year 年
    * @return 年月
    */
-  def on(year: Int): CalendarMonth = CalendarMonth.from(year, this)
+  def on(year: Int, timeZone: TimeZone = TimeZones.Default): CalendarMonth = CalendarMonth.from(year, this, timeZone)
 
   /**
    * その月の最終日を取得する。
@@ -100,7 +100,7 @@ object MonthOfYear {
 
   def apply(month: Int): MonthOfYear = {
     Seq(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).find(
-      _.value == month
+      _.value == month - 1
     ).get
   }
 

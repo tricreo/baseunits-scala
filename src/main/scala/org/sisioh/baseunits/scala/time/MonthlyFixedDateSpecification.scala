@@ -32,6 +32,6 @@ class MonthlyFixedDateSpecification private[time] (private[time] val day: DayOfM
 
   override def ofYearMonth(month: CalendarMonth) =
     CalendarDate.from(month.breachEncapsulationOfYear,
-      month.breachEncapsulationOfMonth, day)
+      month.breachEncapsulationOfMonth, day, month.timeZone)
 
 }

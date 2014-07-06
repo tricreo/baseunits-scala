@@ -18,9 +18,10 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import java.util.Calendar
-import org.sisioh.baseunits.scala.util.Ratio
+import java.util.{ Calendar, TimeZone }
+
 import org.sisioh.baseunits.scala.intervals.{ Limit, LimitValue }
+import org.sisioh.baseunits.scala.util.Ratio
 
 /**
  * 時間量（時間の長さ・期間の長さなど）を表すクラス。
@@ -31,8 +32,8 @@ import org.sisioh.baseunits.scala.intervals.{ Limit, LimitValue }
  * @param quantity 時間の長さ
  * @param unit 時間の単位
  */
-class Duration(val quantity: Long,
-               val unit: TimeUnit)
+class Duration private[time] (val quantity: Long,
+                              val unit: TimeUnit)
     extends Ordered[Duration] with Serializable {
 
   require(quantity >= 0, "Quantity: " + quantity + " must be zero or positive")
@@ -45,12 +46,24 @@ class Duration(val quantity: Long,
    * @param day 元となる日付
    * @return このオブジェクトが表現する長さの時間が経過した未来の日付
    */
-  def addedTo(day: CalendarDate) = {
+  def addedTo(day: CalendarDate): CalendarDate =
+    addedTo(day, TimeZones.Default)
+
+  /**
+   * 指定した日付に、このオブジェクトが表現する長さの時間を加えた、未来の日付を取得する。
+   *
+   * このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。
+   *
+   * @param day 元となる日付
+   * @param timeZone タイムゾーン
+   * @return このオブジェクトが表現する長さの時間が経過した未来の日付
+   */
+  def addedTo(day: CalendarDate, timeZone: TimeZone): CalendarDate = {
     //		only valid for days and larger units
     if (unit.compareTo(TimeUnit.day) < 0) {
       day
     } else {
-      val calendar = day.asJavaCalendarUniversalZoneMidnight
+      val calendar = day.asJavaCalendarOnMidnight(timeZone)
       if (unit == TimeUnit.day) {
         calendar.add(Calendar.DATE, quantity.asInstanceOf[Int])
       } else {
@@ -73,7 +86,7 @@ class Duration(val quantity: Long,
     if (unit.compareTo(TimeUnit.month) < 0) {
       month
     } else {
-      val calendar = month.asJavaCalendarUniversalZoneMidnight
+      val calendar = month.asJavaCalendarOnMidnight
       if (unit == TimeUnit.month) {
         calendar.add(Calendar.MONTH, quantity.asInstanceOf[Int])
       } else {
@@ -90,8 +103,8 @@ class Duration(val quantity: Long,
    * @return このオブジェクトが表現する長さの時間が経過した未来の日時
    * @see addAmountToTimePoint(long, TimePoint)
    */
-  def addedTo(point: TimePoint): TimePoint =
-    addAmountToTimePoint(inBaseUnits, point)
+  def addedTo(point: TimePoint, timeZone: TimeZone = TimeZones.Default): TimePoint =
+    addAmountToTimePoint(inBaseUnits, point, timeZone)
 
   /**
    * このオブジェクトの`quantity`フィールド（量）を返す。
@@ -120,7 +133,7 @@ class Duration(val quantity: Long,
    * 例えば「1ヶ月間」と「30日間」は、同じ基本単位に変換できないため、比較不能である。
    *
    * @param other 比較対照
-   * @return [[java.util.Comparable]] compareTo(Object)に準じる
+   * @return `java.util.Comparable` compareTo(Object)に準じる
    * @throws ClassCastException 引数`other`の単位を、このオブジェクトの単位に変換できない場合
    */
   def compare(other: Duration): Int = {
@@ -161,7 +174,7 @@ class Duration(val quantity: Long,
    * @param other 期間
    * @return 時間量の差
    * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、
-   * どちらのquantityも0ではない場合もしくは、引数otherの長さが、このオブジェクトよりも長い場合
+   *                                  どちらのquantityも0ではない場合もしくは、引数otherの長さが、このオブジェクトよりも長い場合
    */
   def minus(other: Duration): Duration = {
     checkConvertible(other)
@@ -226,8 +239,8 @@ class Duration(val quantity: Long,
    * @param start 開始日時（下側限界値）. `Limitless[CalendarDate]`の場合は、限界がないことを表す
    * @return 期間
    */
-  def startingFromTimePoint(start: LimitValue[TimePoint]): TimeInterval =
-    TimeInterval.startingFrom(start.asInstanceOf[Limit[TimePoint]], this)
+  def startingFromTimePoint(start: LimitValue[TimePoint], timeZone: TimeZone = TimeZones.Default): TimeInterval =
+    TimeInterval.startingFrom(start.asInstanceOf[Limit[TimePoint]], this, timeZone)
 
   /**
    * 指定した日付に、このオブジェクトが表現する長さの時間を引いた、過去の日付を取得する。
@@ -242,7 +255,7 @@ class Duration(val quantity: Long,
     if (unit.compareTo(TimeUnit.day) < 0) {
       day
     } else {
-      val calendar = day.asJavaCalendarUniversalZoneMidnight
+      val calendar = day.asJavaCalendarOnMidnight
       if (unit.equals(TimeUnit.day)) {
         calendar.add(Calendar.DATE, -1 * quantity.asInstanceOf[Int])
       } else {
@@ -259,8 +272,8 @@ class Duration(val quantity: Long,
    * @return このオブジェクトが表現する長さのを引いた、過去の日時
    * @see #addAmountToTimePoint(long, TimePoint)
    */
-  def subtractedFrom(point: TimePoint): TimePoint =
-    addAmountToTimePoint(-1 * inBaseUnits, point)
+  def subtractedFrom(point: TimePoint, timeZone: TimeZone = TimeZones.Default): TimePoint =
+    addAmountToTimePoint(-1 * inBaseUnits, point, timeZone)
 
   /**
    * この時間量の文字列表現を返す。
@@ -286,11 +299,11 @@ class Duration(val quantity: Long,
     }
   }
 
-  private[time] def addAmountToTimePoint(amount: Long, point: TimePoint): TimePoint = {
+  private[time] def addAmountToTimePoint(amount: Long, point: TimePoint, timeZone: TimeZone = TimeZones.Default): TimePoint = {
     if (unit.isConvertibleToMilliseconds) {
       TimePoint.from(amount + point.millisecondsFromEpoc)
     } else {
-      val calendar = point.asJavaCalendar
+      val calendar = point.asJavaCalendar(timeZone)
       addAmountToCalendar(amount, calendar)
       TimePoint.from(calendar)
     }
@@ -345,7 +358,7 @@ class Duration(val quantity: Long,
  */
 object Duration {
 
-  /**長さ `0` の期間 */
+  /** 長さ `0` の期間 */
   val None = milliseconds(0)
 
   /**
@@ -428,9 +441,8 @@ object Duration {
    * @param howMany 時間の長さ（四半期）
    * @return 時間量
    */
-  def quarters(howMany: Int): Duration = {
+  def quarters(howMany: Int): Duration =
     Duration(howMany, TimeUnit.quarter)
-  }
 
   /**
    * 長さが `howMany` ミリの時間量を取得する。
