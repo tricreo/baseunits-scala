@@ -18,18 +18,18 @@
  */
 package example.doctorAppointments
 
-import org.scalatest.junit.AssertionsForJUnit
-import org.junit.Test
 import java.util.TimeZone
-import org.sisioh.baseunits.scala.time.{CalendarDate, Duration, TimeInterval, TimePoint}
+
 import org.hamcrest.CoreMatchers.is
-import org.junit.Assert.assertThat
+import org.junit.Test
+import org.scalatest.{ShouldMatchers, Assertions}
 import org.sisioh.baseunits.scala.intervals.Limit
+import org.sisioh.baseunits.scala.time.{CalendarDate, Duration, TimeInterval, TimePoint}
 
-class AppointmentCalendarTest extends AssertionsForJUnit {
+class AppointmentCalendarTest extends Assertions with ShouldMatchers {
 
-  /**Example.
-   */
+  /** Example.
+    */
   @Test
   def testEventsForDate {
     val pt = TimeZone.getTimeZone("America/Los_Angeles")
@@ -46,11 +46,12 @@ class AppointmentCalendarTest extends AssertionsForJUnit {
     cal.add(shortEvent)
     cal.add(longEvent)
 
-    assertThat(cal.dailyScheduleFor(CalendarDate.from(2004, 6, 6)).size, is(0))
-    assertThat(cal.dailyScheduleFor(CalendarDate.from(2004, 6, 7)).size, is(2))
-    assertThat(cal.dailyScheduleFor(CalendarDate.from(2004, 6, 8)).size, is(1))
-    assertThat(cal.dailyScheduleFor(CalendarDate.from(2004, 6, 9)).size, is(1))
-    assertThat(cal.dailyScheduleFor(CalendarDate.from(2004, 6, 10)).size, is(0))
+    cal.dailyScheduleFor(CalendarDate.from(2004, 6, 6)).size should be === 0
+
+    cal.dailyScheduleFor(CalendarDate.from(2004, 6, 7)).size should be === 2
+    cal.dailyScheduleFor(CalendarDate.from(2004, 6, 8)).size should be === 1
+    cal.dailyScheduleFor(CalendarDate.from(2004, 6, 9)).size should be === 1
+    cal.dailyScheduleFor(CalendarDate.from(2004, 6, 10)).size should be === 0
   }
 
 }

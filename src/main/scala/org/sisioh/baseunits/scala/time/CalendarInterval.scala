@@ -426,7 +426,7 @@ object CalendarInterval {
    * @param year 開始日の年
    * @return 期間
    */
-  def year(year: Int, timeZone: TimeZone): CalendarInterval = {
+  def year(year: Int, timeZone: TimeZone = TimeZones.Default): CalendarInterval = {
     val startDate = CalendarDate.from(year, 1, 1, timeZone)
     val endDate = CalendarDate.from(year + 1, 1, 1, timeZone).plusDays(-1)
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))

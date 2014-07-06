@@ -18,15 +18,15 @@
  */
 package example.socialSecurityBenefits
 
-import org.scalatest.junit.AssertionsForJUnit
-import org.sisioh.baseunits.scala.money.Money
-import org.sisioh.baseunits.scala.util.Ratio
-import org.junit.{Ignore, Test}
 import org.junit.Assert._
-import org.sisioh.baseunits.scala.time.{CalendarInterval, CalendarDate}
+import org.junit.{Ignore, Test}
+import org.scalatest.Assertions
 import org.sisioh.baseunits.scala.intervals.Limit
+import org.sisioh.baseunits.scala.money.Money
+import org.sisioh.baseunits.scala.time.{CalendarDate, CalendarInterval}
+import org.sisioh.baseunits.scala.util.Ratio
 
-class SocialSecurityBenefitExample extends AssertionsForJUnit {
+class SocialSecurityBenefitExample extends Assertions {
   /*
    * Money calculations often must follow seemingly arbitrary rules, and the
    * intricate computations must be exact. Real-world, public examples are
@@ -38,24 +38,24 @@ class SocialSecurityBenefitExample extends AssertionsForJUnit {
    * The examples are 25 years old, but the regulations are current.
    */
 
-  /**Example: (Simplified exerpt from
-   * http://www.ssa.gov/OP_Home/cfr20/404/404-0439.htm) Worker is entitled to
-   * an old-age insurance benefit of $200 payable for October, which is
-   * apportioned as follows after rounding each share down to the nearest
-   * dollar. See regulation �404.304(f).
-   *
-   * Fraction Benefit Worker 2/3 $133 Spouse 1/3 66 Total 199
-   */
+  /** Example: (Simplified exerpt from
+    * http://www.ssa.gov/OP_Home/cfr20/404/404-0439.htm) Worker is entitled to
+    * an old-age insurance benefit of $200 payable for October, which is
+    * apportioned as follows after rounding each share down to the nearest
+    * dollar. See regulation �404.304(f).
+    *
+    * Fraction Benefit Worker 2/3 $133 Spouse 1/3 66 Total 199
+    */
   @Test
   def testArbitraryRoundingRuleInDeductionsFromFamilyBenefits {
     val benefit = Money.dollars(200)
     val workerShare = Ratio(2, 3)
     val spouseShare = Ratio(1, 3)
-    val roundingScale = 0;
+    val roundingScale = 0
     val workerBenefit = benefit.applying(workerShare, roundingScale, BigDecimal.RoundingMode.DOWN)
     val spouseBenefit = benefit.applying(spouseShare, roundingScale, BigDecimal.RoundingMode.DOWN)
-    assertEquals(Money.dollars(133), workerBenefit)
-    assertEquals(Money.dollars(66), spouseBenefit)
+    assert(Money.dollars(133) == workerBenefit)
+    assert(Money.dollars(66) == spouseBenefit)
   }
 
   /**
@@ -94,7 +94,7 @@ class SocialSecurityBenefitExample extends AssertionsForJUnit {
 
     val exemptMonthlyEarnings = Money.dollars(375)
     val exemptAnnualEarnings = exemptMonthlyEarnings.times(12)
-    assertEquals(Money.dollars(4500), exemptAnnualEarnings)
+    assert(Money.dollars(4500) == exemptAnnualEarnings)
     //		Money annualExcessEarnings = earningsFor1979.minus(exemptAnnualEarnings)
     //
     //		Money excessEarnings = earningsFor1979.minus(exemptEarnings)

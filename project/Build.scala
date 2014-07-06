@@ -6,10 +6,10 @@ import sbt._
 import scalariform.formatter.preferences._
 
 object BaseUnitsBuild extends Build {
-
-  lazy val root = Project(id = "baseunits-scala",
-    base = file("."),
-    settings = scalariformSettings ++ org.scalastyle.sbt.ScalastylePlugin.Settings ++ ScctPlugin.instrumentSettings ++ site.settings ++ site.includeScaladoc() ++ Seq(
+    
+  val commonSettings = scalariformSettings ++
+    org.scalastyle.sbt.ScalastylePlugin.Settings ++
+    ScctPlugin.instrumentSettings ++ site.settings ++ site.includeScaladoc() ++ Seq(
       organization := "org.sisioh",
       version := "0.1.14-SNAPSHOT",
       scalaVersion := "2.11.1",
@@ -70,7 +70,18 @@ object BaseUnitsBuild extends Build {
             </developer>
           </developers>
         )
-    )
+  )
+
+//  lazy val example = Project(
+//    id = "baseunits-scala-example",
+//    base = file("example"),
+//    settings = commonSettings
+//  ) dependsOn (root)
+
+  lazy val root = Project(
+    id = "baseunits-scala",
+    base = file("."),
+    settings = commonSettings
   )
 
 }

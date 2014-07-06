@@ -18,26 +18,27 @@
  */
 package example.appointmentsCalendar
 
-import org.scalatest.junit.AssertionsForJUnit
 import java.util.TimeZone
-import org.junit.Test
+
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
-import org.sisioh.baseunits.scala.time.{Duration, TimePoint, CalendarDate, TimeOfDay}
+import org.junit.Test
+import org.scalatest.{ShouldMatchers, Assertions}
+import org.sisioh.baseunits.scala.time.{CalendarDate, Duration, TimeOfDay, TimePoint}
 
-/**Example.
- */
-class RecurringAppointmentScenario extends AssertionsForJUnit {
+/** Example.
+  */
+class RecurringAppointmentScenario extends Assertions with ShouldMatchers {
 
   val HonoluluTime = TimeZone.getTimeZone("Pacific/Honolulu")
 
 
-  /**Example.
-   *
-   * Daily stand-up meeting at 10:00am each work day. (We work in Honolulu, of course.)
-   * Notify 5 minutes before meeting starts.
-   * Derive the TimePoint at which I should notify on April 19 2006.
-   */
+  /** Example.
+    *
+    * Daily stand-up meeting at 10:00am each work day. (We work in Honolulu, of course.)
+    * Notify 5 minutes before meeting starts.
+    * Derive the TimePoint at which I should notify on April 19 2006.
+    */
   @Test
   def testDailyMeetingAlert {
     val scheduledMeetingTime = TimeOfDay.from(10, 0)
@@ -50,7 +51,7 @@ class RecurringAppointmentScenario extends AssertionsForJUnit {
     assertThat(meetingTimePoint, is(TimePoint.at(2006, 4, 19, 10, 0, 0, 0, HonoluluTime)))
 
     // The expressions can be strung together.
-    assertThat(meetingTimeThisDay.asTimePoint(HonoluluTime).minus(Duration.minutes(5)),
-      is(TimePoint.at(2006, 4, 19, 9, 55, 0, 0, HonoluluTime)));
+    meetingTimeThisDay.asTimePoint(HonoluluTime).minus(Duration.minutes(5)) should be ===
+      TimePoint.at(2006, 4, 19, 9, 55, 0, 0, HonoluluTime))
   }
 }
