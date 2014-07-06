@@ -85,11 +85,11 @@ object Clock {
   /**
    * 今日の日付を所得する。
    *
-   * 日付は、あらかじめ設定済みの [[org.sisioh.baseunits.scala.time.TimeZone]] に基づき計算する。
+   * 日付は、あらかじめ設定済みの TimeZone に基づき計算する。
    * `TimeZone`を未設定の状態でこのメソッドを呼び出してはならない。
    *
    * @return 今日の日付
-   * @throws IllegalStateException [[org.sisioh.baseunits.scala.time.TimeZone]]が未設定の場合
+   * @throws IllegalStateException TimeZoneが未設定の場合
    */
   def today: CalendarDate = {
     if (_defaultTimeZoneOption == None) {

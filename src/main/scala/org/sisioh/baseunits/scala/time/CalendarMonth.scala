@@ -32,7 +32,8 @@ import java.util.{ Calendar, TimeZone }
  * @param month 月
  */
 class CalendarMonth private[time] (private[time] val year: Int,
-                                   private[time] val month: MonthOfYear)
+                                   private[time] val month: MonthOfYear,
+                                   private[time] val timeZone: TimeZone)
     extends Ordered[CalendarMonth] with Serializable {
 
   /**
@@ -43,7 +44,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
   def asCalendarInterval =
-    CalendarInterval.month(year, month)
+    CalendarInterval.month(year, month, timeZone)
 
   /**
    * 指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について
@@ -52,7 +53,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    * @param timeZone タイムゾーン
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
-  def asTimePoint(timeZone: TimeZone) =
+  def asTimePoint(timeZone: TimeZone = TimeZones.Default) =
     TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, timeZone)
 
   /**
@@ -63,7 +64,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
   def asYearInterval =
-    CalendarInterval.year(year)
+    CalendarInterval.year(year, timeZone)
 
   /**
    * このインスタンスが表す年月で、引数`day`で表す日を表す年月日を返す。
@@ -73,7 +74,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    * @throws IllegalArgumentException 引数`day`がこの月に存在しない場合
    */
   def at(day: DayOfMonth) =
-    CalendarDate.from(year, month, day)
+    CalendarDate.from(year, month, day, timeZone)
 
   /**
    * このオブジェクトの`month`フィールド（月）を返す。
@@ -99,7 +100,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    * 相対的に過去である方を「小さい」と判断する。
    *
    * @param other 比較対象
-   * @return [[java.util.Comparable]] compareTo(Object)に準じる
+   * @return `java.util.Comparable` compareTo(Object)に準じる
    */
   def compare(other: CalendarMonth): Int =
     if (isBefore(other)) {
@@ -119,7 +120,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
    * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
   def getLastDay =
-    CalendarDate.from(year, month, getLastDayOfMonth)
+    CalendarDate.from(year, month, getLastDayOfMonth, timeZone)
 
   /**
    * 月末の日を取得する。
@@ -178,17 +179,17 @@ class CalendarMonth private[time] (private[time] val year: Int,
   /**
    * このインスタンスが表現する年月の `increment` ヶ月後を返す。
    *
-   *  `increment`に負数を与えてもよい。
+   * `increment`に負数を与えてもよい。
    *
    * @param increment 加える月数
    * @return 計算結果
    */
   def plusMonths(increment: Int) = {
-    val calendar = asJavaCalendarUniversalZoneMidnight
+    val calendar = asJavaCalendarOnMidnight(timeZone)
     calendar.add(Calendar.MONTH, increment)
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH) + 1
-    CalendarMonth.from(year, month)
+    CalendarMonth.from(year, month, calendar.getTimeZone)
   }
 
   /**
@@ -201,11 +202,11 @@ class CalendarMonth private[time] (private[time] val year: Int,
   /**
    * この日付の文字列表現を取得する。
    *
-   * [[java.text.SimpleDateFormat]]の使用に基づく `"yyyy-MM"`のパターンで整形する。
+   * [[java.text.SimpleDateFormat]]の使用に基づく `"yyyy/MM"` のパターンで整形する。
    *
    * @see java.lang.Object#toString()
    */
-  override def toString = toString("yyyy-MM")
+  override def toString = toString("yyyy/MM")
 
   //default for console
 
@@ -217,14 +218,15 @@ class CalendarMonth private[time] (private[time] val year: Int,
    */
   def toString(pattern: String) = {
     // Any timezone works, as long as the same one is used throughout.
-    val arbitraryZone = TimeZone.getTimeZone("Universal")
-    val point = asTimePoint(arbitraryZone)
-    point.toString(pattern, arbitraryZone)
+    val point = asTimePoint(timeZone)
+    point.toString(pattern, timeZone)
   }
 
-  def asJavaCalendarUniversalZoneMidnight = {
-    val zone = TimeZone.getTimeZone("Universal")
-    val calendar = Calendar.getInstance(zone)
+  def asJavaCalendarOnMidnight: Calendar =
+    asJavaCalendarOnMidnight(timeZone)
+
+  def asJavaCalendarOnMidnight(timeZone: TimeZone): Calendar = {
+    val calendar = Calendar.getInstance(timeZone)
     calendar.set(Calendar.YEAR, year)
     calendar.set(Calendar.MONTH, month.value - 1)
     calendar.set(Calendar.DATE, 1)
@@ -232,7 +234,7 @@ class CalendarMonth private[time] (private[time] val year: Int,
     calendar.set(Calendar.MINUTE, 0)
     calendar.set(Calendar.SECOND, 0)
     calendar.set(Calendar.MILLISECOND, 0)
-    calendar;
+    calendar
   }
 }
 
@@ -250,7 +252,7 @@ object CalendarMonth {
    * @param month 月
    * @return [[org.sisioh.baseunits.scala.time.CalendarMonth]]
    */
-  def apply(year: Int, month: Int) = from(year, month)
+  def apply(year: Int, month: Int, timeZone: TimeZone = TimeZones.Default): CalendarMonth = from(year, month, timeZone)
 
   /**
    * 抽出しメソッド。
@@ -269,8 +271,11 @@ object CalendarMonth {
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合
    */
-  def from(year: Int, month: Int) =
-    new CalendarMonth(year, MonthOfYear(month))
+  def from(year: Int, month: Int): CalendarMonth =
+    from(year, month, TimeZones.Default)
+
+  def from(year: Int, month: Int, timeZone: TimeZone): CalendarMonth =
+    new CalendarMonth(year, MonthOfYear(month), timeZone)
 
   /**
    * 指定した年月を表す、[[org.sisioh.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
@@ -279,8 +284,11 @@ object CalendarMonth {
    * @param month 月
    * @return [[org.sisioh.baseunits.scala.time.CalendarMonth]]
    */
-  def from(year: Int, month: MonthOfYear) =
-    new CalendarMonth(year, month)
+  def from(year: Int, month: MonthOfYear): CalendarMonth =
+    from(year, month, TimeZones.Default)
+
+  def from(year: Int, month: MonthOfYear, timeZone: TimeZone): CalendarMonth =
+    new CalendarMonth(year, month, timeZone)
 
   /**
    * 指定した年月を表す、[[org.sisioh.baseunits.scala.time.CalendarMonth]]のインスタンスを生成する。
@@ -290,11 +298,10 @@ object CalendarMonth {
    * @return [[org.sisioh.baseunits.scala.time.CalendarMonth]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateString: String, pattern: String) = {
-    val arbitraryZone = TimeZone.getTimeZone("Universal")
+  def parse(dateString: String, pattern: String, timeZone: TimeZone = TimeZones.Default) = {
     //Any timezone works, as long as the same one is used throughout.
-    val point = TimePoint.parse(dateString, pattern, arbitraryZone)
-    CalendarMonth.from(point, arbitraryZone)
+    val point = TimePoint.parse(dateString, pattern, timeZone)
+    CalendarMonth.from(point)
   }
 
   /**
@@ -302,12 +309,10 @@ object CalendarMonth {
    * [[org.sisioh.baseunits.scala.time.CalendarDate]]のインスタンスを生成する。
    *
    * @param timePoint 瞬間
-   * @param zone タイムゾーン
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    */
-  def from(timePoint: TimePoint, zone: TimeZone): CalendarMonth = {
-    val calendar = timePoint.asJavaCalendar
-    calendar.setTimeZone(zone)
+  def from(timePoint: TimePoint, timeZone: TimeZone = TimeZones.Default): CalendarMonth = {
+    val calendar = timePoint.asJavaCalendar(timeZone)
     CalendarMonth.from(calendar)
   }
 
@@ -316,7 +321,7 @@ object CalendarMonth {
     // Use timezone already set in calendar.
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH) + 1 // T&M Lib counts January as 1
-    CalendarMonth.from(year, month)
+    CalendarMonth.from(year, month, calendar.getTimeZone)
   }
 
 }

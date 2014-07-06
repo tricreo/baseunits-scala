@@ -29,35 +29,34 @@ import org.sisioh.baseunits.scala.util.Specification
  *
  * @author j5ik2o
  */
-class BusinessCalendar {
-
-  private[time] var holidaySpecs: Specification[CalendarDate] = defaultHolidaySpecs
+case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpecification.never) {
 
   /**
    * 休日として取り扱う「日」を追加する。
    *
    * @param date 休日として取り扱う「日」
    */
-  def addHoliday(date: CalendarDate) {
+  def addHoliday(date: CalendarDate): BusinessCalendar =
     addHolidaySpec(DateSpecification.fixed(date))
-  }
 
   /**
    * 休日として取り扱う「日」を追加する。
    *
    * @param days 休日として取り扱う「日」
    */
-  def addHolidays(days: Set[CalendarDate]) {
-    days.foreach(e => addHolidaySpec(DateSpecification.fixed(e)))
-  }
+  def addHolidays(days: Set[CalendarDate]): BusinessCalendar =
+    days.toSeq.foldLeft(this) {
+      case (businessCalendar, calendarDate) =>
+        businessCalendar.addHolidaySpec(DateSpecification.fixed(calendarDate))
+    }
 
   /**
    * 休日として取り扱う「日付仕様」を追加する。
    *
    * @param specs 休日として取り扱う「日付仕様」
    */
-  def addHolidaySpec(specs: Specification[CalendarDate]) {
-    holidaySpecs = holidaySpecs.or(specs)
+  def addHolidaySpec(specs: Specification[CalendarDate]): BusinessCalendar = {
+    copy(holidaySpecs = holidaySpecs.or(specs))
   }
 
   /**
@@ -65,12 +64,12 @@ class BusinessCalendar {
    * 営業日に当たる[[org.sisioh.baseunits.scala.time.CalendarDate]]のみを返す反復子を返す。
    *
    * このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
-   * 引数に与えた反復子の [[scala.Iterator#next()]] を呼び出してはならない。
+   * 引数に与えた反復子の [[scala.Iterator# n e x t ( )]] を呼び出してはならない。
    *
    * @param calendarDays 元となる反復子
    * @return 営業日のみを返す反復子
    */
-  def businessDaysOnly(calendarDays: Iterator[CalendarDate]) = {
+  def businessDaysOnly(calendarDays: Iterator[CalendarDate]): Iterator[CalendarDate] = {
     new Iterator[CalendarDate] {
 
       var lookAhead = nextBusinessDate
@@ -89,7 +88,7 @@ class BusinessCalendar {
       private def nextBusinessDate: Option[CalendarDate] = {
         var result: Option[CalendarDate] = None
         do {
-          result = if (calendarDays.hasNext) Some(calendarDays.next.asInstanceOf[CalendarDate])
+          result = if (calendarDays.hasNext) Some(calendarDays.next())
           else None
         } while ((result == None || isBusinessDay(result.get)) == false)
         result
@@ -103,12 +102,12 @@ class BusinessCalendar {
    * @param interval 期間
    * @return 営業日の日数
    */
-  def getElapsedBusinessDays(interval: CalendarInterval) = {
-    var tally = 0;
+  def getElapsedBusinessDays(interval: CalendarInterval): Int = {
+    var tally = 0
     val iterator = businessDaysOnly(interval.daysIterator)
     while (iterator.hasNext) {
-      iterator.next
-      tally += 1;
+      iterator.next()
+      tally += 1
     }
     tally
   }
@@ -242,8 +241,8 @@ class BusinessCalendar {
    *
    * @return 営業日の[[scala.collection.Set]]
    */
-  protected def defaultHolidaySpecs =
-    DateSpecification.never
+  //  protected def defaultHolidaySpecs =
+  //    DateSpecification.never
 
   /**
    * `0`の先頭から数えて`0`営業日目の日付を返す。
@@ -257,7 +256,7 @@ class BusinessCalendar {
     val businessDays = businessDaysOnly(calendarDays)
     var result: Option[CalendarDate] = None
     for (i <- 0 to numberOfDays) {
-      result = Some(businessDays.next)
+      result = Some(businessDays.next())
     }
     result.get
   }

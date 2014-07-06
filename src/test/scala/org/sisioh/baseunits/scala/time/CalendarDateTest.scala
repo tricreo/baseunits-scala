@@ -72,7 +72,7 @@ class CalendarDateTest extends AssertionsForJUnit {
   def test03_StartAsTimePoint {
     val feb17StartAsCt = feb17.startAsTimePoint(ct)
     val feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct)
-    assert(feb17StartAsCt == (feb17Hour0Ct))
+    assert(feb17StartAsCt == feb17Hour0Ct)
   }
 
   /**
@@ -85,8 +85,8 @@ class CalendarDateTest extends AssertionsForJUnit {
     val feb17AsCt = feb17.asTimeInterval(ct)
     val feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct)
     val feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, ct)
-    assert(feb17AsCt.start == feb17Hour0Ct, "start")
-    assert(feb17AsCt.end == feb18Hour0Ct, "end")
+    assert(feb17AsCt.start.toValue == feb17Hour0Ct, "start")
+    assert(feb17AsCt.end.toValue == feb18Hour0Ct, "end")
   }
 
   /**
@@ -121,8 +121,8 @@ class CalendarDateTest extends AssertionsForJUnit {
   @Test
   def test07_FromTimePoint {
     val feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, gmt)
-    val mapped = CalendarDate.from(feb18Hour0Ct, ct)
-    assert(mapped == (CalendarDate.from(2003, 2, 17)))
+    val mapped = CalendarDate.from(feb18Hour0Ct)
+    assert(mapped == CalendarDate.from(2003, 2, 18))
   }
 
   /**
@@ -226,12 +226,12 @@ class CalendarDateTest extends AssertionsForJUnit {
     expected.set(Calendar.SECOND, 0)
     expected.set(Calendar.MILLISECOND, 0)
 
-    val date = CalendarDate.from(1969, 7, 20)
-    val actual = date.asJavaCalendarUniversalZoneMidnight
-    assert(actual.get(Calendar.HOUR) == (expected.get(Calendar.HOUR)))
-    assert(actual.get(Calendar.AM_PM) == (expected.get(Calendar.AM_PM)))
-    assert(actual.get(Calendar.HOUR_OF_DAY) == (expected.get(Calendar.HOUR_OF_DAY)))
-    assert(actual == (expected))
+    val date = CalendarDate.from(1969, 7, 20, gmt)
+    val actual = date.asJavaCalendarOnMidnight
+    assert(actual.get(Calendar.HOUR) == expected.get(Calendar.HOUR))
+    assert(actual.get(Calendar.AM_PM) == expected.get(Calendar.AM_PM))
+    assert(actual.get(Calendar.HOUR_OF_DAY) == expected.get(Calendar.HOUR_OF_DAY))
+    assert(actual == expected)
   }
 
   /**
@@ -241,6 +241,6 @@ class CalendarDateTest extends AssertionsForJUnit {
    */
   @Test
   def test15_DaysAdd {
-    assert(may1.plusDays(19) == (may20))
+    assert(may1.plusDays(19) == may20)
   }
 }

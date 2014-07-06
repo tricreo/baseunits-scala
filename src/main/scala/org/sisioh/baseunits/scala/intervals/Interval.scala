@@ -64,9 +64,9 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
   /**
    * インスタンスを生成する。
    *
-   * @param isLower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param isLowerClosed 下限値が閉区間である場合は `true`を指定する
-   * @param isUpper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param isUpperClosed 上限値が閉区間である場合は `true`を指定する
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */

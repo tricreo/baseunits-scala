@@ -18,35 +18,33 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import org.scalatest.junit.AssertionsForJUnit
-import org.junit.{ Test, Before, After }
 import java.text.ParseException
-import org.sisioh.baseunits.scala.intervals.Limit
 
+import org.junit.{ After, Before, Test }
+import org.scalatest.junit.AssertionsForJUnit
+import org.sisioh.baseunits.scala.intervals.Limit
 /**
  * `BusinessCalendar`のテストクラス。
  */
 class BusinessCalendarTest extends AssertionsForJUnit {
 
   def japaneseBusinessCalendar = {
-    val calendar = new BusinessCalendar
-
-    // 祝日の登録
-    calendar.addHolidaySpec(DateSpecification.fixed(1, 1)) // 元旦
-    calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.Monday, 2)) // 成人の日
-    calendar.addHolidaySpec(DateSpecification.fixed(2, 11)) // 建国記念日
-    calendar.addHoliday(CalendarDate.from(2010, 3, 21)) // 春分の日
-    calendar.addHolidaySpec(DateSpecification.fixed(4, 29)) // 昭和の日
-    calendar.addHolidaySpec(DateSpecification.fixed(5, 3)) // 憲法記念日
-    calendar.addHolidaySpec(DateSpecification.fixed(5, 4)) // みどりの日
-    calendar.addHolidaySpec(DateSpecification.fixed(5, 5)) // こどもの日
-    calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.Monday, 3)) // 海の日
-    calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.Monday, 3)) // 敬老の日
-    calendar.addHoliday(CalendarDate.from(2010, 9, 23)) // 秋分の日
-    calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.Monday, 2)) // 体育の日
-    calendar.addHolidaySpec(DateSpecification.fixed(11, 3)) // 文化の日
-    calendar.addHolidaySpec(DateSpecification.fixed(11, 23)) // 勤労感謝の日
-    calendar.addHolidaySpec(DateSpecification.fixed(12, 23)) // 天皇誕生日
+    val calendar = BusinessCalendar().
+      addHolidaySpec(DateSpecification.fixed(1, 1)). // 元旦
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.Monday, 2)). // 成人の日
+      addHolidaySpec(DateSpecification.fixed(2, 11)). // 建国記念日
+      addHoliday(CalendarDate.from(2010, 3, 21)). // 春分の日
+      addHolidaySpec(DateSpecification.fixed(4, 29)). // 昭和の日
+      addHolidaySpec(DateSpecification.fixed(5, 3)). // 憲法記念日
+      addHolidaySpec(DateSpecification.fixed(5, 4)). // みどりの日
+      addHolidaySpec(DateSpecification.fixed(5, 5)). // こどもの日
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.Monday, 3)). // 海の日
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.Monday, 3)). // 敬老の日
+      addHoliday(CalendarDate.from(2010, 9, 23)). // 秋分の日
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.Monday, 2)). // 体育の日
+      addHolidaySpec(DateSpecification.fixed(11, 3)). // 文化の日
+      addHolidaySpec(DateSpecification.fixed(11, 23)). // 勤労感謝の日
+      addHolidaySpec(DateSpecification.fixed(12, 23)) // 天皇誕生日
 
     // それぞれの日が「営業日」にあたるかどうかチェック。
     assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 8)) == true) // 金曜日
@@ -75,8 +73,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
    */
   @Before
   def setUp {
-    cal = new BusinessCalendar
-    cal.addHolidays(_HolidayDates.defaultHolidays)
+    cal = BusinessCalendar().addHolidays(_HolidayDates.defaultHolidays)
   }
 
   /**
@@ -90,7 +87,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#getElapsedBusinessDays(CalendarInterval)]]のテスト。
+   * [[BusinessCalendar# g e t E l a p s e d B u s i n e s s D a y s ( C a l e n d a r I n t e r v a l )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -106,7 +103,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#isWeekend(CalendarDate)]]のテスト。
+   * [[BusinessCalendar# i s W e e k e n d ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -131,7 +128,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#isHoliday(CalendarDate)]]のテスト。
+   * [[BusinessCalendar# i s H o l i d a y ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -143,7 +140,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#isBusinessDay(CalendarDate)]]のテスト。
+   * [[BusinessCalendar# i s B u s i n e s s D a y ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -162,7 +159,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#nearestNextBusinessDay(CalendarDate)]]のテスト。
+   * [[BusinessCalendar# n e a r e s t N e x t B u s i n e s s D a y ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -185,7 +182,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#nearestNextBusinessDay(CalendarDate)]]のテスト。
+   * [[BusinessCalendar# n e a r e s t N e x t B u s i n e s s D a y ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -210,7 +207,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[BusinessCalendar#businessDaysOnly(Iterator)]]のテスト。
+   * [[BusinessCalendar# b u s i n e s s D a y s O n l y ( I t e r a t o r )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -229,7 +226,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar# n e x t B u s i n e s s D a y ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -245,7 +242,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#nextBusinessDay(CalendarDate)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar# n e x t B u s i n e s s D a y ( C a l e n d a r D a t e )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -258,7 +255,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar# p l u s B u s i n e s s D a y s ( C a l e n d a r D a t e, i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -269,7 +266,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#plusBusinessDays(CalendarDate, int)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar# p l u s B u s i n e s s D a y s ( C a l e n d a r D a t e, i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -282,7 +279,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#minusBusinessDays(CalendarDate, int)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar# m i n u s B u s i n e s s D a y s ( C a l e n d a r D a t e, i n t )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
@@ -295,24 +292,24 @@ class BusinessCalendarTest extends AssertionsForJUnit {
   }
 
   /**
-   * [[org.sisioh.baseunits.scala.time.BusinessCalendar#businessDaysOnly(Iterator)]]のテスト。
+   * [[org.sisioh.baseunits.scala.time.BusinessCalendar# b u s i n e s s D a y s O n l y ( I t e r a t o r )]]のテスト。
    *
    * @throws Exception 例外が発生した場合
    */
   @Test
   def test12_BusinessDayReverseIterator {
     val friday = CalendarDate.from(2006, 6, 16)
+    val nextMonday = CalendarDate.from(2006, 6, 19)
     val nextTuesday = CalendarDate.from(2006, 6, 20)
     val interval = CalendarInterval.inclusive(Limit(friday), Limit(nextTuesday))
     val it = cal.businessDaysOnly(interval.daysInReverseIterator)
     assert(it.hasNext)
     assert(it.next == nextTuesday)
     assert(it.hasNext)
-    val nextMonday = CalendarDate.from(2006, 6, 19)
     assert(it.next == nextMonday)
     assert(it.hasNext)
     assert(it.next == friday)
-    assert(it.hasNext)
+    assert(it.hasNext == false)
   }
 
   /**

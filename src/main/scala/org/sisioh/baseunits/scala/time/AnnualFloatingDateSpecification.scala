@@ -18,6 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.util.TimeZone
+
 /**
  * 毎年?月の第?曜日を表す日付仕様。
  *
@@ -28,7 +30,8 @@ package org.sisioh.baseunits.scala.time
  */
 class AnnualFloatingDateSpecification private[time] (private[time] val month: Int,
                                                      private[time] val dayOfWeek: DayOfWeek,
-                                                     private[time] val occurrence: Int)
+                                                     private[time] val occurrence: Int,
+                                                     private[time] val timeZone: TimeZone)
     extends AnnualDateSpecification {
 
   require(1 <= month && month <= 12)
@@ -38,10 +41,10 @@ class AnnualFloatingDateSpecification private[time] (private[time] val month: In
     ofYear(date.asCalendarMonth.breachEncapsulationOfYear).equals(date)
 
   override def ofYear(year: Int) = {
-    val firstOfMonth = CalendarDate.from(year, month, 1)
+    val firstOfMonth = CalendarDate.from(year, month, 1, timeZone)
     val dayOfWeekOffset = dayOfWeek.value - firstOfMonth.dayOfWeek.value
     val dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (if (dayOfWeekOffset < 0) 8 else 1)
     val date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek
-    CalendarDate.from(year, month, date)
+    CalendarDate.from(year, month, date, timeZone)
   }
 }

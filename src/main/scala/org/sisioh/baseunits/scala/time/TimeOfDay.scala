@@ -39,7 +39,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    * @param timeZone タイムゾーン
    * @return 瞬間
    */
-  def asTimePointGiven(date: CalendarDate, timeZone: TimeZone): TimePoint = {
+  def asTimePointGiven(date: CalendarDate, timeZone: TimeZone = TimeZones.Default): TimePoint = {
     val timeOfDayOnDate = on(date)
     timeOfDayOnDate.asTimePoint(timeZone)
   }

@@ -23,6 +23,7 @@ object BaseUnitsBuild extends Build {
       ),
       libraryDependencies ++= Seq(
         "junit" % "junit" % "4.8.1" % "test",
+        "com.novocode" % "junit-interface" % "0.8" % "test->default",
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.scalatest" %% "scalatest" % "2.1.6" % "test",
         "commons-io" % "commons-io" % "2.4"
