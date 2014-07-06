@@ -236,12 +236,12 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarMonth,
   /**
    * この日付の文字列表現を取得する。
    *
-   * [[java.text.SimpleDateFormat]]の使用に基づく `"yyyy-MM-dd"`のパターンで整形する。
+   * [[java.text.SimpleDateFormat]]の使用に基づく `"yyyy/MM/dd"`のパターンで整形する。
    *
    * @see java.lang.Object#toString()
    */
   override def toString =
-    toString("yyyy-MM-dd")
+    toString("yyyy/MM/dd")
 
   //default for console
 
