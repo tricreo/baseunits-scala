@@ -289,7 +289,7 @@ class Duration private[time] (val quantity: Long,
    */
   override def toString: String = toNormalizedString(unit.descendingUnitsForDisplay)
 
-  def addAmountToCalendar(amount: Long, calendar: Calendar) {
+  private[time] def addAmountToCalendar(amount: Long, calendar: Calendar): Unit = {
     if (unit.isConvertibleToMilliseconds) {
       calendar.setTimeInMillis(calendar.getTimeInMillis + amount)
     } else {
@@ -311,7 +311,7 @@ class Duration private[time] (val quantity: Long,
   lazy val inBaseUnits =
     quantity * unit.getFactor
 
-  def subtractAmountFromCalendar(amount: Long, calendar: Calendar) =
+  private[time] def subtractAmountFromCalendar(amount: Long, calendar: Calendar): Unit =
     addAmountToCalendar(-1 * amount, calendar)
 
   private def checkAmountValid(amount: Long) {
