@@ -40,9 +40,9 @@ class DayOfMonth private[time] (private[time] val value: Int)
    *
    * @return 日をあらわす正数（1〜31）
    */
-  def breachEncapsulationOfValue = value
+  val breachEncapsulationOfValue = value
 
-  def compare(that: DayOfMonth): Int = value - that.value
+  override def compare(that: DayOfMonth): Int = value - that.value
 
   override def hashCode: Int = 31 * value.hashCode
 
@@ -85,7 +85,7 @@ class DayOfMonth private[time] (private[time] val value: Int)
    * @param month 月
    * @return 適用可能な場合は`true`、そうでない場合は`false`
    */
-  def isApplyable(year: Int, month: MonthOfYear) =
+  def isApplyable(year: Int, month: MonthOfYear): Boolean =
     month.getLastDayOfThisMonth(year).isBefore(this) == false;
 
   /**
