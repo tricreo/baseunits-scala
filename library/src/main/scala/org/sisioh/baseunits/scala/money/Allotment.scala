@@ -25,8 +25,8 @@ package org.sisioh.baseunits.scala.money
  * @param entity 割り当て対象
  * @param amount 金額
  */
-class Allotment[T](private[money] val entity: T,
-                   private[money] val amount: Money) {
+class Allotment[T] private[money](private[money] val entity: T,
+                                  private[money] val amount: Money) {
 
   /**
    * このオブジェクトの`amount`フィールド（金額）を返す。
@@ -35,7 +35,7 @@ class Allotment[T](private[money] val entity: T,
    *
    * @return 金額
    */
-  def breachEncapsulationOfAmount = amount
+  val breachEncapsulationOfAmount = amount
 
   /**
    * このオブジェクトの`entity`フィールド（割り当て対象）を返す。
@@ -44,11 +44,11 @@ class Allotment[T](private[money] val entity: T,
    *
    * @return 割り当て対象
    */
-  def breachEncapsulationOfEntity = entity
+  val breachEncapsulationOfEntity = entity
 
   override def equals(obj: Any) = obj match {
     case that: Allotment[T] => entity == that.entity && amount == that.amount
-    case _                  => false
+    case _ => false
   }
 
   override def hashCode = 31 * (entity.hashCode + amount.hashCode)
@@ -58,8 +58,8 @@ class Allotment[T](private[money] val entity: T,
    *
    * @return 割り当て
    */
-  def negated =
-    new Allotment[T](entity, amount.negated)
+  lazy val negated = new Allotment[T](entity, amount.negated)
+
   def unary_- = negated
 
   override def toString =
