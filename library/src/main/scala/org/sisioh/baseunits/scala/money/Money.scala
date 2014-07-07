@@ -35,9 +35,7 @@ import math.BigDecimal.RoundingMode
 class Money(val amount: BigDecimal, val currency: Currency)
     extends Ordered[Money] with Serializable {
 
-  if (amount.scale != currency.getDefaultFractionDigits) {
-    throw new IllegalArgumentException("Scale of amount does not match currency")
-  }
+  require(amount.scale == currency.getDefaultFractionDigits, "Scale of amount does not match currency")
 
   override def equals(obj: Any) = obj match {
     case that: Money => amount == that.amount && currency == that.currency
@@ -56,7 +54,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
    *
    * @return 絶対金額
    */
-  def abs = Money(amount.abs, currency)
+  lazy val abs: Money = Money(amount.abs, currency)
 
   /**
    * 金額同士の比較を行う。
@@ -70,21 +68,21 @@ class Money(val amount: BigDecimal, val currency: Currency)
    * @param that 比較対象
    * @return `Comparable.compareTo(Object)`に準じる
    */
-  override def compare(that: Money) = {
+  override def compare(that: Money): Int = {
     require(currency == that.currency)
     amount compare that.amount
   }
 
-  def /(divisor: Double) = dividedBy(divisor)
+  def /(divisor: Double): Money = dividedBy(divisor)
 
-  def *(other: BigDecimal) = times(other)
+  def *(other: BigDecimal): Money = times(other)
 
-  def +(other: Money) = {
+  def +(other: Money): Money = {
     require(currency == other.currency)
     plus(other)
   }
 
-  def -(other: Money) = {
+  def -(other: Money): Money = {
     require(currency == other.currency)
     minus(other)
   }
@@ -192,7 +190,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
    * @return 大きい場合は`true`、そうでない場合は`false`
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
    */
-  def isGreaterThan(other: Money) =
+  def isGreaterThan(other: Money): Boolean =
     this > other
 
   /**
@@ -204,7 +202,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
    * @return 小さい場合は`true`、そうでない場合は`false`
    * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
    */
-  def isLessThan(other: Money) = this < other
+  def isLessThan(other: Money): Boolean = this < other
 
   /**
    * このインスタンがあらわす金額が、負の金額かどうか調べる。
@@ -334,9 +332,8 @@ class Money(val amount: BigDecimal, val currency: Currency)
   def times(amount: Int): Money =
     times(BigDecimal(amount))
 
-  override def toString = {
+  override def toString =
     currency.getSymbol + " " + amount
-  }
 
   /**
    * 指定したロケールにおける、単位つきの金額表現の文字列を返す。

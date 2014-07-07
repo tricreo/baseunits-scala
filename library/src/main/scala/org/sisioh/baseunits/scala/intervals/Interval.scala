@@ -18,6 +18,8 @@
  */
 package org.sisioh.baseunits.scala.intervals
 
+import scala.collection.mutable.ArrayBuffer
+
 /**
  * 「区間」を表すクラス。
  *
@@ -42,8 +44,6 @@ package org.sisioh.baseunits.scala.intervals
  */
 class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
                                 private var upper: IntervalLimit[T]) extends Serializable {
-
-  import collection.mutable.ListBuffer
 
   checkLowerIsLessThanOrEqualUpper(lower, upper)
 
@@ -86,11 +86,11 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @return 補区間と対照区間の共通部分のリスト
    * @see <a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
    */
-  def complementRelativeTo(other: Interval[T]): List[Interval[T]] = {
-    val intervalSequence = ListBuffer.empty[Interval[T]]
+  def complementRelativeTo(other: Interval[T]): Seq[Interval[T]] = {
+    val intervalSequence = ArrayBuffer.empty[Interval[T]]
     if (intersects(other) == false) {
       intervalSequence += other
-      intervalSequence.result
+      intervalSequence.toSeq
     } else {
       leftComplementRelativeTo(other) match {
         case Some(left) => intervalSequence += left
@@ -100,7 +100,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
         case Some(right) => intervalSequence += right
         case _           => ()
       }
-      intervalSequence.result
+      intervalSequence.toSeq
     }
   }
 
@@ -123,7 +123,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 新しい開区間
    */
-  def emptyOfSameType = newOfSameType(lowerLimit, false, lowerLimit, false)
+  lazy val emptyOfSameType = newOfSameType(lowerLimit, false, lowerLimit, false)
 
   /**
    * この区間と、与えた区間 `other`の同一性を検証する。
@@ -180,7 +180,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 下側限界がある場合は`true`、そうでない場合は`false`
    */
-  def hasLowerLimit = lowerLimit match {
+  val hasLowerLimit = lowerLimit match {
     case _: Limit[T]     => true
     case _: Limitless[T] => false
   }
@@ -199,7 +199,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 上側限界がある場合は`true`、そうでない場合は`false`
    */
-  def hasUpperLimit = upperLimit match {
+  val hasUpperLimit = upperLimit match {
     case _: Limit[T]     => true
     case _: Limitless[T] => false
   }
@@ -226,7 +226,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 下側限界が閉じている場合は`true`、そうでない場合は`false`
    */
-  def includesLowerLimit = lowerLimitObject.closed
+  val includesLowerLimit = lowerLimitObject.closed
 
   /**
    * 上側限界が閉じているかどうかを取得する。
@@ -242,7 +242,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 上側限界値が閉じている場合は`true`、そうでない場合は`false`
    */
-  def includesUpperLimit = upperLimitObject.closed
+  val includesUpperLimit = upperLimitObject.closed
 
   /**
    * この区間と与えた区間 `other` の積集合（共通部分）を返す。

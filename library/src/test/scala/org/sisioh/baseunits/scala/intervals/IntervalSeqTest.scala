@@ -20,7 +20,8 @@ package org.sisioh.baseunits.scala.intervals
 
 import org.junit.Test
 import org.scalatest.junit.AssertionsForJUnit
-import collection.mutable.ListBuffer
+
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * `IntervalSeq`のテストクラス。
@@ -195,7 +196,7 @@ class IntervalSeqTest extends AssertionsForJUnit {
    */
   @Test
   def test06_Extent {
-    val intervals = ListBuffer.empty[Interval[Int]]
+    val intervals = ArrayBuffer.empty[Interval[Int]]
     intervals += c5_10c
     intervals += o10_12c
     intervals += c20_25c

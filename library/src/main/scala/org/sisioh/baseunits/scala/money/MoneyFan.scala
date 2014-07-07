@@ -19,7 +19,7 @@
 package org.sisioh.baseunits.scala.money
 
 import collection.Iterator
-import collection.mutable.ListBuffer
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * 割り当ての集合。
@@ -127,7 +127,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
   lazy val total = asTally.net
 
   private def asTally = {
-    val moneies = ListBuffer.empty[Money]
+    val moneies = ArrayBuffer.empty[Money]
     for (allotment <- allotments) {
       moneies += allotment.amount
     }

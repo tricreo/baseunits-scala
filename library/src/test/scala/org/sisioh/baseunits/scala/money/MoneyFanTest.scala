@@ -20,7 +20,8 @@ package org.sisioh.baseunits.scala.money
 
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
-import collection.mutable.ListBuffer
+
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * `MoneyFan`のテストクラス。
@@ -34,11 +35,11 @@ class MoneyFanTest extends AssertionsForJUnit {
   def test01_RoommateExample {
     //apportionment, assignment, attribution, post, assignation, allotment, slice
 
-    var c = ListBuffer.empty[Allotment[String]]
+    var c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Joe", Money.dollars(65.00))
     val electricBill = MoneyFan(c.toSet)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Mary", Money.dollars(650))
     c += Allotment("Jill", Money.dollars(650))
     c += Allotment("Joe", Money.dollars(650))
@@ -46,7 +47,7 @@ class MoneyFanTest extends AssertionsForJUnit {
 
     assert(rent.total == Money.dollars(1950))
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Mary", Money.dollars(12))
     c += Allotment("Jill", Money.dollars(344))
     c += Allotment("Joe", Money.dollars(256))
@@ -54,28 +55,28 @@ class MoneyFanTest extends AssertionsForJUnit {
 
     assert(groceries.total == Money.dollars(612))
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Mary", Money.dollars(45.00))
     val internetAccess = MoneyFan(c.toSet)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Joe", Money.dollars(857.00))
     val newSofa = MoneyFan(c.toSet)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jill", Money.dollars(285.67))
     c += Allotment("Joe", Money.dollars(-285.67))
     val jillReimbursesJoeForSofa = MoneyFan(c.toSet)
 
     val netSofaContributions = newSofa.plus(jillReimbursesJoeForSofa)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jill", Money.dollars(285.67))
     c += Allotment("Joe", Money.dollars(571.33))
     val expectedNetSofaContributions = MoneyFan(c.toSet)
     assert(netSofaContributions == expectedNetSofaContributions)
 
-    var c2 = ListBuffer.empty[MoneyFan[String]]
+    var c2 = ArrayBuffer.empty[MoneyFan[String]]
     c2 += electricBill
     c2 += rent
     c2 += groceries
@@ -84,7 +85,7 @@ class MoneyFanTest extends AssertionsForJUnit {
     c2 += jillReimbursesJoeForSofa
     val outlays = FanTally(c2)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Mary", Money.dollars(707))
     c += Allotment("Jill", Money.dollars(1279.67))
     c += Allotment("Joe", Money.dollars(1542.33))
@@ -108,19 +109,19 @@ class MoneyFanTest extends AssertionsForJUnit {
    */
   @Test
   def test02_Equals {
-    var c = ListBuffer.empty[Allotment[String]]
+    var c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jack", Money.dollars(285.67))
     c += Allotment("Jill", Money.dollars(-285.67))
     val aFan = MoneyFan(c.toSet)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jill", Money.dollars(-285.67))
     c += Allotment("Jack", Money.dollars(285.67))
     val anotherFan = MoneyFan(c.toSet)
 
     assert(anotherFan == aFan)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment[String]("Jill", Money.dollars(-285.67))
     c += Allotment[String]("Jack", Money.dollars(285.68))
     val yetAnotherFan = MoneyFan(c.toSet)
@@ -138,13 +139,13 @@ class MoneyFanTest extends AssertionsForJUnit {
 
     val jack17 = MoneyFan(Allotment("Jack", Money.dollars(17)))
     val jill13 = MoneyFan(Allotment("Jill", Money.dollars(13)))
-    var c = ListBuffer.empty[Allotment[String]]
+    var c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jack", Money.dollars(17))
     c += Allotment("Jill", Money.dollars(13))
     val jack17Jill13 = MoneyFan(c.toSet)
     assert(jack17.plus(jill13) == jack17Jill13)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jack", Money.dollars(34))
     c += Allotment("Jill", Money.dollars(13))
     val jack34Jill13 = MoneyFan(c.toSet)
@@ -161,12 +162,12 @@ class MoneyFanTest extends AssertionsForJUnit {
    */
   @Test
   def test04_Negation {
-    var c = ListBuffer.empty[Allotment[String]]
+    var c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jack", Money.dollars(285.67))
     c += Allotment("Jill", Money.dollars(-285.67))
     val positive = MoneyFan(c.toSet)
 
-    c = ListBuffer.empty[Allotment[String]]
+    c = ArrayBuffer.empty[Allotment[String]]
     c += Allotment("Jack", Money.dollars(-285.67))
     c += Allotment("Jill", Money.dollars(285.67))
     val negative = MoneyFan(c.toSet)

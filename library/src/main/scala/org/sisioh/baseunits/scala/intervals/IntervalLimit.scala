@@ -158,7 +158,7 @@ class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
    *
    * @return 無限限界である場合は`true`、そうでない場合は`false`
    */
-  def infinity = value match {
+  def infinity: Boolean = value match {
     case _: Limitless[_] => true
     case _               => false
   }
@@ -167,13 +167,13 @@ class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
    * この限界が開いているかどうかを検証する。
    * @return 開いている場合は`true`、そうでない場合は`false`
    */
-  def isOpen = closed == false
+  def isOpen: Boolean = closed == false
 
   /**
    * この限界が上側限界であるかどうかを検証する。
    * @return 上限値の場合は`true`、そうでない場合は`false`
    */
-  def isUpper = lower == false
+  def isUpper: Boolean = lower == false
 
   override def toString = "IntervalLimit(%s, %s, %s)".format(closed, lower, value)
 
@@ -201,7 +201,7 @@ class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
    * @param obj 比較対象
    * @return 同値であった場合は `0`、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
    */
-  def compare(obj: IntervalLimit[T]): Int = {
+  override def compare(obj: IntervalLimit[T]): Int = {
     if (value.isInstanceOf[Limitless[T]] && obj.value.isInstanceOf[Limitless[T]]) {
       if (lower == obj.lower) {
         return 0
@@ -229,7 +229,7 @@ class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
       }
       return lowerToInt(-1, 1)
     }
-    return value compare obj.value
+    value compare obj.value
   }
 }
 
@@ -251,7 +251,7 @@ object IntervalLimit {
    * @param lower 下側限界を生成する場合は `true`、上側限界を生成する場合は `false`を指定する
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    */
-  def apply[T <% Ordered[T]](closed: Boolean, lower: Boolean, value: LimitValue[T]) =
+  def apply[T <% Ordered[T]](closed: Boolean, lower: Boolean, value: LimitValue[T]): IntervalLimit[T] =
     new IntervalLimit[T](if (value.isInstanceOf[Limitless[_]]) false else closed, lower, value)
 
   /**
@@ -272,7 +272,7 @@ object IntervalLimit {
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    * @return 下側限界インスタンス
    */
-  def lower[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]) = apply(closed, true, value)
+  def lower[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]): IntervalLimit[T] = apply(closed, true, value)
 
   /**
    * 上側限界インスタンスを生成する。
@@ -282,6 +282,6 @@ object IntervalLimit {
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    * @return 上側限界インスタンス
    */
-  def upper[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]) = apply(closed, false, value)
+  def upper[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]): IntervalLimit[T] = apply(closed, false, value)
 
 }

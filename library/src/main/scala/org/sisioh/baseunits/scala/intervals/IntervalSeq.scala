@@ -19,7 +19,7 @@
 package org.sisioh.baseunits.scala.intervals
 
 import scala.collection._
-import collection.mutable.{ ListBuffer, Builder }
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * 区間同士の比較を行うための`Ordering`の実装(上側優先)
@@ -148,8 +148,6 @@ object LowerUpperOrdering {
 class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
     extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
 
-  import collection.mutable.Builder
-
   override protected def newBuilder: mutable.Builder[Interval[T], IntervalSeq[T]] =
     IntervalSeq.newBuilder[T](ordering)
 
@@ -175,29 +173,28 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
    * @return 全ての要素区間を内包する、最小の区間
    * @throws IllegalStateException 要素が1つもない場合
    */
-  def extent = {
+  lazy val extent: Interval[T] = {
     require(intervals.isEmpty == false)
-    intervals match {
+    intervals.toList match {
       case List(e) => e
-      case firstInterval :: _ => {
+      case firstInterval :: _ =>
         val lower = intervals.map(_.lowerLimitObject).min
         val upper = intervals.map(_.upperLimitObject).max
         firstInterval.newOfSameType(lower.value, lower.closed, upper.value, upper.closed)
-      }
     }
   }
 
   /**
    * ソート済みの区間で、隣り合った区間同士に挟まれる区間を区間列として返す。
    *
-   * 結果の区間列の [[java.util.Comparator]] は、この区間列の [[java.util.Comparator]] を流用する。
+   * 結果の区間列の `java.util.Comparator` は、この区間列の `java.util.Comparator` を流用する。
    *
    * 区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重なっていたり接していた場合は、
    * その区間は結果の要素に含まない。全てが重なっている場合は、空の区間列を返す。
    *
    * @return ギャップ区間列
    */
-  def gaps = {
+  lazy val gaps: IntervalSeq[T] = {
     if (intervals.size < 2) {
       IntervalSeq(Seq.empty[Interval[T]])
     } else {
@@ -226,7 +223,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
    *
    * @return 共通区間列
    */
-  def intersections = {
+  lazy val intersections: IntervalSeq[T] = {
     if (intervals.size < 2) {
       IntervalSeq[T]()
     } else {
@@ -256,9 +253,9 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
  * @author j5ik2o
  */
 class IntervalSeqBuilder[T <% Ordered[T]](val ord: Option[Ordering[Interval[T]]] = None)
-    extends Builder[Interval[T], IntervalSeq[T]] {
+    extends mutable.Builder[Interval[T], IntervalSeq[T]] {
 
-  val builder = new ListBuffer[Interval[T]]
+  private lazy val builder = new ArrayBuffer[Interval[T]]
 
   def +=(elem: Interval[T]): this.type = {
     builder += elem
@@ -309,7 +306,7 @@ object IntervalSeq {
    * @param intervals
    * @return [[IntervalSeq]]
    */
-  def apply[T <% Ordered[T]](intervals: From[T]) = new IntervalSeq(intervals)
+  def apply[T <% Ordered[T]](intervals: From[T]): IntervalSeq[T] = new IntervalSeq(intervals)
 
   /**
    * インスタンスを生成する。
@@ -325,7 +322,7 @@ object IntervalSeq {
    * @tparam T 限界値の型
    * @return 構成要素
    */
-  def unapply[T <% Ordered[T]](intervalSeq: IntervalSeq[T]) =
+  def unapply[T <% Ordered[T]](intervalSeq: IntervalSeq[T]): Option[(Seq[Interval[T]], Ordering[Interval[T]])] =
     Some(intervalSeq.intervals, intervalSeq.ordering)
 
   /**
@@ -334,6 +331,7 @@ object IntervalSeq {
    * @tparam T 限界値の型
    * @return ビルダー
    */
-  def newBuilder[T <% Ordered[T]](ordering: Ordering[Interval[T]]): mutable.Builder[Elem[T], To[T]] = new IntervalSeqBuilder[T](Some(ordering))
+  def newBuilder[T <% Ordered[T]](ordering: Ordering[Interval[T]]): mutable.Builder[Elem[T], To[T]] =
+    new IntervalSeqBuilder[T](Some(ordering))
 
 }

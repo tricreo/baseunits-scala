@@ -52,7 +52,7 @@ class RecurringAppointmentScenario extends Assertions with ShouldMatchers {
     assertThat(meetingTimePoint, is(TimePoint.at(2006, 4, 19, 10, 0, 0, 0, HonoluluTime)))
 
     // The expressions can be strung together.
-    meetingTimeThisDay.asTimePoint(HonoluluTime).minus(Duration.minutes(5)) should be ===
+    meetingTimeThisDay.asTimePoint(HonoluluTime).minus(Duration.minutes(5)) shouldEqual
       TimePoint.at(2006, 4, 19, 9, 55, 0, 0, HonoluluTime)
   }
 }
