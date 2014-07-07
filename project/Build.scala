@@ -89,8 +89,11 @@ object BaseUnitsBuild extends Build {
   ) dependsOn (library)
 
   lazy val root = Project(
-    id = "baseunits-scala",
-    base = file(".")
+    id = "baseunits-scala-project",
+    base = file("."),
+    settings = commonSettings ++ Seq(
+      name := "baseunits-scala-project"
+    )
   ) aggregate(library, example)
 
 }
