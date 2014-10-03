@@ -61,7 +61,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    */
   def asTimeOfDay(timeZone: TimeZone = TimeZones.Default): TimeOfDay = {
     val calendar = asJavaCalendar(timeZone)
-    TimeOfDay.from(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE))
+    TimeOfDay.from(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
   }
 
   /**
