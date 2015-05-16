@@ -1,3 +1,4 @@
+import xerial.sbt.Sonatype.SonatypeKeys._
 import com.typesafe.sbt.SbtScalariform._
 import com.typesafe.sbt.SbtSite._
 import sbt.Keys._
@@ -10,16 +11,17 @@ object BaseUnitsBuild extends Build {
   val commonSettings = scalariformSettings ++
     org.scalastyle.sbt.ScalastylePlugin.Settings ++
     ScctPlugin.instrumentSettings ++ site.settings ++ site.includeScaladoc() ++ Seq(
+    sonatypeProfileName := "org.sisioh",
     organization := "org.sisioh",
-    version := "0.1.14",
-    scalaVersion := "2.11.1",
-    crossScalaVersions := Seq("2.10.4", "2.11.1"),
+    scalaVersion := "2.11.6",
+    crossScalaVersions := Seq("2.10.5", "2.11.6"),
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers ++= Seq(
       "Twitter Repository" at "http://maven.twttr.com/",
       "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       "Sonatype Release Repository" at "https://oss.sonatype.org/content/repositories/releases/",
-      "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
+      "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/",
+      "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
     ),
     libraryDependencies ++= Seq(
       "junit" % "junit" % "4.8.1" % "test",
@@ -40,14 +42,6 @@ object BaseUnitsBuild extends Build {
     publishArtifact in Test := false,
     pomIncludeRepository := {
       _ => false
-    },
-    publishTo <<= version {
-      (v: String) =>
-        val nexus = "https://oss.sonatype.org/"
-        if (v.trim.endsWith("SNAPSHOT"))
-          Some("snapshots" at nexus + "content/repositories/snapshots")
-        else
-          Some("releases" at nexus + "service/local/staging/deploy/maven2")
     },
     pomExtra := (
       <url>https://github.com/sisioh/baseunits-scala</url>
