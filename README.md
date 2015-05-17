@@ -18,8 +18,6 @@ Scala version of this library
 [![Scaladoc](http://javadoc-badge.appspot.com/org.sisioh/baseunits-scala.svg?label=scaladoc)](http://javadoc-badge.appspot.com/org.sisioh/baseunits-scala_2.11)
 [![Reference Status](https://www.versioneye.com/java/org.sisioh:baseunits-scala_2.11/reference_badge.svg?style=flat)](https://www.versioneye.com/java/org.sisioh:baseunits-scala_2.11/references)
 
-
-
 ## Installation
 
 Add the following to your sbt build (Scala 2.10.x, and Scala 2.11.x):
@@ -29,7 +27,7 @@ Add the following to your sbt build (Scala 2.10.x, and Scala 2.11.x):
 ```scala
 resolvers += "Sonatype OSS Release Repository" at "https://oss.sonatype.org/content/repositories/releases/"
 
-libraryDependencies += "org.sisioh" %% "baseunits-scala-project" % "0.1.16"
+libraryDependencies += "org.sisioh" %% "baseunits-scala" % "0.1.16"
 ```
 
 ### Snapshot Version
@@ -37,5 +35,5 @@ libraryDependencies += "org.sisioh" %% "baseunits-scala-project" % "0.1.16"
 ```scala
 resolvers += "Sonatype OSS Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
-libraryDependencies += "org.sisioh" %% "baseunits-scala-project" % "0.1.17-SNAPSHOT"
+libraryDependencies += "org.sisioh" %% "baseunits-scala" % "0.1.17-SNAPSHOT"
 ```

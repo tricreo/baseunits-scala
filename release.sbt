@@ -8,7 +8,7 @@ val updateReadme = { state: State =>
   val scalaV = extracted get scalaBinaryVersion
   val v = extracted get version
   val org =  extracted get organization
-  val n = extracted get name
+  val n = (extracted get name).replace("-project", "")
   val snapshotOrRelease = if(extracted get isSnapshot) "snapshots" else "releases"
   val readme = "README.md"
   val readmeFile = file(readme)
