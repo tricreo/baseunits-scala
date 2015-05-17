@@ -8,8 +8,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.8.1")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.4.0")
 
-addSbtPlugin("com.sqality.scct" % "sbt-scct" % "0.3.1-SNAPSHOT")
-
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "0.5.0")
 
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")

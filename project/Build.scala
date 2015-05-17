@@ -10,7 +10,7 @@ object BaseUnitsBuild extends Build {
 
   val commonSettings = scalariformSettings ++
     org.scalastyle.sbt.ScalastylePlugin.Settings ++
-    ScctPlugin.instrumentSettings ++ site.settings ++ site.includeScaladoc() ++ Seq(
+    site.settings ++ site.includeScaladoc() ++ Seq(
     sonatypeProfileName := "org.sisioh",
     organization := "org.sisioh",
     scalaVersion := "2.11.6",
