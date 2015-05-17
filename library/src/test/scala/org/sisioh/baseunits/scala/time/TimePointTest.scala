@@ -46,4 +46,16 @@ class TimePointTest extends AssertionsForJUnit {
     assert(tp4 == TimePoint.at(2010, 1, 1, 1, 1, GMT))
   }
 
+  /**
+   * [[TimePoint#asTimeOfDay]]のテスト。
+   *
+   * @throws Exception 例外が発生した場合
+   */
+  @Test
+  def test01_asTimeOfDay {
+    val CST = TimeZone.getTimeZone("CST")
+    val tp = TimePoint.at(2014, 10, 3, 23, 58, 19, CST)
+    assert(tp.asTimeOfDay(CST) == TimeOfDay.from(hour = 23, minute = 58))
+  }
+
 }
