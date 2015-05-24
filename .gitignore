@@ -8,3 +8,5 @@ project/boot/
 .settings
 
 atlassian-ide-plugin.xml
+
+.credentials
