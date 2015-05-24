@@ -1,8 +1,8 @@
-import xerial.sbt.Sonatype.SonatypeKeys._
 import com.typesafe.sbt.SbtScalariform._
 import com.typesafe.sbt.SbtSite._
 import sbt.Keys._
 import sbt._
+import xerial.sbt.Sonatype.SonatypeKeys._
 
 import scalariform.formatter.preferences._
 
@@ -63,8 +63,11 @@ object BaseUnitsBuild extends Build {
             <url>http://j5ik2o.me</url>
           </developer>
         </developers>
-      )
-  )
+      ),
+    credentials := {
+      val ivyCredentials = (baseDirectory in LocalRootProject).value / ".credentials"
+      Credentials(ivyCredentials) :: Nil
+    })
 
   lazy val library = Project(
     id = "baseunits-scala-library",
