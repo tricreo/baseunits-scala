@@ -67,7 +67,8 @@ object BaseUnitsBuild extends Build {
     credentials := {
       val ivyCredentials = (baseDirectory in LocalRootProject).value / ".credentials"
       Credentials(ivyCredentials) :: Nil
-    })
+    }
+  )
 
   lazy val library = Project(
     id = "baseunits-scala-library",
