@@ -32,8 +32,10 @@ import org.sisioh.baseunits.scala.util.Ratio
  * @param quantity 時間の長さ
  * @param unit 時間の単位
  */
-class Duration private[time] (val quantity: Long,
-                              val unit: TimeUnit)
+class Duration private[time] (
+  val quantity: Long,
+  val unit:     TimeUnit
+)
     extends Ordered[Duration] with Serializable {
 
   require(quantity >= 0, "Quantity: " + quantity + " must be zero or positive")
@@ -81,7 +83,7 @@ class Duration private[time] (val quantity: Long,
    * @param month 元となる年月
    * @return このオブジェクトが表現する長さの時間が経過した未来の年月
    */
-  def addedTo(month: CalendarYearMonth) = {
+  def addedTo(month: CalendarYearMonth): CalendarYearMonth = {
     //		only valid for days and larger units
     if (unit.compareTo(TimeUnit.Month) < 0) {
       month
@@ -113,6 +115,7 @@ class Duration private[time] (val quantity: Long,
    *
    * @return 量
    */
+  @deprecated("Use quantity property instead", "0.1.18")
   val breachEncapsulationOfQuantity = quantity
 
   /**
@@ -122,6 +125,7 @@ class Duration private[time] (val quantity: Long,
    *
    * @return 単位
    */
+  @deprecated("Use unit property instead", "0.1.18")
   val breachEncapsulationOfUnit = unit
 
   /**
@@ -319,8 +323,10 @@ class Duration private[time] (val quantity: Long,
   }
 
   private def checkConvertible(other: Duration) {
-    require((other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) == false,
-      other.toString() + " is not convertible to: " + toString())
+    require(
+      (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) == false,
+      other.toString() + " is not convertible to: " + toString()
+    )
   }
 
   private def checkGreaterThanOrEqualTo(other: Duration) {

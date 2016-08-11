@@ -35,11 +35,13 @@ import annotation.tailrec
  * time comes to compute a decimal value for the ratio. The client typically has
  * the responsibilities that enable an appropriate choice of these parameters.
  *
- * @param numerator 分子をあらわす数
+ * @param numerator   分子をあらわす数
  * @param denominator 分母をあらわす数
  */
-class Ratio(private val numerator: BigDecimal,
-            private val denominator: BigDecimal) {
+class Ratio(
+    val numerator:   BigDecimal,
+    val denominator: BigDecimal
+) {
 
   if (denominator == BigDecimal(0)) {
     throw new ArithmeticException("denominator is zero")
@@ -52,6 +54,7 @@ class Ratio(private val numerator: BigDecimal,
    *
    * @return 分母をあらわず数
    */
+  @deprecated("Use denominator property instead", "0.1.18")
   val breachEncapsulationOfDenominator = denominator
 
   /**
@@ -61,16 +64,17 @@ class Ratio(private val numerator: BigDecimal,
    *
    * @return 分子をあらわす数
    */
+  @deprecated("Use numerator property instead", "0.1.18")
   val breachEncapsulationOfNumerator = numerator
 
   /**
    * 比率を[[scala.math.BigDecimal]]型で取得する。
    *
-   * @param scale 小数点以下の有効数字
+   * @param scale        小数点以下の有効数字
    * @param roundingMode 丸めモード
    * @return この比率の [[scala.math.BigDecimal]] 型の表現
    */
-  def decimalValue(scale: Int, roundingMode: BigDecimal.RoundingMode.Value) = {
+  def decimalValue(scale: Int, roundingMode: BigDecimal.RoundingMode.Value): BigDecimal = {
     BigDecimal(numerator.bigDecimal.divide(denominator.bigDecimal, scale, roundingMode.id))
   }
 
@@ -108,7 +112,7 @@ class Ratio(private val numerator: BigDecimal,
     new Ratio(numerator / gcd, denominator / gcd)
   }
 
-  override def hashCode = 31 * (denominator.hashCode + numerator.hashCode)
+  override def hashCode: Int = 31 * (denominator.hashCode + numerator.hashCode)
 
   /**
    * この比率と `multiplier` の積からなる比率。
@@ -139,7 +143,7 @@ class Ratio(private val numerator: BigDecimal,
    *
    * @see java.lang.Object#toString()
    */
-  override def toString = numerator.toString + "/" + denominator
+  override def toString: String = numerator.toString + "/" + denominator
 
 }
 
@@ -157,7 +161,7 @@ object Ratio {
   /**
    * インスタンスを生成する。
    *
-   * @param numerator 分子
+   * @param numerator   分子
    * @param denominator 分母
    * @return 引数に与えた分子、分母からなる比
    * @throws ArithmeticException 引数`denominator`が0だった場合
@@ -168,7 +172,7 @@ object Ratio {
   /**
    * インスタンスを生成する。
    *
-   * @param numerator 分子
+   * @param numerator   分子
    * @param denominator 分母
    * @return 引数に与えた分子、分母からなる比率
    * @throws ArithmeticException 引数`denominator`が0だった場合
@@ -176,6 +180,6 @@ object Ratio {
   def apply(numerator: Long, denominator: Long): Ratio =
     new Ratio(BigDecimal(numerator), BigDecimal(denominator))
 
-  def unapply(ratio: Ratio) = Some(ratio.numerator, ratio.denominator)
+  def unapply(ratio: Ratio): Option[(BigDecimal, BigDecimal)] = Some(ratio.numerator, ratio.denominator)
 
 }

@@ -18,8 +18,6 @@
  */
 package org.sisioh.baseunits.scala.intervals
 
-import scala.language.implicitConversions
-
 /**
  * 限界値を表すトレイト。
  *
@@ -34,7 +32,7 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
    * @return 限界値
    * @throws NoSuchElementException 無限の場合
    */
-  def toValue = toValueOrElse(throw new NoSuchElementException)
+  def toValue: T = toValueOrElse(throw new NoSuchElementException)
 
   /**
    * 限界値を返す。
@@ -42,12 +40,12 @@ trait LimitValue[T] extends Ordered[LimitValue[T]] {
    * @param default 無限の場合の式
    * @return 限界値。無限の場合は`default`を返す。
    */
-  def toValueOrElse(default: => T) = this match {
+  def toValueOrElse(default: => T): T = this match {
     case Limit(value)    => value
     case _: Limitless[T] => default
   }
 
-  override def equals(obj: Any) = obj match {
+  override def equals(obj: Any): Boolean = obj match {
     case that: LimitValue[T] => (this compare that) == 0
     case that => this match {
       case Limit(value)     => value == that
@@ -71,7 +69,7 @@ object LimitValue {
    * @return [[org.sisioh.baseunits.scala.intervals.Limit]]
    * @throws IllegalArgumentException limitValueがLimitless[T]の場合
    */
-  implicit def toValue[T <% Ordered[T]](limitValue: LimitValue[T]) = limitValue match {
+  implicit def toValue[T](limitValue: LimitValue[T])(implicit ev: T => Ordered[T]): T = limitValue match {
     case Limit(value)    => value
     case _: Limitless[T] => throw new IllegalArgumentException("implicit conversion from Limitless[T] can't do.")
   }
@@ -82,12 +80,12 @@ object LimitValue {
    * @param value 値
    * @return [[org.sisioh.baseunits.scala.intervals.Limit]]
    */
-  def toLimitValue[T <% Ordered[T]](value: T) = value match {
-    case null  => Limitless[T]()
-    case value => Limit(value)
+  def toLimitValue[T](value: Option[T])(implicit ev: T => Ordered[T]): LimitValue[T] = value match {
+    case None    => Limitless[T]()
+    case Some(v) => Limit(v)
   }
 
-  implicit def toLimit[T <% Ordered[T]](value: T) = Limit(value)
+  implicit def toLimit[T](value: T)(implicit ev: T => Ordered[T]): Limit[T] = Limit(value)
 
 }
 
@@ -98,9 +96,9 @@ object LimitValue {
  * @tparam T 限界値の型
  * @param value 限界値
  */
-case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
+case class Limit[T](value: T)(implicit ev: T => Ordered[T]) extends LimitValue[T] {
 
-  def compare(that: LimitValue[T]) = that match {
+  def compare(that: LimitValue[T]): Int = that match {
     case that: Limit[T] => value compare that.value
     case _              => 1
   }
@@ -113,9 +111,9 @@ case class Limit[T <% Ordered[T]](value: T) extends LimitValue[T] {
  * @author j5ik2o
  * @tparam T 限界値の型
  */
-case class Limitless[T <% Ordered[T]]() extends LimitValue[T] {
+case class Limitless[T]()(implicit ev: T => Ordered[T]) extends LimitValue[T] {
 
-  def compare(that: LimitValue[T]) = that match {
+  def compare(that: LimitValue[T]): Int = that match {
     case that: Limitless[T] => 0
     case _                  => -1
   }
@@ -144,9 +142,11 @@ case class Limitless[T <% Ordered[T]]() extends LimitValue[T] {
  * @param lower 下側限界を表す場合は `true`、上側限界を表す場合は `false`
  * @param value 限界値 [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す。
  */
-class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
-                                     val lower: Boolean,
-                                     val value: LimitValue[T])
+class IntervalLimit[T](
+  val closed: Boolean,
+  val lower:  Boolean,
+  val value:  LimitValue[T]
+)(implicit ev: T => Ordered[T])
     extends Ordered[IntervalLimit[T]] with Serializable {
 
   private def lowerToInt(t: Int, f: Int) = if (lower) t else f
@@ -167,22 +167,22 @@ class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
    * この限界が開いているかどうかを検証する。
    * @return 開いている場合は`true`、そうでない場合は`false`
    */
-  def isOpen: Boolean = closed == false
+  def isOpen: Boolean = !closed
 
   /**
    * この限界が上側限界であるかどうかを検証する。
    * @return 上限値の場合は`true`、そうでない場合は`false`
    */
-  def isUpper: Boolean = lower == false
+  def isUpper: Boolean = !lower
 
-  override def toString = "IntervalLimit(%s, %s, %s)".format(closed, lower, value)
+  override def toString: String = "IntervalLimit(%s, %s, %s)".format(closed, lower, value)
 
-  override def equals(obj: Any) = obj match {
+  override def equals(obj: Any): Boolean = obj match {
     case that: IntervalLimit[T] => compareTo(that) == 0
     case _                      => false
   }
 
-  override def hashCode = 31 * (closed.hashCode + value.hashCode + lower.hashCode)
+  override def hashCode: Int = 31 * (closed.hashCode + value.hashCode + lower.hashCode)
 
   /**
    * 限界同士の比較を行う。
@@ -221,7 +221,7 @@ class IntervalLimit[T <% Ordered[T]](val closed: Boolean,
         }
         return 0
       }
-      if (lower == false && obj.lower == false) {
+      if (!lower && !obj.lower) {
         if (closed ^ obj.closed) {
           return closedToInt(1, -1)
         }
@@ -251,7 +251,7 @@ object IntervalLimit {
    * @param lower 下側限界を生成する場合は `true`、上側限界を生成する場合は `false`を指定する
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    */
-  def apply[T <% Ordered[T]](closed: Boolean, lower: Boolean, value: LimitValue[T]): IntervalLimit[T] =
+  def apply[T](closed: Boolean, lower: Boolean, value: LimitValue[T])(implicit ev: T => Ordered[T]): IntervalLimit[T] =
     new IntervalLimit[T](if (value.isInstanceOf[Limitless[_]]) false else closed, lower, value)
 
   /**
@@ -261,7 +261,7 @@ object IntervalLimit {
    * @param intervalLimit [[org.sisioh.baseunits.scala.intervals.IntervalLimit]]
    * @return Option[(Boolean, Boolean, T)]
    */
-  def unapply[T <% Ordered[T]](intervalLimit: IntervalLimit[T]): Option[(Boolean, Boolean, LimitValue[T])] =
+  def unapply[T](intervalLimit: IntervalLimit[T])(implicit ev: T => Ordered[T]): Option[(Boolean, Boolean, LimitValue[T])] =
     Some(intervalLimit.closed, intervalLimit.lower, intervalLimit.value)
 
   /**
@@ -272,7 +272,7 @@ object IntervalLimit {
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    * @return 下側限界インスタンス
    */
-  def lower[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]): IntervalLimit[T] = apply(closed, true, value)
+  def lower[T](closed: Boolean, value: LimitValue[T])(implicit ev: T => Ordered[T]): IntervalLimit[T] = apply(closed, true, value)
 
   /**
    * 上側限界インスタンスを生成する。
@@ -282,6 +282,6 @@ object IntervalLimit {
    * @param value 限界値. `Limitless[T]`の場合は、限界がないことを表す
    * @return 上側限界インスタンス
    */
-  def upper[T <% Ordered[T]](closed: Boolean, value: LimitValue[T]): IntervalLimit[T] = apply(closed, false, value)
+  def upper[T](closed: Boolean, value: LimitValue[T])(implicit ev: T => Ordered[T]): IntervalLimit[T] = apply(closed, false, value)
 
 }

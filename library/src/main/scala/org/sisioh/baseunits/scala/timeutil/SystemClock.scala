@@ -26,5 +26,5 @@ import org.sisioh.baseunits.scala.time.{ TimePoint, TimeSource }
  * @author j5ik2o
  */
 object SystemClock extends TimeSource {
-  def now = TimePoint.from(System.currentTimeMillis())
+  def now: TimePoint = TimePoint.from(System.currentTimeMillis())
 }

@@ -27,10 +27,12 @@ import java.util.Calendar
  *
  * @author j5ik2o
  * @param value 1 = Calendar.SUNDAY, 2 = Calendar.MONDAY, ...
- * @param _name 名前
+ * @param name 名前
  */
-final class DayOfWeek private[time] (private[time] val value: Int,
-                                     _name: String) {
+final class DayOfWeek private[time] (
+    val value: Int,
+    val name:  String
+) {
   /**
    * このオブジェクトの`value`フィールド（[[java.util.Calendar]]に定義する曜日をあらわす定数値）を返す。
    *
@@ -38,9 +40,9 @@ final class DayOfWeek private[time] (private[time] val value: Int,
    *
    * @return [[java.util.Calendar]]に定義する曜日をあらわす定数値（`SUNDAY`〜`SATURDAY`）
    */
-  val breachEncapsulationOfValue = value
+  @deprecated("Use value property instead", "0.1.18")
+  val breachEncapsulationOfValue: Int = value
 
-  val name = _name
 }
 
 /**
@@ -60,6 +62,6 @@ object DayOfWeek {
 
   val values = Seq(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
 
-  def apply(value: Int) = values.find(_.value == value).get
+  def apply(value: Int): DayOfWeek = values.find(_.value == value).get
 
 }

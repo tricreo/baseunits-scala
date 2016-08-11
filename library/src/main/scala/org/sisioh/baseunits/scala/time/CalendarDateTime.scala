@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.text.ParseException
 import java.util.TimeZone
 
 /**
@@ -31,8 +32,10 @@ import java.util.TimeZone
  * @param date 年月日
  * @param time 時分
  */
-class CalendarDateTime private[time] (private[time] val date: CalendarDate,
-                                      private[time] val time: TimeOfDay)
+class CalendarDateTime private[time] (
+  val date: CalendarDate,
+  val time: TimeOfDay
+)
     extends Ordered[CalendarDateTime] with Serializable {
 
   /**
@@ -52,7 +55,8 @@ class CalendarDateTime private[time] (private[time] val date: CalendarDate,
    *
    * @return 年月日
    */
-  val breachEncapsulationOfDate = date
+  @deprecated("Use date property instead", "0.1.18")
+  val breachEncapsulationOfDate: CalendarDate = date
 
   /**
    * このオブジェクトの`time`フィールド（時分）を返す。
@@ -61,7 +65,8 @@ class CalendarDateTime private[time] (private[time] val date: CalendarDate,
    *
    * @return 時分
    */
-  val breachEncapsulationOfTime = time
+  @deprecated("Use time property instead", "0.1.18")
+  val breachEncapsulationOfTime: TimeOfDay = time
 
   override def compare(other: CalendarDateTime): Int = {
     val dateComparance = date.compareTo(other.date)
@@ -78,7 +83,7 @@ class CalendarDateTime private[time] (private[time] val date: CalendarDate,
     case _                      => false
   }
 
-  override def hashCode = 31 * (date.hashCode + time.hashCode)
+  override def hashCode: Int = 31 * (date.hashCode + time.hashCode)
 
   /**
    * 指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
@@ -89,7 +94,7 @@ class CalendarDateTime private[time] (private[time] val date: CalendarDate,
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: CalendarDateTime): Boolean =
-    isBefore(other) == false && equals(other) == false
+    !isBefore(other) && !equals(other)
 
   /**
    * 指定した年月日時分 `other` が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
@@ -109,13 +114,13 @@ class CalendarDateTime private[time] (private[time] val date: CalendarDate,
     }
   }
 
-  override def toString =
+  override def toString: String =
     date.toString + " at " + time.toString
 
   /**
    * この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
    *
-   * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
+   * @param pattern  [[java.text.SimpleDateFormat]]に基づくパターン
    * @param timeZone タイムゾーン
    * @return 整形済み時間文字列
    */
@@ -163,10 +168,10 @@ object CalendarDateTime {
   /**
    * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
    *
-   * @param year 西暦年をあらわす数
-   * @param month 月をあらわす正数（1〜12）
-   * @param day 日をあらわす正数（1〜31）
-   * @param hour 時をあらわす正数（0〜23）
+   * @param year   西暦年をあらわす数
+   * @param month  月をあらわす正数（1〜12）
+   * @param day    日をあらわす正数（1〜31）
+   * @param hour   時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
    * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
@@ -179,11 +184,11 @@ object CalendarDateTime {
   /**
    * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
    *
-   * @param year 西暦年をあらわす数
-   * @param month 月をあらわす正数（1〜12）
-   * @param day 日をあらわす正数（1〜31）
-   * @param hour 時をあらわす正数（0〜23）
-   * @param minute 分をあらわす正数（0〜59）
+   * @param year     西暦年をあらわす数
+   * @param month    月をあらわす正数（1〜12）
+   * @param day      日をあらわす正数（1〜31）
+   * @param hour     時をあらわす正数（0〜23）
+   * @param minute   分をあらわす正数（0〜59）
    * @param timeZone タイムゾーン
    * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
@@ -197,7 +202,7 @@ object CalendarDateTime {
    * 指定した年月日時分を表す、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param dateTimeString 年月日時分を表す文字列
-   * @param pattern 解析パターン文字列
+   * @param pattern        解析パターン文字列
    * @return [[CalendarDateTime]]
    * @throws ParseException 文字列の解析に失敗した場合
    */

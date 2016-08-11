@@ -27,37 +27,37 @@ import org.sisioh.baseunits.scala.intervals.Limit
  */
 abstract class AnnualDateSpecification extends DateSpecification {
 
-  override def firstOccurrenceIn(interval: CalendarInterval) = {
-    val firstTry = ofYear(interval.start.toValue.asCalendarMonth.breachEncapsulationOfYear)
+  override def firstOccurrenceIn(interval: CalendarInterval): Option[CalendarDate] = {
+    val firstTry = ofYear(interval.start.toValue.asCalendarMonth.year)
     if (interval.includes(Limit(firstTry))) {
       Some(firstTry)
     } else {
-      val secondTry = ofYear(interval.start.toValue.asCalendarMonth.breachEncapsulationOfYear + 1)
+      val secondTry = ofYear(interval.start.toValue.asCalendarMonth.year + 1)
       if (interval.includes(Limit(secondTry))) {
         Some(secondTry)
       } else None
     }
   }
 
-  override def iterateOver(interval: CalendarInterval) = {
+  override def iterateOver(interval: CalendarInterval): Iterator[CalendarDate] = {
     new Iterator[CalendarDate] {
 
       private var _next = firstOccurrenceIn(interval)
 
       private var year = _next map {
-        o => o.asCalendarMonth.breachEncapsulationOfYear
+        o => o.asCalendarMonth.year
       } getOrElse (-1)
 
-      override def hasNext = _next != None
+      override def hasNext: Boolean = _next.isDefined
 
-      override def next = {
-        if (hasNext == false) {
+      override def next: CalendarDate = {
+        if (!hasNext) {
           throw new NoSuchElementException
         }
         val current = _next
         year += 1
         _next = Some(ofYear(year))
-        if (interval.includes(Limit(_next.get)) == false) {
+        if (!interval.includes(Limit(_next.get))) {
           _next = None
         }
         current.get
@@ -72,4 +72,5 @@ abstract class AnnualDateSpecification extends DateSpecification {
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    */
   def ofYear(year: Int): CalendarDate
+
 }

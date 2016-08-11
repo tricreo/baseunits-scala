@@ -166,10 +166,10 @@ class TimeOfDayTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test10_BeforeWithLaterTimeOfDay {
-    assert(midnight.isBefore(twoMinutesBeforeMidnight) == true, "expected midnight not after twoMinutesBeforeMidnight")
-    assert(morning.isBefore(afternoon) == true, "expected morning not after afternoon")
-    assert(noon.isBefore(twoMinutesBeforeMidnight) == true, "expected noon not after twoMinutesBeforeMidnight")
+  def test10_BeforeWithLaterTimeOfDay() {
+    assert(midnight.isBefore(twoMinutesBeforeMidnight), "expected midnight not after twoMinutesBeforeMidnight")
+    assert(morning.isBefore(afternoon), "expected morning not after afternoon")
+    assert(noon.isBefore(twoMinutesBeforeMidnight), "expected noon not after twoMinutesBeforeMidnight")
   }
 
   /**
@@ -178,11 +178,11 @@ class TimeOfDayTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test11_BeforeWithSameTimeOfDay {
-    assert(midnight.isBefore(midnight) == false, "expected midnight not after midnight")
-    assert(morning.isBefore(morning) == false, "expected morning not after morning")
-    assert(afternoon.isBefore(afternoon) == false, "expected afternoon not after afternoon")
-    assert(noon.isBefore(noon) == false, "expected noon not after noon")
+  def test11_BeforeWithSameTimeOfDay() {
+    assert(!midnight.isBefore(midnight), "expected midnight not after midnight")
+    assert(!morning.isBefore(morning), "expected morning not after morning")
+    assert(!afternoon.isBefore(afternoon), "expected afternoon not after afternoon")
+    assert(!noon.isBefore(noon), "expected noon not after noon")
   }
 
   /**
@@ -192,11 +192,11 @@ class TimeOfDayTest extends AssertionsForJUnit {
    */
   @Test
   def test12_GetHour {
-    assert(midnight.breachEncapsulationOfHour == HourOfDay(0))
-    assert(morning.breachEncapsulationOfHour == HourOfDay(10))
-    assert(noon.breachEncapsulationOfHour == HourOfDay(12))
-    assert(afternoon.breachEncapsulationOfHour == HourOfDay(15))
-    assert(twoMinutesBeforeMidnight.breachEncapsulationOfHour == HourOfDay(23))
+    assert(midnight.hour == HourOfDay(0))
+    assert(morning.hour == HourOfDay(10))
+    assert(noon.hour == HourOfDay(12))
+    assert(afternoon.hour == HourOfDay(15))
+    assert(twoMinutesBeforeMidnight.hour == HourOfDay(23))
   }
 
   /**
@@ -206,11 +206,11 @@ class TimeOfDayTest extends AssertionsForJUnit {
    */
   @Test
   def test13_GetMinute {
-    assert(midnight.breachEncapsulationOfMinute == MinuteOfHour(0))
-    assert(morning.breachEncapsulationOfMinute == MinuteOfHour(20))
-    assert(noon.breachEncapsulationOfMinute == MinuteOfHour(0))
-    assert(afternoon.breachEncapsulationOfMinute == MinuteOfHour(40))
-    assert(twoMinutesBeforeMidnight.breachEncapsulationOfMinute == MinuteOfHour(58))
+    assert(midnight.minute == MinuteOfHour(0))
+    assert(morning.minute == MinuteOfHour(20))
+    assert(noon.minute == MinuteOfHour(0))
+    assert(afternoon.minute == MinuteOfHour(40))
+    assert(twoMinutesBeforeMidnight.minute == MinuteOfHour(58))
   }
 
   /**

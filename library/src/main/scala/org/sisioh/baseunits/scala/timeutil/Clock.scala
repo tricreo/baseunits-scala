@@ -70,7 +70,7 @@ case class Clock(timeSource: TimeSource = SystemClock, timeZone: TimeZone = Time
    *
    * @return 今年
    */
-  def year: Int = month.breachEncapsulationOfYear
+  def year: Int = month.year
 
 }
 

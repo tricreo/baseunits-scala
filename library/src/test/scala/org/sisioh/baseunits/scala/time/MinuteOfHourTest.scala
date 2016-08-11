@@ -33,7 +33,7 @@ class MinuteOfHourTest extends AssertionsForJUnit {
    */
   @Test
   def test01_Simple {
-    assert(MinuteOfHour(11).breachEncapsulationOfValue == 11)
+    assert(MinuteOfHour(11).value == 11)
     assert(MinuteOfHour(23) == MinuteOfHour(23))
   }
 

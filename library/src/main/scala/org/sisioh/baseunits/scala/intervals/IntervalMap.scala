@@ -28,7 +28,7 @@ import scala.collection.immutable.{ Map, MapLike }
  * @tparam A キーとなる区間の型
  * @tparam B 値の型
  */
-abstract class IntervalMap[A <% Ordered[A], +B]
+abstract class IntervalMap[A, +B](implicit ev: A => Ordered[A])
     extends Map[Interval[A], B]
     with MapLike[Interval[A], B, IntervalMap[A, B]] {
 
@@ -58,7 +58,7 @@ abstract class IntervalMap[A <% Ordered[A], +B]
 
 }
 
-class LinearIntervalMap[A <% Ordered[A], B](protected val intervalMap: Map[Interval[A], B])
+class LinearIntervalMap[A, B](protected val intervalMap: Map[Interval[A], B])(implicit ev: A => Ordered[A])
     extends IntervalMap[A, B] {
 
   /**
@@ -66,12 +66,12 @@ class LinearIntervalMap[A <% Ordered[A], B](protected val intervalMap: Map[Inter
    *
    * `intervalMap`は空を利用する。
    */
-  def this() = this(Map.empty[Interval[A], B])
+  def this()(implicit ev: A => Ordered[A]) = this(Map.empty[Interval[A], B])
 
   override def toString(): String = intervalMap.toString
 
   def containsIntersectingKey(otherInterval: Interval[A]): Boolean =
-    intersectingKeys(otherInterval).isEmpty == false
+    intersectingKeys(otherInterval).nonEmpty
 
   private def directPut(source: Map[Interval[A], B], intervalSequence: Seq[Interval[A]], value: B) = {
     val keyValues = collection.mutable.Map.empty[Interval[A], B]
@@ -98,10 +98,10 @@ class LinearIntervalMap[A <% Ordered[A], B](protected val intervalMap: Map[Inter
    * @return 指定した区間と共通部分を持つ区間の列
    */
   private def intersectingKeys(otherInterval: Interval[A]): Seq[Interval[A]] =
-    intervalMap.keys.map {
+    intervalMap.keys.flatMap {
       case e if e.intersects(otherInterval) => Some(e)
       case _                                => None
-    }.flatten.toSeq
+    }.toSeq
 
   def iterator: Iterator[(Interval[A], B)] = intervalMap.iterator
 
@@ -148,7 +148,7 @@ object LinearIntervalMap {
    * @tparam B 値の型
    * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
    */
-  def apply[A <% Ordered[A], B]: LinearIntervalMap[A, B] = new LinearIntervalMap
+  def apply[A, B](implicit ev: A => Ordered[A]): LinearIntervalMap[A, B] = new LinearIntervalMap
 
   /**
    * ファクトリメソッド。
@@ -157,7 +157,7 @@ object LinearIntervalMap {
    * @tparam B 値の型
    * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
    */
-  def apply[A <% Ordered[A], B](intervalMap: Map[Interval[A], B]): LinearIntervalMap[A, B] =
+  def apply[A, B](intervalMap: Map[Interval[A], B])(implicit ev: A => Ordered[A]): LinearIntervalMap[A, B] =
     new LinearIntervalMap(intervalMap)
 
   /**
@@ -167,7 +167,7 @@ object LinearIntervalMap {
    * @tparam B 値の型
    * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
    */
-  def unapply[A <% Ordered[A], B](linearIntervalMap: LinearIntervalMap[A, B]): Option[Map[Interval[A], B]] =
+  def unapply[A, B](linearIntervalMap: LinearIntervalMap[A, B])(implicit ev: A => Ordered[A]): Option[Map[Interval[A], B]] =
     Some(linearIntervalMap.intervalMap)
 
 }

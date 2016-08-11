@@ -115,8 +115,8 @@ class MoneyTest extends AssertionsForJUnit {
   @Test
   def test04_Constructor {
     val d69_99 = new Money(BigDecimal("69.99"), USD)
-    assert(d69_99.breachEncapsulationOfAmount == BigDecimal("69.99"))
-    assert(d69_99.breachEncapsulationOfCurrency == USD)
+    assert(d69_99.amount == BigDecimal("69.99"))
+    assert(d69_99.currency == USD)
     try {
       new Money(BigDecimal("69.999"), USD)
       fail("Money constructor shall never round, and shall not accept a value whose scale doesn't fit the Currency.")

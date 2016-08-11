@@ -26,10 +26,12 @@ import java.lang.String
  *
  * @author j5ik2o
  */
-final class TimeUnit private[time] (_name: String,
-                                    private[time] val valueType: TimeUnit.Type,
-                                    private[time] val valueBaseType: TimeUnit.Type,
-                                    private[time] val factor: TimeUnitConversionFactor) extends Ordered[TimeUnit] {
+final class TimeUnit private[time] (
+    _name:                           String,
+    private[time] val valueType:     TimeUnit.Type,
+    private[time] val valueBaseType: TimeUnit.Type,
+    private[time] val factor:        TimeUnitConversionFactor
+) extends Ordered[TimeUnit] {
 
   val name = _name
 
@@ -40,7 +42,7 @@ final class TimeUnit private[time] (_name: String,
    * @param other 変換先単位
    * @return 変換できる場合は`true`、そうでない場合は`false`
    */
-  def isConvertibleTo(other: TimeUnit) = valueBaseType == other.valueBaseType
+  def isConvertibleTo(other: TimeUnit): Boolean = valueBaseType == other.valueBaseType
 
   /**
    * この単位で表される値を、ミリ秒単位に変換できるかどうかを検証する。
@@ -94,7 +96,7 @@ final class TimeUnit private[time] (_name: String,
    */
   lazy val nextFinerUnit: Option[TimeUnit] = {
     val descending = descendingUnits
-    (0 until descending.length).find(descending(_) == this).flatMap {
+    descending.indices.find(descending(_) == this).flatMap {
       index =>
         if (index == descending.length - 1) None
         else Some(descending(index + 1))

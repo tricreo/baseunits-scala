@@ -24,12 +24,14 @@ import java.util.{ Calendar, GregorianCalendar, TimeZone }
  * 1年の中の特定の「月」を表す列挙型。
  *
  * @param lastDayOfThisMonth その月の最終日
- * @param calendarValue [[java.util.Calendar]]に定義する月をあらわす定数値
+ * @param calendarValue      [[java.util.Calendar]]に定義する月をあらわす定数値
  */
-sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: DayOfMonth,
-                                        private[time] val calendarValue: Int) {
+sealed class MonthOfYear private[time] (
+    val lastDayOfThisMonth: DayOfMonth,
+    val calendarValue:      Int
+) {
 
-  private[time] def value = calendarValue
+  val month = calendarValue + 1
 
   /**
    * このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
@@ -38,6 +40,7 @@ sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: Da
    *
    * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
    */
+  @deprecated("Use calendarValue property instead", "0.1.18")
   val breachEncapsulationOfCalendarValue = calendarValue
 
   /**
@@ -47,7 +50,8 @@ sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: Da
    *
    * @return 月をあらわす数（1〜12）
    */
-  val breachEncapsulationOfValue = value + 1
+  @deprecated("Use value property instead", "0.1.18")
+  val breachEncapsulationOfValue = calendarValue + 1
 
   /**
    * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
@@ -57,7 +61,7 @@ sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: Da
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(other: MonthOfYear) = isBefore(other) == false && equals(other) == false
+  def isAfter(other: MonthOfYear): Boolean = !isBefore(other) && !equals(other)
 
   /**
    * 指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
@@ -67,7 +71,7 @@ sealed class MonthOfYear private[time] (private[time] val lastDayOfThisMonth: Da
    * @param other 対象日
    * @return 未来である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(other: MonthOfYear) = value < other.value
+  def isBefore(other: MonthOfYear): Boolean = calendarValue < other.calendarValue
 
   //	public DayOfYear at(DayOfMonth month) {
   //		// ...
@@ -100,7 +104,7 @@ object MonthOfYear {
 
   def apply(month: Int): MonthOfYear = {
     Seq(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).find(
-      _.value == month - 1
+      _.month == month
     ).get
   }
 

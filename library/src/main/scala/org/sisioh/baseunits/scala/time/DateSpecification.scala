@@ -69,7 +69,7 @@ object DateSpecification {
    * @param date マッチする日
    * @return 日付仕様
    */
-  def fixed(date: CalendarDate) =
+  def fixed(date: CalendarDate): FixedDateSpecification =
     new FixedDateSpecification(date)
 
   /**

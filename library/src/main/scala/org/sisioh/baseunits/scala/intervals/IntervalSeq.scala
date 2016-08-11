@@ -30,7 +30,7 @@ import scala.collection.mutable.ArrayBuffer
  * @param inverseLower 下限が逆順の場合は`true`
  * @param inverseUpper 上限が逆順の場合は`false`
  */
-class UpperLowerOrdering[T <% Ordered[T]](private val inverseLower: Boolean, private val inverseUpper: Boolean)
+class UpperLowerOrdering[T](private val inverseLower: Boolean, private val inverseUpper: Boolean)(implicit ev: T => Ordered[T])
     extends Ordering[Interval[T]] {
 
   private[this] val lowerFactor = if (inverseLower) -1 else 1
@@ -46,8 +46,8 @@ class UpperLowerOrdering[T <% Ordered[T]](private val inverseLower: Boolean, pri
     } else {
       val upperComparance = e1.upperLimitObject.compareTo(e2.upperLimitObject)
       val lowerComparance = e1.lowerLimitObject.compareTo(e2.lowerLimitObject)
-      if (upperComparance != 0) (upperComparance * upperFactor)
-      else (lowerComparance * lowerFactor)
+      if (upperComparance != 0) upperComparance * upperFactor
+      else lowerComparance * lowerFactor
     }
 }
 
@@ -65,7 +65,7 @@ object UpperLowerOrdering {
    * @param inverseUpper
    * @return [[UpperLowerOrdering]]
    */
-  def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
+  def apply[T](inverseLower: Boolean, inverseUpper: Boolean)(implicit ev: T => Ordered[T]): UpperLowerOrdering[T] =
     new UpperLowerOrdering[T](inverseLower, inverseUpper)
 
   /**
@@ -74,7 +74,7 @@ object UpperLowerOrdering {
    * @param upperLowerOrdering [[UpperLowerOrdering]]
    * @return `Option[(Boolean, Boolean)]`
    */
-  def unapply[T <% Ordered[T]](upperLowerOrdering: UpperLowerOrdering[T]) =
+  def unapply[T](upperLowerOrdering: UpperLowerOrdering[T])(implicit ev: T => Ordered[T]): Option[(Boolean, Boolean)] =
     Some(upperLowerOrdering.inverseLower, upperLowerOrdering.inverseUpper)
 
 }
@@ -88,7 +88,7 @@ object UpperLowerOrdering {
  * @param inverseLower 下限が逆順の場合は`true`
  * @param inverseUpper 上限が逆順の場合は`false`
  */
-class LowerUpperOrdering[T <% Ordered[T]](private val inverseLower: Boolean, private val inverseUpper: Boolean)
+class LowerUpperOrdering[T](private val inverseLower: Boolean, private val inverseUpper: Boolean)(implicit ev: T => Ordered[T])
     extends Ordering[Interval[T]] {
 
   private[this] val lowerFactor = if (inverseLower) -1 else 1
@@ -104,8 +104,8 @@ class LowerUpperOrdering[T <% Ordered[T]](private val inverseLower: Boolean, pri
     } else {
       val upperComparance = e1.upperLimitObject.compareTo(e2.upperLimitObject)
       val lowerComparance = e1.lowerLimitObject.compareTo(e2.lowerLimitObject)
-      if (lowerComparance != 0) (lowerComparance + lowerFactor)
-      else (upperComparance * upperFactor)
+      if (lowerComparance != 0) lowerComparance + lowerFactor
+      else upperComparance * upperFactor
     }
 }
 
@@ -123,7 +123,7 @@ object LowerUpperOrdering {
    * @param inverseUpper
    * @return [[LowerUpperOrdering]]
    */
-  def apply[T <% Ordered[T]](inverseLower: Boolean, inverseUpper: Boolean) =
+  def apply[T](inverseLower: Boolean, inverseUpper: Boolean)(implicit ev: T => Ordered[T]): LowerUpperOrdering[T] =
     new LowerUpperOrdering[T](inverseLower, inverseUpper)
 
   /**
@@ -133,7 +133,7 @@ object LowerUpperOrdering {
    * @return `Option[(Boolean, Boolean)]`
    */
 
-  def unapply[T <% Ordered[T]](lowerUpperOrdering: LowerUpperOrdering[T]) =
+  def unapply[T](lowerUpperOrdering: LowerUpperOrdering[T])(implicit ev: T => Ordered[T]): Option[(Boolean, Boolean)] =
     Some(lowerUpperOrdering.inverseLower, lowerUpperOrdering.inverseUpper)
 }
 
@@ -145,7 +145,7 @@ object LowerUpperOrdering {
  * @param intervals [[Interval]]の列
  * @param ordering [[Ordering]]
  */
-class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])
+class IntervalSeq[T](val intervals: Seq[Interval[T]], val ordering: Ordering[Interval[T]])(implicit ev: T => Ordered[T])
     extends Seq[Interval[T]] with SeqLike[Interval[T], IntervalSeq[T]] {
 
   override protected def newBuilder: mutable.Builder[Interval[T], IntervalSeq[T]] =
@@ -156,7 +156,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
    *
    * `intervals`は空を利用し、`ordering`は`UpperLowerOrdering[T](true, false)`を利用する。
    */
-  def this() = this(Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
+  def this()(implicit ev: T => Ordered[T]) = this(Seq.empty[Interval[T]], UpperLowerOrdering[T](true, false))
 
   /**
    * インスタンスを生成する。
@@ -165,7 +165,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
    *
    * @param intervals [[Interval]]の列
    */
-  def this(intervals: Seq[Interval[T]]) = this(intervals, UpperLowerOrdering[T](true, false))
+  def this(intervals: Seq[Interval[T]])(implicit ev: T => Ordered[T]) = this(intervals, UpperLowerOrdering[T](true, false))
 
   /**
    * 全ての要素区間を内包する、最小の区間を返す。
@@ -174,7 +174,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
    * @throws IllegalStateException 要素が1つもない場合
    */
   lazy val extent: Interval[T] = {
-    require(intervals.isEmpty == false)
+    require(intervals.nonEmpty)
     intervals.toList match {
       case List(e) => e
       case firstInterval :: _ =>
@@ -198,7 +198,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
     if (intervals.size < 2) {
       IntervalSeq(Seq.empty[Interval[T]])
     } else {
-      val seq = (1 until this.intervals.size).map {
+      val seq = (1 until this.intervals.size).flatMap {
         i =>
           val left = this.intervals(i - 1)
           val right = this.intervals(i)
@@ -208,7 +208,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
           } else {
             Some(gap)
           }
-      }.flatten
+      }
       IntervalSeq(seq)
     }
   }
@@ -239,11 +239,11 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
     }
   }
 
-  def iterator = this.intervals.iterator
+  def iterator: Iterator[Interval[T]] = this.intervals.iterator
 
   def length: Int = this.intervals.length
 
-  def apply(idx: Int) = this.intervals(idx)
+  def apply(idx: Int): Interval[T] = this.intervals(idx)
 
 }
 
@@ -252,7 +252,7 @@ class IntervalSeq[T <% Ordered[T]](val intervals: Seq[Interval[T]], val ordering
  *
  * @author j5ik2o
  */
-class IntervalSeqBuilder[T <% Ordered[T]](val ord: Option[Ordering[Interval[T]]] = None)
+class IntervalSeqBuilder[T](val ord: Option[Ordering[Interval[T]]] = None)(implicit ev: T => Ordered[T])
     extends mutable.Builder[Interval[T], IntervalSeq[T]] {
 
   private lazy val builder = new ArrayBuffer[Interval[T]]
@@ -285,7 +285,7 @@ object IntervalSeq {
   type Elem[T] = Interval[T]
   type To[T] = IntervalSeq[T]
 
-  implicit def canBuildFrom[T <% Ordered[T]]: CanBuildFrom[From[T], Elem[T], To[T]] =
+  implicit def canBuildFrom[T](implicit ev: T => Ordered[T]): CanBuildFrom[From[T], Elem[T], To[T]] =
     new CanBuildFrom[From[T], Elem[T], To[T]] {
 
       def apply(from: From[T]) = {
@@ -306,7 +306,7 @@ object IntervalSeq {
    * @param intervals
    * @return [[IntervalSeq]]
    */
-  def apply[T <% Ordered[T]](intervals: From[T]): IntervalSeq[T] = new IntervalSeq(intervals)
+  def apply[T](intervals: From[T])(implicit ev: T => Ordered[T]): IntervalSeq[T] = new IntervalSeq(intervals)
 
   /**
    * インスタンスを生成する。
@@ -314,7 +314,7 @@ object IntervalSeq {
    * @tparam T 限界値の型
    * @return [[IntervalSeq]]
    */
-  def apply[T <% Ordered[T]](): To[T] = new IntervalSeq[T]()
+  def apply[T]()(implicit ev: T => Ordered[T]): To[T] = new IntervalSeq[T]()
 
   /**
    * 抽出子メソッド。
@@ -322,7 +322,7 @@ object IntervalSeq {
    * @tparam T 限界値の型
    * @return 構成要素
    */
-  def unapply[T <% Ordered[T]](intervalSeq: IntervalSeq[T]): Option[(Seq[Interval[T]], Ordering[Interval[T]])] =
+  def unapply[T](intervalSeq: IntervalSeq[T])(implicit ev: T => Ordered[T]): Option[(Seq[Interval[T]], Ordering[Interval[T]])] =
     Some(intervalSeq.intervals, intervalSeq.ordering)
 
   /**
@@ -331,7 +331,7 @@ object IntervalSeq {
    * @tparam T 限界値の型
    * @return ビルダー
    */
-  def newBuilder[T <% Ordered[T]](ordering: Ordering[Interval[T]]): mutable.Builder[Elem[T], To[T]] =
+  def newBuilder[T](ordering: Ordering[Interval[T]])(implicit ev: T => Ordered[T]): mutable.Builder[Elem[T], To[T]] =
     new IntervalSeqBuilder[T](Some(ordering))
 
 }

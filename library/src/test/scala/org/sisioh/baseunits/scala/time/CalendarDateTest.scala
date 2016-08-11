@@ -143,10 +143,10 @@ class CalendarDateTest extends AssertionsForJUnit {
    */
   @Test
   def test09_DayOfWeek() {
-    var date = CalendarDate.from(2004, 11, 6)
-    assert(date.dayOfWeek == (DayOfWeek.Saturday))
-    date = CalendarDate.from(2007, 1, 1)
-    assert(date.dayOfWeek == (DayOfWeek.Monday))
+    val date1 = CalendarDate.from(2004, 11, 6)
+    assert(date1.dayOfWeek == DayOfWeek.Saturday)
+    val date2 = CalendarDate.from(2007, 1, 1)
+    assert(date2.dayOfWeek == DayOfWeek.Monday)
   }
 
   /**
@@ -157,8 +157,8 @@ class CalendarDateTest extends AssertionsForJUnit {
   @Test
   def test10_NextDay() {
     val feb28_2004 = CalendarDate.from(2004, 2, 28)
-    assert(feb28_2004.nextDay == (CalendarDate.from(2004, 2, 29)))
-    assert(feb28_2004.nextDay.nextDay == (CalendarDate.from(2004, 3, 1)))
+    assert(feb28_2004.nextDay == CalendarDate.from(2004, 2, 29))
+    assert(feb28_2004.nextDay.nextDay == CalendarDate.from(2004, 3, 1))
   }
 
   /**

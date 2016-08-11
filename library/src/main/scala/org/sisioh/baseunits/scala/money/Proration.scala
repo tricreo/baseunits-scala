@@ -38,7 +38,7 @@ object Proration {
    * @param n 分割数
    * @return 分割結果
    */
-  def dividedEvenlyIntoParts(total: Money, n: Int) = {
+  def dividedEvenlyIntoParts(total: Money, n: Int): Array[Money] = {
     val lowResult = total.dividedBy(BigDecimal(n), BigDecimal.RoundingMode.DOWN)
     val lowResults = Array.fill(n)(lowResult)
     val remainder = total.minus(sum(lowResults))
@@ -103,7 +103,7 @@ object Proration {
    * @param longProportions 比数の配列
    * @return 分割結果
    */
-  def proratedOver[T <% Number](total: Money, longProportions: Array[T]): Array[Money] = {
+  def proratedOver[T](total: Money, longProportions: Array[T])(implicit ev: T => Number): Array[Money] = {
     val proportions = longProportions.map(e => BigDecimal(e.longValue))
     proratedOver(total, proportions)
   }
@@ -130,7 +130,7 @@ object Proration {
    * @param proportions 比の配列
    * @return 割合の配列
    */
-  def ratios(proportions: Array[BigDecimal]) = {
+  def ratios(proportions: Array[BigDecimal]): Array[Ratio] = {
     val total = sum(proportions)
     proportions.map(e => Ratio(e, total))
   }
@@ -141,7 +141,7 @@ object Proration {
    * @param elements 配列
    * @return 和
    */
-  def sum(elements: Array[BigDecimal]) =
+  def sum(elements: Array[BigDecimal]): BigDecimal =
     elements.sum
 
   /**
@@ -151,13 +151,13 @@ object Proration {
    * @return 和
    * @throws IllegalArgumentException 引数`elements`の要素数が0の場合
    */
-  def sum(elements: Array[Money]) = {
+  def sum(elements: Array[Money]): Money = {
     require(elements.size > 0)
-    val sum = Money.adjustBy(0, elements(0).breachEncapsulationOfCurrency)
+    val sum = Money.adjustBy(0, elements(0).currency)
     elements.foldLeft(sum)(_.plus(_))
   }
 
   private def defaultScaleForIntermediateCalculations(total: Money) =
-    total.breachEncapsulationOfAmount.precision + 2
+    total.amount.precision + 2
 
 }

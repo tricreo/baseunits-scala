@@ -25,16 +25,18 @@ package org.sisioh.baseunits.scala.time
  * @param dayOfWeek [[org.sisioh.baseunits.scala.time.DayOfWeek]]
  * @param occurrence 周回数（1〜5）
  */
-class MonthlyFloatingDateSpecification private[time] (private[time] val dayOfWeek: DayOfWeek,
-                                                      private[time] val occurrence: Int)
+class MonthlyFloatingDateSpecification private[time] (
+  private[time] val dayOfWeek:  DayOfWeek,
+  private[time] val occurrence: Int
+)
     extends MonthlyDateSpecification {
 
   require(1 <= occurrence && occurrence <= 5)
 
-  override def isSatisfiedBy(date: CalendarDate) =
+  override def isSatisfiedBy(date: CalendarDate): Boolean =
     ofYearMonth(date.asCalendarMonth) == date
 
-  override def ofYearMonth(month: CalendarYearMonth) = {
+  override def ofYearMonth(month: CalendarYearMonth): CalendarDate = {
     val firstOfMonth = CalendarDate.from(month, DayOfMonth(1), month.timeZone)
     val dayOfWeekOffset = dayOfWeek.value - firstOfMonth.dayOfWeek.value
     val dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (if (dayOfWeekOffset < 0) 8 else 1)

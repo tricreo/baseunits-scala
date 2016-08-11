@@ -28,18 +28,20 @@ import java.util.TimeZone
  * @param day 日
  * @param timeZone タイムゾーン
  */
-class AnnualFixedDateSpecification private[time] (private[time] val month: MonthOfYear,
-                                                  private[time] val day: DayOfMonth,
-                                                  private[time] val timeZone: TimeZone)
+class AnnualFixedDateSpecification private[time] (
+  private[time] val month:    MonthOfYear,
+  private[time] val day:      DayOfMonth,
+  private[time] val timeZone: TimeZone
+)
     extends AnnualDateSpecification {
 
-  override def isSatisfiedBy(date: CalendarDate) = {
-    day == date.breachEncapsulationOfDay &&
-      month == date.asCalendarMonth.breachEncapsulationOfMonth
+  override def isSatisfiedBy(date: CalendarDate): Boolean = {
+    day == date.day &&
+      month == date.asCalendarMonth.month
   }
 
-  override def ofYear(year: Int) = CalendarDate.from(year, month, day, timeZone)
+  override def ofYear(year: Int): CalendarDate = CalendarDate.from(year, month, day, timeZone)
 
-  override def toString = day.toString + " " + month.toString
+  override def toString: String = day.toString + " " + month.toString
 
 }

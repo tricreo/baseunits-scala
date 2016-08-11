@@ -34,14 +34,14 @@ class SystemClockTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test01_SystemClockTimeSource {
+  def test01_SystemClockTimeSource() {
     // The following calls allow polymorphic substitution of TimeSources
     // either in applications or, more often, in testing.
     val source = SystemClock
-    val expectedNow = TimePoint.from(new Date).breachEncapsulationOfMillisecondsFromEpoc
-    val now = source.now.breachEncapsulationOfMillisecondsFromEpoc
+    val expectedNow = TimePoint.from(new Date).millisecondsFromEpoc
+    val now = source.now.millisecondsFromEpoc
 
     // タイミングによって成功しない、微妙なテスト…。
-    assert(abs((now.toDouble - expectedNow)) <= 50)
+    assert(abs(now.toDouble - expectedNow) <= 50)
   }
 }

@@ -26,11 +26,13 @@ package org.sisioh.baseunits.scala.time
  * @author j5ik2o
  * @param value 分をあらわす正数
  */
-class MinuteOfHour private[time] (private[time] val value: Int)
+class MinuteOfHour private[time] (val value: Int)
     extends Ordered[MinuteOfHour] with Serializable {
 
-  require(MinuteOfHour.MIN <= value && value <= MinuteOfHour.MAX,
-    "Illegal value for 24 hour: " + value + ", please use a value between 0 and 23")
+  require(
+    MinuteOfHour.MIN <= value && value <= MinuteOfHour.MAX,
+    "Illegal value for 24 hour: " + value + ", please use a value between 0 and 23"
+  )
 
   /**
    * このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
@@ -39,7 +41,8 @@ class MinuteOfHour private[time] (private[time] val value: Int)
    *
    * @return 時をあらわす正数（0〜23）
    */
-  def breachEncapsulationOfValue = value
+  @deprecated("Use value property instead", "0.1.18")
+  val breachEncapsulationOfValue = value
 
   override def compare(other: MinuteOfHour): Int = value - other.value
 
@@ -48,7 +51,7 @@ class MinuteOfHour private[time] (private[time] val value: Int)
     case _                  => false
   }
 
-  override def hashCode = 31 * value.hashCode
+  override def hashCode: Int = 31 * value.hashCode
 
   /**
    * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも未来かどうか調べる。
@@ -58,7 +61,7 @@ class MinuteOfHour private[time] (private[time] val value: Int)
    * @param another 基準分
    * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(another: MinuteOfHour) = value > another.value
+  def isAfter(another: MinuteOfHour): Boolean = value > another.value
 
   /**
    * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも過去かどうか調べる。
@@ -68,9 +71,9 @@ class MinuteOfHour private[time] (private[time] val value: Int)
    * @param another 基準分
    * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも過去である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(another: MinuteOfHour) = value < another.value
+  def isBefore(another: MinuteOfHour): Boolean = value < another.value
 
-  override def toString = "%02d".format(value)
+  override def toString: String = "%02d".format(value)
 
 }
 
@@ -91,7 +94,7 @@ object MinuteOfHour {
    * @param value 分をあらわす正数
    * @return [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
    */
-  def apply(value: Int) = new MinuteOfHour(value)
+  def apply(value: Int): MinuteOfHour = new MinuteOfHour(value)
 
   /**
    * 抽出しメソッド。
@@ -99,6 +102,6 @@ object MinuteOfHour {
    * @param minuteOfHour [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
    * @return `Option[Int]`
    */
-  def unapply(minuteOfHour: MinuteOfHour) = Some(minuteOfHour.value)
+  def unapply(minuteOfHour: MinuteOfHour): Option[Int] = Some(minuteOfHour.value)
 
 }

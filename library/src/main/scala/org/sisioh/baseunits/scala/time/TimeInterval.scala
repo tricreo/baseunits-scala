@@ -100,7 +100,7 @@ class TimeInterval private[time] (startValue: LimitValue[TimePoint], startInclud
    * @param interval 比較対象の期間
    * @return 積集合（共通部分）
    */
-  def intersect(interval: TimeInterval) = super.intersect(interval).asInstanceOf[TimeInterval]
+  def intersect(interval: TimeInterval): TimeInterval = super.intersect(interval).asInstanceOf[TimeInterval]
 
   /**
    * 指定した日時が、この期間の開始日時以前でないかどうかを検証する。
@@ -109,7 +109,7 @@ class TimeInterval private[time] (startValue: LimitValue[TimePoint], startInclud
    * @return 開始日時以前でない場合は`true`、そうでない場合は`false`
    * @see Interval#isAbove(Comparable)
    */
-  def isAfter(point: LimitValue[TimePoint]) = isAbove(point)
+  def isAfter(point: LimitValue[TimePoint]): Boolean = isAbove(point)
 
   /**
    * 指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
@@ -118,7 +118,7 @@ class TimeInterval private[time] (startValue: LimitValue[TimePoint], startInclud
    * @return 終了日時以後でない場合は`true`、そうでない場合は`false`
    * @see Interval#isBelow(Comparable)
    */
-  def isBefore(point: LimitValue[TimePoint]) = isBelow(point)
+  def isBefore(point: LimitValue[TimePoint]): Boolean = isBelow(point)
 
   /**
    * この期間の長さを取得する。
@@ -143,10 +143,12 @@ class TimeInterval private[time] (startValue: LimitValue[TimePoint], startInclud
    * @param isEndClosed 上限値を期間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 新しい期間
    */
-  override def newOfSameType(start: LimitValue[TimePoint],
-                             isStartClosed: Boolean,
-                             end: LimitValue[TimePoint],
-                             isEndClosed: Boolean) =
+  override def newOfSameType(
+    start:         LimitValue[TimePoint],
+    isStartClosed: Boolean,
+    end:           LimitValue[TimePoint],
+    isEndClosed:   Boolean
+  ): TimeInterval =
     TimeInterval(start, isStartClosed, end, isEndClosed, timeZone)
 
   /**
@@ -220,11 +222,13 @@ object TimeInterval {
    * @param endClosed 終了時間を含める場合は`false`
    * @return [[org.sisioh.baseunits.scala.time.TimeInterval]]
    */
-  def apply(start: LimitValue[TimePoint],
-            startClosed: Boolean,
-            end: LimitValue[TimePoint],
-            endClosed: Boolean,
-            timeZone: TimeZone = TimeZones.Default): TimeInterval =
+  def apply(
+    start:       LimitValue[TimePoint],
+    startClosed: Boolean,
+    end:         LimitValue[TimePoint],
+    endClosed:   Boolean,
+    timeZone:    TimeZone              = TimeZones.Default
+  ): TimeInterval =
     new TimeInterval(start, startClosed, end, endClosed, timeZone)
 
   /**

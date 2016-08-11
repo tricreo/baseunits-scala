@@ -148,8 +148,8 @@ class CalendarDateTimeTest extends AssertionsForJUnit {
    */
   @Test
   def test09_breachEncapsulationOf {
-    assert(feb17_1_23.breachEncapsulationOfDate == CalendarDate.from(2003, 2, 17))
-    assert(feb17_1_23.breachEncapsulationOfTime == TimeOfDay.from(1, 23))
+    assert(feb17_1_23.date == CalendarDate.from(2003, 2, 17))
+    assert(feb17_1_23.time == TimeOfDay.from(1, 23))
   }
 
   /**

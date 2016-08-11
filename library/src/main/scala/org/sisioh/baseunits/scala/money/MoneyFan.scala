@@ -28,7 +28,7 @@ import scala.collection.mutable.ArrayBuffer
  * @tparam T 割り当て対象
  * @param allotments 割り当ての要素（複数）
  */
-class MoneyFan[T](private val allotments: Set[Allotment[T]])
+class MoneyFan[T](val allotments: Set[Allotment[T]])
     extends Iterable[Allotment[T]] {
 
   /**
@@ -69,9 +69,9 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
    * @param subtracted [[org.sisioh.baseunits.scala.money.MoneyFan]]
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
-  def minus(subtracted: MoneyFan[T]) = plus(subtracted.negated)
+  def minus(subtracted: MoneyFan[T]): MoneyFan[T] = plus(subtracted.negated)
 
-  def -(subtracted: MoneyFan[T]) = minus(subtracted)
+  def -(subtracted: MoneyFan[T]): MoneyFan[T] = minus(subtracted)
 
   /**
    * この [[org.sisioh.baseunits.scala.money.MoneyFan]]の [[org.sisioh.baseunits.scala.money.Allotment]]を\
@@ -85,7 +85,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
     new MoneyFan[T](negatedAllotments)
   }
 
-  def unary_- = negated
+  def unary_- : MoneyFan[T] = negated
 
   /**
    * この[[org.sisioh.baseunits.scala.money.MoneyFan]]に`added`を足した和を返す。
@@ -95,7 +95,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
    * @param added [[org.sisioh.baseunits.scala.money.MoneyFan]]
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
-  def plus(added: MoneyFan[T]) = {
+  def plus(added: MoneyFan[T]): MoneyFan[T] = {
     val allEntities = allotments.map(_.entity) ++ added.allotments.map(_.entity)
     val summedAllotments = allEntities.map {
       entity =>
@@ -115,9 +115,9 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
     new MoneyFan[T](summedAllotments).withoutZeros
   }
 
-  def +(added: MoneyFan[T]) = plus(added)
+  def +(added: MoneyFan[T]): MoneyFan[T] = plus(added)
 
-  override def toString = allotments.toString
+  override def toString: String = allotments.toString
 
   /**
    * 全ての割り当ての合計額を返す。
@@ -127,12 +127,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
   lazy val total = asTally.net
 
   private def asTally = {
-    val moneies = ArrayBuffer.empty[Money]
-    for (allotment <- allotments) {
-      moneies += allotment.amount
-    }
-
-    new Tally(moneies)
+    new Tally(allotments.toVector.map(_.amount))
   }
 
   /**
@@ -142,7 +137,7 @@ class MoneyFan[T](private val allotments: Set[Allotment[T]])
    * @return [[org.sisioh.baseunits.scala.money.MoneyFan]]
    */
   private lazy val withoutZeros = {
-    val nonZeroAllotments = allotments.filter(_.breachEncapsulationOfAmount.isZero == false).toSet
+    val nonZeroAllotments = allotments.filter(_.amount.isZero == false).toSet
     new MoneyFan[T](nonZeroAllotments)
   }
 }
@@ -183,6 +178,6 @@ object MoneyFan {
    * @param moneyFan [[MoneyFan]]
    * @return `Option[Set[Allotment[T]]]`
    */
-  def unapply[T](moneyFan: MoneyFan[T]) = Some(moneyFan.allotments)
+  def unapply[T](moneyFan: MoneyFan[T]): Option[Set[Allotment[T]]] = Some(moneyFan.allotments)
 
 }

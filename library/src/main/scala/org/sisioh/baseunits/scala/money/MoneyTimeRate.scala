@@ -30,8 +30,10 @@ import org.sisioh.baseunits.scala.time.{ Duration, TimeRate }
  * @param rate 単位時間あたりの数量
  * @param currency 通貨単位
  */
-class MoneyTimeRate(private val rate: TimeRate,
-                    private val currency: Currency) {
+class MoneyTimeRate(
+    private val rate:     TimeRate,
+    private val currency: Currency
+) {
 
   /**
    * インスタンスを生成する。
@@ -40,8 +42,7 @@ class MoneyTimeRate(private val rate: TimeRate,
    * @param duration 時間量
    */
   def this(money: Money, duration: Duration) =
-    this(TimeRate(money.breachEncapsulationOfAmount, duration),
-      money.breachEncapsulationOfCurrency)
+    this(TimeRate(money.amount, duration), money.currency)
 
   /**
    * このオブジェクトの`currency`フィールド（通貨単位）を返す。
@@ -66,7 +67,7 @@ class MoneyTimeRate(private val rate: TimeRate,
     case _                   => false
   }
 
-  override def hashCode = 31 * (currency.hashCode + rate.hashCode)
+  override def hashCode: Int = 31 * (currency.hashCode + rate.hashCode)
 
   /**
    * 時間量に対してこの割合を適用した場合の金額を返す。
@@ -98,7 +99,7 @@ class MoneyTimeRate(private val rate: TimeRate,
   def over(duration: Duration, roundMode: BigDecimal.RoundingMode.Value): Money =
     over(duration, rate.scale, roundMode)
 
-  override def toString =
+  override def toString: String =
     currency.getSymbol + " " + rate.toString
 
 }

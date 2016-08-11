@@ -26,11 +26,13 @@ package org.sisioh.baseunits.scala.time
  * @author j5ik2o
  * @param value 時をあらわす正数
  */
-class HourOfDay private (private[time] val value: Int)
+class HourOfDay private (val value: Int)
     extends Ordered[HourOfDay] with Serializable {
 
-  require(value >= HourOfDay.MIN && value <= HourOfDay.MAX,
-    "Illegal value for 24 hour: %d , please use a value between 0 and 23".format(value))
+  require(
+    value >= HourOfDay.MIN && value <= HourOfDay.MAX,
+    "Illegal value for 24 hour: %d , please use a value between 0 and 23".format(value)
+  )
 
   /**
    * このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
@@ -39,6 +41,7 @@ class HourOfDay private (private[time] val value: Int)
    *
    * @return 時をあらわす正数（0〜23）
    */
+  @deprecated("Use value property instead", "0.1.18")
   val breachEncapsulationOfValue = value
 
   override def compare(that: HourOfDay): Int = value - that.value
@@ -66,7 +69,7 @@ class HourOfDay private (private[time] val value: Int)
    */
   def isBefore(another: HourOfDay): Boolean = value < another.value
 
-  override def toString = "%02d".format(value)
+  override def toString: String = "%02d".format(value)
 }
 
 /**
@@ -93,7 +96,7 @@ object HourOfDay {
    * インスタンスを生成する。
    *
    * @param initial 時をあらわす正数
-   * @param amPm 午前午後を表す文字列
+   * @param amPm    午前午後を表す文字列
    * @return 時（0〜11）
    * @throws IllegalArgumentException 引数`initial`の値が0〜11の範囲ではない場合もしくは、引数`amPm`の値が `"AM"` または `"PM"` ではない場合
    */
@@ -115,13 +118,17 @@ object HourOfDay {
    * @param amPm 午前午後を表す文字列
    * @return 24時間制における時
    * @throws IllegalArgumentException 引数`initial`の値が0〜11の範囲ではない場合もしくは、
-   * 引数`amPm`の値が `"AM"` または `"PM"` ではない場合
+   *                                  引数`amPm`の値が `"AM"` または `"PM"` ではない場合
    */
   def convertTo24hour(hour: Int, amPm: String): Int = {
-    require("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm),
-      "AM PM indicator invalid: %s, please use AM or PM".format(amPm))
-    require(hour >= MIN && hour <= 12,
-      "Illegal value for 12 hour: %d, please use a value between 0 and 11".format(hour))
+    require(
+      "AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm),
+      "AM PM indicator invalid: %s, please use AM or PM".format(amPm)
+    )
+    require(
+      hour >= MIN && hour <= 12,
+      "Illegal value for 12 hour: %d, please use a value between 0 and 11".format(hour)
+    )
 
     var translatedAmPm = if ("AM".equalsIgnoreCase(amPm)) 0 else 12
     val delta = if (hour == 12) 12 else 0

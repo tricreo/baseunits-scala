@@ -42,20 +42,22 @@ import scala.collection.mutable.ArrayBuffer
  * @param lower 下側限界
  * @param upper 上側限界
  */
-class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
-                                private var upper: IntervalLimit[T]) extends Serializable {
+class Interval[T](
+    private var lower: IntervalLimit[T],
+    private var upper: IntervalLimit[T]
+)(implicit ev: T => Ordered[T]) extends Serializable {
 
   checkLowerIsLessThanOrEqualUpper(lower, upper)
 
   // 単一要素区間であり、かつ、どちらか片方が開いている場合、両者を開く。
   // [5, 5) や (5, 5] を [5, 5] にする。(5, 5)は空区間だから除外。
-  if (upper.infinity == false && lower.infinity == false &&
+  if (!upper.infinity && !lower.infinity &&
     upper.value == lower.value && (lower.isOpen ^ upper.isOpen)) {
     if (lower.isOpen) {
-      lower = IntervalLimit.lower(true, lower.value)
+      lower = IntervalLimit.lower(closed = true, lower.value)
     }
     if (upper.isOpen) {
-      upper = IntervalLimit.upper(true, upper.value)
+      upper = IntervalLimit.upper(closed = true, upper.value)
     }
   }
   val lowerLimitObject = lower
@@ -64,13 +66,13 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
   /**
    * インスタンスを生成する。
    *
-   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower         下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param isLowerClosed 下限値が閉区間である場合は `true`を指定する
-   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper         上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param isUpperClosed 上限値が閉区間である場合は `true`を指定する
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
-  def this(lower: LimitValue[T], isLowerClosed: Boolean, upper: LimitValue[T], isUpperClosed: Boolean) = {
+  def this(lower: LimitValue[T], isLowerClosed: Boolean, upper: LimitValue[T], isUpperClosed: Boolean)(implicit ev: T => Ordered[T]) = {
     this(IntervalLimit.lower(isLowerClosed, lower), IntervalLimit.upper(isUpperClosed, upper))
   }
 
@@ -88,7 +90,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    */
   def complementRelativeTo(other: Interval[T]): Seq[Interval[T]] = {
     val intervalSequence = ArrayBuffer.empty[Interval[T]]
-    if (intersects(other) == false) {
+    if (!intersects(other)) {
       intervalSequence += other
       intervalSequence.toSeq
     } else {
@@ -110,11 +112,11 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @param other 区間
    * @return 完全に内包する場合は`true`、そうでない場合は`false`
    */
-  def covers(other: Interval[T]) = {
+  def covers(other: Interval[T]): Boolean = {
     val lowerPass = includes(other.lowerLimit) ||
-      (lowerLimit == other.lowerLimit && other.includesLowerLimit == false)
+      lowerLimit == other.lowerLimit && !other.includesLowerLimit
     val upperPass = includes(other.upperLimit) ||
-      (upperLimit == other.upperLimit && other.includesUpperLimit == false)
+      upperLimit == other.upperLimit && !other.includesUpperLimit
     lowerPass && upperPass
   }
 
@@ -123,7 +125,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 新しい開区間
    */
-  lazy val emptyOfSameType = newOfSameType(lowerLimit, false, lowerLimit, false)
+  lazy val emptyOfSameType = newOfSameType(lowerLimit, lowerClosed = false, lowerLimit, upperClosed = false)
 
   /**
    * この区間と、与えた区間 `other`の同一性を検証する。
@@ -137,7 +139,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @param obj 比較対象の区間
    * @return 同一である場合は`true`、そうでない場合は`false`
    */
-  override def equals(obj: Any) = obj match {
+  override def equals(obj: Any): Boolean = obj match {
     case other: Interval[T] =>
       if (isEmpty & other.isEmpty) true
       else if (isEmpty ^ other.isEmpty) false
@@ -158,13 +160,13 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @param other 比較対象の区間
    * @return ギャップ区間
    */
-  def gap(other: Interval[T]) =
+  def gap(other: Interval[T]): Interval[T] =
     if (intersects(other)) emptyOfSameType
     else
-      newOfSameType(lesserOfUpperLimits(other), lesserOfUpperIncludedInUnion(other) == false,
-        greaterOfLowerLimits(other), greaterOfLowerIncludedInUnion(other) == false)
+      newOfSameType(lesserOfUpperLimits(other), !lesserOfUpperIncludedInUnion(other),
+        greaterOfLowerLimits(other), !greaterOfLowerIncludedInUnion(other))
 
-  override def hashCode = 31 * (lowerLimit.hashCode ^ upperLimit.hashCode)
+  override def hashCode: Int = 31 * (lowerLimit.hashCode ^ upperLimit.hashCode)
 
   /**
    * 下側限界があるかどうかを取得する。
@@ -210,7 +212,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @param value 値
    * @return 含まれる場合は`true`、そうでない場合は`false`
    */
-  def includes(value: LimitValue[T]): Boolean = isBelow(value) == false && isAbove(value) == false
+  def includes(value: LimitValue[T]): Boolean = !isBelow(value) && !isAbove(value)
 
   /**
    * 下側限界が閉じているかどうかを取得する。
@@ -252,7 +254,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @param other 比較対象の区間
    * @return 積集合（共通部分）
    */
-  def intersect(other: Interval[T]) = {
+  def intersect(other: Interval[T]): Interval[T] = {
     val intersectLowerBound = greaterOfLowerLimits(other)
     val intersectUpperBound = lesserOfUpperLimits(other)
     if (intersectLowerBound > intersectUpperBound) emptyOfSameType
@@ -273,13 +275,13 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @param other 対象区間
    * @return 共通部分が存在する場合は`true`、そうでない場合は`false`
    */
-  def intersects(other: Interval[T]) =
+  def intersects(other: Interval[T]): Boolean =
     if (equalBothLimitless(upperLimit, other.upperLimit)) true
     else if (equalBothLimitless(lowerLimit, other.lowerLimit)) true
     else greaterOfLowerLimits(other) compare lesserOfUpperLimits(other) match {
-      case comparison if (comparison < 0) => true
-      case comparison if (comparison > 0) => false
-      case _                              => greaterOfLowerIncludedInIntersection(other) && lesserOfUpperIncludedInIntersection(other)
+      case comparison if comparison < 0 => true
+      case comparison if comparison > 0 => false
+      case _                            => greaterOfLowerIncludedInIntersection(other) && lesserOfUpperIncludedInIntersection(other)
     }
 
   /**
@@ -288,9 +290,9 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @param value 値
    * @return 超過していない場合は`true`、そうでない場合は`false`
    */
-  def isAbove(value: LimitValue[T]) =
-    if (hasLowerLimit == false) false
-    else lowerLimit > value || (lowerLimit == value && includesLowerLimit == false)
+  def isAbove(value: LimitValue[T]): Boolean =
+    if (!hasLowerLimit) false
+    else lowerLimit > value || lowerLimit == value && !includesLowerLimit
 
   /**
    * 指定した値 `value` が、この区間の上側限界を超過していないかどうかを検証する。
@@ -299,15 +301,15 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    * @return 超過していない場合は`true`、そうでない場合は`false`
    */
   def isBelow(value: LimitValue[T]): Boolean =
-    if (hasUpperLimit == false) false
-    else upperLimit < value || (upperLimit == value && includesUpperLimit == false)
+    if (!hasUpperLimit) false
+    else upperLimit < value || upperLimit == value && !includesUpperLimit
 
   /**
    * この区間が閉区間であるかどうかを検証する。
    *
    * @return 閉区間である場合は`true`、そうでない場合（半開区間を含む）は`false`
    */
-  def isClosed = includesLowerLimit && includesUpperLimit
+  def isClosed: Boolean = includesLowerLimit && includesUpperLimit
 
   /**
    * この区間が空であるかどうかを検証する。
@@ -329,7 +331,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 開区間である場合は`true`、そうでない場合（半開区間を含む）は`false`
    */
-  def isOpen = includesLowerLimit == false && includesUpperLimit == false
+  def isOpen: Boolean = includesLowerLimit == false && includesUpperLimit == false
 
   /**
    * この区間が単一要素区間であるかどうかを検証する。
@@ -338,7 +340,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 単一要素区間である場合は`true`、そうでない場合は`false`
    */
-  def isSingleElement =
+  def isSingleElement: Boolean =
     if (hasUpperLimit == false) false
     else if (hasLowerLimit == false) false
     //An interval containing a single element, {a}.
@@ -358,18 +360,18 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 下側限界値. 限界がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
    */
-  def lowerLimit = lowerLimitObject.value
+  def lowerLimit: LimitValue[T] = lowerLimitObject.value
 
   /**
    * この区間と同じ型`T`を持つ、新しい区間を生成する。
    *
-   * @param lower 下側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
+   * @param lower       下側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
    * @param lowerClosed 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
-   * @param upper 上側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
+   * @param upper       上側限界値. 限界値がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
    * @param upperClosed 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 新しい区間
    */
-  def newOfSameType(lower: LimitValue[T], lowerClosed: Boolean, upper: LimitValue[T], upperClosed: Boolean) =
+  def newOfSameType(lower: LimitValue[T], lowerClosed: Boolean, upper: LimitValue[T], upperClosed: Boolean): Interval[T] =
     new Interval(lower, lowerClosed, upper, upperClosed)
 
   /**
@@ -382,7 +384,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @see java.lang.Object#toString()
    */
-  override def toString =
+  override def toString: String =
     if (isEmpty) "{}"
     else if (isSingleElement) "{" + lowerLimit.toString + "}"
     else toStringDetail
@@ -401,7 +403,7 @@ class Interval[T <% Ordered[T]](private var lower: IntervalLimit[T],
    *
    * @return 上側限界値. 限界がない場合は、[[org.sisioh.baseunits.scala.intervals.Limitless]]
    */
-  def upperLimit = upperLimitObject.value
+  def upperLimit: LimitValue[T] = upperLimitObject.value
 
   /**
    * この区間と与えた区間 `other` の下側限界値のうち、より大きい（限界の狭い、制約の大きい）限界値を返す。
@@ -587,7 +589,7 @@ object Interval {
    * @param upper 上側限界
    * @return [[org.sisioh.baseunits.scala.intervals.Interval]]
    */
-  def apply[T <% Ordered[T]](lower: IntervalLimit[T], upper: IntervalLimit[T]) = new Interval(lower, upper)
+  def apply[T](lower: IntervalLimit[T], upper: IntervalLimit[T])(implicit ev: T => Ordered[T]): Interval[T] = new Interval(lower, upper)
 
   /**
    * 抽出子メソッド。
@@ -595,7 +597,8 @@ object Interval {
    * @tparam T 限界値の型
    * @return 分解されたフィールドを含むTupleのOption型
    */
-  def unapply[T <% Ordered[T]](interval: Interval[T]) = Some(interval.lowerLimitObject, interval.upperLimitObject)
+  def unapply[T](interval: Interval[T])(implicit ev: T => Ordered[T]): Option[(IntervalLimit[T], IntervalLimit[T])] =
+    Some(interval.lowerLimitObject, interval.upperLimitObject)
 
   /**
    * 下側限界のみを持つ区間を生成する。
@@ -605,7 +608,7 @@ object Interval {
    * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
-  def andMore[T <% Ordered[T]](lower: LimitValue[T]) = closed(lower, Limitless[T])
+  def andMore[T](lower: LimitValue[T])(implicit ev: T => Ordered[T]): Interval[T] = closed(lower, Limitless[T]())
 
   /**
    * 閉区間を生成する。
@@ -616,7 +619,7 @@ object Interval {
    * @return 閉区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
-  def closed[T <% Ordered[T]](lower: LimitValue[T], upper: LimitValue[T]) =
+  def closed[T](lower: LimitValue[T], upper: LimitValue[T])(implicit ev: T => Ordered[T]): Interval[T] =
     new Interval(lower, true, upper, true)
 
   /**
@@ -628,7 +631,7 @@ object Interval {
    * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
-  def moreThan[T <% Ordered[T]](lower: LimitValue[T]) = open(lower, Limitless[T])
+  def moreThan[T](lower: LimitValue[T])(implicit ev: T => Ordered[T]): Interval[T] = open(lower, Limitless[T]())
 
   //  def isEmpty[T <% Ordered[T]](someValue: LimitValue[T]) =
   //    new Interval[T](someValue, false, someValue, false)
@@ -642,22 +645,22 @@ object Interval {
    * @return 開区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
-  def open[T <% Ordered[T]](lower: LimitValue[T], upper: LimitValue[T]) = new Interval(lower, false, upper, false)
+  def open[T](lower: LimitValue[T], upper: LimitValue[T])(implicit ev: T => Ordered[T]): Interval[T] = new Interval(lower, false, upper, false)
 
   /**
    * 区間を生成する。
    * 主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。
    *
    * @tparam T 限界値の型
-   * @param lower 下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param lower         下側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param lowerIncluded 下限値を区間に含む（閉じた下側限界）場合は`true`を指定する
-   * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
+   * @param upper         上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @param upperIncluded 上限値を区間に含む（閉じた上側限界）場合は`true`を指定する
    * @return 区間
    * @throws IllegalArgumentException 下限値が上限値より大きい場合
    */
-  def over[T <% Ordered[T]](lower: LimitValue[T], lowerIncluded: Boolean, upper: LimitValue[T],
-                            upperIncluded: Boolean) = new Interval(lower, lowerIncluded, upper, upperIncluded)
+  def over[T](lower: LimitValue[T], lowerIncluded: Boolean, upper: LimitValue[T],
+              upperIncluded: Boolean)(implicit ev: T => Ordered[T]): Interval[T] = new Interval(lower, lowerIncluded, upper, upperIncluded)
 
   /**
    * 単一要素区間を生成する。
@@ -666,7 +669,7 @@ object Interval {
    * @param element 単一要素となる値
    * @return 区間
    */
-  def singleElement[T <% Ordered[T]](element: LimitValue[T]) = closed(element, element)
+  def singleElement[T](element: LimitValue[T])(implicit ev: T => Ordered[T]): Interval[T] = closed(element, element)
 
   /**
    * 上側限界のみを持つ区間を生成する。
@@ -677,7 +680,7 @@ object Interval {
    * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
-  def under[T <% Ordered[T]](upper: LimitValue[T]) = open(Limitless[T], upper)
+  def under[T](upper: LimitValue[T])(implicit ev: T => Ordered[T]): Interval[T] = open(Limitless[T], upper)
 
   /**
    * 上側限界のみを持つ区間を生成する。
@@ -688,6 +691,6 @@ object Interval {
    * @param upper 上側限界値. [[org.sisioh.baseunits.scala.intervals.Limitless]]の場合は、限界がないことを表す
    * @return 区間
    */
-  def upTo[T <% Ordered[T]](upper: LimitValue[T]) = closed(Limitless[T], upper)
+  def upTo[T](upper: LimitValue[T])(implicit ev: T => Ordered[T]): Interval[T] = closed(Limitless[T], upper)
 
 }

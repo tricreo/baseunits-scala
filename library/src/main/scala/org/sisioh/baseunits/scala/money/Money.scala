@@ -37,7 +37,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
 
   require(amount.scale == currency.getDefaultFractionDigits, "Scale of amount does not match currency")
 
-  override def equals(obj: Any) = obj match {
+  override def equals(obj: Any): Boolean = obj match {
     case that: Money => amount == that.amount && currency == that.currency
     //    case bd: BigDecimal => amount == bd
     //    case n: Int => amount == n
@@ -46,7 +46,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
     case _           => false
   }
 
-  override def hashCode = 31 * (amount.hashCode + currency.hashCode)
+  override def hashCode: Int = 31 * (amount.hashCode + currency.hashCode)
 
   /**
    * Returns a [[org.sisioh.baseunits.scala.money.Money]] whose amount is
@@ -124,6 +124,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
    *
    * @return 量
    */
+  @deprecated("Use amount property instead", "0.1.18")
   val breachEncapsulationOfAmount = amount
 
   /**
@@ -133,6 +134,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
    *
    * @return 通貨単位
    */
+  @deprecated("Use currency property instead", "0.1.18")
   val breachEncapsulationOfCurrency = currency
 
   /**
@@ -332,7 +334,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
   def times(amount: Int): Money =
     times(BigDecimal(amount))
 
-  override def toString =
+  override def toString: String =
     currency.getSymbol + " " + amount
 
   /**
@@ -341,7 +343,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
    * @param localeOption ロケールの`Option`。`None`の場合は `Locale#getDefault()` を利用する。
    * @return 金額の文字列表現
    */
-  def toString(localeOption: Option[Locale]) = {
+  def toString(localeOption: Option[Locale]): String = {
     def createStrng(_locale: Locale) = currency.getSymbol(_locale) + " " + amount
     localeOption match {
       case Some(locale) => createStrng(locale)
@@ -376,7 +378,7 @@ class Money(val amount: BigDecimal, val currency: Currency)
   }
 
   private def checkHasSameCurrencyAs(aMoney: Money): Unit = {
-    if (hasSameCurrencyAs(aMoney) == false) {
+    if (!hasSameCurrencyAs(aMoney)) {
       throw new ClassCastException(aMoney.toString() + " is not same currency as " + this.toString())
     }
   }

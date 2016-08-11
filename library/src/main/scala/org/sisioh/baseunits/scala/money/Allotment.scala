@@ -25,8 +25,10 @@ package org.sisioh.baseunits.scala.money
  * @param entity 割り当て対象
  * @param amount 金額
  */
-class Allotment[T] private[money] (private[money] val entity: T,
-                                   private[money] val amount: Money) {
+class Allotment[T] private[money] (
+    val entity: T,
+    val amount: Money
+) {
 
   /**
    * このオブジェクトの`amount`フィールド（金額）を返す。
@@ -35,6 +37,7 @@ class Allotment[T] private[money] (private[money] val entity: T,
    *
    * @return 金額
    */
+  @deprecated("Use amount property instead", "0.1.18")
   val breachEncapsulationOfAmount = amount
 
   /**
@@ -44,14 +47,15 @@ class Allotment[T] private[money] (private[money] val entity: T,
    *
    * @return 割り当て対象
    */
+  @deprecated("Use entity property instead", "0.1.18")
   val breachEncapsulationOfEntity = entity
 
-  override def equals(obj: Any) = obj match {
+  override def equals(obj: Any): Boolean = obj match {
     case that: Allotment[T] => entity == that.entity && amount == that.amount
     case _                  => false
   }
 
-  override def hashCode = 31 * (entity.hashCode + amount.hashCode)
+  override def hashCode: Int = 31 * (entity.hashCode + amount.hashCode)
 
   /**
    * 割り当て量の正負を反転させた新しい割り当てを返す。
@@ -60,9 +64,9 @@ class Allotment[T] private[money] (private[money] val entity: T,
    */
   lazy val negated = new Allotment[T](entity, amount.negated)
 
-  def unary_- = negated
+  def unary_- : Allotment[T] = negated
 
-  override def toString =
+  override def toString: String =
     "" + entity + " --> " + amount
 
 }
@@ -81,7 +85,7 @@ object Allotment {
    * @param amount [[org.sisioh.baseunits.scala.money.Money]]
    * @return [[org.sisioh.baseunits.scala.money.Allotment]]
    */
-  def apply[T](entity: T, amount: Money) = new Allotment[T](entity, amount)
+  def apply[T](entity: T, amount: Money): Allotment[T] = new Allotment[T](entity, amount)
 
   /**
    * 抽出子メソッド。
@@ -89,6 +93,6 @@ object Allotment {
    * @param allotment [[org.sisioh.baseunits.scala.money.Allotment]]
    * @return `Option[(T, Money)]`
    */
-  def unapplly[T](allotment: Allotment[T]) = Some(allotment.entity, allotment.amount)
+  def unapplly[T](allotment: Allotment[T]): Option[(Any, Money)] = Some(allotment.entity, allotment.amount)
 
 }

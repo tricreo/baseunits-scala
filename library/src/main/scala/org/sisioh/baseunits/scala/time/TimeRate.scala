@@ -27,8 +27,10 @@ package org.sisioh.baseunits.scala.time
  * @param quantity 単位時間あたりの量
  * @param unit 単位時間
  */
-class TimeRate(private[time] val quantity: BigDecimal,
-               private[time] val unit: Duration) {
+class TimeRate(
+    private[time] val quantity: BigDecimal,
+    private[time] val unit:     Duration
+) {
 
   /**
    * インスタンスを生成する。
@@ -56,12 +58,12 @@ class TimeRate(private[time] val quantity: BigDecimal,
    */
   val breachEncapsulationOfUnit = unit
 
-  override def equals(obj: Any) = obj match {
+  override def equals(obj: Any): Boolean = obj match {
     case that: TimeRate => quantity == that.quantity && unit == that.unit
     case _              => false
   }
 
-  override def hashCode = 31 * (quantity.hashCode + unit.hashCode)
+  override def hashCode: Int = 31 * (quantity.hashCode + unit.hashCode)
 
   /**
    * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
@@ -96,7 +98,7 @@ class TimeRate(private[time] val quantity: BigDecimal,
    * @param duration 時間量
    * @param roundingMode 丸めモード
    * @return 絶対量
-   * @throws 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
+   * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
    * @throws ArithmeticException 引数 `roundingMode` に `RoundingMode.UNNECESSARY` を指定したにもかかわらず、
    * 			引数`duration`の時間量が単位時間で割り切れない場合
    */
@@ -109,9 +111,9 @@ class TimeRate(private[time] val quantity: BigDecimal,
    *
    * @return スケール
    */
-  def scale = quantity.scale
+  def scale: Int = quantity.scale
 
-  override def toString = {
+  override def toString: String = {
     val buffer = new StringBuffer
     buffer.append(quantity)
     buffer.append(" per ")
@@ -152,6 +154,6 @@ object TimeRate {
    * @param [[org.sisioh.baseunits.scala.time.TimeRate]]
    * @return `Option[(BigDecimal, Duration)]`
    */
-  def unapply(timeRate: TimeRate) = Some(timeRate.quantity, timeRate.unit)
+  def unapply(timeRate: TimeRate): Option[(BigDecimal, Duration)] = Some(timeRate.quantity, timeRate.unit)
 
 }

@@ -28,7 +28,7 @@ import org.sisioh.baseunits.scala.intervals.Limit
  */
 class BusinessCalendarTest extends AssertionsForJUnit {
 
-  def japaneseBusinessCalendar = {
+  def japaneseBusinessCalendar: BusinessCalendar = {
     val calendar = BusinessCalendar().
       addHolidaySpec(DateSpecification.fixed(1, 1)). // 元旦
       addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.Monday, 2)). // 成人の日
@@ -72,7 +72,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Before
-  def setUp {
+  def setUp() {
     cal = BusinessCalendar().addHolidays(_HolidayDates.defaultHolidays)
   }
 
@@ -82,7 +82,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @After
-  def tearDown {
+  def tearDown() {
     cal = null
   }
 
@@ -92,7 +92,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test01_ElapsedBusinessDays {
+  def test01_ElapsedBusinessDays() {
     val nov1 = CalendarDate.from(2004, 11, 1)
     val nov30 = CalendarDate.from(2004, 11, 30)
     val interval = CalendarInterval.inclusive(Limit(nov1), Limit(nov30))
@@ -108,14 +108,14 @@ class BusinessCalendarTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test02_IsWeekend {
+  def test02_IsWeekend() {
     val saturday = CalendarDate.from(2004, 1, 10)
-    assert(cal.isWeekend(saturday) == true)
+    assert(cal.isWeekend(saturday))
 
     val sunday = saturday.nextDay
-    assert(cal.isWeekend(sunday) == true)
+    assert(cal.isWeekend(sunday))
 
-    var day = sunday;
+    var day = sunday
     for (i <- 0 until 5) {
       day = day.nextDay
       assert(cal.isWeekend(day) == false, "it's a midweek day")

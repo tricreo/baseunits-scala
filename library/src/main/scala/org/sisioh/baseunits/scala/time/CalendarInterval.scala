@@ -32,8 +32,10 @@ import org.sisioh.baseunits.scala.intervals.{ Interval, Limit, LimitValue, Limit
  * @param startValue 開始日
  * @param endValue 終了日
  */
-class CalendarInterval protected (startValue: LimitValue[CalendarDate],
-                                  endValue: LimitValue[CalendarDate])
+class CalendarInterval protected (
+  startValue: LimitValue[CalendarDate],
+  endValue:   LimitValue[CalendarDate]
+)
     extends Interval[CalendarDate](startValue, true, endValue, true) with Serializable {
 
   /**
@@ -62,7 +64,6 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * <li>2009/01/01</li>
    * </ol>
    *
-   *
    * この期間が開始日（下側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
    * `true`を返すので、無限ループに注意すること。
    *
@@ -70,7 +71,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
    */
   lazy val daysInReverseIterator: Iterator[CalendarDate] = {
-    if (hasUpperLimit == false) {
+    if (!hasUpperLimit) {
       throw new IllegalStateException
     }
 
@@ -84,7 +85,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
       override def hasNext = {
         end match {
           case _: Limitless[CalendarDate] => true
-          case Limit(end)                 => _next.toValue.isBefore(end) == false
+          case Limit(end)                 => !_next.toValue.isBefore(end)
         }
       }
 
@@ -119,7 +120,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
    */
   lazy val daysIterator: Iterator[CalendarDate] = {
-    if (hasLowerLimit == false) {
+    if (!hasLowerLimit) {
       throw new IllegalStateException
     }
 
@@ -133,12 +134,12 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
       override def hasNext = {
         end match {
           case _: Limitless[CalendarDate] => true
-          case Limit(end)                 => _next.toValue.isAfter(end) == false
+          case Limit(end)                 => !_next.toValue.isAfter(end)
         }
       }
 
       override def next: CalendarDate = {
-        if (hasNext == false) {
+        if (!hasNext) {
           throw new NoSuchElementException
         }
         val current = _next
@@ -246,11 +247,13 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
    * @throws IllegalArgumentException 引数subintervalLengthの長さ単位が「日」未満の場合
    */
   def subintervalIterator(subintervalLength: Duration): Iterator[CalendarInterval] = {
-    if (hasLowerLimit == false) {
+    if (!hasLowerLimit) {
       throw new IllegalStateException
     }
-    require(TimeUnit.Day.compareTo(subintervalLength.normalizedUnit) <= 0,
-      "CalendarIntervals must be a whole number of days or months.")
+    require(
+      TimeUnit.Day.compareTo(subintervalLength.normalizedUnit) <= 0,
+      "CalendarIntervals must be a whole number of days or months."
+    )
 
     val segmentLength = subintervalLength
 
@@ -262,7 +265,7 @@ class CalendarInterval protected (startValue: LimitValue[CalendarDate],
         CalendarInterval.this.covers(_next)
 
       override def next: CalendarInterval = {
-        if (hasNext == false) {
+        if (!hasNext) {
           throw new NoSuchElementException
         }
         val current = _next
@@ -288,7 +291,7 @@ object CalendarInterval {
    * @param endValue 終了日
    * @return [[org.sisioh.baseunits.scala.time.CalendarInterval]]
    */
-  def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]) =
+  def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]): CalendarInterval =
     new CalendarInterval(startValue, endValue)
 
   /**
@@ -297,7 +300,7 @@ object CalendarInterval {
    * @param calendarInterval [[CalendarInterval]]
    * @return `Option[(CalendarInterval)]`
    */
-  def unapply(calendarInterval: CalendarInterval) =
+  def unapply(calendarInterval: CalendarInterval): Option[(LimitValue[CalendarDate], LimitValue[CalendarDate])] =
     Some(calendarInterval.start, calendarInterval.end)
 
   /**
@@ -309,7 +312,7 @@ object CalendarInterval {
    * @return 期間
    */
   def everFrom(startDate: LimitValue[CalendarDate]): CalendarInterval =
-    inclusive(startDate, Limitless[CalendarDate])
+    inclusive(startDate, Limitless[CalendarDate]())
 
   /**
    * 終了日より、上側限界のみを持つ期間を生成する。
@@ -320,7 +323,7 @@ object CalendarInterval {
    * @return 期間
    */
   def everPreceding(endDate: LimitValue[CalendarDate]): CalendarInterval =
-    inclusive(Limitless[CalendarDate], endDate)
+    inclusive(Limitless[CalendarDate](), endDate)
 
   /**
    * 開始日と終了日より、期間を生成する。

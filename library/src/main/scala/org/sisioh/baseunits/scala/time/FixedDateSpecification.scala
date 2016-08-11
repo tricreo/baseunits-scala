@@ -30,7 +30,7 @@ class FixedDateSpecification private[time] (private[time] val date: CalendarDate
     extends DateSpecification {
 
   def iterateOver(interval: CalendarInterval): Iterator[CalendarDate] = {
-    if (firstOccurrenceIn(interval) == None) {
+    if (firstOccurrenceIn(interval).isEmpty) {
       return Iterator.empty
     }
     new Iterator[CalendarDate] {
@@ -40,7 +40,7 @@ class FixedDateSpecification private[time] (private[time] val date: CalendarDate
       override def hasNext = end
 
       override def next = {
-        if (hasNext == false) {
+        if (!hasNext) {
           throw new NoSuchElementException
         }
         end = true

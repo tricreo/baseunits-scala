@@ -46,7 +46,7 @@ class FanTally[T](private[money] val fans: Iterable[MoneyFan[T]])
   lazy val net: MoneyFan[T] =
     fans.foldLeft(new MoneyFan[T])(_ plus _)
 
-  override def toString() = fans.toString()
+  override def toString(): String = fans.toString()
 
   /**
    * 要素の[[MoneyFan]]が含む[[Allotment]]の合計額を返す。
@@ -69,7 +69,7 @@ object FanTally {
    * @param fans [[org.sisioh.baseunits.scala.money.MoneyFan]]の`Iterable`
    * @return [[org.sisioh.baseunits.scala.money.FanTally]]
    */
-  def apply[T](fans: Iterable[MoneyFan[T]]) = new FanTally[T](fans)
+  def apply[T](fans: Iterable[MoneyFan[T]]): FanTally[T] = new FanTally[T](fans)
 
   /**
    * 抽出子メソッド。
@@ -77,6 +77,6 @@ object FanTally {
    * @param fanTally [[org.sisioh.baseunits.scala.money.FanTally]]
    * @return `Option[Iterable[MoneyFan[T]]]`
    */
-  def unapply[T](fanTally: FanTally[T]) = Some(fanTally.fans)
+  def unapply[T](fanTally: FanTally[T]): Option[Iterable[MoneyFan[T]]] = Some(fanTally.fans)
 
 }

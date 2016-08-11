@@ -24,18 +24,21 @@ import java.util.TimeZone
  * 1日の中の特定の「時分」を表すクラス。
  *
  * [[java.util.Date]]と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。
- * @param hour 時
+ *
+ * @param hour   時
  * @param minute 分
  */
-class TimeOfDay private[time] (private[time] val hour: HourOfDay,
-                               private[time] val minute: MinuteOfHour)
+class TimeOfDay private[time] (
+  val hour:   HourOfDay,
+  val minute: MinuteOfHour
+)
     extends Ordered[TimeOfDay] with Serializable {
 
   /**
    * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について
    * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
    *
-   * @param date 年月日
+   * @param date     年月日
    * @param timeZone タイムゾーン
    * @return 瞬間
    */
@@ -51,6 +54,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    *
    * @return 時
    */
+  @deprecated("Use hour property instead", "0.1.18")
   val breachEncapsulationOfHour = hour
 
   /**
@@ -60,6 +64,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    *
    * @return 分
    */
+  @deprecated("Use minute property instead", "0.1.18")
   val breachEncapsulationOfMinute = minute
 
   override def compare(other: TimeOfDay): Int = {
@@ -73,7 +78,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
     case _               => false
   }
 
-  override def hashCode = 31 * (hour.hashCode + minute.hashCode)
+  override def hashCode: Int = 31 * (hour.hashCode + minute.hashCode)
 
   /**
    * このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
@@ -83,7 +88,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    * @param another 基準時分
    * @return 未来である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(another: TimeOfDay) = {
+  def isAfter(another: TimeOfDay): Boolean = {
     hour.isAfter(another.hour) || (hour == another.hour && minute.isAfter(another.minute))
   }
 
@@ -95,7 +100,7 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    * @param another 基準時分
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(another: TimeOfDay) = {
+  def isBefore(another: TimeOfDay): Boolean = {
     hour.isBefore(another.hour) || (hour == another.hour && minute.isBefore(another.minute))
   }
 
@@ -106,10 +111,10 @@ class TimeOfDay private[time] (private[time] val hour: HourOfDay,
    * @param date 年月日
    * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
    */
-  def on(date: CalendarDate) =
+  def on(date: CalendarDate): CalendarDateTime =
     CalendarDateTime.from(date, this)
 
-  override def toString =
+  override def toString: String =
     hour.toString + ":" + minute.toString
 
 }
@@ -124,7 +129,7 @@ object TimeOfDay {
   /**
    * インスタンスを生成する。
    *
-   * @param hour 時
+   * @param hour   時
    * @param minute 分
    */
   def apply(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = new TimeOfDay(hour, minute)
@@ -134,12 +139,12 @@ object TimeOfDay {
    *
    * @param timeOfDay [[org.sisioh.baseunits.scala.time.TimeOfDay]]
    */
-  def unapply(timeOfDay: TimeOfDay) = Some(timeOfDay.hour, timeOfDay.minute)
+  def unapply(timeOfDay: TimeOfDay): Option[(HourOfDay, MinuteOfHour)] = Some(timeOfDay.hour, timeOfDay.minute)
 
   /**
    * 指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
    *
-   * @param hour 時
+   * @param hour   時
    * @param minute 分
    * @return [[org.sisioh.baseunits.scala.time.TimeOfDay]]
    */
@@ -148,7 +153,7 @@ object TimeOfDay {
   /**
    * 指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
    *
-   * @param hour 時をあらわす正数（0〜23）
+   * @param hour   時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
    * @return [[org.sisioh.baseunits.scala.time.TimeOfDay]]
    * @throws IllegalArgumentException 引数`hour`が0〜23の範囲ではない場合もしくは、引数`minute`が0〜59の範囲ではない場合

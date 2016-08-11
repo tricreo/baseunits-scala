@@ -224,7 +224,8 @@ object DurationTest extends Assertions {
   @Test
   def test12_Divide {
     assert(Duration.days(3).dividedBy(Duration.days(2)).decimalValue(1, BigDecimal.RoundingMode.DOWN) == BigDecimal(
-      1.5))
+      1.5
+    ))
   }
 
   /**

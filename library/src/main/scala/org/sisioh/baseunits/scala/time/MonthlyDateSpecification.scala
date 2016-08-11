@@ -27,7 +27,7 @@ import org.sisioh.baseunits.scala.intervals.Limit
  */
 abstract class MonthlyDateSpecification extends DateSpecification {
 
-  override def firstOccurrenceIn(interval: CalendarInterval) = {
+  override def firstOccurrenceIn(interval: CalendarInterval): Option[CalendarDate] = {
     val month = interval.start.toValue.asCalendarMonth
 
     val firstTry = ofYearMonth(month)
@@ -41,7 +41,7 @@ abstract class MonthlyDateSpecification extends DateSpecification {
     }
   }
 
-  override def iterateOver(interval: CalendarInterval) = {
+  override def iterateOver(interval: CalendarInterval): Iterator[CalendarDate] = {
     new Iterator[CalendarDate] {
 
       var _next = firstOccurrenceIn(interval)
@@ -51,13 +51,13 @@ abstract class MonthlyDateSpecification extends DateSpecification {
       override def hasNext = next != None
 
       override def next = {
-        if (hasNext == false) {
+        if (!hasNext) {
           throw new NoSuchElementException
         }
         val current = _next
         _month = _month.nextMonth
         _next = Some(MonthlyDateSpecification.this.ofYearMonth(_month))
-        if (interval.includes(Limit(_next.get)) == false) {
+        if (!interval.includes(Limit(_next.get))) {
           _next = None
         }
         current.get

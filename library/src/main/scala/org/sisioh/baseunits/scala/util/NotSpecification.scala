@@ -27,7 +27,7 @@ package org.sisioh.baseunits.scala.util
 class NotSpecification[T](private[util] val spec1: Specification[T])
     extends Specification[T] {
 
-  override def isSatisfiedBy(t: T) =
-    spec1.isSatisfiedBy(t) == false
+  override def isSatisfiedBy(t: T): Boolean =
+    !spec1.isSatisfiedBy(t)
 
 }

@@ -40,14 +40,14 @@ class Tally(private[money] val monies: Iterable[Money])
 
   private[this] val _currency = currency
 
-  require(monies.exists(_.breachEncapsulationOfCurrency == _currency))
+  require(monies.exists(_.currency == _currency))
 
   /**
    * 通貨単位を返す。
    * @return 通貨単位
    */
   lazy val currency: Currency =
-    monies.head.breachEncapsulationOfCurrency
+    monies.head.currency
 
   /**
    * 合計金額を返す。
@@ -55,7 +55,7 @@ class Tally(private[money] val monies: Iterable[Money])
    */
   lazy val net: Money = Money.sum(monies)
 
-  override def toString() = monies.toString()
+  override def toString: String = monies.toString()
 
   def iterator: Iterator[Money] = monies.iterator
 

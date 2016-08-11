@@ -30,12 +30,12 @@ sealed trait Shifter {
 object Shifter {
 
   case object Next extends Shifter {
-    def shift(date: CalendarDate, cal: BusinessCalendar) =
+    def shift(date: CalendarDate, cal: BusinessCalendar): CalendarDate =
       cal.nearestNextBusinessDay(date)
   }
 
   case object Prev extends Shifter {
-    def shift(date: CalendarDate, cal: BusinessCalendar) =
+    def shift(date: CalendarDate, cal: BusinessCalendar): CalendarDate =
       cal.nearestPrevBusinessDay(date)
   }
 
@@ -44,16 +44,18 @@ object Shifter {
 /**
  * 指定日が非営業日の場合のシフト戦略。
  */
-class MonthlyFixedBusinessDateSpecification(val day: DayOfMonth,
-                                            val shifter: Shifter,
-                                            val cal: BusinessCalendar) extends MonthlyDateSpecification {
+class MonthlyFixedBusinessDateSpecification(
+    val day:     DayOfMonth,
+    val shifter: Shifter,
+    val cal:     BusinessCalendar
+) extends MonthlyDateSpecification {
 
-  def ofYearMonth(month: CalendarYearMonth) =
-    shifter.shift(CalendarDate.from(month.breachEncapsulationOfYear, month.breachEncapsulationOfMonth, day, month.timeZone), cal)
+  def ofYearMonth(month: CalendarYearMonth): CalendarDate =
+    shifter.shift(CalendarDate.from(month.year, month.month, day, month.timeZone), cal)
 
-  override def isSatisfiedBy(date: CalendarDate) =
+  override def isSatisfiedBy(date: CalendarDate): Boolean =
     if (cal.isBusinessDay(date)) {
-      val thisMonth = ofYearMonth(date.breachEncapsulationOfYearMonth)
+      val thisMonth = ofYearMonth(date.yearMonth)
       thisMonth.equals(date)
     } else false
 

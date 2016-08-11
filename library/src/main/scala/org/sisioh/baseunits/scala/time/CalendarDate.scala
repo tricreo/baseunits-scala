@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.text.ParseException
 import java.util.{ Calendar, TimeZone }
 
 import org.sisioh.baseunits.scala.intervals.Limit
@@ -30,12 +31,12 @@ import org.sisioh.baseunits.scala.intervals.Limit
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
  * @author j5ik2o
- * @param yearMonth 年月
- * @param day 日
  */
-class CalendarDate private[time] (private[time] val yearMonth: CalendarYearMonth,
-                                  private[time] val day: DayOfMonth,
-                                  private[time] val timeZone: TimeZone)
+class CalendarDate private[time] (
+  val yearMonth: CalendarYearMonth,
+  val day:       DayOfMonth,
+  val timeZone:  TimeZone
+)
     extends Ordered[CalendarDate] with Serializable {
 
   /**
@@ -86,7 +87,7 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarYearMonth
    * @return このインスタンスが表現する日を含む年を表す期間
    */
   lazy val asYearInterval: CalendarInterval =
-    CalendarInterval.year(yearMonth.breachEncapsulationOfYear, timeZone)
+    CalendarInterval.year(yearMonth.year, timeZone)
 
   /**
    * このインスタンスが表す日付で、引数`timeOfDay`で表す時を表す日時を返す。
@@ -104,7 +105,8 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarYearMonth
    *
    * @return 日
    */
-  val breachEncapsulationOfDay = day
+  @deprecated("Use day property instead", "0.1.18")
+  val breachEncapsulationOfDay: DayOfMonth = day
 
   /**
    * このオブジェクトの`yearMonth`フィールド（年月）を返す。
@@ -113,7 +115,8 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarYearMonth
    *
    * @return 年月
    */
-  val breachEncapsulationOfYearMonth = yearMonth
+  @deprecated("Use yearMonth property instead", "0.1.18")
+  val breachEncapsulationOfYearMonth: CalendarYearMonth = yearMonth
 
   /**
    * この日付の曜日を返す。
@@ -125,13 +128,13 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarYearMonth
     DayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))
   }
 
-  override def equals(obj: Any) = obj match {
+  override def equals(obj: Any): Boolean = obj match {
     case that: CalendarDate     => this.day == that.day && this.yearMonth == that.yearMonth
     case that: CalendarDateTime => this == that.date
     case _                      => false
   }
 
-  override def hashCode = 31 * (day.hashCode + yearMonth.hashCode)
+  override def hashCode: Int = 31 * (day.hashCode + yearMonth.hashCode)
 
   /**
    * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
@@ -263,8 +266,8 @@ class CalendarDate private[time] (private[time] val yearMonth: CalendarYearMonth
 
   private[time] def asJavaCalendarOnMidnight(timeZone: TimeZone): Calendar = {
     val calendar = Calendar.getInstance(timeZone)
-    calendar.set(Calendar.YEAR, yearMonth.breachEncapsulationOfYear)
-    calendar.set(Calendar.MONTH, yearMonth.breachEncapsulationOfMonth.value)
+    calendar.set(Calendar.YEAR, yearMonth.year)
+    calendar.set(Calendar.MONTH, yearMonth.month.calendarValue)
     calendar.set(Calendar.DATE, day.value)
     calendar.set(Calendar.HOUR_OF_DAY, 0)
     calendar.set(Calendar.MINUTE, 0)
@@ -404,7 +407,7 @@ object CalendarDate {
    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateString: String, pattern: String, timeZone: TimeZone = TimeZones.Default) = {
+  def parse(dateString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): CalendarDate = {
     // Any timezone works, as long as the same one is used throughout.
     val point = TimePoint.parse(dateString, pattern, timeZone)
     CalendarDate.from(point, timeZone)

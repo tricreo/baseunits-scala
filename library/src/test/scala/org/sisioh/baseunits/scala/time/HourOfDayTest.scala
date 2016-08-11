@@ -32,7 +32,7 @@ class HourOfDayTest extends AssertionsForJUnit {
    */
   @Test
   def test01_24Simple {
-    assert(HourOfDay(22).breachEncapsulationOfValue == 22)
+    assert(HourOfDay(22).value == 22)
   }
 
   /**

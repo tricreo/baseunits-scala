@@ -73,10 +73,10 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
 
       var lookAhead = nextBusinessDate
 
-      override def hasNext = lookAhead != None
+      override def hasNext = lookAhead.isDefined
 
       override def next: CalendarDate = {
-        if (hasNext == false) {
+        if (!hasNext) {
           throw new NoSuchElementException
         }
         val _next = lookAhead
@@ -89,7 +89,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
         do {
           result = if (calendarDays.hasNext) Some(calendarDays.next())
           else None
-        } while ((result == None || isBusinessDay(result.get)) == false)
+        } while (!(result.isEmpty || isBusinessDay(result.get)))
         result
       }
     }
@@ -120,8 +120,8 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @param day 日
    * @return 営業日に当たる場合は`true`、そうでない場合は`false`
    */
-  def isBusinessDay(day: CalendarDate) =
-    isWeekend(day) == false && isHoliday(day) == false
+  def isBusinessDay(day: CalendarDate): Boolean =
+    !isWeekend(day) && !isHoliday(day)
 
   /**
    * [[org.sisioh.baseunits.scala.time.CalendarDate]]が休日に当たるかどうか調べる。
@@ -131,7 +131,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @param day 日
    * @return 休日に当たる場合は`true`、そうでない場合は`false`
    */
-  def isHoliday(day: CalendarDate) =
+  def isHoliday(day: CalendarDate): Boolean =
     holidaySpecs.isSatisfiedBy(day)
 
   /**
@@ -142,7 +142,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @param day 日
    * @return 週末に当たる場合は`true`、そうでない場合は`false`
    */
-  def isWeekend(day: CalendarDate) = {
+  def isWeekend(day: CalendarDate): Boolean = {
     val dow = day.dayOfWeek
     dow == DayOfWeek.Saturday || dow == DayOfWeek.Sunday
   }
@@ -155,7 +155,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @return 日付
    * @throws IllegalArgumentException 引数`0`が負数の場合
    */
-  def minusBusinessDays(startDate: CalendarDate, numberOfDays: Int) = {
+  def minusBusinessDays(startDate: CalendarDate, numberOfDays: Int): CalendarDate = {
     if (numberOfDays < 0) {
       throw new IllegalArgumentException("Negative numberOfDays not supported")
     }
@@ -171,7 +171,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @param day 基準日
    * @return 営業日
    */
-  def nearestNextBusinessDay(day: CalendarDate) =
+  def nearestNextBusinessDay(day: CalendarDate): CalendarDate =
     if (isBusinessDay(day)) {
       day
     } else {
@@ -186,7 +186,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @param day 基準日
    * @return 営業日
    */
-  def nearestPrevBusinessDay(day: CalendarDate) =
+  def nearestPrevBusinessDay(day: CalendarDate): CalendarDate =
     if (isBusinessDay(day)) {
       day
     } else {
@@ -214,7 +214,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @return 日付
    * @throws IllegalArgumentException 引数`0`が負数の場合
    */
-  def plusBusinessDays(startDate: CalendarDate, numberOfDays: Int) = {
+  def plusBusinessDays(startDate: CalendarDate, numberOfDays: Int): CalendarDate = {
     if (numberOfDays < 0) {
       throw new IllegalArgumentException("Negative numberOfDays not supported")
     }
@@ -228,7 +228,7 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @param startDate 基準日
    * @return 前営業日
    */
-  def prevBusinessDay(startDate: CalendarDate) =
+  def prevBusinessDay(startDate: CalendarDate): CalendarDate =
     if (isBusinessDay(startDate)) {
       minusBusinessDays(startDate, 1)
     } else {
@@ -242,8 +242,10 @@ case class BusinessCalendar(holidaySpecs: Specification[CalendarDate] = DateSpec
    * @param calendarDays 日付イテレータ
    * @return 営業日
    */
-  private def nextNumberOfBusinessDays(numberOfDays: Int,
-                                       calendarDays: Iterator[CalendarDate]): CalendarDate = {
+  private def nextNumberOfBusinessDays(
+    numberOfDays: Int,
+    calendarDays: Iterator[CalendarDate]
+  ): CalendarDate = {
     require(numberOfDays >= 0)
     val businessDays = businessDaysOnly(calendarDays)
     (0 to numberOfDays).foldLeft[Option[CalendarDate]](None) { (_, _) =>

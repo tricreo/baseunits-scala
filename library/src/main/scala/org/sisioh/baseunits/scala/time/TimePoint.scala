@@ -18,7 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import java.text.SimpleDateFormat
+import java.text.{ ParseException, SimpleDateFormat }
 import java.util.{ Calendar, TimeZone, Date => JDate }
 
 import org.sisioh.baseunits.scala.intervals.{ Limit, LimitValue }
@@ -31,7 +31,7 @@ import org.sisioh.baseunits.scala.intervals.{ Limit, LimitValue }
  * @author j5ik2o
  * @param millisecondsFromEpoc エポックからの経過ミリ秒
  */
-class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
+class TimePoint private[time] (val millisecondsFromEpoc: Long)
     extends Ordered[TimePoint] with Serializable {
 
   /**
@@ -80,6 +80,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    *
    * @return エポックからの経過ミリ秒
    */
+  @deprecated("Use millisecondsFromEpoc property instead", "0.1.18")
   val breachEncapsulationOfMillisecondsFromEpoc = millisecondsFromEpoc
 
   /**
@@ -120,7 +121,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
     case _               => false
   }
 
-  override def hashCode = 31 * (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)).asInstanceOf[Int]
+  override def hashCode: Int = 31 * (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)).asInstanceOf[Int]
 
   /**
    * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
@@ -177,7 +178,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
   def minus(duration: Duration, timeZone: TimeZone = TimeZones.Default): TimePoint =
     duration.subtractedFrom(this, timeZone)
 
-  def -(duration: Duration)(implicit timeZone: TimeZone) = minus(duration, timeZone)
+  def -(duration: Duration)(implicit timeZone: TimeZone): TimePoint = minus(duration, timeZone)
 
   /**
    * このオブジェクトが表現する瞬間の、ちょうど1日後を取得する。
@@ -186,7 +187,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    *
    * @return 1日後
    */
-  def nextDay(timeZone: TimeZone = TimeZones.Default) = this.+(Duration.days(1))(timeZone)
+  def nextDay(timeZone: TimeZone = TimeZones.Default): TimePoint = this.+(Duration.days(1))(timeZone)
 
   /**
    * この日時から、指定した時間の長さ分未来の日時を取得する。
@@ -194,14 +195,14 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param duration 時間の長さ
    * @return 未来の日時
    */
-  def +(duration: Duration)(implicit timeZone: TimeZone) = duration.addedTo(this, timeZone)
+  def +(duration: Duration)(implicit timeZone: TimeZone): TimePoint = duration.addedTo(this, timeZone)
 
   /**
    * この瞬間の文字列表現を取得する。
    *
    * @see java.lang.Object#toString()
    */
-  override def toString = toString("yyyy/MM/dd HH:mm:ss", TimeZones.Default)
+  override def toString: String = toString("yyyy/MM/dd HH:mm:ss", TimeZones.Default)
 
   /**
    * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
@@ -210,7 +211,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param timeZone タイムゾーン
    * @return 整形済み時間文字列
    */
-  def toString(pattern: String, timeZone: TimeZone = TimeZones.Default) = {
+  def toString(pattern: String, timeZone: TimeZone = TimeZones.Default): String = {
     val format = new SimpleDateFormat(pattern)
     format.setTimeZone(timeZone)
     format.format(asJavaUtilDate)
@@ -224,7 +225,7 @@ class TimePoint private[time] (private[time] val millisecondsFromEpoc: Long)
    * @param end 終了日時（上側限界値）. `LimitValue[TimePoint]`の場合は、限界がないことを表す
    * @return [[org.sisioh.baseunits.scala.time.TimeInterval]]
    */
-  def until(end: LimitValue[TimePoint], timeZone: TimeZone = TimeZones.Default) =
+  def until(end: LimitValue[TimePoint], timeZone: TimeZone = TimeZones.Default): TimeInterval =
     TimeInterval.over(Limit(this), end, timeZone)
 
 }
@@ -250,7 +251,7 @@ object TimePoint {
    * @param timePoint [[TimePoint]]
    * @return `Option[(Long)]`
    */
-  def unapply(timePoint: TimePoint) = Some(timePoint.millisecondsFromEpoc)
+  def unapply(timePoint: TimePoint): Option[Long] = Some(timePoint.millisecondsFromEpoc)
 
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
@@ -281,9 +282,11 @@ object TimePoint {
    */
   def at(yearMonth: CalendarYearMonth, date: DayOfMonth, hour: Int,
          minute: Int, second: Int, millisecond: Int, timeZone: TimeZone): TimePoint = {
-    at(yearMonth.breachEncapsulationOfYear,
-      yearMonth.breachEncapsulationOfMonth.value + 1,
-      date.value, hour, minute, second, millisecond, timeZone)
+    at(
+      yearMonth.year,
+      yearMonth.month.month,
+      date.value, hour, minute, second, millisecond, timeZone
+    )
   }
 
   /**
@@ -412,7 +415,7 @@ object TimePoint {
    */
   def at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int,
          millisecond: Int, timeZone: TimeZone): TimePoint =
-    at(year, month.value, date.value, hour, minute, second, millisecond, timeZone)
+    at(year, month.month, date.value, hour, minute, second, millisecond, timeZone)
 
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
@@ -429,7 +432,7 @@ object TimePoint {
    * @throws IllegalArgumentException 引数`hour`の値が0〜11の範囲ではない場合もしくは、
    *                                  引数`amPm`の値が `"AM"` または `"PM"` ではない場合
    */
-  def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int, millisecond: Int) = {
+  def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int, millisecond: Int): TimePoint = {
     at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, TimeZones.Default)
   }
 
@@ -470,8 +473,10 @@ object TimePoint {
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def atMidnight(calendarDate: CalendarDate, timeZone: TimeZone): TimePoint =
-    at(calendarDate.asCalendarMonth,
-      calendarDate.breachEncapsulationOfDay, 0, 0, 0, 0, timeZone)
+    at(
+      calendarDate.asCalendarMonth,
+      calendarDate.day, 0, 0, 0, 0, timeZone
+    )
 
   /**
    * デフォルトタイムゾーンにおける、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
@@ -524,8 +529,7 @@ object TimePoint {
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
   def from(date: CalendarDate, time: TimeOfDay, timeZone: TimeZone): TimePoint =
-    at(date.asCalendarMonth, date.breachEncapsulationOfDay,
-      time.breachEncapsulationOfHour.value, time.breachEncapsulationOfMinute.value,
+    at(date.asCalendarMonth, date.day, time.hour.value, time.minute.value,
       0, 0, timeZone)
 
   /**
@@ -560,7 +564,7 @@ object TimePoint {
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone = TimeZones.Default) = {
+  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): TimePoint = {
     val sdf = new SimpleDateFormat(pattern)
     sdf.setTimeZone(timeZone)
     val date = sdf.parse(dateTimeString)
