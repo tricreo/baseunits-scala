@@ -32,15 +32,15 @@ class HolidayCalendarExample extends Assertions with ShouldMatchers {
   @Test
   def testDeriveBirthday {
     // Calculate Martin Luther King, Jr.'s birthday, January 15, for the year 2005:
-    val mlkBirthday = DateSpecification.fixed(1, 15)
+    val mlkBirthday = DateSpecification.fixed(1, 15, ZoneIds.Default)
     // Then you can do checks like
     val jan15_2005 = CalendarDate.from(2005, 1, 15)
     mlkBirthday.isSatisfiedBy(jan15_2005) shouldEqual true
     // Derive the date(s) for an interval
-    val mlk2005 = mlkBirthday.firstOccurrenceIn(CalendarInterval.year(2005))
+    val mlk2005 = mlkBirthday.firstOccurrenceIn(CalendarInterval.year(2005, ZoneIds.Default))
     mlk2005.get shouldEqual jan15_2005
     // Calculate all the birthdays in his lifetime
-    val mlkLifetime = CalendarInterval.inclusive(1929, 1, 15, 1968, 4, 4)
+    val mlkLifetime = CalendarInterval.inclusive(1929, 1, 15, 1968, 4, 4, ZoneIds.Default)
     val mlkBirthdays = mlkBirthday.iterateOver(mlkLifetime)
     mlkBirthdays.next shouldEqual CalendarDate.from(1929, 1, 15)
     mlkBirthdays.next shouldEqual CalendarDate.from(1930, 1, 15)
@@ -55,15 +55,15 @@ class HolidayCalendarExample extends Assertions with ShouldMatchers {
   @Test
   def testDeriveThanksgiving {
     // Calculate Thanksgiving, the 4th Thursday in November, for the year 2005
-    val thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.Thursday, 4)
+    val thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.Thursday, 4, ZoneIds.Default)
     // With the specification, you can do checks like
     thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 24)) shouldEqual true
     thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 25)) shouldEqual false
     // Derive the date(s) for an interval
-    thanksgiving.firstOccurrenceIn(CalendarInterval.year(2005)).get shouldEqual CalendarDate.from(2005, 11, 24)
+    thanksgiving.firstOccurrenceIn(CalendarInterval.year(2005, ZoneIds.Default)).get shouldEqual CalendarDate.from(2005, 11, 24, ZoneIds.Default)
 
     // Calculate all the Thanksgivings over a three year interval.
-    val y2002_2004 = CalendarInterval.inclusive(2002, 1, 1, 2004, 12, 31)
+    val y2002_2004 = CalendarInterval.inclusive(2002, 1, 1, 2004, 12, 31, ZoneIds.Default)
     thanksgiving.firstOccurrenceIn(y2002_2004).get shouldEqual CalendarDate.from(2002, 11, 28)
 
     val iterator = thanksgiving.iterateOver(y2002_2004)

@@ -29,11 +29,11 @@ import org.sisioh.baseunits.scala.time.{ CalendarDate, TimeSource, TimePoint }
  */
 class ClockTest extends AssertionsForJUnit {
 
-  val gmt = TimeZone.getTimeZone("Universal")
+  val gmt = TimeZone.getTimeZone("Universal").toZoneId
 
   val dec1_5am_gmt = TimePoint.at(2004, 12, 1, 5, 0, gmt)
 
-  val pt = TimeZone.getTimeZone("America/Los_Angeles")
+  val pt = TimeZone.getTimeZone("America/Los_Angeles").toZoneId
 
   //  val ct = TimeZone.getTimeZone("America/Chicago")
 
@@ -56,7 +56,7 @@ class ClockTest extends AssertionsForJUnit {
    */
   @Test
   def test01_Now {
-    val clock = Clock(dummySourceDec1_5h)
+    val clock = Clock(dummySourceDec1_5h, gmt)
     assert(clock.now == dec1_5am_gmt)
   }
 
@@ -81,7 +81,7 @@ class ClockTest extends AssertionsForJUnit {
     assert(clock.todayAsDate == CalendarDate.from(2004, 12, 1, gmt))
     assert(clock.now == dec1_5am_gmt)
 
-    val clock2 = clock.copy(timeZone = pt)
+    val clock2 = clock.copy(zoneId = pt)
     assert(clock2.todayAsDate == CalendarDate.from(2004, 11, 30, pt))
     assert(clock2.now == dec1_5am_gmt)
   }

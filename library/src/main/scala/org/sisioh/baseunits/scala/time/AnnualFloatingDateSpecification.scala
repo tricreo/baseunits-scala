@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.time.ZoneId
 import java.util.TimeZone
 
 /**
@@ -32,7 +33,7 @@ class AnnualFloatingDateSpecification private[time] (
   private[time] val month:      Int,
   private[time] val dayOfWeek:  DayOfWeek,
   private[time] val occurrence: Int,
-  private[time] val timeZone:   TimeZone
+  private[time] val zoneId:     ZoneId
 )
     extends AnnualDateSpecification {
 
@@ -43,11 +44,11 @@ class AnnualFloatingDateSpecification private[time] (
     ofYear(date.asCalendarMonth.year).equals(date)
 
   override def ofYear(year: Int): CalendarDate = {
-    val firstOfMonth = CalendarDate.from(year, month, 1, timeZone)
+    val firstOfMonth = CalendarDate.from(year, month, 1, zoneId)
     val dayOfWeekOffset = dayOfWeek.value - firstOfMonth.dayOfWeek.value
     val dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (if (dayOfWeekOffset < 0) 8 else 1)
     val date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek
-    CalendarDate.from(year, month, date, timeZone)
+    CalendarDate.from(year, month, date, zoneId)
   }
 
 }

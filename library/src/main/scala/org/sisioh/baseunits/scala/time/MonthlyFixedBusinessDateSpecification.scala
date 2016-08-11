@@ -51,7 +51,7 @@ class MonthlyFixedBusinessDateSpecification(
 ) extends MonthlyDateSpecification {
 
   def ofYearMonth(month: CalendarYearMonth): CalendarDate =
-    shifter.shift(CalendarDate.from(month.year, month.month, day, month.timeZone), cal)
+    shifter.shift(CalendarDate.from(month.year, month.month, day, month.zoneId), cal)
 
   override def isSatisfiedBy(date: CalendarDate): Boolean =
     if (cal.isBusinessDay(date)) {

@@ -19,6 +19,7 @@
 package org.sisioh.baseunits.scala.time
 
 import java.text.ParseException
+import java.time.{ YearMonth, ZoneId, ZonedDateTime }
 import java.util.{ Calendar, TimeZone }
 
 /**
@@ -31,11 +32,16 @@ import java.util.{ Calendar, TimeZone }
  * @author j5ik2o
  */
 class CalendarYearMonth private[time] (
-  val year:     Int,
-  val month:    MonthOfYear,
-  val timeZone: TimeZone
+  val year:   Int,
+  val month:  MonthOfYear,
+  val zoneId: ZoneId
 )
     extends Ordered[CalendarYearMonth] with Serializable {
+
+  lazy val asYearMonth: YearMonth = YearMonth.of(year, month.value)
+
+  @deprecated("Use zoneId property instead", "0.1.18")
+  val timeZone = TimeZone.getTimeZone(zoneId)
 
   /**
    * このインスタンスが表現する年月の1日からその月末までの、期間を生成する。
@@ -45,7 +51,8 @@ class CalendarYearMonth private[time] (
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
   lazy val asCalendarInterval: CalendarInterval =
-    CalendarInterval.month(year, month, timeZone)
+    CalendarInterval.month(year, month, zoneId)
+
   /**
    * このインスタンスが表現する年月を含む年の元旦からその大晦日までの、期間を生成する。
    *
@@ -54,34 +61,44 @@ class CalendarYearMonth private[time] (
    * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
    */
   lazy val asYearInterval: CalendarInterval =
-    CalendarInterval.year(year, timeZone)
+    CalendarInterval.year(year, zoneId)
+
   /**
    * 月末の日付を取得する。
    *
    * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
   lazy val lastDay =
-    CalendarDate.from(year, month, lastDayOfMonth, timeZone)
+    CalendarDate.from(year, month, lastDayOfMonth, zoneId)
+
   /**
    * 月末の日を取得する。
    *
    * @return [[org.sisioh.baseunits.scala.time.DayOfMonth]]
    */
   lazy val lastDayOfMonth: DayOfMonth = month.getLastDayOfThisMonth(year)
+
   /**
    * このインスタンスが表現する年月の翌月を返す。
    *
    * @return 翌月
    */
   lazy val nextMonth: CalendarYearMonth = plusMonths(1)
+
   /**
    * このインスタンスが表現する年月の前月を返す。
    *
    * @return 前月
    */
   lazy val previousDay: CalendarYearMonth = plusMonths(-1)
+
+  @deprecated("Use asJavaZonedDateTimeOnMidnight property instead", "0.1.18")
   lazy val asJavaCalendarOnMidnight: Calendar =
-    asJavaCalendarOnMidnight(timeZone)
+    asJavaCalendarOnMidnight(TimeZone.getTimeZone(zoneId))
+
+  lazy val asJavaZonedDateTimeOnMidnight: ZonedDateTime =
+    asJavaZonedDateTimeOnMidnight(zoneId)
+
   /**
    * このオブジェクトの`month`フィールド（月）を返す。
    *
@@ -109,7 +126,7 @@ class CalendarYearMonth private[time] (
    * @throws IllegalArgumentException 引数`day`がこの月に存在しない場合
    */
   def atCalendarDate(day: DayOfMonth): CalendarDate =
-    CalendarDate.from(year, month, day, timeZone)
+    CalendarDate.from(year, month, day, zoneId)
 
   /**
    * 年月日同士の比較を行う。
@@ -135,7 +152,7 @@ class CalendarYearMonth private[time] (
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
   def isAfter(other: CalendarYearMonth): Boolean =
-    isBefore(other) == false && equals(other) == false
+    !isBefore(other) && !equals(other)
 
   override def equals(obj: Any): Boolean = obj match {
     case that: CalendarYearMonth => this.month == that.month && this.year == that.year
@@ -168,7 +185,7 @@ class CalendarYearMonth private[time] (
    * @return 未来の年月
    */
   def plus(length: Duration): CalendarYearMonth =
-    length.addedTo(this)
+    length.addedTo(this, zoneId)
 
   /**
    * このインスタンスが表現する年月の `increment` ヶ月後を返す。
@@ -179,13 +196,14 @@ class CalendarYearMonth private[time] (
    * @return 計算結果
    */
   def plusMonths(increment: Int): CalendarYearMonth = {
-    val calendar = asJavaCalendarOnMidnight(timeZone)
-    calendar.add(Calendar.MONTH, increment)
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH) + 1
-    CalendarYearMonth.from(year, month, calendar.getTimeZone)
+    val zonedDateTime = asJavaZonedDateTimeOnMidnight
+    val newZonedDateTime = zonedDateTime.plusMonths(increment)
+    val year = newZonedDateTime.getYear
+    val month = newZonedDateTime.getMonthValue
+    CalendarYearMonth.from(year, month, zoneId)
   }
 
+  @deprecated("Use asJavaZonedDateTimeOnMidnight method instead", "0.1.18")
   def asJavaCalendarOnMidnight(timeZone: TimeZone): Calendar = {
     val calendar = Calendar.getInstance(timeZone)
     calendar.set(Calendar.YEAR, year)
@@ -196,6 +214,10 @@ class CalendarYearMonth private[time] (
     calendar.set(Calendar.SECOND, 0)
     calendar.set(Calendar.MILLISECOND, 0)
     calendar
+  }
+
+  def asJavaZonedDateTimeOnMidnight(zoneId: ZoneId): ZonedDateTime = {
+    ZonedDateTime.of(year, month.value, 1, 0, 0, 0, 0, zoneId)
   }
 
   /**
@@ -215,8 +237,8 @@ class CalendarYearMonth private[time] (
    */
   def toString(pattern: String): String = {
     // Any timezone works, as long as the same one is used throughout.
-    val point = asTimePoint(timeZone)
-    point.toString(pattern, timeZone)
+    val point = asTimePoint(zoneId)
+    point.toString(pattern, zoneId)
   }
 
   /**
@@ -226,8 +248,11 @@ class CalendarYearMonth private[time] (
    * @param timeZone タイムゾーン
    * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
    */
-  def asTimePoint(timeZone: TimeZone = TimeZones.Default): TimePoint =
-    TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, timeZone)
+  def asTimePoint(timeZone: TimeZone): TimePoint =
+    asTimePoint(timeZone.toZoneId)
+
+  def asTimePoint(zoneId: ZoneId = this.zoneId): TimePoint =
+    TimePoint.at(year, month, DayOfMonth(1), 0, 0, 0, 0, zoneId)
 
 }
 
@@ -245,8 +270,12 @@ object CalendarYearMonth {
    * @param month 月
    * @return [[org.sisioh.baseunits.scala.time.CalendarYearMonth]]
    */
-  def apply(year: Int, month: Int, timeZone: TimeZone = TimeZones.Default): CalendarYearMonth =
-    from(year, month, timeZone)
+  @deprecated("Use apply(year: Int, month: Int, zoneId: ZoneId) method instead", "0.1.18")
+  def apply(year: Int, month: Int, timeZone: TimeZone): CalendarYearMonth =
+    from(year, month, timeZone.toZoneId)
+
+  def apply(year: Int, month: Int, zoneId: ZoneId = ZoneIds.Default): CalendarYearMonth =
+    from(year, month, zoneId)
 
   /**
    * 指定した年月を表す、[[CalendarYearMonth]]のインスタンスを生成する。
@@ -257,8 +286,12 @@ object CalendarYearMonth {
    * @return [[CalendarDate]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合
    */
+  @deprecated("Use from(year: Int, month: Int, zoneId: ZoneId) method instead", "0.1.18")
   def from(year: Int, month: Int, timeZone: TimeZone): CalendarYearMonth =
-    new CalendarYearMonth(year, MonthOfYear(month), timeZone)
+    new CalendarYearMonth(year, MonthOfYear(month), timeZone.toZoneId)
+
+  def from(year: Int, month: Int, zoneId: ZoneId): CalendarYearMonth =
+    new CalendarYearMonth(year, MonthOfYear(month), zoneId)
 
   /**
    * 抽出子メソッド。
@@ -278,7 +311,7 @@ object CalendarYearMonth {
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合
    */
   def from(year: Int, month: Int): CalendarYearMonth =
-    from(year, month, TimeZones.Default)
+    from(year, month, ZoneIds.Default)
 
   /**
    * 指定した年月を表す、[[CalendarYearMonth]]のインスタンスを生成する。
@@ -288,7 +321,7 @@ object CalendarYearMonth {
    * @return [[CalendarYearMonth]]
    */
   def from(year: Int, month: MonthOfYear): CalendarYearMonth =
-    from(year, month, TimeZones.Default)
+    from(year, month, ZoneIds.Default)
 
   /**
    * 指定した年月を表す、[[CalendarYearMonth]] のインスタンスを生成する。
@@ -298,8 +331,12 @@ object CalendarYearMonth {
    * @param timeZone タイムゾーン
    * @return [[CalendarYearMonth]]
    */
+  @deprecated("Use from(year: Int, month: MonthOfYear, zoneId: ZoneId) method instead", "0.1.18")
   def from(year: Int, month: MonthOfYear, timeZone: TimeZone): CalendarYearMonth =
-    new CalendarYearMonth(year, month, timeZone)
+    new CalendarYearMonth(year, month, timeZone.toZoneId)
+
+  def from(year: Int, month: MonthOfYear, zoneId: ZoneId): CalendarYearMonth =
+    new CalendarYearMonth(year, month, zoneId)
 
   /**
    * 指定した年月を表す、[[CalendarYearMonth]] のインスタンスを生成する。
@@ -309,10 +346,17 @@ object CalendarYearMonth {
    * @return [[CalendarYearMonth]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): CalendarYearMonth = {
+  @deprecated("Use parse(dateString: String, pattern: String, zoneId: ZoneId) method instead", "0.1.18")
+  def parse(dateString: String, pattern: String, timeZone: TimeZone): CalendarYearMonth = {
     //Any timezone works, as long as the same one is used throughout.
     val point = TimePoint.parse(dateString, pattern, timeZone)
-    CalendarYearMonth.from(point)
+    CalendarYearMonth.from(point, timeZone.toZoneId)
+  }
+
+  def parse(dateString: String, pattern: String, zoneId: ZoneId = ZoneIds.Default): CalendarYearMonth = {
+    //Any timezone works, as long as the same one is used throughout.
+    val point = TimePoint.parse(dateString, pattern, zoneId)
+    CalendarYearMonth.from(point, zoneId)
   }
 
   /**
@@ -322,17 +366,29 @@ object CalendarYearMonth {
    * @param timePoint 瞬間
    * @return [[CalendarDate]]
    */
-  def from(timePoint: TimePoint, timeZone: TimeZone = TimeZones.Default): CalendarYearMonth = {
-    val calendar = timePoint.asJavaCalendar(timeZone)
-    CalendarYearMonth.from(calendar)
+  @deprecated("Use from(timePoint: TimePoint, zoneId: ZoneId) method instead", "0.1.18")
+  def from(timePoint: TimePoint, timeZone: TimeZone): CalendarYearMonth = from(timePoint, timeZone.toZoneId)
+
+  def from(timePoint: TimePoint, zoneId: ZoneId = ZoneIds.Default): CalendarYearMonth = {
+    val zonedDateTime = timePoint.asJavaZonedDateTime(zoneId)
+    CalendarYearMonth.from(zonedDateTime)
   }
 
+  @deprecated("Use from(zonedDateTime: ZonedDateTime) method instead", "0.1.18")
   private[time] def from(calendar: Calendar): CalendarYearMonth = {
     // CHECKSTYLE IGNORE THIS LINE
     // Use timezone already set in calendar.
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH) + 1 // T&M Lib counts January as 1
     CalendarYearMonth.from(year, month, calendar.getTimeZone)
+  }
+
+  private[time] def from(zonedDateTime: ZonedDateTime): CalendarYearMonth = {
+    // CHECKSTYLE IGNORE THIS LINE
+    // Use timezone already set in calendar.
+    val year = zonedDateTime.getYear
+    val month = zonedDateTime.getMonthValue
+    CalendarYearMonth.from(year, month, zonedDateTime.getZone)
   }
 
 }

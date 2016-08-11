@@ -37,8 +37,8 @@ class TimeRateTest extends AssertionsForJUnit {
     assert(rate.over(Duration.hours(1)) == BigDecimal(6000.00))
 
     assert(rate.toString == "100.0 per 1 minute")
-    assert(rate.breachEncapsulationOfQuantity == BigDecimal(100))
-    assert(rate.breachEncapsulationOfUnit == Duration.minutes(1))
+    assert(rate.quantity == BigDecimal(100))
+    assert(rate.unit == Duration.minutes(1))
   }
 
   /**
@@ -91,9 +91,6 @@ class TimeRateTest extends AssertionsForJUnit {
     assert(rate == (TimeRate(11.00, Duration.days(2))))
     assert(rate.equals(rate) == (true))
     assert(rate.equals(TimeRate(11.00, Duration.days(2))) == true)
-    //		assert(rate.equals(new TimeRate(11.00, Duration.days(2)) {
-    //		})==(false))
-    assert(rate.equals(null) == false)
     assert(rate.equals(TimeRate(11.00, Duration.days(1))) == false)
     assert(rate.equals(TimeRate(11.00, Duration.months(2))) == false)
     assert(rate.equals(TimeRate(11.01, Duration.days(2))) == false)

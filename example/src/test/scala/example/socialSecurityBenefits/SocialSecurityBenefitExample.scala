@@ -23,7 +23,7 @@ import org.junit.{ Ignore, Test }
 import org.scalatest.Assertions
 import org.sisioh.baseunits.scala.intervals.Limit
 import org.sisioh.baseunits.scala.money.Money
-import org.sisioh.baseunits.scala.time.{ CalendarDate, CalendarInterval }
+import org.sisioh.baseunits.scala.time.{ CalendarDate, CalendarInterval, ZoneIds }
 import org.sisioh.baseunits.scala.util.Ratio
 
 class SocialSecurityBenefitExample extends Assertions {
@@ -75,7 +75,7 @@ class SocialSecurityBenefitExample extends Assertions {
      */
 
     // Does beneficiary attain age 72 during the benefit year 1972?
-    val y1979 = CalendarInterval.year(1979)
+    val y1979 = CalendarInterval.year(1979, ZoneIds.Default)
     val birthday72 = CalendarDate.from(1979, 7, 15)
     assertTrue(y1979.includes(Limit(birthday72)))
 

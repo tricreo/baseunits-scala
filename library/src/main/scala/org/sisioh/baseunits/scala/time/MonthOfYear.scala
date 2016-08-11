@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.time.{ LocalDate, Month, ZoneId }
 import java.util.{ Calendar, GregorianCalendar, TimeZone }
 
 /**
@@ -31,7 +32,10 @@ sealed class MonthOfYear private[time] (
     val calendarValue:      Int
 ) {
 
-  val month = calendarValue + 1
+  val value = calendarValue + 1
+
+  lazy val asJavaMonth: Month =
+    java.time.Month.of(value)
 
   /**
    * このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
@@ -83,7 +87,10 @@ sealed class MonthOfYear private[time] (
    * @param year 年
    * @return 年月
    */
-  def on(year: Int, timeZone: TimeZone = TimeZones.Default): CalendarYearMonth = CalendarYearMonth.from(year, this, timeZone)
+  @deprecated("Use on(year: Int, zoneId: ZoneId) method instead", "0.1.18")
+  def on(year: Int, timeZone: TimeZone): CalendarYearMonth = CalendarYearMonth.from(year, this, timeZone.toZoneId)
+
+  def on(year: Int, zoneId: ZoneId = ZoneIds.Default): CalendarYearMonth = CalendarYearMonth.from(year, this, zoneId)
 
   /**
    * その月の最終日を取得する。
@@ -104,7 +111,7 @@ object MonthOfYear {
 
   def apply(month: Int): MonthOfYear = {
     Seq(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).find(
-      _.month == month
+      _.value == month
     ).get
   }
 
@@ -114,8 +121,8 @@ object MonthOfYear {
   /** Feburary */
   val Feb = new MonthOfYear(DayOfMonth(28), Calendar.FEBRUARY) {
     override def getLastDayOfThisMonth(year: Int): DayOfMonth = {
-      val calendar = new GregorianCalendar(year, 2, 1)
-      if (calendar.isLeapYear(year)) DayOfMonth(29) else DayOfMonth(28)
+      val date = LocalDate.of(year, 2, 1)
+      if (date.isLeapYear) DayOfMonth(29) else DayOfMonth(28)
     }
   }
 

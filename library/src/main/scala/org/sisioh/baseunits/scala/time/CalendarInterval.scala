@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.time.ZoneId
 import java.util.{ Calendar, TimeZone }
 
 import org.sisioh.baseunits.scala.intervals.{ Interval, Limit, LimitValue, Limitless }
@@ -30,7 +31,7 @@ import org.sisioh.baseunits.scala.intervals.{ Interval, Limit, LimitValue, Limit
  *
  * @author j5ik2o
  * @param startValue 開始日
- * @param endValue 終了日
+ * @param endValue   終了日
  */
 class CalendarInterval protected (
   startValue: LimitValue[CalendarDate],
@@ -46,10 +47,13 @@ class CalendarInterval protected (
    * @param timeZone タイムゾーン
    * @return 時間の期間
    */
-  def asTimeInterval(timeZone: TimeZone = TimeZones.Default): TimeInterval = {
-    val startPoint = lowerLimit.toValue.asTimeInterval(timeZone).start
-    val endPoint = upperLimit.toValue.asTimeInterval(timeZone).end
-    TimeInterval.over(startPoint, endPoint, timeZone)
+  @deprecated("Use asTimeInterval(zoneId: ZoneId) method instead", "0.1.18")
+  def asTimeInterval(timeZone: TimeZone): TimeInterval = asTimeInterval(timeZone.toZoneId)
+
+  def asTimeInterval(zoneId: ZoneId = ZoneIds.Default): TimeInterval = {
+    val startPoint = lowerLimit.toValue.asTimeInterval(zoneId).start
+    val endPoint = upperLimit.toValue.asTimeInterval(zoneId).end
+    TimeInterval.over(startPoint, endPoint)
   }
 
   /**
@@ -90,7 +94,7 @@ class CalendarInterval protected (
       }
 
       override def next = {
-        if (hasNext == false) {
+        if (!hasNext) {
           throw new NoSuchElementException
         }
         val current = _next
@@ -111,7 +115,6 @@ class CalendarInterval protected (
    * <li>2009/01/03</li>
    * <li>2009/01/04</li>
    * </ol>
-   *
    *
    * この期間が終了日（上側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
    * `true`を返すので、無限ループに注意すること。
@@ -173,9 +176,9 @@ class CalendarInterval protected (
    */
   lazy val lengthInDaysInt: Int = {
     require(hasLowerLimit && hasUpperLimit)
-    val calStart = start.toValue.asJavaCalendarOnMidnight
-    val calEnd = end.toValue.plusDays(1).asJavaCalendarOnMidnight
-    val diffMillis = calEnd.getTimeInMillis - calStart.getTimeInMillis
+    val calStart = start.toValue.asJavaZonedDateTimeOnMidnight
+    val calEnd = end.toValue.plusDays(1).asJavaZonedDateTimeOnMidnight
+    val diffMillis = calEnd.toInstant.toEpochMilli - calStart.toInstant.toEpochMilli
     (diffMillis / TimeUnitConversionFactor.MillisecondsPerDay.value).asInstanceOf[Int]
   }
 
@@ -200,10 +203,10 @@ class CalendarInterval protected (
    */
   lazy val lengthInMonthsInt: Int = {
     require(hasLowerLimit && hasUpperLimit)
-    val calStart = start.toValue.asJavaCalendarOnMidnight
-    val calEnd = end.toValue.plusDays(1).asJavaCalendarOnMidnight
-    val yearDiff = calEnd.get(Calendar.YEAR) - calStart.get(Calendar.YEAR)
-    val monthDiff = yearDiff * 12 + calEnd.get(Calendar.MONTH) - calStart.get(Calendar.MONTH)
+    val calStart = start.toValue.asJavaZonedDateTimeOnMidnight
+    val calEnd = end.toValue.plusDays(1).asJavaZonedDateTimeOnMidnight
+    val yearDiff = calEnd.getYear - calStart.getYear
+    val monthDiff = yearDiff * 12 + calEnd.getMonth.getValue - calStart.getMonth.getValue
     monthDiff
   }
 
@@ -237,13 +240,12 @@ class CalendarInterval protected (
    * <li>[2009/01/09, 2009/01/10]</li>
    * </ol>
    *
-   *
    * この期間が終了日（上側限界）を持たない場合、 [[scala.collection.Iterator]] `hasNext()`は常に
    * `true`を返すので、無限ループに注意すること。
    *
    * @param subintervalLength 反復子が返す期間の長さ
    * @return 期間の反復子
-   * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
+   * @throws IllegalStateException    この期間が開始日（下側限界）を持たない場合
    * @throws IllegalArgumentException 引数subintervalLengthの長さ単位が「日」未満の場合
    */
   def subintervalIterator(subintervalLength: Duration): Iterator[CalendarInterval] = {
@@ -288,7 +290,7 @@ object CalendarInterval {
    * インスタンスを生成する。
    *
    * @param startValue 開始日
-   * @param endValue 終了日
+   * @param endValue   終了日
    * @return [[org.sisioh.baseunits.scala.time.CalendarInterval]]
    */
   def apply(startValue: LimitValue[CalendarDate], endValue: LimitValue[CalendarDate]): CalendarInterval =
@@ -331,7 +333,7 @@ object CalendarInterval {
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
    * @param start 開始日
-   * @param end 終了日
+   * @param end   終了日
    * @return 期間
    * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
    */
@@ -343,21 +345,33 @@ object CalendarInterval {
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
-   * @param startYear 開始日の年
+   * @param startYear  開始日の年
    * @param startMonth 開始日の月（1〜12）
-   * @param startDay 開始日の日
-   * @param endYear 終了日の年
-   * @param endMonth 終了日の月（1〜12）
-   * @param endDay 終了日の日
+   * @param startDay   開始日の日
+   * @param endYear    終了日の年
+   * @param endMonth   終了日の月（1〜12）
+   * @param endDay     終了日の日
    * @return 期間
    * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
    */
+  @deprecated("Use inclusive(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int, zoneId: ZoneId) method instead", "0.1.18")
   def inclusive(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int,
-                endDay: Int, timeZone: TimeZone = TimeZones.Default): CalendarInterval = {
+                endDay: Int, timeZone: TimeZone): CalendarInterval = {
     val startDate = CalendarDate.from(startYear, startMonth, startDay, timeZone)
     val endDate = CalendarDate.from(endYear, endMonth, endDay, timeZone)
     new CalendarInterval(Limit(startDate), Limit(endDate))
   }
+
+  def inclusive(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int,
+                endDay: Int, zoneId: ZoneId): CalendarInterval = {
+    val startDate = CalendarDate.from(startYear, startMonth, startDay, zoneId)
+    val endDate = CalendarDate.from(endYear, endMonth, endDay, zoneId)
+    new CalendarInterval(Limit(startDate), Limit(endDate))
+  }
+
+  def inclusive(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int,
+                endDay: Int): CalendarInterval =
+    inclusive(startYear, startMonth, startDay, endYear, endMonth, endDay, ZoneIds.Default)
 
   /**
    * 指定した年月の1日からその月末までの、期間を生成する。
@@ -368,7 +382,7 @@ object CalendarInterval {
    * @return 期間
    */
   def month(month: CalendarYearMonth): CalendarInterval = {
-    val startDate = CalendarDate.from(month, DayOfMonth(1), month.timeZone)
+    val startDate = CalendarDate.from(month, DayOfMonth(1), month.zoneId)
     val endMonth = startDate.plusMonths(1)
     val endDate = endMonth.plusDays(-1)
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
@@ -379,27 +393,41 @@ object CalendarInterval {
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
-   * @param year 開始日の年
-   * @param _month 開始日の月（1〜12）
+   * @param year   開始日の年
+   * @param month 開始日の月（1〜12）
    * @return 期間
    */
-  def month(year: Int, _month: Int, timeZone: TimeZone): CalendarInterval =
-    month(year, MonthOfYear(_month), timeZone)
+  @deprecated("Use month(year: Int, _month: Int, zoneId: ZoneId) method instead", "0.1.18")
+  def month(year: Int, month: Int, timeZone: TimeZone): CalendarInterval =
+    CalendarInterval.month(year, MonthOfYear(month), timeZone.toZoneId)
+
+  def month(year: Int, month: Int, zoneId: ZoneId): CalendarInterval =
+    CalendarInterval.month(year, MonthOfYear(month), zoneId)
+
+  def month(year: Int, month: Int): CalendarInterval =
+    CalendarInterval.month(year, MonthOfYear(month), ZoneIds.Default)
 
   /**
    * 指定した年月の1日からその月末までの、期間を生成する。
    *
    * 生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。
    *
-   * @param year 開始日の年
+   * @param year  開始日の年
    * @param month 開始日の月
    * @return 期間
    */
-  def month(year: Int, month: MonthOfYear, timeZone: TimeZone): CalendarInterval = {
-    val startDate = CalendarDate.from(year, month, DayOfMonth(1), timeZone)
+  @deprecated("Use month(year: Int, month: MonthOfYear, zoneId: ZoneId) method instead", "0.1.18")
+  def month(year: Int, month: MonthOfYear, timeZone: TimeZone): CalendarInterval =
+    CalendarInterval.month(year, month, timeZone.toZoneId)
+
+  def month(year: Int, month: MonthOfYear, zoneId: ZoneId): CalendarInterval = {
+    val startDate = CalendarDate.from(year, month, DayOfMonth(1), zoneId)
     val endDate = startDate.plusMonths(1).plusDays(-1)
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
   }
+
+  def month(year: Int, month: MonthOfYear): CalendarInterval =
+    CalendarInterval.month(year, month, ZoneIds.Default)
 
   /**
    * 開始日と期間の長さより、期間を生成する。
@@ -408,7 +436,7 @@ object CalendarInterval {
    *
    * 引数 `length` の期間の長さの単位が "日" 未満である場合は、開始日と終了日は同日となる。
    *
-   * @param start 開始日（下側限界値）
+   * @param start  開始日（下側限界値）
    * @param length 期間の長さ
    * @return 期間
    */
@@ -429,9 +457,16 @@ object CalendarInterval {
    * @param year 開始日の年
    * @return 期間
    */
-  def year(year: Int, timeZone: TimeZone = TimeZones.Default): CalendarInterval = {
+  @deprecated("Use year(year: Int, zoneId: ZoneId) method instead", "0.1.18")
+  def year(year: Int, timeZone: TimeZone): CalendarInterval = {
     val startDate = CalendarDate.from(year, 1, 1, timeZone)
     val endDate = CalendarDate.from(year + 1, 1, 1, timeZone).plusDays(-1)
+    CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
+  }
+
+  def year(year: Int, zoneId: ZoneId): CalendarInterval = {
+    val startDate = CalendarDate.from(year, 1, 1, zoneId)
+    val endDate = CalendarDate.from(year + 1, 1, 1, zoneId).plusDays(-1)
     CalendarInterval.inclusive(Limit(startDate), Limit(endDate))
   }
 

@@ -19,13 +19,14 @@
 package org.sisioh.baseunits.scala.time
 
 import java.text.ParseException
+import java.time.{ ZoneId, ZonedDateTime }
 import java.util.TimeZone
 
 /**
  * カレンダー上の特定の「年月日時分」を表すクラス。
  *
  * [[java.util.Date]]と異なり、分未満（秒以下）の概念を持っていない。また、
- * [[org.sisioh.baseunits.scala.time.TimePoint]]と異なり、
+ * [[TimePoint]]と異なり、
  * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。
  *
  * @author j5ik2o
@@ -40,13 +41,33 @@ class CalendarDateTime private[time] (
 
   /**
    * 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
-   * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
+   * [[TimePoint]] 型のインスタンスを返す。
    *
    * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
-  def asTimePoint(timeZone: TimeZone = TimeZones.Default): TimePoint =
-    TimePoint.from(date, time, timeZone)
+  @deprecated("Use asTimePoint(zoneId: ZoneId) method instead", "0.1.18")
+  def asTimePoint(timeZone: TimeZone): TimePoint =
+    TimePoint.from(date, time, timeZone.toZoneId)
+
+  /**
+   * 指定したゾーンIDにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
+   * [[TimePoint]] 型のインスタンスを返す。
+   *
+   * @param zoneId [[ZoneId]]
+   * @return [[TimePoint]]
+   */
+  def asTimePoint(zoneId: ZoneId = ZoneIds.Default): TimePoint =
+    TimePoint.from(date, time, zoneId)
+
+  /**
+   * デフォルトのゾーンIDにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について
+   * [[TimePoint]] 型のインスタンスを返す。
+   *
+   * @return [[TimePoint]]
+   */
+  def asZonedDateTime(zoneId: ZoneId = ZoneIds.Default): ZonedDateTime =
+    ZonedDateTime.of(date.asLocalDate, time.asLocalTime, zoneId)
 
   /**
    * このオブジェクトの`date`フィールド（年月日）を返す。
@@ -124,9 +145,19 @@ class CalendarDateTime private[time] (
    * @param timeZone タイムゾーン
    * @return 整形済み時間文字列
    */
-  def toString(pattern: String, timeZone: TimeZone = TimeZones.Default): String = {
-    val point = asTimePoint(timeZone)
-    point.toString(pattern, timeZone)
+  @deprecated("Use toString(pattern: String, zoneId: ZoneId) method instead", "0.1.18")
+  def toString(pattern: String, timeZone: TimeZone): String = toString(pattern, timeZone.toZoneId)
+
+  /**
+   * この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
+   *
+   * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
+   * @param zoneId  ゾーンID
+   * @return 整形済み時間文字列
+   */
+  def toString(pattern: String, zoneId: ZoneId = ZoneIds.Default): String = {
+    val point = asTimePoint(zoneId)
+    point.toString(pattern, zoneId)
   }
 
 }
@@ -143,72 +174,125 @@ object CalendarDateTime {
    *
    * @param aDate [[org.sisioh.baseunits.scala.time.CalendarDate]]
    * @param aTime [[org.sisioh.baseunits.scala.time.TimeOfDay]]
-   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
+   * @return [[CalendarDateTime]]
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
+   *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
+   *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def apply(aDate: CalendarDate, aTime: TimeOfDay): CalendarDateTime = from(aDate, aTime)
 
   /**
    * 抽出子メソッド。
    *
-   * @param calendarDateTime [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
+   * @param calendarDateTime [[CalendarDateTime]]
    * @return `Option[(CalendarDate,TimeOfDay)]`
    */
   def unapply(calendarDateTime: CalendarDateTime): Option[(CalendarDate, TimeOfDay)] =
     Some(calendarDateTime.date, calendarDateTime.time)
 
   /**
-   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
+   * 指定した年月日時分を表す、[[CalendarDateTime]]のインスタンスを生成する。
    *
    * @param aDate 年月日
    * @param aTime 時分
-   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
+   * @return [[CalendarDateTime]]
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
+   *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
+   *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(aDate: CalendarDate, aTime: TimeOfDay): CalendarDateTime = new CalendarDateTime(aDate, aTime)
 
   /**
-   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
+   * 指定した年月日時分を表す、[[CalendarDateTime]]のインスタンスを生成する。
+   *
+   * @param zonedDateTime [[ZonedDateTime]]
+   * @return [[CalendarDateTime]]
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
+   *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
+   *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
+   */
+  def from(zonedDateTime: ZonedDateTime): CalendarDateTime = {
+    val calendarDate = CalendarDate.from(zonedDateTime.toLocalDate)
+    val timeOfDay = TimeOfDay.from(zonedDateTime.toLocalTime)
+    from(calendarDate, timeOfDay)
+  }
+
+  /**
+   * 指定した年月日を時分表す、[[CalendarDateTime]]のインスタンスを生成する。
    *
    * @param year   西暦年をあらわす数
    * @param month  月をあらわす正数（1〜12）
    * @param day    日をあらわす正数（1〜31）
    * @param hour   時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
-   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
+   * @return [[CalendarDateTime]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
    *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
    *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int): CalendarDateTime =
-    from(year, month, day, hour, minute, TimeZones.Default)
+    from(year, month, day, hour, minute, ZoneIds.Default)
 
   /**
-   * 指定した年月日を時分表す、[[org.sisioh.baseunits.scala.time.CalendarDateTime]]のインスタンスを生成する。
+   * 指定した年月日を時分表す、[[CalendarDateTime]]のインスタンスを生成する。
    *
    * @param year     西暦年をあらわす数
    * @param month    月をあらわす正数（1〜12）
    * @param day      日をあらわす正数（1〜31）
    * @param hour     時をあらわす正数（0〜23）
    * @param minute   分をあらわす正数（0〜59）
-   * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.CalendarDateTime]]
+   * @param timeZone [[TimeZone]]
+   * @return [[CalendarDateTime]]
    * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
    *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
    *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
    */
+  @deprecated("Use from(year: Int, month: Int, day: Int, hour: Int, minute: Int, zoneId: ZoneId) method instead", "0.1.18")
   def from(year: Int, month: Int, day: Int, hour: Int, minute: Int, timeZone: TimeZone): CalendarDateTime =
-    new CalendarDateTime(CalendarDate.from(year, month, day, timeZone), TimeOfDay.from(hour, minute))
+    new CalendarDateTime(CalendarDate.from(year, month, day, timeZone.toZoneId), TimeOfDay.from(hour, minute))
+
+  /**
+   * 指定した年月日を時分表す、[[CalendarDateTime]]のインスタンスを生成する。
+   *
+   * @param year   西暦年をあらわす数
+   * @param month  月をあらわす正数（1〜12）
+   * @param day    日をあらわす正数（1〜31）
+   * @param hour   時をあらわす正数（0〜23）
+   * @param minute 分をあらわす正数（0〜59）
+   * @param zoneId [[ZoneId]]
+   * @return [[CalendarDateTime]]
+   * @throws IllegalArgumentException 引数`month`が1〜12の範囲ではない場合もしくは、
+   *                                  引数`day`が1〜31の範囲ではない場合もしくは、引数`hour`が0〜23の範囲ではない場合もしくは、
+   *                                  引数`minute`が0〜59の範囲ではない場合もしくは、引数`day`が`yearMonth`の月に存在しない場合
+   */
+  def from(year: Int, month: Int, day: Int, hour: Int, minute: Int, zoneId: ZoneId): CalendarDateTime =
+    new CalendarDateTime(CalendarDate.from(year, month, day, zoneId), TimeOfDay.from(hour, minute))
 
   /**
    * 指定した年月日時分を表す、[[CalendarDate]]のインスタンスを生成する。
    *
    * @param dateTimeString 年月日時分を表す文字列
    * @param pattern        解析パターン文字列
+   * @param timeZone       [[TimeZone]]
    * @return [[CalendarDateTime]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): CalendarDateTime = {
+  @deprecated("Use parse(dateTimeString: String, pattern: String, zoneId: ZoneId) method instead", "0.1.18")
+  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone): CalendarDateTime = parse(dateTimeString, pattern, timeZone.toZoneId)
+
+  /**
+   * 指定した年月日時分を表す、[[CalendarDate]]のインスタンスを生成する。
+   *
+   * @param dateTimeString 年月日時分を表す文字列
+   * @param pattern        解析パターン文字列
+   * @param zoneId         [[ZoneId]]
+   * @return [[CalendarDateTime]]
+   * @throws ParseException 文字列の解析に失敗した場合
+   */
+  def parse(dateTimeString: String, pattern: String, zoneId: ZoneId = ZoneIds.Default): CalendarDateTime = {
     //Any timezone works, as long as the same one is used throughout.
-    val point = TimePoint.parse(dateTimeString, pattern, timeZone)
-    CalendarDateTime.from(point.asCalendarDate(timeZone), point.asTimeOfDay(timeZone))
+    val point = TimePoint.parse(dateTimeString, pattern, zoneId)
+    CalendarDateTime.from(point.asCalendarDate(zoneId), point.asTimeOfDay(zoneId))
   }
+
 }

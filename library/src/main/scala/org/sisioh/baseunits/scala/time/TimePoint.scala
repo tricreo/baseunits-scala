@@ -19,6 +19,7 @@
 package org.sisioh.baseunits.scala.time
 
 import java.text.{ ParseException, SimpleDateFormat }
+import java.time._
 import java.util.{ Calendar, TimeZone, Date => JDate }
 
 import org.sisioh.baseunits.scala.intervals.{ Limit, LimitValue }
@@ -34,23 +35,33 @@ import org.sisioh.baseunits.scala.intervals.{ Limit, LimitValue }
 class TimePoint private[time] (val millisecondsFromEpoc: Long)
     extends Ordered[TimePoint] with Serializable {
 
+  lazy val asInstant: Instant = Instant.ofEpochMilli(millisecondsFromEpoc)
+
   /**
-   * このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、`java.util.Calendar`型として取得する。
+   * このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、[[java.util.Calendar]]型として取得する。
    *
    * @param timeZone タイムゾーン
-   * @return `java.util.Calendar`
+   * @return [[java.util.Calendar]]
    */
+  @deprecated("Use asJavaZonedDateTime method instead", "0.1.18")
   def asJavaCalendar(timeZone: TimeZone = TimeZones.Default): Calendar = {
     val result = Calendar.getInstance(timeZone)
-    result.setTime(asJavaUtilDate)
+    result.setTime(new JDate(millisecondsFromEpoc))
     result
   }
 
+  def asJavaZonedDateTime(zoneId: ZoneId = ZoneIds.Default): ZonedDateTime =
+    ZonedDateTime.ofInstant(asInstant, zoneId)
+
+  def asJavaLocalDateTime(zoneId: ZoneId = ZoneIds.Default): LocalDateTime =
+    asJavaZonedDateTime(zoneId).toLocalDateTime
+
   /**
-   * このオブジェクトが表現する瞬間を、`java.util.Date` 型として取得する。
+   * このオブジェクトが表現する瞬間を、[[java.util.Date]]型として取得する。
    *
    * @return [[java.util.Date]]
    */
+  @deprecated("Not Use this method", "0.1.18")
   lazy val asJavaUtilDate = new JDate(millisecondsFromEpoc)
 
   /**
@@ -59,9 +70,14 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    * @param timeZone タイムゾーン
    * @return 時分
    */
-  def asTimeOfDay(timeZone: TimeZone = TimeZones.Default): TimeOfDay = {
-    val calendar = asJavaCalendar(timeZone)
-    TimeOfDay.from(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
+  @deprecated("Use def asTimeOfDay(zoneId: ZoneId) method instead", "0.1.18")
+  def asTimeOfDay(timeZone: TimeZone): TimeOfDay = {
+    asTimeOfDay(timeZone.toZoneId)
+  }
+
+  def asTimeOfDay(zoneId: ZoneId = ZoneIds.Default): TimeOfDay = {
+    val localDateTime = LocalDateTime.ofInstant(asInstant, zoneId)
+    TimeOfDay.from(localDateTime.getHour, localDateTime.getMinute)
   }
 
   /**
@@ -71,7 +87,12 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    * @param timeZone タイムゾーン
    * @return 午前0時（深夜）の瞬間を表す [[TimePoint]]
    */
-  def backToMidnight(timeZone: TimeZone = TimeZones.Default): LimitValue[TimePoint] = asCalendarDate(timeZone).asTimeInterval(timeZone).start
+  @deprecated("Use backToMidnight(zoneId: ZoneId) method instead", "0.1.18")
+  def backToMidnight(timeZone: TimeZone): LimitValue[TimePoint] =
+    asCalendarDate(timeZone.toZoneId).asTimeInterval(timeZone.toZoneId).start
+
+  def backToMidnight(zoneId: ZoneId = ZoneIds.Default): LimitValue[TimePoint] =
+    asCalendarDate(zoneId).asTimeInterval(zoneId).start
 
   /**
    * このオブジェクトの`millisecondsFromEpoc`フィールド（エポックからの経過ミリ秒）を返す。
@@ -86,14 +107,40 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
   /**
    * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
    *
-   * @param timeZone タイムゾーン
-   * @return 日付
+   * @param timeZone [[TimeZone]]
+   * @return [[CalendarDate]]
    */
-  def asCalendarDate(timeZone: TimeZone = TimeZones.Default): CalendarDate =
-    CalendarDate.from(this, timeZone)
+  @deprecated("Use asCalendarDate(zoneId: ZoneId) method instead", "0.1.18")
+  def asCalendarDate(timeZone: TimeZone): CalendarDate =
+    CalendarDate.from(this, timeZone.toZoneId)
 
-  def asCalendarDateTime(timeZone: TimeZone = TimeZones.Default): CalendarDateTime =
-    CalendarDateTime.from(asCalendarDate(timeZone), asTimeOfDay(timeZone))
+  /**
+   * このインスタンスが表現する瞬間の、指定したゾーンIDにおける日付を取得する。
+   *
+   * @param zoneId [[ZoneId]]
+   * @return [[CalendarDate]]
+   */
+  def asCalendarDate(zoneId: ZoneId = ZoneIds.Default): CalendarDate =
+    CalendarDate.from(this, zoneId)
+
+  /**
+   * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日時を取得する。
+   *
+   * @param timeZone [[TimeZone]]
+   * @return [[CalendarDateTime]]
+   */
+  @deprecated("Use asCalendarDateTime(zoneId: ZoneId) method instead", "0.1.18")
+  def asCalendarDateTime(timeZone: TimeZone): CalendarDateTime =
+    CalendarDateTime.from(asCalendarDate(timeZone.toZoneId), asTimeOfDay(timeZone.toZoneId))
+
+  /**
+   * このインスタンスが表現する瞬間の、指定したゾーンIDにおける日時を取得する。
+   *
+   * @param zoneId [[ZoneId]]
+   * @return [[CalendarDateTime]]
+   */
+  def asCalendarDateTime(zoneId: ZoneId = ZoneIds.Default): CalendarDateTime =
+    CalendarDateTime.from(asCalendarDate(zoneId), asTimeOfDay(zoneId))
 
   /**
    * 瞬間同士の比較を行う。
@@ -117,11 +164,11 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    * @see java.lang.Object#equals(java.lang.Object)
    */
   override def equals(obj: Any): Boolean = obj match {
-    case that: TimePoint => millisecondsFromEpoc == that.millisecondsFromEpoc
+    case that: TimePoint => asInstant == that.asInstant
     case _               => false
   }
 
-  override def hashCode: Int = 31 * (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)).asInstanceOf[Int]
+  override def hashCode: Int = 31 * asInstant.hashCode()
 
   /**
    * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
@@ -139,7 +186,7 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    * @param other 対象日時
    * @return 未来である場合は`true`、そうでない場合は`false`
    */
-  def isAfter(other: TimePoint): Boolean = millisecondsFromEpoc > other.millisecondsFromEpoc
+  def isAfter(other: TimePoint): Boolean = asInstant.isAfter(other.asInstant)
 
   /**
    * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
@@ -157,17 +204,20 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    * @param other 対象日時
    * @return 過去である場合は`true`、そうでない場合は`false`
    */
-  def isBefore(other: TimePoint): Boolean = millisecondsFromEpoc < other.millisecondsFromEpoc
+  def isBefore(other: TimePoint): Boolean = asInstant.isBefore(other.asInstant)
 
   /**
    * 指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間`other`の年月日が等価であるかを調べる。
    *
-   * @param other 対象瞬間
+   * @param other    対象瞬間
    * @param timeZone タイムゾーン
    * @return 等価である場合は`true`、そうでない場合は`false`
    */
-  def isSameDayAs(other: TimePoint, timeZone: TimeZone = TimeZones.Default): Boolean =
-    asCalendarDate(timeZone) == other.asCalendarDate(timeZone)
+  def isSameDayAs(other: TimePoint, timeZone: TimeZone): Boolean =
+    asCalendarDate(timeZone.toZoneId) == other.asCalendarDate(timeZone.toZoneId)
+
+  def isSameDayAs(other: TimePoint, zoneId: ZoneId = ZoneIds.Default): Boolean =
+    isSameDayAs(other, TimeZone.getTimeZone(zoneId))
 
   /**
    * この日時の、指定した時間の長さ分過去の日時を取得する。
@@ -175,10 +225,21 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    * @param duration 時間の長さ
    * @return 過去の日時
    */
-  def minus(duration: Duration, timeZone: TimeZone = TimeZones.Default): TimePoint =
-    duration.subtractedFrom(this, timeZone)
+  def minus(duration: Duration): TimePoint =
+    duration.subtractedFrom(this)
 
-  def -(duration: Duration)(implicit timeZone: TimeZone): TimePoint = minus(duration, timeZone)
+  def -(duration: Duration): TimePoint = minus(duration)
+
+  /**
+   * この日時から、指定した時間の長さ分未来の日時を取得する。
+   *
+   * @param duration 時間の長さ
+   * @return 未来の日時
+   */
+  def plus(duration: Duration): TimePoint =
+    duration.addedTo(this)
+
+  def +(duration: Duration): TimePoint = plus(duration)
 
   /**
    * このオブジェクトが表現する瞬間の、ちょうど1日後を取得する。
@@ -187,34 +248,30 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    *
    * @return 1日後
    */
-  def nextDay(timeZone: TimeZone = TimeZones.Default): TimePoint = this.+(Duration.days(1))(timeZone)
-
-  /**
-   * この日時から、指定した時間の長さ分未来の日時を取得する。
-   *
-   * @param duration 時間の長さ
-   * @return 未来の日時
-   */
-  def +(duration: Duration)(implicit timeZone: TimeZone): TimePoint = duration.addedTo(this, timeZone)
+  lazy val nextDay: TimePoint = this.+(Duration.days(1))
 
   /**
    * この瞬間の文字列表現を取得する。
    *
    * @see java.lang.Object#toString()
    */
-  override def toString: String = toString("yyyy/MM/dd HH:mm:ss", TimeZones.Default)
+  override def toString: String = toString("yyyy/MM/dd HH:mm:ss")
 
   /**
    * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
    *
-   * @param pattern [[java.text.SimpleDateFormat]]に基づくパターン
+   * @param pattern  [[java.text.SimpleDateFormat]]に基づくパターン
    * @param timeZone タイムゾーン
    * @return 整形済み時間文字列
    */
-  def toString(pattern: String, timeZone: TimeZone = TimeZones.Default): String = {
+  @deprecated("Use def toString(pattern: String, zoneId: ZoneId) method instead", "0.1.18")
+  def toString(pattern: String, timeZone: TimeZone): String =
+    toString(pattern, timeZone.toZoneId)
+
+  def toString(pattern: String, zoneId: ZoneId = ZoneIds.Default): String = {
     val format = new SimpleDateFormat(pattern)
-    format.setTimeZone(timeZone)
-    format.format(asJavaUtilDate)
+    format.setTimeZone(TimeZone.getTimeZone(zoneId))
+    format.format(new JDate(millisecondsFromEpoc))
   }
 
   /**
@@ -223,10 +280,10 @@ class TimePoint private[time] (val millisecondsFromEpoc: Long)
    * 生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。
    *
    * @param end 終了日時（上側限界値）. `LimitValue[TimePoint]`の場合は、限界がないことを表す
-   * @return [[org.sisioh.baseunits.scala.time.TimeInterval]]
+   * @return [[TimeInterval]]
    */
-  def until(end: LimitValue[TimePoint], timeZone: TimeZone = TimeZones.Default): TimeInterval =
-    TimeInterval.over(Limit(this), end, timeZone)
+  def until(end: LimitValue[TimePoint]): TimeInterval =
+    TimeInterval.over(Limit(this), end)
 
 }
 
@@ -241,7 +298,7 @@ object TimePoint {
    * インスタンスを生成する。
    *
    * @param milliseconds エポックからの経過ミリ秒
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def apply(milliseconds: Long): TimePoint = from(milliseconds)
 
@@ -256,67 +313,78 @@ object TimePoint {
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param yearMonth 年月
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
-   * @param second 秒
+   * @param yearMonth   年月
+   * @param date        日
+   * @param hour        時
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def at(yearMonth: CalendarYearMonth, date: DayOfMonth, hour: Int,
          minute: Int, second: Int, millisecond: Int): TimePoint =
-    at(yearMonth, date, hour, minute, second, millisecond, TimeZones.Default)
+    at(yearMonth, date, hour, minute, second, millisecond, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param yearMonth 年月
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
-   * @param second 秒
+   * @param yearMonth   年月
+   * @param date        日
+   * @param hour        時
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @param timeZone    タイムゾーン
+   * @return [[TimePoint]]
    */
+  @deprecated("Use at(yearMonth: CalendarYearMonth, date: DayOfMonth, hour: Int, minute: Int, second: Int, millisecond: Int, zoneId: ZoneId) method instead", "0.1.18")
   def at(yearMonth: CalendarYearMonth, date: DayOfMonth, hour: Int,
          minute: Int, second: Int, millisecond: Int, timeZone: TimeZone): TimePoint = {
     at(
       yearMonth.year,
-      yearMonth.month.month,
-      date.value, hour, minute, second, millisecond, timeZone
+      yearMonth.month.value,
+      date.value, hour, minute, second, millisecond, timeZone.toZoneId
+    )
+  }
+
+  def at(yearMonth: CalendarYearMonth, date: DayOfMonth, hour: Int,
+         minute: Int, second: Int, millisecond: Int, zoneId: ZoneId): TimePoint = {
+    at(
+      yearMonth.year,
+      yearMonth.month.value,
+      date.value, hour, minute, second, millisecond, zoneId
     )
   }
 
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
-   * @param second 秒
+   * @param year        年
+   * @param month       月（1〜12）
+   * @param date        日
+   * @param hour        時
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int): TimePoint =
-    at(year, month, date, hour, minute, second, millisecond, TimeZones.Default)
+    at(year, month, date, hour, minute, second, millisecond, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
-   * @param second 秒
+   * @param year        年
+   * @param month       月（1〜12）
+   * @param date        日
+   * @param hour        時
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @param timeZone    タイムゾーン
+   * @return [[TimePoint]]
    */
+  @deprecated("Use at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int, zoneId: ZoneId) method instead", "0.1.18")
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int, timeZone: TimeZone): TimePoint = {
     val calendar = Calendar.getInstance(timeZone)
     calendar.set(Calendar.YEAR, year)
@@ -329,183 +397,217 @@ object TimePoint {
     from(calendar.getTime.getTime)
   }
 
+  def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, millisecond: Int, zoneId: ZoneId): TimePoint = {
+    val zonedDateTime = ZonedDateTime.of(year, month, date, hour, minute, second, millisecond * 1000000, zoneId)
+    from(zonedDateTime)
+  }
+
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
+   * @param year   年
+   * @param month  月（1〜12）
+   * @param date   日
+   * @param hour   時
    * @param minute 分
    * @param second 秒
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int): TimePoint =
-    at(year, month, date, hour, minute, second, TimeZones.Default)
+    at(year, month, date, hour, minute, second, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
-   * @param second 秒
+   * @param year     年
+   * @param month    月（1〜12）
+   * @param date     日
+   * @param hour     時
+   * @param minute   分
+   * @param second   秒
    * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
+  @deprecated("Use at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, zoneId: ZoneId) method instead", "0.1.18")
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, timeZone: TimeZone): TimePoint =
-    at(year, month, date, hour, minute, second, 0, timeZone)
+    at(year, month, date, hour, minute, second, 0, timeZone.toZoneId)
+
+  def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, second: Int, zoneId: ZoneId): TimePoint =
+    at(year, month, date, hour, minute, second, 0, zoneId)
 
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
+   * @param year   年
+   * @param month  月（1〜12）
+   * @param date   日
+   * @param hour   時
    * @param minute 分
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int): TimePoint =
-    at(year, month, date, hour, minute, TimeZones.Default)
+    at(year, month, date, hour, minute, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
+   * @param year     年
+   * @param month    月（1〜12）
+   * @param date     日
+   * @param hour     時
+   * @param minute   分
    * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
+  @deprecated("Use at(year: Int, month: Int, date: Int, hour: Int, minute: Int, zoneId: ZoneId) method instead", "0.1.18")
   def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, timeZone: TimeZone): TimePoint =
-    at(year, month, date, hour, minute, 0, 0, timeZone)
+    at(year, month, date, hour, minute, 0, 0, timeZone.toZoneId)
+
+  def at(year: Int, month: Int, date: Int, hour: Int, minute: Int, zoneId: ZoneId): TimePoint =
+    at(year, month, date, hour, minute, 0, 0, zoneId)
 
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
-   * @param second 秒
+   * @param year        年
+   * @param month       月
+   * @param date        日
+   * @param hour        時
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int, millisecond: Int): TimePoint =
-    at(year, month, date, hour, minute, second, millisecond, TimeZones.Default)
+    at(year, month, date, hour, minute, second, millisecond, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月
-   * @param date 日
-   * @param hour 時
-   * @param minute 分
-   * @param second 秒
+   * @param year        年
+   * @param month       月
+   * @param date        日
+   * @param hour        時
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @param timeZone    タイムゾーン
+   * @return [[TimePoint]]
    */
+  @deprecated("Use at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int, millisecond: Int, zoneId: ZoneId) method instead", "0.1.18")
   def at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int,
          millisecond: Int, timeZone: TimeZone): TimePoint =
-    at(year, month.month, date.value, hour, minute, second, millisecond, timeZone)
+    at(year, month.value, date.value, hour, minute, second, millisecond, timeZone.toZoneId)
+
+  def at(year: Int, month: MonthOfYear, date: DayOfMonth, hour: Int, minute: Int, second: Int,
+         millisecond: Int, zoneId: ZoneId): TimePoint =
+    at(year, month.value, date.value, hour, minute, second, millisecond, zoneId)
 
   /**
    * デフォルトタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
-   * @param amPm 午前午後を表す文字列("AM", "PM"など)
-   * @param minute 分
-   * @param second 秒
+   * @param year        年
+   * @param month       月（1〜12）
+   * @param date        日
+   * @param hour        時
+   * @param amPm        午前午後を表す文字列("AM", "PM"など)
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数`hour`の値が0〜11の範囲ではない場合もしくは、
    *                                  引数`amPm`の値が `"AM"` または `"PM"` ではない場合
    */
   def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int, millisecond: Int): TimePoint = {
-    at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, TimeZones.Default)
+    at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, ZoneIds.Default)
   }
 
   /**
    * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
-   * @param hour 時
-   * @param amPm 午前午後を表す文字列("AM", "PM"など)
-   * @param minute 分
-   * @param second 秒
+   * @param year        年
+   * @param month       月（1〜12）
+   * @param date        日
+   * @param hour        時
+   * @param amPm        午前午後を表す文字列("AM", "PM"など)
+   * @param minute      分
+   * @param second      秒
    * @param millisecond ミリ秒
-   * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @param timeZone    タイムゾーン
+   * @return [[TimePoint]]
    * @throws IllegalArgumentException 引数`hour`の値が0〜11の範囲ではない場合もしくは、
    *                                  引数`amPm`の値が `"AM"` または `"PM"` ではない場合もしく
    */
+  @deprecated("Use at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int, millisecond: Int, zoneId: ZoneId) method instead", "0.1.18")
   def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int,
              millisecond: Int, timeZone: TimeZone): TimePoint =
-    at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, timeZone)
+    at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, timeZone.toZoneId)
+
+  def at12hr(year: Int, month: Int, date: Int, hour: Int, amPm: String, minute: Int, second: Int,
+             millisecond: Int, zoneId: ZoneId): TimePoint =
+    at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, zoneId)
 
   /**
    * デフォルトタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
    *
    * @param calendarDate 日付
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def atMidnight(calendarDate: CalendarDate): TimePoint =
-    atMidnight(calendarDate, TimeZones.Default)
+    atMidnight(calendarDate, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
    *
    * @param calendarDate 日付
-   * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @param timeZone     タイムゾーン
+   * @return [[TimePoint]]
    */
+  @deprecated("Use atMidnight(calendarDate: CalendarDate, zoneId: ZoneId) method instead", "0.1.18")
   def atMidnight(calendarDate: CalendarDate, timeZone: TimeZone): TimePoint =
     at(
       calendarDate.asCalendarMonth,
-      calendarDate.day, 0, 0, 0, 0, timeZone
+      calendarDate.day, 0, 0, 0, 0, timeZone.toZoneId
+    )
+
+  def atMidnight(calendarDate: CalendarDate, zoneId: ZoneId): TimePoint =
+    at(
+      calendarDate.asCalendarMonth,
+      calendarDate.day, 0, 0, 0, 0, zoneId
     )
 
   /**
    * デフォルトタイムゾーンにおける、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
    *
-   * @param year 年
+   * @param year  年
    * @param month 月（1〜12）
-   * @param date 日
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @param date  日
+   * @return [[TimePoint]]
    */
   def atMidnight(year: Int, month: Int, date: Int): TimePoint =
-    atMidnight(year, month, date, TimeZones.Default)
+    atMidnight(year, month, date, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
    *
-   * @param year 年
-   * @param month 月（1〜12）
-   * @param date 日
+   * @param year     年
+   * @param month    月（1〜12）
+   * @param date     日
    * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
+  @deprecated("Use atMidnight(year: Int, month: Int, date: Int, zoneId: ZoneId) method instead", "0.1.18")
   def atMidnight(year: Int, month: Int, date: Int, timeZone: TimeZone): TimePoint =
-    at(year, month, date, 0, 0, 0, 0, timeZone)
+    at(year, month, date, 0, 0, 0, 0, timeZone.toZoneId)
+
+  def atMidnight(year: Int, month: Int, date: Int, zoneId: ZoneId): TimePoint =
+    at(year, month, date, 0, 0, 0, 0, zoneId)
 
   /**
-   * [[java.util.Calendar]]を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
+   * [[java.util.Calendar]]を[[TimePoint]]に変換する。
    *
    * @param calendar 元となる日時情報を表す [[java.util.Calendar]]インスタンス
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def from(calendar: Calendar): TimePoint =
     from(calendar.getTime)
@@ -515,37 +617,60 @@ object TimePoint {
    *
    * @param date 日付
    * @param time 時間
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def from(date: CalendarDate, time: TimeOfDay): TimePoint =
-    from(date, time, TimeZones.Default)
+    from(date, time, ZoneIds.Default)
 
   /**
    * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
    *
-   * @param date 日付
-   * @param time 時間
+   * @param date     日付
+   * @param time     時間
    * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
+  @deprecated("Use from(date: CalendarDate, time: TimeOfDay, zoneId: ZoneId) method instead", "0.1.18")
   def from(date: CalendarDate, time: TimeOfDay, timeZone: TimeZone): TimePoint =
     at(date.asCalendarMonth, date.day, time.hour.value, time.minute.value,
-      0, 0, timeZone)
+      0, 0, timeZone.toZoneId)
+
+  def from(date: CalendarDate, time: TimeOfDay, zoneId: ZoneId): TimePoint =
+    at(date.asCalendarMonth, date.day, time.hour.value, time.minute.value,
+      0, 0, zoneId)
 
   /**
-   * `java.util.Date`を[[org.sisioh.baseunits.scala.time.TimePoint]]に変換する。
+   * [[java.util.Date]]を[[TimePoint]]に変換する。
    *
    * @param javaDate 元となる日時情報を表す [[java.util.Date]]インスタンス
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def from(javaDate: JDate): TimePoint =
     from(javaDate.getTime)
 
   /**
-   * エポックからの経過ミリ秒を [[org.sisioh.baseunits.scala.time.TimePoint]] に変換する。
+   * [[java.time.Instant]]を[[TimePoint]]に変換する。
+   *
+   * @param instant 元となる日時情報を表す [[java.time.Instant]]インスタンス
+   * @return [[TimePoint]]
+   */
+  def from(instant: Instant): TimePoint =
+    from(instant.toEpochMilli)
+
+  /**
+   * [[java.time.ZonedDateTime]]を[[TimePoint]]に変換する。
+   *
+   * @param zonedDateTime 元となる日時情報を表す [[java.time.ZonedDateTime]]インスタンス
+   * @return [[TimePoint]]
+   */
+  def from(zonedDateTime: ZonedDateTime): TimePoint =
+    from(zonedDateTime.toInstant.toEpochMilli)
+
+  /**
+   * エポックからの経過ミリ秒を [[TimePoint]] に変換する。
    *
    * @param milliseconds エポックからの経過ミリ秒
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @return [[TimePoint]]
    */
   def from(milliseconds: Long): TimePoint = {
     val result = new TimePoint(milliseconds)
@@ -556,17 +681,31 @@ object TimePoint {
 
   /**
    * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す
-   * [[org.sisioh.baseunits.scala.time.TimePoint]]を返す。
+   * [[TimePoint]]を返す。
    *
    * @param dateTimeString 日時を表す文字列
-   * @param pattern 解析パターン
-   * @param timeZone タイムゾーン
-   * @return [[org.sisioh.baseunits.scala.time.TimePoint]]
+   * @param pattern        解析パターン
+   * @param timeZone       タイムゾーン
+   * @return [[TimePoint]]
    * @throws ParseException 文字列の解析に失敗した場合
    */
-  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone = TimeZones.Default): TimePoint = {
+  @deprecated("Use parse(dateTimeString: String, pattern: String, zoneId: ZoneId) method instead", "0.1.18")
+  def parse(dateTimeString: String, pattern: String, timeZone: TimeZone): TimePoint =
+    parse(dateTimeString, pattern, timeZone.toZoneId)
+
+  /**
+   * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す
+   * [[TimePoint]]を返す。
+   *
+   * @param dateTimeString 日時を表す文字列
+   * @param pattern        解析パターン
+   * @param zoneId       ゾーンID
+   * @return [[TimePoint]]
+   * @throws ParseException 文字列の解析に失敗した場合
+   */
+  def parse(dateTimeString: String, pattern: String, zoneId: ZoneId = ZoneIds.Default): TimePoint = {
     val sdf = new SimpleDateFormat(pattern)
-    sdf.setTimeZone(timeZone)
+    sdf.setTimeZone(TimeZone.getTimeZone(zoneId))
     val date = sdf.parse(dateTimeString)
     from(date)
   }

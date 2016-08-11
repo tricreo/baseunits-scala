@@ -52,16 +52,29 @@ final class DayOfWeek private[time] (
  */
 object DayOfWeek {
 
-  val Sunday = new DayOfWeek(Calendar.SUNDAY, "SUNDAY")
-  val Monday = new DayOfWeek(Calendar.MONDAY, "MONDAY")
-  val Tuesday = new DayOfWeek(Calendar.TUESDAY, "TUESDAY")
-  val Wednesday = new DayOfWeek(Calendar.WEDNESDAY, "WEDNESDAY")
-  val Thursday = new DayOfWeek(Calendar.THURSDAY, "THURSDAY")
-  val Friday = new DayOfWeek(Calendar.FRIDAY, "FRIDAY")
-  val Saturday = new DayOfWeek(Calendar.SATURDAY, "SATURDAY")
+  val Mapping = Map(
+    java.time.DayOfWeek.SUNDAY -> Calendar.SUNDAY,
+    java.time.DayOfWeek.MONDAY -> Calendar.MONDAY,
+    java.time.DayOfWeek.TUESDAY -> Calendar.TUESDAY,
+    java.time.DayOfWeek.WEDNESDAY -> Calendar.WEDNESDAY,
+    java.time.DayOfWeek.THURSDAY -> Calendar.THURSDAY,
+    java.time.DayOfWeek.FRIDAY -> Calendar.FRIDAY,
+    java.time.DayOfWeek.SATURDAY -> Calendar.SATURDAY
+  )
+
+  val Sunday = new DayOfWeek(1, "SUNDAY")
+  val Monday = new DayOfWeek(2, "MONDAY")
+  val Tuesday = new DayOfWeek(3, "TUESDAY")
+  val Wednesday = new DayOfWeek(4, "WEDNESDAY")
+  val Thursday = new DayOfWeek(5, "THURSDAY")
+  val Friday = new DayOfWeek(6, "FRIDAY")
+  val Saturday = new DayOfWeek(7, "SATURDAY")
 
   val values = Seq(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
 
   def apply(value: Int): DayOfWeek = values.find(_.value == value).get
+
+  def apply(value: java.time.DayOfWeek): DayOfWeek =
+    apply(Mapping(value))
 
 }

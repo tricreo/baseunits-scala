@@ -30,7 +30,7 @@ class TimePointTest extends AssertionsForJUnit {
 
   @Test
   def test {
-    val GMT = TimeZone.getTimeZone("Universal")
+    val GMT = TimeZone.getTimeZone("Universal").toZoneId
     val tp = TimePoint.from(0L)
     assert(tp == TimePoint.from(0L))
 
@@ -53,7 +53,7 @@ class TimePointTest extends AssertionsForJUnit {
    */
   @Test
   def test01_asTimeOfDay {
-    val CST = TimeZone.getTimeZone("CST")
+    val CST = TimeZone.getTimeZone("CST").toZoneId
     val tp = TimePoint.at(2014, 10, 3, 23, 58, 19, CST)
     assert(tp.asTimeOfDay(CST) == TimeOfDay.from(hour = 23, minute = 58))
   }

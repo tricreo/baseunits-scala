@@ -30,32 +30,32 @@ class BusinessCalendarTest extends AssertionsForJUnit {
 
   def japaneseBusinessCalendar: BusinessCalendar = {
     val calendar = BusinessCalendar().
-      addHolidaySpec(DateSpecification.fixed(1, 1)). // 元旦
-      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.Monday, 2)). // 成人の日
-      addHolidaySpec(DateSpecification.fixed(2, 11)). // 建国記念日
-      addHoliday(CalendarDate.from(2010, 3, 21)). // 春分の日
-      addHolidaySpec(DateSpecification.fixed(4, 29)). // 昭和の日
-      addHolidaySpec(DateSpecification.fixed(5, 3)). // 憲法記念日
-      addHolidaySpec(DateSpecification.fixed(5, 4)). // みどりの日
-      addHolidaySpec(DateSpecification.fixed(5, 5)). // こどもの日
-      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.Monday, 3)). // 海の日
-      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.Monday, 3)). // 敬老の日
-      addHoliday(CalendarDate.from(2010, 9, 23)). // 秋分の日
-      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.Monday, 2)). // 体育の日
-      addHolidaySpec(DateSpecification.fixed(11, 3)). // 文化の日
-      addHolidaySpec(DateSpecification.fixed(11, 23)). // 勤労感謝の日
-      addHolidaySpec(DateSpecification.fixed(12, 23)) // 天皇誕生日
+      addHolidaySpec(DateSpecification.fixed(1, 1, ZoneIds.Default)). // 元旦
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.Monday, 2, ZoneIds.Default)). // 成人の日
+      addHolidaySpec(DateSpecification.fixed(2, 11, ZoneIds.Default)). // 建国記念日
+      addHoliday(CalendarDate.from(2010, 3, 21, ZoneIds.Default)). // 春分の日
+      addHolidaySpec(DateSpecification.fixed(4, 29, ZoneIds.Default)). // 昭和の日
+      addHolidaySpec(DateSpecification.fixed(5, 3, ZoneIds.Default)). // 憲法記念日
+      addHolidaySpec(DateSpecification.fixed(5, 4, ZoneIds.Default)). // みどりの日
+      addHolidaySpec(DateSpecification.fixed(5, 5, ZoneIds.Default)). // こどもの日
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.Monday, 3, ZoneIds.Default)). // 海の日
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.Monday, 3, ZoneIds.Default)). // 敬老の日
+      addHoliday(CalendarDate.from(2010, 9, 23, ZoneIds.Default)). // 秋分の日
+      addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.Monday, 2, ZoneIds.Default)). // 体育の日
+      addHolidaySpec(DateSpecification.fixed(11, 3, ZoneIds.Default)). // 文化の日
+      addHolidaySpec(DateSpecification.fixed(11, 23, ZoneIds.Default)). // 勤労感謝の日
+      addHolidaySpec(DateSpecification.fixed(12, 23, ZoneIds.Default)) // 天皇誕生日
 
     // それぞれの日が「営業日」にあたるかどうかチェック。
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 8)) == true) // 金曜日
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 9)) == false) // 土曜日
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 10)) == false) // 日曜日
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 11)) == false) // 月曜日体育の日
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 12)) == true) // 火曜日平日
+    assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 8, ZoneIds.Default))) // 金曜日
+    assert(!calendar.isBusinessDay(CalendarDate.from(2010, 10, 9, ZoneIds.Default))) // 土曜日
+    assert(!calendar.isBusinessDay(CalendarDate.from(2010, 10, 10, ZoneIds.Default))) // 日曜日
+    assert(!calendar.isBusinessDay(CalendarDate.from(2010, 10, 11, ZoneIds.Default))) // 月曜日体育の日
+    assert(calendar.isBusinessDay(CalendarDate.from(2010, 10, 12, ZoneIds.Default))) // 火曜日平日
 
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 11, 22)) == true) // 月曜日平日
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 11, 23)) == false) // 火曜日祝日
-    assert(calendar.isBusinessDay(CalendarDate.from(2010, 11, 24)) == true) // 水曜日平日
+    assert(calendar.isBusinessDay(CalendarDate.from(2010, 11, 22, ZoneIds.Default))) // 月曜日平日
+    assert(!calendar.isBusinessDay(CalendarDate.from(2010, 11, 23, ZoneIds.Default))) // 火曜日祝日
+    assert(calendar.isBusinessDay(CalendarDate.from(2010, 11, 24, ZoneIds.Default))) // 水曜日平日
 
     // 振替休日（「国民の祝日」が日曜日にあたる場合、その直後の「国民の祝日」でない日を休日とする）とか、
     // 国民の休日（「国民の祝日」と次の「国民の祝日」の間隔が中1日しかなくその中日（なかび）が「国民の祝日」でない場合、その日を休日とする）
@@ -322,7 +322,7 @@ class BusinessCalendarTest extends AssertionsForJUnit {
     val calendar = japaneseBusinessCalendar
 
     val itr =
-      calendar.businessDaysOnly(CalendarInterval.inclusive(2010, 10, 1, 2010, 11, 30).daysIterator)
+      calendar.businessDaysOnly(CalendarInterval.inclusive(2010, 10, 1, 2010, 11, 30, ZoneIds.Default).daysIterator)
     val sb = new StringBuilder
     while (itr.hasNext) {
       val calendarDate = itr.next()
@@ -394,10 +394,10 @@ class BusinessCalendarTest extends AssertionsForJUnit {
 
     def defaultHolidays: Set[CalendarDate] = {
       val dates = collection.mutable.Set[CalendarDate]()
-      val strings = COMMON_US_HOLIDAYS;
+      val strings = COMMON_US_HOLIDAYS
       for (string <- strings) {
         try {
-          dates += CalendarDate.parse(string, "yyyy/MM/dd")
+          dates += CalendarDate.parse(string, "yyyy/MM/dd", ZoneIds.Default)
         } catch {
           case e: ParseException => throw new Error(e)
         }

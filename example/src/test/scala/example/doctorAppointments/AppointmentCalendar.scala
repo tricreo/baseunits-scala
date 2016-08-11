@@ -18,11 +18,11 @@
  */
 package example.doctorAppointments
 
-import java.util.TimeZone
-import org.sisioh.baseunits.scala.time.CalendarDate
-import collection.mutable.ListBuffer
+import java.time.ZoneId
 
-class AppointmentCalendar private[doctorAppointments] (private[doctorAppointments] val defaultZone: TimeZone) {
+import org.sisioh.baseunits.scala.time.CalendarDate
+
+class AppointmentCalendar private[doctorAppointments] (private[doctorAppointments] val defaultZoneId: ZoneId) {
 
   var events = Set.empty[Appointment]
 
@@ -32,7 +32,7 @@ class AppointmentCalendar private[doctorAppointments] (private[doctorAppointment
 
   def dailyScheduleFor(calDate: CalendarDate): List[Appointment] = {
     //    val daysAppointments = ListBuffer.empty[Appointment]
-    val day = calDate.asTimeInterval(defaultZone)
+    val day = calDate.asTimeInterval(defaultZoneId)
 
     events.filter(_.timeInterval.intersects(day)).toList
 

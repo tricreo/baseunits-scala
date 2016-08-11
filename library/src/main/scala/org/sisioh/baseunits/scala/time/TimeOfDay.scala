@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.time.{ LocalTime, ZoneId }
 import java.util.TimeZone
 
 /**
@@ -34,17 +35,22 @@ class TimeOfDay private[time] (
 )
     extends Ordered[TimeOfDay] with Serializable {
 
+  lazy val asLocalTime: LocalTime = LocalTime.of(hour.value, minute.value)
+
   /**
    * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について
-   * [[org.sisioh.baseunits.scala.time.TimePoint]] 型のインスタンスを返す。
+   * [[TimePoint]] 型のインスタンスを返す。
    *
    * @param date     年月日
    * @param timeZone タイムゾーン
    * @return 瞬間
    */
-  def asTimePointGiven(date: CalendarDate, timeZone: TimeZone = TimeZones.Default): TimePoint = {
+  @deprecated("Use asTimePointGiven(date: CalendarDate, zoneId: ZoneId) method instead", "0.1.18")
+  def asTimePointGiven(date: CalendarDate, timeZone: TimeZone): TimePoint = asTimePointGiven(date, timeZone.toZoneId)
+
+  def asTimePointGiven(date: CalendarDate, zoneId: ZoneId = ZoneIds.Default): TimePoint = {
     val timeOfDayOnDate = on(date)
-    timeOfDayOnDate.asTimePoint(timeZone)
+    timeOfDayOnDate.asTimePoint(zoneId)
   }
 
   /**
@@ -131,33 +137,45 @@ object TimeOfDay {
    *
    * @param hour   時
    * @param minute 分
+   * @throws IllegalArgumentException 引数`hour`が0〜23の範囲ではない場合もしくは、引数`minute`が0〜59の範囲ではない場合
    */
   def apply(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = new TimeOfDay(hour, minute)
 
   /**
    * 抽出子メソッド。
    *
-   * @param timeOfDay [[org.sisioh.baseunits.scala.time.TimeOfDay]]
+   * @param timeOfDay [[TimeOfDay]]
    */
   def unapply(timeOfDay: TimeOfDay): Option[(HourOfDay, MinuteOfHour)] = Some(timeOfDay.hour, timeOfDay.minute)
 
   /**
-   * 指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
+   * 指定した時分を表す、[[TimeOfDay]]のインスタンスを生成する。
    *
    * @param hour   時
    * @param minute 分
-   * @return [[org.sisioh.baseunits.scala.time.TimeOfDay]]
+   * @return [[TimeOfDay]]
+   * @throws IllegalArgumentException 引数`hour`が0〜23の範囲ではない場合もしくは、引数`minute`が0〜59の範囲ではない場合
    */
   def from(hour: HourOfDay, minute: MinuteOfHour): TimeOfDay = apply(hour, minute)
 
   /**
-   * 指定した時分を表す、[[org.sisioh.baseunits.scala.time.TimeOfDay]]のインスタンスを生成する。
+   * 指定した時分を表す、[[TimeOfDay]]のインスタンスを生成する。
    *
    * @param hour   時をあらわす正数（0〜23）
    * @param minute 分をあらわす正数（0〜59）
-   * @return [[org.sisioh.baseunits.scala.time.TimeOfDay]]
+   * @return [[TimeOfDay]]
    * @throws IllegalArgumentException 引数`hour`が0〜23の範囲ではない場合もしくは、引数`minute`が0〜59の範囲ではない場合
    */
   def from(hour: Int, minute: Int): TimeOfDay = new TimeOfDay(HourOfDay(hour), MinuteOfHour(minute))
+
+  /**
+   * 指定した時分を表す、[[TimeOfDay]]のインスタンスを生成する。
+   *
+   * @param localTime [[LocalTime]]
+   * @return [[TimeOfDay]]
+   * @throws IllegalArgumentException 引数`hour`が0〜23の範囲ではない場合もしくは、引数`minute`が0〜59の範囲ではない場合
+   */
+  def from(localTime: LocalTime): TimeOfDay =
+    from(localTime.getHour, localTime.getMinute)
 
 }

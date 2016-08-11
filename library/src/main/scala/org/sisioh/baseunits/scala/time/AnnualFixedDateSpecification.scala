@@ -18,7 +18,7 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import java.util.TimeZone
+import java.time.ZoneId
 
 /**
  * 毎年X月Y日、を表す日付仕様。
@@ -26,12 +26,12 @@ import java.util.TimeZone
  * @author j5ik2o
  * @param month 月
  * @param day 日
- * @param timeZone タイムゾーン
+ * @param zoneId タイムゾーンID
  */
 class AnnualFixedDateSpecification private[time] (
-  private[time] val month:    MonthOfYear,
-  private[time] val day:      DayOfMonth,
-  private[time] val timeZone: TimeZone
+  private[time] val month:  MonthOfYear,
+  private[time] val day:    DayOfMonth,
+  private[time] val zoneId: ZoneId
 )
     extends AnnualDateSpecification {
 
@@ -40,7 +40,7 @@ class AnnualFixedDateSpecification private[time] (
       month == date.asCalendarMonth.month
   }
 
-  override def ofYear(year: Int): CalendarDate = CalendarDate.from(year, month, day, timeZone)
+  override def ofYear(year: Int): CalendarDate = CalendarDate.from(year, month, day, zoneId)
 
   override def toString: String = day.toString + " " + month.toString
 

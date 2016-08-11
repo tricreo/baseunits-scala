@@ -23,15 +23,15 @@ import java.util.TimeZone
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
 import org.junit.Test
-import org.scalatest.{ ShouldMatchers, Assertions }
-import org.sisioh.baseunits.scala.time.{ CalendarDate, Duration, TimeOfDay, TimePoint }
+import org.scalatest.{ Assertions, ShouldMatchers }
+import org.sisioh.baseunits.scala.time._
 
 /**
  * Example.
  */
 class RecurringAppointmentScenario extends Assertions with ShouldMatchers {
 
-  val HonoluluTime = TimeZone.getTimeZone("Pacific/Honolulu")
+  val HonoluluTime = TimeZone.getTimeZone("Pacific/Honolulu").toZoneId
 
   /**
    * Example.

@@ -33,7 +33,7 @@ class AppointmentCalendarTest extends Assertions with ShouldMatchers {
    */
   @Test
   def testEventsForDate {
-    val pt = TimeZone.getTimeZone("America/Los_Angeles")
+    val pt = TimeZone.getTimeZone("America/Los_Angeles").toZoneId
 
     val jun7at10 = TimePoint.at(2004, 6, 7, 10, 0, 0, 0, pt)
     val shortTime = TimeInterval.startingFrom(Limit(jun7at10), Duration.hours(3))

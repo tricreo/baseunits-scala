@@ -222,7 +222,7 @@ class TimeOfDayTest extends AssertionsForJUnit {
   def test14_AsTimePoint {
     val fiveFifteen = TimeOfDay.from(17, 15)
     val mayEleventh = CalendarDate.from(2006, 5, 11)
-    val mayEleventhAtFiveFifteen = fiveFifteen.asTimePointGiven(mayEleventh, CST)
-    assert(mayEleventhAtFiveFifteen == TimePoint.at(2006, 5, 11, 17, 15, 0, 0, CST))
+    val mayEleventhAtFiveFifteen = fiveFifteen.asTimePointGiven(mayEleventh, CST.toZoneId)
+    assert(mayEleventhAtFiveFifteen == TimePoint.at(2006, 5, 11, 17, 15, 0, 0, CST.toZoneId))
   }
 }

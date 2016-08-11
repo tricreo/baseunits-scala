@@ -44,9 +44,9 @@ class CalendarIntervalTest extends AssertionsForJUnit {
 
   val jun1 = CalendarDate.from(2004, 6, 1)
 
-  val may = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 31)
+  val may = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 31, ZoneIds.Default)
 
-  val ct = TimeZone.getTimeZone("America/Chicago")
+  val ct = TimeZone.getTimeZone("America/Chicago").toZoneId
 
   /**
    * [[CalendarInterval]]のインスタンスがシリアライズできるかどうか検証する。
@@ -160,37 +160,37 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   @Test
   def test07_Length {
     assert(may1.through(may3).length == Duration.days(3))
-    val may2002_july2004 = CalendarInterval.inclusive(2002, 5, 1, 2004, 7, 1)
+    val may2002_july2004 = CalendarInterval.inclusive(2002, 5, 1, 2004, 7, 1, ZoneIds.Default)
     // (5/1/2002-4/30/2003) 365 days + (-4/30/2004) 366 + (5/1-7/31) 31+30+1 = 793 days
-    assert(may2002_july2004.length == (Duration.days(793)))
-    assert(may2002_july2004.lengthInMonths == (Duration.months(26)))
-    assert(apr15.through(may14).lengthInMonths == (Duration.months(1)))
+    assert(may2002_july2004.length == Duration.days(793))
+    assert(may2002_july2004.lengthInMonths == Duration.months(26))
+    assert(apr15.through(may14).lengthInMonths == Duration.months(1))
   }
 
   @Test
-  def test08_Complements {
+  def test08_Complements() {
     val may1Onward = CalendarInterval.inclusive(Limit(may1), Limitless[CalendarDate])
     val may2Onward = CalendarInterval.inclusive(Limit(may2), Limitless[CalendarDate])
     val complementList = may2Onward.complementRelativeTo(may1Onward)
     assert(complementList.size == 1)
 
     val complement = complementList.iterator.next.asInstanceOf[CalendarInterval]
-    assert(complement.isClosed == true)
+    assert(complement.isClosed)
     assert(complement.start == may1)
     assert(complement.end == may1)
   }
 
   @Test
-  def test10_EverFromToString {
+  def test10_EverFromToString() {
     val x = CalendarDate.from(2007, 6, 5)
     val i = CalendarInterval.everFrom(Limit(x))
     assert(i.toString == "[Limit(2007/06/05), Infinity)")
   }
 
   @Test
-  def test11_BackwardCalendarIvalIntersection {
+  def test11_BackwardCalendarIvalIntersection() {
     try {
-      CalendarInterval.inclusive(2001, 1, 1, 1776, 7, 4)
+      CalendarInterval.inclusive(2001, 1, 1, 1776, 7, 4, ZoneIds.Default)
       fail
     } catch {
       case e: IllegalArgumentException => // success
@@ -201,11 +201,11 @@ class CalendarIntervalTest extends AssertionsForJUnit {
   @Test
   def test12_StartingFrom {
     val d1 = CalendarInterval.startingFrom(Limit(may1), Duration.days(2))
-    val expected1 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 2)
+    val expected1 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 2, ZoneIds.Default)
     assert(d1 == expected1)
 
     val d2 = CalendarInterval.startingFrom(Limit(may1), Duration.minutes(2))
-    val expected2 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 1)
+    val expected2 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 1, ZoneIds.Default)
     assert(d2 == expected2)
   }
 }

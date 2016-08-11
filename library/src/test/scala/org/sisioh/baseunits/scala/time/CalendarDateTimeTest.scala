@@ -87,8 +87,8 @@ class CalendarDateTimeTest extends AssertionsForJUnit {
    */
   @Test
   def test03_StartAsTimePoint {
-    val feb17_1_23AsCt = feb17_1_23.asTimePoint(ct)
-    assert(feb17_1_23AsCt == TimePoint.at(2003, 2, 17, 1, 23, ct))
+    val feb17_1_23AsCt = feb17_1_23.asTimePoint(ct.toZoneId)
+    assert(feb17_1_23AsCt == TimePoint.at(2003, 2, 17, 1, 23, ct.toZoneId))
   }
 
   /**
@@ -98,10 +98,10 @@ class CalendarDateTimeTest extends AssertionsForJUnit {
    */
   @Test
   def test05_FormattedString {
-    val zone = TimeZone.getTimeZone("Universal")
-    assert(feb17_1_23.toString("M/d/yyyy", zone) == ("2/17/2003"))
+    val zoneId = TimeZone.getTimeZone("Universal").toZoneId
+    assert(feb17_1_23.toString("M/d/yyyy", zoneId) == "2/17/2003")
     //Now a nonsense pattern, to make sure it isn't succeeding by accident.
-    assert(feb17_1_23.toString("#d-yy/MM yyyy", zone) == ("#17-03/02 2003"))
+    assert(feb17_1_23.toString("#d-yy/MM yyyy", zoneId) == "#17-03/02 2003")
   }
 
   /**
@@ -111,9 +111,9 @@ class CalendarDateTimeTest extends AssertionsForJUnit {
    */
   @Test
   def test06_FromFormattedString {
-    assert(CalendarDateTime.parse("2/17/2003 01:23", "M/d/yyyy HH:mm") == feb17_1_23)
+    assert(CalendarDateTime.parse("2/17/2003 01:23", "M/d/yyyy HH:mm", ZoneIds.Default) == feb17_1_23)
     //Now a nonsense pattern, to make sure it isn't succeeding by accident.
-    assert(CalendarDateTime.parse("#17-03/02 2003, 01:23", "#d-yy/MM yyyy, HH:mm") == feb17_1_23)
+    assert(CalendarDateTime.parse("#17-03/02 2003, 01:23", "#d-yy/MM yyyy, HH:mm", ZoneIds.Default) == feb17_1_23)
   }
 
   /**
@@ -123,11 +123,10 @@ class CalendarDateTimeTest extends AssertionsForJUnit {
    */
   @Test
   def test08_Equals {
-    assert(feb17_1_23.equals(feb17_1_23) == true)
-    assert(feb17_1_23.equals(feb17_3_45) == false)
-    assert(feb17_1_23.equals(mar13_3_45) == false)
-    assert(feb17_1_23.equals(null) == false)
-    assert(new CalendarDateTime(CalendarDate.from(2003, 2, 17), TimeOfDay.from(1, 23)).equals(feb17_1_23) == true)
+    assert(feb17_1_23.equals(feb17_1_23))
+    assert(!feb17_1_23.equals(feb17_3_45))
+    assert(!feb17_1_23.equals(mar13_3_45))
+    assert(new CalendarDateTime(CalendarDate.from(2003, 2, 17, ZoneIds.Default), TimeOfDay.from(1, 23)).equals(feb17_1_23))
     //    assert(new CalendarMinute(CalendarDate.from(2003, 2, 17),
     //      TimeOfDay.from(1, 23)) {
     //

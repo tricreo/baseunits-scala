@@ -108,7 +108,7 @@ class DayOfMonth private[time] (val value: Int)
    * @throws IllegalArgumentException 引数`month`の月にこの日が存在しない場合
    */
   def on(month: CalendarYearMonth): CalendarDate =
-    CalendarDate.from(month, this, month.timeZone)
+    CalendarDate.from(month, this, month.zoneId)
 
   override def toString: String = String.valueOf(value)
 

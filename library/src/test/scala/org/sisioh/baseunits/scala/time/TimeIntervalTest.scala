@@ -72,9 +72,9 @@ class TimeIntervalTest extends AssertionsForJUnit {
   def test03_AfterClosed {
     val interval = TimeInterval.closed(Limit(dec20_2003), Limit(dec22_2003))
     // Only the lower end should matter for this test.
-    assert(interval.isAfter(Limit(dec19_2003)) == true)
-    assert(interval.isAfter(Limit(dec20_2003)) == false)
-    assert(interval.isAfter(Limit(dec21_2003)) == false)
+    assert(interval.isAfter(Limit(dec19_2003)))
+    assert(!interval.isAfter(Limit(dec20_2003)))
+    assert(!interval.isAfter(Limit(dec21_2003)))
   }
 
   /**
@@ -85,11 +85,11 @@ class TimeIntervalTest extends AssertionsForJUnit {
   @Test
   def test04_IncludesClosed {
     val interval = TimeInterval.closed(Limit(dec20_2003), Limit(dec22_2003))
-    assert(interval.includes(Limit(dec19_2003)) == false)
-    assert(interval.includes(Limit(dec20_2003)) == true)
-    assert(interval.includes(Limit(dec21_2003)) == true)
-    assert(interval.includes(Limit(dec22_2003)) == true)
-    assert(interval.includes(Limit(dec23_2003)) == false)
+    assert(!interval.includes(Limit(dec19_2003)))
+    assert(interval.includes(Limit(dec20_2003)))
+    assert(interval.includes(Limit(dec21_2003)))
+    assert(interval.includes(Limit(dec22_2003)))
+    assert(!interval.includes(Limit(dec23_2003)))
   }
 
   /**
@@ -101,9 +101,9 @@ class TimeIntervalTest extends AssertionsForJUnit {
   def test05_BeforeOpen {
     val interval = TimeInterval.open(Limit(dec20_2003), Limit(dec22_2003))
     // Only the upper end should matter for this test.
-    assert(interval.isBefore(Limit(dec21_2003)) == false)
-    assert(interval.isBefore(Limit(dec22_2003)) == true)
-    assert(interval.isBefore(Limit(dec23_2003)) == true)
+    assert(!interval.isBefore(Limit(dec21_2003)))
+    assert(interval.isBefore(Limit(dec22_2003)))
+    assert(interval.isBefore(Limit(dec23_2003)))
   }
 
   /**
@@ -115,9 +115,9 @@ class TimeIntervalTest extends AssertionsForJUnit {
   def test06_AfterOpen {
     val interval = TimeInterval.open(Limit(dec20_2003), Limit(dec22_2003))
     // Only the lower end should matter for this test.
-    assert(interval.isAfter(Limit(dec19_2003)) == true)
-    assert(interval.isAfter(Limit(dec20_2003)) == true)
-    assert(interval.isAfter(Limit(dec21_2003)) == false)
+    assert(interval.isAfter(Limit(dec19_2003)))
+    assert(interval.isAfter(Limit(dec20_2003)))
+    assert(!interval.isAfter(Limit(dec21_2003)))
   }
 
   /**
@@ -128,11 +128,11 @@ class TimeIntervalTest extends AssertionsForJUnit {
   @Test
   def test07_IncludesOpen {
     val interval = TimeInterval.open(Limit(dec20_2003), Limit(dec22_2003))
-    assert(interval.includes(Limit(dec19_2003)) == false)
-    assert(interval.includes(Limit(dec20_2003)) == false)
-    assert(interval.includes(Limit(dec21_2003)) == true)
-    assert(interval.includes(Limit(dec22_2003)) == false)
-    assert(interval.includes(Limit(dec23_2003)) == false)
+    assert(!interval.includes(Limit(dec19_2003)))
+    assert(!interval.includes(Limit(dec20_2003)))
+    assert(interval.includes(Limit(dec21_2003)))
+    assert(!interval.includes(Limit(dec22_2003)))
+    assert(!interval.includes(Limit(dec23_2003)))
   }
 
   /**
@@ -143,11 +143,11 @@ class TimeIntervalTest extends AssertionsForJUnit {
   @Test
   def test08_IncludesHalfOpen {
     val interval = TimeInterval.over(Limit(dec20_2003), true, Limit(dec22_2003), false)
-    assert(interval.includes(Limit(dec19_2003)) == false)
-    assert(interval.includes(Limit(dec20_2003)) == true)
-    assert(interval.includes(Limit(dec21_2003)) == true)
-    assert(interval.includes(Limit(dec22_2003)) == false)
-    assert(interval.includes(Limit(dec23_2003)) == false)
+    assert(!interval.includes(Limit(dec19_2003)))
+    assert(interval.includes(Limit(dec20_2003)))
+    assert(interval.includes(Limit(dec21_2003)))
+    assert(!interval.includes(Limit(dec22_2003)))
+    assert(!interval.includes(Limit(dec23_2003)))
   }
 
   /**
@@ -238,9 +238,9 @@ class TimeIntervalTest extends AssertionsForJUnit {
   @Test
   def test14_EverUntil {
     val afterDec20 = TimeInterval.everPreceding(Limit(dec20_2003))
-    assert(afterDec20.includes(Limit(TimePoint.atMidnight(2062, 3, 5))) == false)
-    assert(afterDec20.includes(Limit(TimePoint.atMidnight(1776, 7, 4))) == true)
-    assert(afterDec20.includes(Limit(dec20_2003)) == false)
+    assert(!afterDec20.includes(Limit(TimePoint.atMidnight(2062, 3, 5))))
+    assert(afterDec20.includes(Limit(TimePoint.atMidnight(1776, 7, 4))))
+    assert(!afterDec20.includes(Limit(dec20_2003)))
   }
 
   /**
@@ -271,13 +271,13 @@ class TimeIntervalTest extends AssertionsForJUnit {
     val end = TimePoint.at(2004, 2, 8, 2, 0)
     val interval = TimeInterval.over(Limit(start), Limit(end))
     val it = interval.daysIterator
-    assert(it.hasNext == true)
-    assert(it.next == (start))
-    assert(it.hasNext == true)
-    assert(it.next == (TimePoint.at(2004, 2, 6, 10, 0)))
-    assert(it.hasNext == true)
-    assert(it.next == (TimePoint.at(2004, 2, 7, 10, 0)))
-    assert(it.hasNext == false)
+    assert(it.hasNext)
+    assert(it.next == start)
+    assert(it.hasNext)
+    assert(it.next == TimePoint.at(2004, 2, 6, 10, 0))
+    assert(it.hasNext)
+    assert(it.next == TimePoint.at(2004, 2, 7, 10, 0))
+    assert(!it.hasNext)
     try {
       it.next
       fail
@@ -298,7 +298,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
     val interval3 = TimeInterval.everFrom(Limit(start))
     val it3 = interval3.daysIterator
     for (i <- 0 until 100) {
-      assert(it3.hasNext == true)
+      assert(it3.hasNext)
     }
   }
 
@@ -316,11 +316,11 @@ class TimeIntervalTest extends AssertionsForJUnit {
 
     val interval = TimeInterval.over(Limit(d4_h10), Limit(d9_h2))
     var iterator = interval.subintervalIterator(Duration.days(2))
-    assert(iterator.hasNext == true)
-    assert(iterator.next == (TimeInterval.over(Limit(d4_h10), Limit(d6_h10))))
-    assert(iterator.hasNext == true)
-    assert(iterator.next == (TimeInterval.over(Limit(d6_h10), Limit(d8_h10))))
-    assert(iterator.hasNext == false)
+    assert(iterator.hasNext)
+    assert(iterator.next == TimeInterval.over(Limit(d4_h10), Limit(d6_h10)))
+    assert(iterator.hasNext)
+    assert(iterator.next == TimeInterval.over(Limit(d6_h10), Limit(d8_h10)))
+    assert(!iterator.hasNext)
     try {
       iterator.next
       fail;
@@ -330,7 +330,7 @@ class TimeIntervalTest extends AssertionsForJUnit {
     }
 
     iterator = interval.subintervalIterator(Duration.weeks(1))
-    assert(iterator.hasNext == false)
+    assert(!iterator.hasNext)
 
     val h2 = d9_h2;
     val h3_m30 = TimePoint.at(2004, 2, 9, 3, 30)
@@ -340,15 +340,15 @@ class TimeIntervalTest extends AssertionsForJUnit {
 
     val interval2 = TimeInterval.over(Limit(h2), Limit(h8))
     iterator = interval2.subintervalIterator(Duration.minutes(90))
-    assert(iterator.hasNext == true)
+    assert(iterator.hasNext)
     assert(iterator.next == TimeInterval.over(Limit(h2), Limit(h3_m30)))
-    assert(iterator.hasNext == true)
+    assert(iterator.hasNext)
     assert(iterator.next == TimeInterval.over(Limit(h3_m30), Limit(h5)))
-    assert(iterator.hasNext == true)
+    assert(iterator.hasNext)
     assert(iterator.next == TimeInterval.over(Limit(h5), Limit(h6_m30)))
-    assert(iterator.hasNext == true)
+    assert(iterator.hasNext)
     assert(iterator.next == TimeInterval.over(Limit(h6_m30), Limit(h8)))
-    assert(iterator.hasNext == false)
+    assert(!iterator.hasNext)
 
     try {
       iterator.next
@@ -371,10 +371,10 @@ class TimeIntervalTest extends AssertionsForJUnit {
     val intersection = i19_22.intersect(i20_23)
     assert(intersection.start == Limit(dec20_2003))
     assert(intersection.end == Limit(dec22_2003))
-    assert(i19_22.intersects(i20_23) == true, "intersects true")
+    assert(i19_22.intersects(i20_23), "intersects true")
 
     val i19_21 = TimeInterval.over(Limit(dec19_2003), Limit(dec21_2003))
     val i22_23 = TimeInterval.over(Limit(dec22_2003), Limit(dec23_2003))
-    assert(i19_21.intersects(i22_23) == false, "intersects false")
+    assert(!i19_21.intersects(i22_23), "intersects false")
   }
 }

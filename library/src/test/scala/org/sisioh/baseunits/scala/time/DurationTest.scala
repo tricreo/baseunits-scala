@@ -108,18 +108,18 @@ object DurationTest extends Assertions {
    */
   @Test
   def test06_SubtractFromCalendarDate {
-    val oct20 = CalendarDate.from(2003, 10, 20)
-    val dec20 = CalendarDate.from(2003, 12, 20)
+    val oct20 = CalendarDate.from(2003, 10, 20, ZoneIds.Default)
+    val dec20 = CalendarDate.from(2003, 12, 20, ZoneIds.Default)
 
     val twoMonths = Duration.months(2)
-    assert(twoMonths.subtractedFrom(dec20) == oct20)
+    assert(twoMonths.subtractedFrom(dec20, ZoneIds.Default) == oct20)
 
     val sixtyoneDays = Duration.days(61)
-    assert(sixtyoneDays.subtractedFrom(dec20) == oct20)
+    assert(sixtyoneDays.subtractedFrom(dec20, ZoneIds.Default) == oct20)
 
-    val dec20_2001 = CalendarDate.from(2001, 12, 20)
+    val dec20_2001 = CalendarDate.from(2001, 12, 20, ZoneIds.Default)
     val twoYears = Duration.years(2)
-    assert(twoYears.subtractedFrom(dec20) == dec20_2001)
+    assert(twoYears.subtractedFrom(dec20, ZoneIds.Default) == dec20_2001)
   }
 
   /**
@@ -375,37 +375,37 @@ object DurationTest extends Assertions {
    */
   @Test
   def test2o_AddToCalendarMonth {
-    val oct2003 = CalendarYearMonth.from(2003, 10)
-    val dec2003 = CalendarYearMonth.from(2003, 12)
+    val oct2003 = CalendarYearMonth.from(2003, 10, ZoneIds.Default)
+    val dec2003 = CalendarYearMonth.from(2003, 12, ZoneIds.Default)
 
     val twoMonths = Duration.months(2)
-    assert(twoMonths.addedTo(oct2003) == dec2003)
+    assert(twoMonths.addedTo(oct2003, ZoneIds.Default) == dec2003)
 
     val sixtyoneDays = Duration.days(61)
-    assert(sixtyoneDays.addedTo(oct2003) == oct2003)
+    assert(sixtyoneDays.addedTo(oct2003, ZoneIds.Default) == oct2003)
 
-    val dec2001 = CalendarYearMonth.from(2001, 12)
+    val dec2001 = CalendarYearMonth.from(2001, 12, ZoneIds.Default)
     val twoYears = Duration.years(2)
-    assert(twoYears.addedTo(dec2001) == dec2003)
+    assert(twoYears.addedTo(dec2001, ZoneIds.Default) == dec2003)
 
     // 単位が日未満の時は日付を変えない。
     val threeHours = Duration.days(30)
-    assert(threeHours.addedTo(CalendarYearMonth.from(2010, 11)) == CalendarYearMonth.from(2010, 11))
+    assert(threeHours.addedTo(CalendarYearMonth.from(2010, 11, ZoneIds.Default), ZoneIds.Default) == CalendarYearMonth.from(2010, 11))
   }
 
   @Test
   def testSucceedToMinus {
-    val GMT = TimeZone.getTimeZone("Universal")
+    val GMT = TimeZone.getTimeZone("Universal").toZoneId
     val tp1 = TimePoint.at(2014, 7, 1, 0, 0, GMT)
     val tp2 = TimePoint.at(2014, 6, 1, 0, 0, GMT)
-    assert(tp1.minus(Duration.months(1), GMT) == tp2)
+    assert(tp1.minus(Duration.months(1)) == tp2)
   }
 
   @Test
   def testFailToMinus {
-    val JST = TimeZone.getTimeZone("JST")
+    val JST = TimeZone.getTimeZone("JST").toZoneId
     val tp1 = TimePoint.at(2014, 7, 1, 0, 0, JST)
     val tp2 = TimePoint.at(2014, 6, 1, 0, 0, JST)
-    assert(tp1.minus(Duration.months(1), JST) == tp2)
+    assert(tp1.minus(Duration.months(1)) == tp2)
   }
 }

@@ -18,6 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.time.ZonedDateTime
+
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import java.util.{ Calendar, TimeZone }
@@ -26,17 +28,17 @@ import java.util.{ Calendar, TimeZone }
  * `CalendarDate`のテストクラス。
  */
 class CalendarDateTest extends AssertionsForJUnit {
-  val feb17 = CalendarDate.from(2003, 2, 17)
+  val feb17 = CalendarDate.from(2003, 2, 17, ZoneIds.Default)
 
-  val mar13 = CalendarDate.from(2003, 3, 13)
+  val mar13 = CalendarDate.from(2003, 3, 13, ZoneIds.Default)
 
-  val may1 = CalendarDate.from(2004, 5, 1)
+  val may1 = CalendarDate.from(2004, 5, 1, ZoneIds.Default)
 
-  val may20 = CalendarDate.from(2004, 5, 20)
+  val may20 = CalendarDate.from(2004, 5, 20, ZoneIds.Default)
 
   val gmt = TimeZone.getTimeZone("Universal")
 
-  val ct = TimeZone.getTimeZone("America/Chicago")
+  val ct = TimeZone.getTimeZone("America/Chicago").toZoneId
 
   /**
    * [[CalendarDate]]のインスタンスがシリアライズできるかどうか検証する。
@@ -108,9 +110,9 @@ class CalendarDateTest extends AssertionsForJUnit {
    */
   @Test
   def test06_FromFormattedString() {
-    assert(CalendarDate.parse("2/17/2003", "M/d/yyyy") == (feb17))
+    assert(CalendarDate.parse("2/17/2003", "M/d/yyyy", ZoneIds.Default) == (feb17))
     //Now a nonsense pattern, to make sure it isn't succeeding by accident.
-    assert(CalendarDate.parse("#17-03/02 2003", "#d-yy/MM yyyy") == (feb17))
+    assert(CalendarDate.parse("#17-03/02 2003", "#d-yy/MM yyyy", ZoneIds.Default) == (feb17))
   }
 
   /**
@@ -120,7 +122,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    */
   @Test
   def test07_FromTimePoint() {
-    val feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, gmt)
+    val feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, gmt.toZoneId)
     val mapped = CalendarDate.from(feb18Hour0Ct)
     assert(mapped == CalendarDate.from(2003, 2, 18))
   }
@@ -180,20 +182,20 @@ class CalendarDateTest extends AssertionsForJUnit {
    */
   @Test
   def test12_Month() {
-    val nov6_2004 = CalendarDate.from(2004, 11, 6)
-    val nov2004 = CalendarInterval.inclusive(2004, 11, 1, 2004, 11, 30)
+    val nov6_2004 = CalendarDate.from(2004, 11, 6, ZoneIds.Default)
+    val nov2004 = CalendarInterval.inclusive(2004, 11, 1, 2004, 11, 30, ZoneIds.Default)
     assert(nov6_2004.asMonthInterval == nov2004)
 
-    val dec6_2004 = CalendarDate.from(2004, 12, 6)
-    val dec2004 = CalendarInterval.inclusive(2004, 12, 1, 2004, 12, 31)
+    val dec6_2004 = CalendarDate.from(2004, 12, 6, ZoneIds.Default)
+    val dec2004 = CalendarInterval.inclusive(2004, 12, 1, 2004, 12, 31, ZoneIds.Default)
     assert(dec6_2004.asMonthInterval == dec2004)
 
-    val feb9_2004 = CalendarDate.from(2004, 2, 9)
-    val feb2004 = CalendarInterval.inclusive(2004, 2, 1, 2004, 2, 29)
+    val feb9_2004 = CalendarDate.from(2004, 2, 9, ZoneIds.Default)
+    val feb2004 = CalendarInterval.inclusive(2004, 2, 1, 2004, 2, 29, ZoneIds.Default)
     assert(feb9_2004.asMonthInterval == feb2004)
 
-    val feb9_2003 = CalendarDate.from(2003, 2, 9)
-    val feb2003 = CalendarInterval.inclusive(2003, 2, 1, 2003, 2, 28)
+    val feb9_2003 = CalendarDate.from(2003, 2, 9, ZoneIds.Default)
+    val feb2003 = CalendarInterval.inclusive(2003, 2, 1, 2003, 2, 28, ZoneIds.Default)
     assert(feb9_2003.asMonthInterval == feb2003)
 
   }
@@ -205,7 +207,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    */
   @Test
   def test13_ToString() {
-    val date = CalendarDate.from(2004, 5, 28)
+    val date = CalendarDate.from(2004, 5, 28, ZoneIds.Default)
     assert(date.toString() == "2004/05/28")
   }
 
@@ -226,11 +228,20 @@ class CalendarDateTest extends AssertionsForJUnit {
     expected.set(Calendar.SECOND, 0)
     expected.set(Calendar.MILLISECOND, 0)
 
-    val date = CalendarDate.from(1969, 7, 20, gmt)
+    val date = CalendarDate.from(1969, 7, 20, gmt.toZoneId)
     val actual = date.asJavaCalendarOnMidnight
     assert(actual.get(Calendar.HOUR) == expected.get(Calendar.HOUR))
     assert(actual.get(Calendar.AM_PM) == expected.get(Calendar.AM_PM))
     assert(actual.get(Calendar.HOUR_OF_DAY) == expected.get(Calendar.HOUR_OF_DAY))
+    assert(actual == expected)
+  }
+
+  @Test
+  def test15_ConversionToJavaUtil() {
+    val expected = ZonedDateTime.of(1969, 7, 20, 0, 0, 0, 0, gmt.toZoneId)
+
+    val date = CalendarDate.from(1969, 7, 20, gmt.toZoneId)
+    val actual = date.asJavaZonedDateTimeOnMidnight(gmt.toZoneId)
     assert(actual == expected)
   }
 
@@ -240,7 +251,7 @@ class CalendarDateTest extends AssertionsForJUnit {
    * @throws Exception 例外が発生した場合
    */
   @Test
-  def test15_DaysAdd() {
+  def test16_DaysAdd() {
     assert(may1.plusDays(19) == may20)
   }
 }

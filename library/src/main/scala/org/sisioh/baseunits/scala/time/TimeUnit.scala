@@ -18,8 +18,8 @@
  */
 package org.sisioh.baseunits.scala.time
 
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
-import java.lang.String
 
 /**
  * 時間の単位を表す列挙型。
@@ -89,6 +89,14 @@ final class TimeUnit private[time] (
     } else 0
   }
 
+  private[time] lazy val javaZonedDateTImeConstantForBaseType = {
+    if (valueBaseType == TimeUnit.Type.Millisecond) {
+      ChronoUnit.MILLIS
+    } else if (valueBaseType == TimeUnit.Type.Month) {
+      ChronoUnit.MONTHS
+    } else ChronoUnit.ERAS
+  }
+
   /**
    * この単位から変換可能な単位のうち、現在の単位より一つ小さい単位を取得する。
    *
@@ -104,7 +112,7 @@ final class TimeUnit private[time] (
   }
 
   private[time] def toString(quantity: Long) = {
-    val buffer = new StringBuffer
+    val buffer = new StringBuilder
     buffer.append(quantity)
     buffer.append(" ")
     buffer.append(valueType.name)

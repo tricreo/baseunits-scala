@@ -18,6 +18,7 @@
  */
 package org.sisioh.baseunits.scala.timeutil
 
+import java.time.ZoneId
 import java.util.TimeZone
 
 import org.sisioh.baseunits.scala.time._
@@ -27,7 +28,7 @@ import org.sisioh.baseunits.scala.time._
  *
  * @author j5ik2o
  */
-case class Clock(timeSource: TimeSource = SystemClock, timeZone: TimeZone = TimeZones.Default) {
+case class Clock(timeSource: TimeSource = SystemClock, zoneId: ZoneId) {
 
   /**
    * 現在時刻を取得する。
@@ -41,14 +42,14 @@ case class Clock(timeSource: TimeSource = SystemClock, timeZone: TimeZone = Time
    *
    * @return 今日の日付
    */
-  def todayAsDate: CalendarDate = now.asCalendarDate(timeZone)
+  def todayAsDate: CalendarDate = now.asCalendarDate(zoneId)
 
   /**
    * 今日の日時を所得する。
    *
    * @return 今日の日時
    */
-  def todayAsDateTime: CalendarDateTime = now.asCalendarDateTime(timeZone)
+  def todayAsDateTime: CalendarDateTime = now.asCalendarDateTime(zoneId)
 
   /**
    * 今日の曜日を取得する。
@@ -74,4 +75,4 @@ case class Clock(timeSource: TimeSource = SystemClock, timeZone: TimeZone = Time
 
 }
 
-object Clock extends Clock(SystemClock, TimeZones.Default)
+object Clock extends Clock(SystemClock, ZoneIds.Default)
