@@ -20,13 +20,12 @@ package example.doctorAppointments
 
 import java.util.TimeZone
 
-import org.hamcrest.CoreMatchers.is
 import org.junit.Test
-import org.scalatest.{ ShouldMatchers, Assertions }
+import org.scalatest.{ Assertions, Matchers }
 import org.sisioh.baseunits.scala.intervals.Limit
 import org.sisioh.baseunits.scala.time.{ CalendarDate, Duration, TimeInterval, TimePoint }
 
-class AppointmentCalendarTest extends Assertions with ShouldMatchers {
+class AppointmentCalendarTest extends Assertions with Matchers {
 
   /**
    * Example.

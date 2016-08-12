@@ -18,13 +18,11 @@
  */
 package example.holidayCalendar
 
-import org.hamcrest.CoreMatchers.is
-import org.junit.Assert.assertThat
 import org.junit.Test
-import org.scalatest.{ ShouldMatchers, Assertions }
+import org.scalatest.{ Assertions, Matchers }
 import org.sisioh.baseunits.scala.time._
 
-class HolidayCalendarExample extends Assertions with ShouldMatchers {
+class HolidayCalendarExample extends Assertions with Matchers {
 
   /**
    * Example.

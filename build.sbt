@@ -46,13 +46,15 @@ val commonSettings =
       "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       "Sonatype Release Repository" at "https://oss.sonatype.org/content/repositories/releases/",
       "Sonatype Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/",
-      "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
+      "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
+      "Artima Maven Repository" at "http://repo.artima.com/releases"
     ),
     libraryDependencies ++= Seq(
       "junit" % "junit" % "4.8.1" % "test",
       "com.novocode" % "junit-interface" % "0.8" % "test->default",
       "org.mockito" % "mockito-core" % "1.9.5" % "test",
-      "org.scalatest" %% "scalatest" % "2.1.6" % "test",
+      "org.scalactic" %% "scalactic" % "3.0.0",
+      "org.scalatest" %% "scalatest" % "3.0.0" % "test",
       "commons-io" % "commons-io" % "2.4"
     ),
     publishMavenStyle := true,

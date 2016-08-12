@@ -18,16 +18,14 @@
  */
 package example.insuranceRates
 
-import org.hamcrest.CoreMatchers.is
-import org.junit.Assert.assertThat
 import org.junit.Test
-import org.scalatest.{ ShouldMatchers, Assertions }
+import org.scalatest.{ Assertions, Matchers }
 import org.sisioh.baseunits.scala.intervals.{ Interval, IntervalMap, Limit, LinearIntervalMap }
 import org.sisioh.baseunits.scala.money.{ Money, Proration }
 import org.sisioh.baseunits.scala.time.{ CalendarDate, Duration }
 import org.sisioh.baseunits.scala.util.Ratio
 
-class CalculateRate extends Assertions with ShouldMatchers {
+class CalculateRate extends Assertions with Matchers {
 
   /** 契約日 */
   val policyEffectiveDate = CalendarDate.from(2004, 11, 7)

@@ -21,11 +21,11 @@ package example.manual
 import java.util.Currency
 
 import org.junit.Test
-import org.scalatest.{ Assertions, ShouldMatchers }
+import org.scalatest.{ Assertions, Matchers }
 import org.sisioh.baseunits.scala.money.{ Money, MoneyTimeRate, Proration }
 import org.sisioh.baseunits.scala.time.Duration
 
-class MoneyLanguageExampleTest extends Assertions with ShouldMatchers {
+class MoneyLanguageExampleTest extends Assertions with Matchers {
 
   val CAD = Currency.getInstance("CAD")
 
