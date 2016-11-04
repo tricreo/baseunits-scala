@@ -22,7 +22,7 @@ Scala version of this library
 
 ## Installation
 
-Add the following to your sbt build (Scala 2.10.x, and Scala 2.11.x):
+Add the following to your sbt build (Scala 2.10.x, and Scala 2.11.x, and Scala 2.12.x):
 
 ### Release Version
 
