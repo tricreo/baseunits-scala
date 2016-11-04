@@ -20,6 +20,13 @@ val formatPreferences = FormattingPreferences()
   .setPreference(DoubleIndentClassDeclaration, true)
   .setPreference(AlignArguments, true)
 
+def scalaTest(v: String): Seq[ModuleID] = v match {
+  case "2.10.5" | "2.11.8" =>
+    Seq("org.scalactic" %% "scalactic" % "3.0.0", "org.scalatest" %% "scalatest" % "3.0.0" % "test")
+  case _ =>
+      Seq("org.scalactic" % "scalactic_2.12.0-M5" % "3.0.0",
+      "org.scalatest" % "scalatest_2.12.0-M5" % "3.0.0")
+}
 
 val commonSettings =
   scalaStyleSettings ++ SbtScalariform.scalariformSettings ++ Seq(
@@ -29,7 +36,7 @@ val commonSettings =
     sonatypeProfileName := "org.sisioh",
     organization := "org.sisioh",
     scalaVersion := "2.11.8",
-    crossScalaVersions := Seq("2.10.5", "2.11.8"),
+    crossScalaVersions := Seq("2.10.5", "2.11.8", "2.12.0"),
     scalacOptions ++= Seq(
       "-feature"
       , "-deprecation"
@@ -51,10 +58,10 @@ val commonSettings =
     ),
     libraryDependencies ++= Seq(
       "junit" % "junit" % "4.8.1" % "test",
-      "com.novocode" % "junit-interface" % "0.8" % "test->default",
-      "org.mockito" % "mockito-core" % "1.9.5" % "test",
       "org.scalactic" %% "scalactic" % "3.0.0",
       "org.scalatest" %% "scalatest" % "3.0.0" % "test",
+      "com.novocode" % "junit-interface" % "0.8" % "test->default",
+      "org.mockito" % "mockito-core" % "1.9.5" % "test",
       "commons-io" % "commons-io" % "2.4"
     ),
     publishMavenStyle := true,
