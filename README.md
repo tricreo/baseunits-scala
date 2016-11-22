@@ -37,5 +37,5 @@ libraryDependencies += "org.sisioh" %% "baseunits-scala" % "0.1.19"
 ```scala
 resolvers += "Sonatype OSS Snapshot Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
-libraryDependencies += "org.sisioh" %% "baseunits-scala" % "0.1.19-SNAPSHOT"
+libraryDependencies += "org.sisioh" %% "baseunits-scala" % "0.1.20-SNAPSHOT"
 ```
