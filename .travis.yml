@@ -8,3 +8,7 @@ jdk:
 
 script:
  - "sbt ++$TRAVIS_SCALA_VERSION test"
+
+after_success:
+ - bash <(curl -s https://codecov.io/bash)
+
