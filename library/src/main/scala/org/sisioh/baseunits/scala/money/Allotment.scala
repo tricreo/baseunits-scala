@@ -19,34 +19,34 @@
 package org.sisioh.baseunits.scala.money
 
 /**
- * 何かに対するお金の割り当てをあらわす。
- *
- * @tparam T 割り当て対象
- * @param entity 割り当て対象
- * @param amount 金額
- */
+  * 何かに対するお金の割り当てをあらわす。
+  *
+  * @tparam T 割り当て対象
+  * @param entity 割り当て対象
+  * @param amount 金額
+  */
 class Allotment[T] private[money] (
     val entity: T,
     val amount: Money
 ) {
 
   /**
-   * このオブジェクトの`amount`フィールド（金額）を返す。
-   *
-   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-   *
-   * @return 金額
-   */
+    * このオブジェクトの`amount`フィールド（金額）を返す。
+    *
+    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+    *
+    * @return 金額
+    */
   @deprecated("Use amount property instead", "0.1.18")
   val breachEncapsulationOfAmount = amount
 
   /**
-   * このオブジェクトの`entity`フィールド（割り当て対象）を返す。
-   *
-   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-   *
-   * @return 割り当て対象
-   */
+    * このオブジェクトの`entity`フィールド（割り当て対象）を返す。
+    *
+    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+    *
+    * @return 割り当て対象
+    */
   @deprecated("Use entity property instead", "0.1.18")
   val breachEncapsulationOfEntity = entity
 
@@ -58,10 +58,10 @@ class Allotment[T] private[money] (
   override def hashCode: Int = 31 * (entity.hashCode + amount.hashCode)
 
   /**
-   * 割り当て量の正負を反転させた新しい割り当てを返す。
-   *
-   * @return 割り当て
-   */
+    * 割り当て量の正負を反転させた新しい割り当てを返す。
+    *
+    * @return 割り当て
+    */
   lazy val negated = new Allotment[T](entity, amount.negated)
 
   def unary_- : Allotment[T] = negated
@@ -72,27 +72,29 @@ class Allotment[T] private[money] (
 }
 
 /**
- * `Allotment`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * `Allotment`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 object Allotment {
 
   /**
-   * インスタンスを生成する。
-   *
-   * @param entity 割り当て対象
-   * @param amount [[org.sisioh.baseunits.scala.money.Money]]
-   * @return [[org.sisioh.baseunits.scala.money.Allotment]]
-   */
-  def apply[T](entity: T, amount: Money): Allotment[T] = new Allotment[T](entity, amount)
+    * インスタンスを生成する。
+    *
+    * @param entity 割り当て対象
+    * @param amount [[org.sisioh.baseunits.scala.money.Money]]
+    * @return [[org.sisioh.baseunits.scala.money.Allotment]]
+    */
+  def apply[T](entity: T, amount: Money): Allotment[T] =
+    new Allotment[T](entity, amount)
 
   /**
-   * 抽出子メソッド。
-   *
-   * @param allotment [[org.sisioh.baseunits.scala.money.Allotment]]
-   * @return `Option[(T, Money)]`
-   */
-  def unapplly[T](allotment: Allotment[T]): Option[(Any, Money)] = Some(allotment.entity, allotment.amount)
+    * 抽出子メソッド。
+    *
+    * @param allotment [[org.sisioh.baseunits.scala.money.Allotment]]
+    * @return `Option[(T, Money)]`
+    */
+  def unapplly[T](allotment: Allotment[T]): Option[(Any, Money)] =
+    Some(allotment.entity, allotment.amount)
 
 }

@@ -19,30 +19,35 @@
 package org.sisioh.baseunits.scala.time
 
 /**
- * `TimeUnit`に変数するためのファクター。
- *
- * @author j5ik2o
- * @param _name 名前
- * @param value 値
- */
+  * `TimeUnit`に変数するためのファクター。
+  *
+  * @author j5ik2o
+  * @param _name 名前
+  * @param value 値
+  */
 private[time] final class TimeUnitConversionFactor(_name: String, val value: Int) {
   val name = _name
 }
 
 /**
- * `TimeUnitConversionFactor`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * `TimeUnitConversionFactor`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 private[time] object TimeUnitConversionFactor {
 
   val Identical = new TimeUnitConversionFactor("identical", 1)
-  val MillisecondsPerSecond = new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
-  val MillisecondsPerMinute = new TimeUnitConversionFactor("millisecondsPerMinute", 60 * MillisecondsPerSecond.value)
-  val MillisecondsPerHour = new TimeUnitConversionFactor("millisecondsPerHour", 60 * MillisecondsPerMinute.value)
-  val MillisecondsPerDay = new TimeUnitConversionFactor("millisecondsPerDay", 24 * MillisecondsPerHour.value)
-  val MillisecondsPerWeek = new TimeUnitConversionFactor("millisecondsPerWeek", 7 * MillisecondsPerDay.value)
+  val MillisecondsPerSecond =
+    new TimeUnitConversionFactor("millisecondsPerSecond", 1000)
+  val MillisecondsPerMinute =
+    new TimeUnitConversionFactor("millisecondsPerMinute", 60 * MillisecondsPerSecond.value)
+  val MillisecondsPerHour =
+    new TimeUnitConversionFactor("millisecondsPerHour", 60 * MillisecondsPerMinute.value)
+  val MillisecondsPerDay =
+    new TimeUnitConversionFactor("millisecondsPerDay", 24 * MillisecondsPerHour.value)
+  val MillisecondsPerWeek =
+    new TimeUnitConversionFactor("millisecondsPerWeek", 7 * MillisecondsPerDay.value)
   val MonthsPerQuarter = new TimeUnitConversionFactor("monthsPerQuarter", 3)
-  val MonthsPerYear = new TimeUnitConversionFactor("monthsPerYear", 12)
+  val MonthsPerYear    = new TimeUnitConversionFactor("monthsPerYear", 12)
 
 }

@@ -21,56 +21,58 @@ package org.sisioh.baseunits.scala.time
 import java.util.Calendar
 
 /**
- * 1週間の中の特定の「曜日」を表す列挙型。
- *
- * タイムゾーンの概念はない。
- *
- * @author j5ik2o
- * @param value 1 = Calendar.SUNDAY, 2 = Calendar.MONDAY, ...
- * @param name 名前
- */
+  * 1週間の中の特定の「曜日」を表す列挙型。
+  *
+  * タイムゾーンの概念はない。
+  *
+  * @author j5ik2o
+  * @param value 1 = Calendar.SUNDAY, 2 = Calendar.MONDAY, ...
+  * @param name 名前
+  */
 final class DayOfWeek private[time] (
     val value: Int,
-    val name:  String
+    val name: String
 ) {
+
   /**
-   * このオブジェクトの`value`フィールド（[[java.util.Calendar]]に定義する曜日をあらわす定数値）を返す。
-   *
-   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-   *
-   * @return [[java.util.Calendar]]に定義する曜日をあらわす定数値（`SUNDAY`〜`SATURDAY`）
-   */
+    * このオブジェクトの`value`フィールド（[[java.util.Calendar]]に定義する曜日をあらわす定数値）を返す。
+    *
+    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+    *
+    * @return [[java.util.Calendar]]に定義する曜日をあらわす定数値（`SUNDAY`〜`SATURDAY`）
+    */
   @deprecated("Use value property instead", "0.1.18")
   val breachEncapsulationOfValue: Int = value
 
 }
 
 /**
- * コンパニオンオブジェクト。
- *
- * @author j5i2ko
- */
+  * コンパニオンオブジェクト。
+  *
+  * @author j5i2ko
+  */
 object DayOfWeek {
 
   val Mapping = Map(
-    java.time.DayOfWeek.SUNDAY -> Calendar.SUNDAY,
-    java.time.DayOfWeek.MONDAY -> Calendar.MONDAY,
-    java.time.DayOfWeek.TUESDAY -> Calendar.TUESDAY,
+    java.time.DayOfWeek.SUNDAY    -> Calendar.SUNDAY,
+    java.time.DayOfWeek.MONDAY    -> Calendar.MONDAY,
+    java.time.DayOfWeek.TUESDAY   -> Calendar.TUESDAY,
     java.time.DayOfWeek.WEDNESDAY -> Calendar.WEDNESDAY,
-    java.time.DayOfWeek.THURSDAY -> Calendar.THURSDAY,
-    java.time.DayOfWeek.FRIDAY -> Calendar.FRIDAY,
-    java.time.DayOfWeek.SATURDAY -> Calendar.SATURDAY
+    java.time.DayOfWeek.THURSDAY  -> Calendar.THURSDAY,
+    java.time.DayOfWeek.FRIDAY    -> Calendar.FRIDAY,
+    java.time.DayOfWeek.SATURDAY  -> Calendar.SATURDAY
   )
 
-  val Sunday = new DayOfWeek(1, "SUNDAY")
-  val Monday = new DayOfWeek(2, "MONDAY")
-  val Tuesday = new DayOfWeek(3, "TUESDAY")
+  val Sunday    = new DayOfWeek(1, "SUNDAY")
+  val Monday    = new DayOfWeek(2, "MONDAY")
+  val Tuesday   = new DayOfWeek(3, "TUESDAY")
   val Wednesday = new DayOfWeek(4, "WEDNESDAY")
-  val Thursday = new DayOfWeek(5, "THURSDAY")
-  val Friday = new DayOfWeek(6, "FRIDAY")
-  val Saturday = new DayOfWeek(7, "SATURDAY")
+  val Thursday  = new DayOfWeek(5, "THURSDAY")
+  val Friday    = new DayOfWeek(6, "FRIDAY")
+  val Saturday  = new DayOfWeek(7, "SATURDAY")
 
-  val values = Seq(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
+  val values =
+    Seq(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
 
   def apply(value: Int): DayOfWeek = values.find(_.value == value).get
 

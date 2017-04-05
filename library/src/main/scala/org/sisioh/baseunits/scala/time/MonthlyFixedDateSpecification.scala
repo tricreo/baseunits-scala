@@ -19,11 +19,11 @@
 package org.sisioh.baseunits.scala.time
 
 /**
- * 毎月?日を表す日付仕様。
- *
- * @author j5ik2o
- * @param day [[org.sisioh.baseunits.scala.time.DayOfMonth]]
- */
+  * 毎月?日を表す日付仕様。
+  *
+  * @author j5ik2o
+  * @param day [[org.sisioh.baseunits.scala.time.DayOfMonth]]
+  */
 class MonthlyFixedDateSpecification private[time] (private[time] val day: DayOfMonth)
     extends MonthlyDateSpecification {
 

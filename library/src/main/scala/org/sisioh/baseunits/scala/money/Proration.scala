@@ -21,96 +21,99 @@ package org.sisioh.baseunits.scala.money
 import org.sisioh.baseunits.scala.util.Ratio
 
 /**
- * 比例配分の為のユーティリティ。
- *
- * @author j5ik2o
- */
+  * 比例配分の為のユーティリティ。
+  *
+  * @author j5ik2o
+  */
 object Proration {
 
   /**
-   * 指定した金額を`n`等分した金額の配列を返す。
-   *
-   * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
-   *
-   * 例えば、53円を5人で等分した場合は、`{11, 11, 11, 10, 10}`となる。
-   *
-   * @param total 合計金額
-   * @param n 分割数
-   * @return 分割結果
-   */
+    * 指定した金額を`n`等分した金額の配列を返す。
+    *
+    * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
+    *
+    * 例えば、53円を5人で等分した場合は、`{11, 11, 11, 10, 10}`となる。
+    *
+    * @param total 合計金額
+    * @param n 分割数
+    * @return 分割結果
+    */
   def dividedEvenlyIntoParts(total: Money, n: Int): Array[Money] = {
-    val lowResult = total.dividedBy(BigDecimal(n), BigDecimal.RoundingMode.DOWN)
+    val lowResult =
+      total.dividedBy(BigDecimal(n), BigDecimal.RoundingMode.DOWN)
     val lowResults = Array.fill(n)(lowResult)
-    val remainder = total.minus(sum(lowResults))
+    val remainder  = total.minus(sum(lowResults))
     distributeRemainderOver(lowResults, remainder)
   }
 
   /**
-   * `total`のうち、`portion / whole`の割合の金額を返す。割り切れない場合は切り捨てる。
-   *
-   * @param total 合計額
-   * @param portion 部分量をあらわす値
-   * @param whole 全体量をあらわす値
-   * @return 部分の金額
-   * @throws ArithmeticException 引数`whole`が0だった場合
-   */
+    * `total`のうち、`portion / whole`の割合の金額を返す。割り切れない場合は切り捨てる。
+    *
+    * @param total 合計額
+    * @param portion 部分量をあらわす値
+    * @param whole 全体量をあらわす値
+    * @return 部分の金額
+    * @throws ArithmeticException 引数`whole`が0だった場合
+    */
   def partOfWhole(total: Money, portion: Long, whole: Long): Money =
     partOfWhole(total, Ratio(portion, whole))
 
   /**
-   * `total`のうち、`ratio`の割合の金額を返す。割り切れない場合は切り捨てる。
-   *
-   * @param total 合計額
-   * @param ratio 割合
-   * @return 指定した割合の金額
-   */
+    * `total`のうち、`ratio`の割合の金額を返す。割り切れない場合は切り捨てる。
+    *
+    * @param total 合計額
+    * @param ratio 割合
+    * @return 指定した割合の金額
+    */
   def partOfWhole(total: Money, ratio: Ratio): Money = {
-    val scale = defaultScaleForIntermediateCalculations(total)
+    val scale      = defaultScaleForIntermediateCalculations(total)
     val multiplier = ratio.decimalValue(scale, BigDecimal.RoundingMode.DOWN)
     total.times(multiplier, BigDecimal.RoundingMode.DOWN)
   }
 
   /**
-   * 指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
-   *
-   * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
-   *
-   * 例えば、52円を1:3:1で等分した場合は、`{11, 31, 10}`となる。
-   *
-   * @param total 合計金額
-   * @param proportions 比数の配列
-   * @return 分割結果
-   */
+    * 指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
+    *
+    * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
+    *
+    * 例えば、52円を1:3:1で等分した場合は、`{11, 31, 10}`となる。
+    *
+    * @param total 合計金額
+    * @param proportions 比数の配列
+    * @return 分割結果
+    */
   def proratedOver(total: Money, proportions: Array[BigDecimal]): Array[Money] = {
     val scale = defaultScaleForIntermediateCalculations(total)
-    val simpleResult = ratios(proportions).map {
-      e =>
-        val multiplier = e.decimalValue(scale, BigDecimal.RoundingMode.DOWN)
-        total.times(multiplier, BigDecimal.RoundingMode.DOWN)
+    val simpleResult = ratios(proportions).map { e =>
+      val multiplier = e.decimalValue(scale, BigDecimal.RoundingMode.DOWN)
+      total.times(multiplier, BigDecimal.RoundingMode.DOWN)
     }
     val remainder = total.minus(sum(simpleResult))
     distributeRemainderOver(simpleResult, remainder)
   }
 
   /**
-   * 指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
-   *
-   * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
-   *
-   * 例えば、52円を1:3:1で等分した場合は、`{11, 31, 10}`となる。
-   *
-   * @param total 合計金額
-   * @param longProportions 比数の配列
-   * @return 分割結果
-   */
-  def proratedOver[T](total: Money, longProportions: Array[T])(implicit ev: T => Number): Array[Money] = {
+    * 指定した金額を`proportions`であらわす割合で分割した金額の配列を返す。
+    *
+    * 但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。
+    *
+    * 例えば、52円を1:3:1で等分した場合は、`{11, 31, 10}`となる。
+    *
+    * @param total 合計金額
+    * @param longProportions 比数の配列
+    * @return 分割結果
+    */
+  def proratedOver[T](total: Money, longProportions: Array[T])(
+      implicit ev: T => Number): Array[Money] = {
     val proportions = longProportions.map(e => BigDecimal(e.longValue))
     proratedOver(total, proportions)
   }
 
   private[money] def distributeRemainderOver(amounts: Array[Money], remainder: Money) = {
-    val increments = remainder.dividedBy(remainder.minimumIncrement)
-      .decimalValue(0, BigDecimal.RoundingMode.UNNECESSARY).intValue
+    val increments = remainder
+      .dividedBy(remainder.minimumIncrement)
+      .decimalValue(0, BigDecimal.RoundingMode.UNNECESSARY)
+      .intValue
 
     assert(increments <= amounts.length)
 
@@ -125,32 +128,32 @@ object Proration {
   }
 
   /**
-   * 比数の配列を割合の配列に変換する。
-   *
-   * @param proportions 比の配列
-   * @return 割合の配列
-   */
+    * 比数の配列を割合の配列に変換する。
+    *
+    * @param proportions 比の配列
+    * @return 割合の配列
+    */
   def ratios(proportions: Array[BigDecimal]): Array[Ratio] = {
     val total = sum(proportions)
     proportions.map(e => Ratio(e, total))
   }
 
   /**
-   * `elements`の要素の和を返す。
-   *
-   * @param elements 配列
-   * @return 和
-   */
+    * `elements`の要素の和を返す。
+    *
+    * @param elements 配列
+    * @return 和
+    */
   def sum(elements: Array[BigDecimal]): BigDecimal =
     elements.sum
 
   /**
-   * `elements`の要素の和を返す。
-   *
-   * @param elements 配列
-   * @return 和
-   * @throws IllegalArgumentException 引数`elements`の要素数が0の場合
-   */
+    * `elements`の要素の和を返す。
+    *
+    * @param elements 配列
+    * @return 和
+    * @throws IllegalArgumentException 引数`elements`の要素数が0の場合
+    */
   def sum(elements: Array[Money]): Money = {
     require(elements.size > 0)
     val sum = Money.adjustBy(0, elements(0).currency)

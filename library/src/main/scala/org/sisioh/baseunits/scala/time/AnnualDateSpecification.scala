@@ -21,10 +21,10 @@ package org.sisioh.baseunits.scala.time
 import org.sisioh.baseunits.scala.intervals.Limit
 
 /**
- * 1年間に1度だけ仕様を満たす日付仕様。
- *
- * @author j5ik2o
- */
+  * 1年間に1度だけ仕様を満たす日付仕様。
+  *
+  * @author j5ik2o
+  */
 abstract class AnnualDateSpecification extends DateSpecification {
 
   override def firstOccurrenceIn(interval: CalendarInterval): Option[CalendarDate] = {
@@ -44,8 +44,8 @@ abstract class AnnualDateSpecification extends DateSpecification {
 
       private var _next = firstOccurrenceIn(interval)
 
-      private var year = _next map {
-        o => o.asCalendarMonth.year
+      private var year = _next map { o =>
+        o.asCalendarMonth.year
       } getOrElse (-1)
 
       override def hasNext: Boolean = _next.isDefined
@@ -66,11 +66,11 @@ abstract class AnnualDateSpecification extends DateSpecification {
   }
 
   /**
-   * 指定した年においてこの日付仕様を満たす年月日を返す。
-   *
-   * @param year 西暦年をあらわす数
-   * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
-   */
+    * 指定した年においてこの日付仕様を満たす年月日を返す。
+    *
+    * @param year 西暦年をあらわす数
+    * @return [[org.sisioh.baseunits.scala.time.CalendarDate]]
+    */
   def ofYear(year: Int): CalendarDate
 
 }

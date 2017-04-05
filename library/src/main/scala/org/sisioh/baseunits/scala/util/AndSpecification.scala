@@ -17,16 +17,15 @@
 package org.sisioh.baseunits.scala.util
 
 /**
- * ANDを表す仕様。
- *
- * @tparam T モデルの型
- * @author j5ik2o
- */
+  * ANDを表す仕様。
+  *
+  * @tparam T モデルの型
+  * @author j5ik2o
+  */
 class AndSpecification[T](
-  private[util] val spec1: Specification[T],
-  private[util] val spec2: Specification[T]
-)
-    extends Specification[T] {
+    private[util] val spec1: Specification[T],
+    private[util] val spec2: Specification[T]
+) extends Specification[T] {
 
   override def isSatisfiedBy(t: T): Boolean =
     spec1.isSatisfiedBy(t) && spec2.isSatisfiedBy(t)

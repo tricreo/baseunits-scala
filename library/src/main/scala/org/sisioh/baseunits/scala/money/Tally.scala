@@ -23,19 +23,18 @@ import java.util.Currency
 import collection.Iterator
 
 /**
- * 同じ通貨単位の金額の集合をあらわすクラス。
- *
- * @author j5ik2o
- * @param monies [[Money]]の`Iterable`
- */
-class Tally(private[money] val monies: Iterable[Money])
-    extends Iterable[Money] {
+  * 同じ通貨単位の金額の集合をあらわすクラス。
+  *
+  * @author j5ik2o
+  * @param monies [[Money]]の`Iterable`
+  */
+class Tally(private[money] val monies: Iterable[Money]) extends Iterable[Money] {
 
   /**
-   * インスタンスを生成する。
-   *
-   * @param monies [[Money]]の可変引数
-   */
+    * インスタンスを生成する。
+    *
+    * @param monies [[Money]]の可変引数
+    */
   def this(monies: Money*) = this(monies.toIterable)
 
   private[this] val _currency = currency
@@ -43,16 +42,16 @@ class Tally(private[money] val monies: Iterable[Money])
   require(monies.exists(_.currency == _currency))
 
   /**
-   * 通貨単位を返す。
-   * @return 通貨単位
-   */
+    * 通貨単位を返す。
+    * @return 通貨単位
+    */
   lazy val currency: Currency =
     monies.head.currency
 
   /**
-   * 合計金額を返す。
-   * @return 合計
-   */
+    * 合計金額を返す。
+    * @return 合計
+    */
   lazy val net: Money = Money.sum(monies)
 
   override def toString: String = monies.toString()
@@ -62,26 +61,26 @@ class Tally(private[money] val monies: Iterable[Money])
 }
 
 /**
- * `Tally`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * `Tally`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 object Tally {
 
   /**
-   * インスタンスを生成する。
-   *
-   * @param monies [[Money]]の`Iterable`
-   * @return [[Tally]]
-   */
+    * インスタンスを生成する。
+    *
+    * @param monies [[Money]]の`Iterable`
+    * @return [[Tally]]
+    */
   def apply(monies: Iterable[Money]): Tally = new Tally(monies)
 
   /**
-   * 抽出子メソッド。
-   *
-   * @param tally [[Tally]]
-   * @return `Option[Iterable[Money]]`
-   */
+    * 抽出子メソッド。
+    *
+    * @param tally [[Tally]]
+    * @return `Option[Iterable[Money]]`
+    */
   def unapply(tally: Tally): Option[Iterable[Money]] = Some(tally.monies)
 
 }

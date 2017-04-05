@@ -19,15 +19,15 @@
 package org.sisioh.baseunits.scala.intervals
 
 import scala.collection.Iterator
-import scala.collection.immutable.{ Map, MapLike }
+import scala.collection.immutable.{Map, MapLike}
 
 /**
- * 区間に対して値をマッピングする抽象クラス。
- *
- * @author j5ik2o
- * @tparam A キーとなる区間の型
- * @tparam B 値の型
- */
+  * 区間に対して値をマッピングする抽象クラス。
+  *
+  * @author j5ik2o
+  * @tparam A キーとなる区間の型
+  * @tparam B 値の型
+  */
 abstract class IntervalMap[A, +B](implicit ev: A => Ordered[A])
     extends Map[Interval[A], B]
     with MapLike[Interval[A], B, IntervalMap[A, B]] {
@@ -37,11 +37,11 @@ abstract class IntervalMap[A, +B](implicit ev: A => Ordered[A])
   override def empty: IntervalMap[A, B] = new LinearIntervalMap
 
   /**
-   * Add a key/value pair to this map.
-   * @param key the key
-   * @param value the value
-   * @return A new map with the new binding added to this map
-   */
+    * Add a key/value pair to this map.
+    * @param key the key
+    * @param value the value
+    * @return A new map with the new binding added to this map
+    */
   override def updated[B1 >: B](key: Interval[A], value: B1): IntervalMap[A, B1] =
     new LinearIntervalMap(intervalMap.updated(key, value))
 
@@ -50,22 +50,23 @@ abstract class IntervalMap[A, +B](implicit ev: A => Ordered[A])
   def +[B1 >: B](kv: (Interval[A], B1)): IntervalMap[A, B1]
 
   /**
-   * 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に `true` を返す。
-   * @param interval 区間
-   * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は`true`、そうでない場合は`false`
-   */
+    * 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に `true` を返す。
+    * @param interval 区間
+    * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は`true`、そうでない場合は`false`
+    */
   def containsIntersectingKey(interval: Interval[A]): Boolean
 
 }
 
-class LinearIntervalMap[A, B](protected val intervalMap: Map[Interval[A], B])(implicit ev: A => Ordered[A])
+class LinearIntervalMap[A, B](protected val intervalMap: Map[Interval[A], B])(
+    implicit ev: A => Ordered[A])
     extends IntervalMap[A, B] {
 
   /**
-   * インスタンスを生成する。
-   *
-   * `intervalMap`は空を利用する。
-   */
+    * インスタンスを生成する。
+    *
+    * `intervalMap`は空を利用する。
+    */
   def this()(implicit ev: A => Ordered[A]) = this(Map.empty[Interval[A], B])
 
   override def toString(): String = intervalMap.toString
@@ -73,30 +74,32 @@ class LinearIntervalMap[A, B](protected val intervalMap: Map[Interval[A], B])(im
   def containsIntersectingKey(otherInterval: Interval[A]): Boolean =
     intersectingKeys(otherInterval).nonEmpty
 
-  private def directPut(source: Map[Interval[A], B], intervalSequence: Seq[Interval[A]], value: B) = {
+  private def directPut(source: Map[Interval[A], B],
+                        intervalSequence: Seq[Interval[A]],
+                        value: B) = {
     val keyValues = collection.mutable.Map.empty[Interval[A], B]
     keyValues ++= source
-    intervalSequence.foreach {
-      e =>
-        keyValues += (e -> value)
+    intervalSequence.foreach { e =>
+      keyValues += (e -> value)
     }
     keyValues.toMap
   }
 
-  def contains(key: LimitValue[A]): Boolean = findKeyIntervalContaining(key).isDefined
+  def contains(key: LimitValue[A]): Boolean =
+    findKeyIntervalContaining(key).isDefined
 
   private def findKeyIntervalContaining(key: LimitValue[A]): Option[Interval[A]] =
     intervalMap.keys.find(_.includes(key))
 
   /**
-   * この写像が保持するキーとしての区間のうち、指定した区間 `otherInterval`と共通部分を持つ
-   * 区間の列を取得する。
-   *
-   * 戻り値の列は、区間の自然順にソートされている。
-   *
-   * @param otherInterval 対象区間
-   * @return 指定した区間と共通部分を持つ区間の列
-   */
+    * この写像が保持するキーとしての区間のうち、指定した区間 `otherInterval`と共通部分を持つ
+    * 区間の列を取得する。
+    *
+    * 戻り値の列は、区間の自然順にソートされている。
+    *
+    * @param otherInterval 対象区間
+    * @return 指定した区間と共通部分を持つ区間の列
+    */
   private def intersectingKeys(otherInterval: Interval[A]): Seq[Interval[A]] =
     intervalMap.keys.flatMap {
       case e if e.intersects(otherInterval) => Some(e)
@@ -107,7 +110,7 @@ class LinearIntervalMap[A, B](protected val intervalMap: Map[Interval[A], B])(im
 
   def +[B1 >: B](kv: (Interval[A], B1)): LinearIntervalMap[A, B1] = {
     val removed = this.-(kv._1)
-    val result = removed.intervalMap.+(kv)
+    val result  = removed.intervalMap.+(kv)
     new LinearIntervalMap(result)
   }
 
@@ -121,13 +124,12 @@ class LinearIntervalMap[A, B](protected val intervalMap: Map[Interval[A], B])(im
 
   def -(key: Interval[A]): LinearIntervalMap[A, B] = {
     val intervalSeq = intersectingKeys(key)
-    var currentMap = intervalMap
-    intervalSeq.foreach {
-      oldInterval =>
-        val oldValue = currentMap(oldInterval)
-        currentMap -= oldInterval
-        val complementIntervalSeq = key.complementRelativeTo(oldInterval)
-        currentMap = directPut(currentMap, complementIntervalSeq, oldValue)
+    var currentMap  = intervalMap
+    intervalSeq.foreach { oldInterval =>
+      val oldValue = currentMap(oldInterval)
+      currentMap -= oldInterval
+      val complementIntervalSeq = key.complementRelativeTo(oldInterval)
+      currentMap = directPut(currentMap, complementIntervalSeq, oldValue)
     }
     new LinearIntervalMap(currentMap)
   }
@@ -135,40 +137,42 @@ class LinearIntervalMap[A, B](protected val intervalMap: Map[Interval[A], B])(im
 }
 
 /**
- * `LinearIntervalMap`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * `LinearIntervalMap`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 object LinearIntervalMap {
 
   /**
-   * インスタンスを生成する。
-   *
-   * @tparam A キーの型
-   * @tparam B 値の型
-   * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
-   */
-  def apply[A, B](implicit ev: A => Ordered[A]): LinearIntervalMap[A, B] = new LinearIntervalMap
+    * インスタンスを生成する。
+    *
+    * @tparam A キーの型
+    * @tparam B 値の型
+    * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
+    */
+  def apply[A, B](implicit ev: A => Ordered[A]): LinearIntervalMap[A, B] =
+    new LinearIntervalMap
 
   /**
-   * ファクトリメソッド。
-   *
-   * @tparam A キーの型
-   * @tparam B 値の型
-   * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
-   */
-  def apply[A, B](intervalMap: Map[Interval[A], B])(implicit ev: A => Ordered[A]): LinearIntervalMap[A, B] =
+    * ファクトリメソッド。
+    *
+    * @tparam A キーの型
+    * @tparam B 値の型
+    * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
+    */
+  def apply[A, B](intervalMap: Map[Interval[A], B])(
+      implicit ev: A => Ordered[A]): LinearIntervalMap[A, B] =
     new LinearIntervalMap(intervalMap)
 
   /**
-   * 抽出子メソッド。
-   *
-   * @tparam A キーの型
-   * @tparam B 値の型
-   * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
-   */
-  def unapply[A, B](linearIntervalMap: LinearIntervalMap[A, B])(implicit ev: A => Ordered[A]): Option[Map[Interval[A], B]] =
+    * 抽出子メソッド。
+    *
+    * @tparam A キーの型
+    * @tparam B 値の型
+    * @return [[org.sisioh.baseunits.scala.intervals.LinearIntervalMap]]
+    */
+  def unapply[A, B](linearIntervalMap: LinearIntervalMap[A, B])(
+      implicit ev: A => Ordered[A]): Option[Map[Interval[A], B]] =
     Some(linearIntervalMap.intervalMap)
 
 }
-

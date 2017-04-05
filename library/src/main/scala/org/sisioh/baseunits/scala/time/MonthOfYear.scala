@@ -18,18 +18,18 @@
  */
 package org.sisioh.baseunits.scala.time
 
-import java.time.{ LocalDate, Month, ZoneId }
-import java.util.{ Calendar, GregorianCalendar, TimeZone }
+import java.time.{LocalDate, Month, ZoneId}
+import java.util.{Calendar, GregorianCalendar, TimeZone}
 
 /**
- * 1年の中の特定の「月」を表す列挙型。
- *
- * @param lastDayOfThisMonth その月の最終日
- * @param calendarValue      [[java.util.Calendar]]に定義する月をあらわす定数値
- */
+  * 1年の中の特定の「月」を表す列挙型。
+  *
+  * @param lastDayOfThisMonth その月の最終日
+  * @param calendarValue      [[java.util.Calendar]]に定義する月をあらわす定数値
+  */
 sealed class MonthOfYear private[time] (
     val lastDayOfThisMonth: DayOfMonth,
-    val calendarValue:      Int
+    val calendarValue: Int
 ) {
 
   val value = calendarValue + 1
@@ -38,81 +38,86 @@ sealed class MonthOfYear private[time] (
     java.time.Month.of(value)
 
   /**
-   * このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
-   *
-   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-   *
-   * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
-   */
+    * このオブジェクトの`calendarValue`フィールド（[[java.util.Calendar]]に定義する月をあらわす定数値）を返す。
+    *
+    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+    *
+    * @return [[java.util.Calendar]]に定義する月をあらわす定数値（JANUARY〜DECEMBER）
+    */
   @deprecated("Use calendarValue property instead", "0.1.18")
   val breachEncapsulationOfCalendarValue = calendarValue
 
   /**
-   * このオブジェクトの`value`フィールド（月をあらわす数 1〜12）を返す。
-   *
-   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-   *
-   * @return 月をあらわす数（1〜12）
-   */
+    * このオブジェクトの`value`フィールド（月をあらわす数 1〜12）を返す。
+    *
+    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+    *
+    * @return 月をあらわす数（1〜12）
+    */
   @deprecated("Use value property instead", "0.1.18")
   val breachEncapsulationOfValue = calendarValue + 1
 
   /**
-   * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
-   *
-   * お互いが同一日時である場合は `false` を返す。
-   *
-   * @param other 対象日時
-   * @return 過去である場合は`true`、そうでない場合は`false`
-   */
+    * 指定した日 `other` が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+    *
+    * お互いが同一日時である場合は `false` を返す。
+    *
+    * @param other 対象日時
+    * @return 過去である場合は`true`、そうでない場合は`false`
+    */
   def isAfter(other: MonthOfYear): Boolean = !isBefore(other) && !equals(other)
 
   /**
-   * 指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
-   *
-   * お互いが同一日時である場合は `false` を返す。
-   *
-   * @param other 対象日
-   * @return 未来である場合は`true`、そうでない場合は`false`
-   */
-  def isBefore(other: MonthOfYear): Boolean = calendarValue < other.calendarValue
+    * 指定した日 `other` が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+    *
+    * お互いが同一日時である場合は `false` を返す。
+    *
+    * @param other 対象日
+    * @return 未来である場合は`true`、そうでない場合は`false`
+    */
+  def isBefore(other: MonthOfYear): Boolean =
+    calendarValue < other.calendarValue
 
   //	public DayOfYear at(DayOfMonth month) {
   //		// ...
   //	}
 
   /**
-   * 指定した年の、この月を表す年月を返す。
-   *
-   * @param year 年
-   * @return 年月
-   */
+    * 指定した年の、この月を表す年月を返す。
+    *
+    * @param year 年
+    * @return 年月
+    */
   @deprecated("Use on(year: Int, zoneId: ZoneId) method instead", "0.1.18")
-  def on(year: Int, timeZone: TimeZone): CalendarYearMonth = CalendarYearMonth.from(year, this, timeZone.toZoneId)
+  def on(year: Int, timeZone: TimeZone): CalendarYearMonth =
+    CalendarYearMonth.from(year, this, timeZone.toZoneId)
 
-  def on(year: Int, zoneId: ZoneId = ZoneIds.Default): CalendarYearMonth = CalendarYearMonth.from(year, this, zoneId)
+  def on(year: Int, zoneId: ZoneId = ZoneIds.Default): CalendarYearMonth =
+    CalendarYearMonth.from(year, this, zoneId)
 
   /**
-   * その月の最終日を取得する。
-   *
-   * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
-   * @return 最終日
-   */
+    * その月の最終日を取得する。
+    *
+    * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
+    * @return 最終日
+    */
   private[time] def getLastDayOfThisMonth(year: Int) = lastDayOfThisMonth
 
 }
 
 /**
- * `MonthOfYear`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * `MonthOfYear`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 object MonthOfYear {
 
   def apply(month: Int): MonthOfYear = {
-    Seq(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).find(
-      _.value == month
-    ).get
+    Seq(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
+      .find(
+        _.value == month
+      )
+      .get
   }
 
   /** January */

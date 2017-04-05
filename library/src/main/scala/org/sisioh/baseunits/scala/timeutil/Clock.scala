@@ -24,53 +24,53 @@ import java.util.TimeZone
 import org.sisioh.baseunits.scala.time._
 
 /**
- * 時計を表すクラス。
- *
- * @author j5ik2o
- */
+  * 時計を表すクラス。
+  *
+  * @author j5ik2o
+  */
 case class Clock(timeSource: TimeSource = SystemClock, zoneId: ZoneId) {
 
   /**
-   * 現在時刻を取得する。
-   *
-   * @return 現在時刻
-   */
+    * 現在時刻を取得する。
+    *
+    * @return 現在時刻
+    */
   def now: TimePoint = timeSource.now
 
   /**
-   * 今日の日付を所得する。
-   *
-   * @return 今日の日付
-   */
+    * 今日の日付を所得する。
+    *
+    * @return 今日の日付
+    */
   def todayAsDate: CalendarDate = now.asCalendarDate(zoneId)
 
   /**
-   * 今日の日時を所得する。
-   *
-   * @return 今日の日時
-   */
+    * 今日の日時を所得する。
+    *
+    * @return 今日の日時
+    */
   def todayAsDateTime: CalendarDateTime = now.asCalendarDateTime(zoneId)
 
   /**
-   * 今日の曜日を取得する。
-   *
-   * @return 今日の曜日
-   */
+    * 今日の曜日を取得する。
+    *
+    * @return 今日の曜日
+    */
   def dayOfWeek: DayOfWeek = todayAsDate.dayOfWeek
 
   /**
-   * 今月を所得する。
-   *
-   * @return 今月
-   */
+    * 今月を所得する。
+    *
+    * @return 今月
+    */
   def month: CalendarYearMonth =
     todayAsDate.asCalendarMonth
 
   /**
-   * 今年を取得する。
-   *
-   * @return 今年
-   */
+    * 今年を取得する。
+    *
+    * @return 今年
+    */
   def year: Int = month.year
 
 }

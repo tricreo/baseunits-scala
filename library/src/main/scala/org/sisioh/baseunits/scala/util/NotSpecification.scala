@@ -16,16 +16,15 @@
 package org.sisioh.baseunits.scala.util
 
 /**
- * 否定の仕様を表すモデル。
- *
- * <p>ある `Specification` の否定をとる `Specification` 実装クラス。
- * デコレータではないので注意。</p>
- *
- * @tparam T [[NotSpecification]]の型
- * @author j5ik2o
- */
-class NotSpecification[T](private[util] val spec1: Specification[T])
-    extends Specification[T] {
+  * 否定の仕様を表すモデル。
+  *
+  * <p>ある `Specification` の否定をとる `Specification` 実装クラス。
+  * デコレータではないので注意。</p>
+  *
+  * @tparam T [[NotSpecification]]の型
+  * @author j5ik2o
+  */
+class NotSpecification[T](private[util] val spec1: Specification[T]) extends Specification[T] {
 
   override def isSatisfiedBy(t: T): Boolean =
     !spec1.isSatisfiedBy(t)

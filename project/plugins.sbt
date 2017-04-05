@@ -5,7 +5,7 @@ resolvers ++= Seq(
   "Sonatype OSS Release Repository" at "https://oss.sonatype.org/content/repositories/releases/"
 )
 
-addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.6.0")
+addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "0.6.6")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.8.1")
 

@@ -19,8 +19,8 @@
 package org.sisioh.baseunits.scala.time
 
 /**
- * 現在時刻の取得に失敗したことをあらわす例外。
- *
- * @author j5ik2o
- */
+  * 現在時刻の取得に失敗したことをあらわす例外。
+  *
+  * @author j5ik2o
+  */
 case class TimeSourceException(message: String) extends Exception(message)

@@ -21,26 +21,26 @@ package org.sisioh.baseunits.scala.time
 import java.time.ZoneId
 
 /**
- * 毎年X月Y日、を表す日付仕様。
- *
- * @author j5ik2o
- * @param month 月
- * @param day 日
- * @param zoneId タイムゾーンID
- */
+  * 毎年X月Y日、を表す日付仕様。
+  *
+  * @author j5ik2o
+  * @param month 月
+  * @param day 日
+  * @param zoneId タイムゾーンID
+  */
 class AnnualFixedDateSpecification private[time] (
-  private[time] val month:  MonthOfYear,
-  private[time] val day:    DayOfMonth,
-  private[time] val zoneId: ZoneId
-)
-    extends AnnualDateSpecification {
+    private[time] val month: MonthOfYear,
+    private[time] val day: DayOfMonth,
+    private[time] val zoneId: ZoneId
+) extends AnnualDateSpecification {
 
   override def isSatisfiedBy(date: CalendarDate): Boolean = {
     day == date.day &&
-      month == date.asCalendarMonth.month
+    month == date.asCalendarMonth.month
   }
 
-  override def ofYear(year: Int): CalendarDate = CalendarDate.from(year, month, day, zoneId)
+  override def ofYear(year: Int): CalendarDate =
+    CalendarDate.from(year, month, day, zoneId)
 
   override def toString: String = day.toString + " " + month.toString
 

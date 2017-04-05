@@ -23,10 +23,10 @@ sealed trait Shifter {
 }
 
 /**
- * コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 object Shifter {
 
   case object Next extends Shifter {
@@ -42,12 +42,12 @@ object Shifter {
 }
 
 /**
- * 指定日が非営業日の場合のシフト戦略。
- */
+  * 指定日が非営業日の場合のシフト戦略。
+  */
 class MonthlyFixedBusinessDateSpecification(
-    val day:     DayOfMonth,
+    val day: DayOfMonth,
     val shifter: Shifter,
-    val cal:     BusinessCalendar
+    val cal: BusinessCalendar
 ) extends MonthlyDateSpecification {
 
   def ofYearMonth(month: CalendarYearMonth): CalendarDate =

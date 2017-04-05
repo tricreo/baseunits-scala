@@ -19,17 +19,16 @@
 package org.sisioh.baseunits.scala.time
 
 /**
- * 毎月の第?曜日を表す日付仕様。
- *
- * @author j5ik2o
- * @param dayOfWeek [[org.sisioh.baseunits.scala.time.DayOfWeek]]
- * @param occurrence 周回数（1〜5）
- */
+  * 毎月の第?曜日を表す日付仕様。
+  *
+  * @author j5ik2o
+  * @param dayOfWeek [[org.sisioh.baseunits.scala.time.DayOfWeek]]
+  * @param occurrence 周回数（1〜5）
+  */
 class MonthlyFloatingDateSpecification private[time] (
-  private[time] val dayOfWeek:  DayOfWeek,
-  private[time] val occurrence: Int
-)
-    extends MonthlyDateSpecification {
+    private[time] val dayOfWeek: DayOfWeek,
+    private[time] val occurrence: Int
+) extends MonthlyDateSpecification {
 
   require(1 <= occurrence && occurrence <= 5)
 
@@ -37,9 +36,11 @@ class MonthlyFloatingDateSpecification private[time] (
     ofYearMonth(date.asCalendarMonth) == date
 
   override def ofYearMonth(month: CalendarYearMonth): CalendarDate = {
-    val firstOfMonth = CalendarDate.from(month, DayOfMonth(1), month.zoneId)
+    val firstOfMonth    = CalendarDate.from(month, DayOfMonth(1), month.zoneId)
     val dayOfWeekOffset = dayOfWeek.value - firstOfMonth.dayOfWeek.value
-    val dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (if (dayOfWeekOffset < 0) 8 else 1)
+    val dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (if (dayOfWeekOffset < 0)
+                                                                8
+                                                              else 1)
     val date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek
     CalendarDate.from(month, DayOfMonth(date), month.zoneId)
   }

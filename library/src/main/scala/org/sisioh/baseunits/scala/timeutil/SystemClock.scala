@@ -18,13 +18,13 @@
  */
 package org.sisioh.baseunits.scala.timeutil
 
-import org.sisioh.baseunits.scala.time.{ TimePoint, TimeSource }
+import org.sisioh.baseunits.scala.time.{TimePoint, TimeSource}
 
 /**
- * システム時計に基づき、現在の時刻を返すクラス。
- *
- * @author j5ik2o
- */
+  * システム時計に基づき、現在の時刻を返すクラス。
+  *
+  * @author j5ik2o
+  */
 object SystemClock extends TimeSource {
   def now: TimePoint = TimePoint.from(System.currentTimeMillis())
 }

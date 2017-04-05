@@ -1,30 +1,4 @@
-import com.typesafe.sbt.SbtScalariform
-import com.typesafe.sbt.SbtScalariform.ScalariformKeys
-import org.scalastyle.sbt.ScalastylePlugin._
-
-import scalariform.formatter.preferences._
-
-val compileScalaStyle = taskKey[Unit]("compileScalaStyle")
-
-lazy val scalaStyleSettings = Seq(
-  (scalastyleConfig in Compile) := file("scalastyle-config.xml"),
-  compileScalaStyle := scalastyle.in(Compile).toTask("").value,
-  (compile in Compile) <<= (compile in Compile) dependsOn compileScalaStyle
-)
-
-val formatPreferences = FormattingPreferences()
-  .setPreference(RewriteArrowSymbols, false)
-  .setPreference(AlignParameters, true)
-  .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(SpacesAroundMultiImports, true)
-  .setPreference(DoubleIndentClassDeclaration, true)
-  .setPreference(AlignArguments, true)
-
-val commonSettings =
-  scalaStyleSettings ++ SbtScalariform.scalariformSettings ++ Seq(
-    ScalariformKeys.preferences in Compile := formatPreferences
-    , ScalariformKeys.preferences in Test := formatPreferences) ++
-    site.settings ++ site.includeScaladoc() ++ Seq(
+val commonSettings = site.settings ++ site.includeScaladoc() ++ Seq(
     sonatypeProfileName := "org.sisioh",
     organization := "org.sisioh",
     scalaVersion := "2.11.8",

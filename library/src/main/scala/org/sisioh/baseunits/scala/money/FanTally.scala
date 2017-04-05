@@ -19,64 +19,65 @@
 package org.sisioh.baseunits.scala.money
 
 /**
- * [[org.sisioh.baseunits.scala.money.MoneyFan]]の集合。
- *
- * @author j5ik2o
- * @tparam T 割り当ての対象
- * @param fans [[MoneyFan]]の[[scala.Iterable]]
- */
-class FanTally[T](private[money] val fans: Iterable[MoneyFan[T]])
-    extends Iterable[MoneyFan[T]] {
+  * [[org.sisioh.baseunits.scala.money.MoneyFan]]の集合。
+  *
+  * @author j5ik2o
+  * @tparam T 割り当ての対象
+  * @param fans [[MoneyFan]]の[[scala.Iterable]]
+  */
+class FanTally[T](private[money] val fans: Iterable[MoneyFan[T]]) extends Iterable[MoneyFan[T]] {
 
   import collection.Iterator
 
   /**
-   * インスタンスを生成する。
-   *
-   * @param fan [[MoneyFan]]
-   */
+    * インスタンスを生成する。
+    *
+    * @param fan [[MoneyFan]]
+    */
   def this(fan: MoneyFan[T]) = this(Iterable.fill(1)(fan))
 
   def iterator: Iterator[MoneyFan[T]] = fans.iterator
 
   /**
-   * 要素の[[MoneyFan]]を全てマージしたものを返す。
-   * @return [[MoneyFan]]
-   */
+    * 要素の[[MoneyFan]]を全てマージしたものを返す。
+    * @return [[MoneyFan]]
+    */
   lazy val net: MoneyFan[T] =
     fans.foldLeft(new MoneyFan[T])(_ plus _)
 
   override def toString(): String = fans.toString()
 
   /**
-   * 要素の[[MoneyFan]]が含む[[Allotment]]の合計額を返す。
-   * @return 合計額
-   */
+    * 要素の[[MoneyFan]]が含む[[Allotment]]の合計額を返す。
+    * @return 合計額
+    */
   lazy val total: Money = net.total
 
 }
 
 /**
- * `FanTally`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * `FanTally`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 object FanTally {
 
   /**
-   * インスタンスを生成する。
-   *
-   * @param fans [[org.sisioh.baseunits.scala.money.MoneyFan]]の`Iterable`
-   * @return [[org.sisioh.baseunits.scala.money.FanTally]]
-   */
-  def apply[T](fans: Iterable[MoneyFan[T]]): FanTally[T] = new FanTally[T](fans)
+    * インスタンスを生成する。
+    *
+    * @param fans [[org.sisioh.baseunits.scala.money.MoneyFan]]の`Iterable`
+    * @return [[org.sisioh.baseunits.scala.money.FanTally]]
+    */
+  def apply[T](fans: Iterable[MoneyFan[T]]): FanTally[T] =
+    new FanTally[T](fans)
 
   /**
-   * 抽出子メソッド。
-   *
-   * @param fanTally [[org.sisioh.baseunits.scala.money.FanTally]]
-   * @return `Option[Iterable[MoneyFan[T]]]`
-   */
-  def unapply[T](fanTally: FanTally[T]): Option[Iterable[MoneyFan[T]]] = Some(fanTally.fans)
+    * 抽出子メソッド。
+    *
+    * @param fanTally [[org.sisioh.baseunits.scala.money.FanTally]]
+    * @return `Option[Iterable[MoneyFan[T]]]`
+    */
+  def unapply[T](fanTally: FanTally[T]): Option[Iterable[MoneyFan[T]]] =
+    Some(fanTally.fans)
 
 }

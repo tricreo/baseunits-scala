@@ -19,15 +19,14 @@
 package org.sisioh.baseunits.scala.time
 
 /**
- * 1時間の中の特定の「分」を表すクラス。
- *
- * [[java.util.Date]]と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。
- *
- * @author j5ik2o
- * @param value 分をあらわす正数
- */
-class MinuteOfHour private[time] (val value: Int)
-    extends Ordered[MinuteOfHour] with Serializable {
+  * 1時間の中の特定の「分」を表すクラス。
+  *
+  * [[java.util.Date]]と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。
+  *
+  * @author j5ik2o
+  * @param value 分をあらわす正数
+  */
+class MinuteOfHour private[time] (val value: Int) extends Ordered[MinuteOfHour] with Serializable {
 
   require(
     MinuteOfHour.MIN <= value && value <= MinuteOfHour.MAX,
@@ -35,12 +34,12 @@ class MinuteOfHour private[time] (val value: Int)
   )
 
   /**
-   * このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
-   *
-   * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
-   *
-   * @return 時をあらわす正数（0〜23）
-   */
+    * このオブジェクトの`value`フィールド（時をあらわす正数）を返す。
+    *
+    * CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。
+    *
+    * @return 時をあらわす正数（0〜23）
+    */
   @deprecated("Use value property instead", "0.1.18")
   val breachEncapsulationOfValue = value
 
@@ -54,23 +53,23 @@ class MinuteOfHour private[time] (val value: Int)
   override def hashCode: Int = 31 * value.hashCode
 
   /**
-   * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも未来かどうか調べる。
-   *
-   * 等価である場合は`false`を返す。
-   *
-   * @param another 基準分
-   * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
-   */
+    * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも未来かどうか調べる。
+    *
+    * 等価である場合は`false`を返す。
+    *
+    * @param another 基準分
+    * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも未来である場合は`true`、そうでない場合は`false`
+    */
   def isAfter(another: MinuteOfHour): Boolean = value > another.value
 
   /**
-   * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも過去かどうか調べる。
-   *
-   * 等価である場合は`false`を返す。
-   *
-   * @param another 基準分
-   * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも過去である場合は`true`、そうでない場合は`false`
-   */
+    * 同時(hour)において、このインスタンスが表す分が、引数`another`で表される時よりも過去かどうか調べる。
+    *
+    * 等価である場合は`false`を返す。
+    *
+    * @param another 基準分
+    * @return 同日において、このインスタンスが表す分が、引数`another`で表される時よりも過去である場合は`true`、そうでない場合は`false`
+    */
   def isBefore(another: MinuteOfHour): Boolean = value < another.value
 
   override def toString: String = "%02d".format(value)
@@ -78,10 +77,10 @@ class MinuteOfHour private[time] (val value: Int)
 }
 
 /**
- * `MinuteOfHour`コンパニオンオブジェクト。
- *
- * @author j5ik2o
- */
+  * `MinuteOfHour`コンパニオンオブジェクト。
+  *
+  * @author j5ik2o
+  */
 object MinuteOfHour {
 
   val MIN = 0
@@ -89,19 +88,20 @@ object MinuteOfHour {
   val MAX = 59
 
   /**
-   * インスタンスを生成する。
-   *
-   * @param value 分をあらわす正数
-   * @return [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
-   */
+    * インスタンスを生成する。
+    *
+    * @param value 分をあらわす正数
+    * @return [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
+    */
   def apply(value: Int): MinuteOfHour = new MinuteOfHour(value)
 
   /**
-   * 抽出しメソッド。
-   *
-   * @param minuteOfHour [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
-   * @return `Option[Int]`
-   */
-  def unapply(minuteOfHour: MinuteOfHour): Option[Int] = Some(minuteOfHour.value)
+    * 抽出しメソッド。
+    *
+    * @param minuteOfHour [[org.sisioh.baseunits.scala.time.MinuteOfHour]]
+    * @return `Option[Int]`
+    */
+  def unapply(minuteOfHour: MinuteOfHour): Option[Int] =
+    Some(minuteOfHour.value)
 
 }
