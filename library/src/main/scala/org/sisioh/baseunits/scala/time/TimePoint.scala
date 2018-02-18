@@ -697,8 +697,7 @@ object TimePoint {
     * @param timeZone     タイムゾーン
     * @return [[TimePoint]]
     */
-  @deprecated("Use atMidnight(calendarDate: CalendarDate, zoneId: ZoneId) method instead",
-              "0.1.18")
+  @deprecated("Use atMidnight(calendarDate: CalendarDate, zoneId: ZoneId) method instead", "0.1.18")
   def atMidnight(calendarDate: CalendarDate, timeZone: TimeZone): TimePoint =
     at(
       calendarDate.asCalendarMonth,
@@ -849,7 +848,9 @@ object TimePoint {
     * @return [[TimePoint]]
     * @throws ParseException 文字列の解析に失敗した場合
     */
-  def parse(dateTimeString: String, pattern: String, zoneId: ZoneId = ZoneIds.Default): TimePoint = {
+  def parse(dateTimeString: String,
+            pattern: String,
+            zoneId: ZoneId = ZoneIds.Default): TimePoint = {
     val sdf = new SimpleDateFormat(pattern)
     sdf.setTimeZone(TimeZone.getTimeZone(zoneId))
     val date = sdf.parse(dateTimeString)
